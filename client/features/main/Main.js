@@ -11,6 +11,7 @@ import {
   getFakeDefinitions,
   selectFakeDefinitions,
   clearFakeDefs,
+  clearFakeWords
 } from "./mainSlice";
 
 const Main = () => {
@@ -53,7 +54,9 @@ const Main = () => {
   };
 
   const handleGetFakeWords = () => {
+    dispatch(clearFakeWords())
     dispatch(clearFakeDefs())
+ 
      allDefs = []
     let count = 0;
     while (count < 5) {
@@ -88,7 +91,10 @@ const Main = () => {
     dispatch(clearFakeDefs())
   };
 
+
+
   const handleChooseWord = (def) => {
+    allDefs = []
 setDefArray([])
 allDefs = []
 setRound(round + 1)
@@ -96,8 +102,10 @@ setReply("CORRECT!")
 def === definition ? setScore(score + 1)
    :
 setReply(`Wrongo! the anser was ${definition}`)
-
   }
+
+  console.log("FINAL ARRL ", finalArr)
+  console.log("defARRAY: ", defArray)
   return (
     <div>
       <div>Let's BALDERDASH!!!</div>

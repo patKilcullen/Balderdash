@@ -140,7 +140,10 @@ const mainSlice = createSlice({
     reducers: {
       clearFakeDefs(state, action){
         state.fakeDefinitions = []
-      }
+      },
+      clearFakeWords(state, action){
+        state.fakeWords = []
+      },
     },
     extraReducers: (builder)=>{
         builder
@@ -177,6 +180,6 @@ export const selectFakeDefinitions = (state)=>{
 export const selectFakeWords = (state)=>{
   return state.main.fakeWords
 }
-export const { clearFakeDefs } = mainSlice.actions;
+export const { clearFakeDefs, clearFakeWords } = mainSlice.actions;
 
 export default mainSlice.reducer
