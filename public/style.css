@@ -1,3 +1,29 @@
+#header {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-between;
+border: 2px solid black;
+/* background-color: aquamarine; */
+}
+#title {
+  align-self: center;
+  margin-top: 10vh;
+  color: blueviolet;
+}
+#nav {
+ align-self: flex-end;
+  
+  
+}
+
+.main {
+  background-color: blueviolet;
+  display: flex;
+  flex-direction: column;
+}
+
+
 body {
   font-family: sans-serif;
 }
@@ -18,4 +44,9 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+#definitions {
+  display: flex;
+  flex-direction: column;
 }

@@ -3,6 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../app/store';
 
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+
+
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
   const dispatch = useDispatch();
@@ -13,16 +17,16 @@ const Navbar = () => {
   };
 
   return (
-    <div>
-      <h1>BALDERDASH</h1>
-      <nav>
+    <Card id = "header" color="primary">
+      <h1 id = "title">BALDERDASH</h1>
+      <nav id="nav">
         {isLoggedIn ? (
-          <div>
+          <div >
             {/* The navbar will show these links after you log in */}
             <Link to="/home">Home</Link>
-            <button type="button" onClick={logoutAndRedirectHome}>
+            <Button type="button" onClick={logoutAndRedirectHome}>
               Logout
-            </button>
+            </Button>
           </div>
         ) : (
           <div>
@@ -33,7 +37,7 @@ const Navbar = () => {
         )}
       </nav>
       <hr />
-    </div>
+    </Card>
   );
 };
 
