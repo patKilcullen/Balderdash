@@ -12,6 +12,7 @@ import {
   selectFakeDefinitions,
   clearFakeDefs,
   clearFakeWords,
+  clearDefinition,
 } from "./mainSlice";
 import { selectMe } from "../auth/authSlice";
 
@@ -38,21 +39,30 @@ const Main = () => {
   useEffect(()=>{
     localStorage.setItem(`${username}`, 0)
   },[])
-  console.log("This is the USER NAME: ", username)
+  // console.log("This is the USER NAME: ", username)
 
   // SOCKET
   // socket.emit('word', word)
   const definition = useSelector(selectDefinition);
+
+  useEffect(()=>{
+    setDefDisplayed(definition)
+  },[definition])
+  console.log("DEF : ", definition)
+const [defDisplayed, setDefDisplayed] = useState("") 
+console.log("DEF DISPLAYED: ", defDisplayed)
   const [defArray, setDefArray] = useState([]);
   const [score, setScore] = useState(0);
   const [round, setRound] = useState(0);
   const [reply, setReply] = useState("");
   // console.log("DEFINTTT: ", definition)
   const [wordX, setWordX] = useState([]);
+console.log("WORD X: ", wordX)
 
   const handleGetDefs = () => {
     dispatch(getDefinition(word[0]))
       .then(() => {
+        // setDefDisplayed(definition)
         handleGetFakeDefinitions();
       })
       .then(() => {
@@ -120,16 +130,15 @@ const Main = () => {
   };
 
   const handleChooseWord = (def) => {
-
     allDefs = [];
+    setWordX([])
     setDefArray([]);
-
+    setDater([])
+    setDefDisplayed("")
     setRound(round + 1);
     setReply("CORRECT!");
     def === definitionX
       ? setScore(score + 1)
-    
-
       : setReply(`Wrongo! The definition of ${wordX} is "${definitionX}"`);
   };
 
@@ -167,13 +176,13 @@ const Main = () => {
 
   useEffect(()=>{
     clientSocket.on("receive_score", (data) => {
-        console.log("DATA from recevie score: ", data)
+        // console.log("DATA from recevie score: ", data)
         scoreArray.push(data)
       });
   },[score])
 
 let scoreArray = []
-console.log("SCORE ARRAY: ", scoreArray)
+// console.log("SCORE ARRAY: ", scoreArray)
   useEffect(() => {
 
   
@@ -208,12 +217,16 @@ console.log("SCORE ARRAY: ", scoreArray)
         Score: {score}/{round}
       </h1>
       <h1>{reply}</h1>
-      <Button onClick={() => handleGetWord()} sx={{ border: "2px solid black" }}>Get Word</Button>
+      <Button onClick={() => handleGetWord()}  sx={{ fontSize: 30 }}>Get Word</Button>
       <h2>{wordX ? wordX : ""}</h2>
-      <Button onClick={() => handleGetDefs()}>Get Definition</Button>
+     {wordX && wordX.length ? <Button onClick={() => handleGetDefs()}>Get Definition</Button> : null}
 
-      <h3>{typeof definition === "string" ? definition : " "}</h3>
-      <Button onClick={() => play()}>Play</Button>
+      {/* <h3>{typeof definition === "string" ? definition : " "}</h3>
+    { typeof definition === "string" ?  <Button onClick={() => play()}>Play</Button> : null} */}
+
+    <h3>{typeof defDisplayed === "string" ? defDisplayed : " "}</h3>
+    {/* { typeof defDisplayed === "string" ?  <Button onClick={() => play()}>Play</Button> : null} */}
+    { defDisplayed.length ?  <Button onClick={() => play()}>Play</Button> : null}
       <div></div>
       <div id="definitions">
         {dater && dater.length

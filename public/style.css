@@ -4,12 +4,12 @@ flex-direction: column;
 align-items: center;
 justify-content: space-between;
 border: 2px solid black;
-/* background-color: aquamarine; */
+background-color: #88ebe6
 }
 #title {
   align-self: center;
   margin-top: 10vh;
-  color: blueviolet;
+  /* color: blueviolet; */
 }
 #nav {
  align-self: flex-end;

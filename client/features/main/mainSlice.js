@@ -91,6 +91,9 @@ const mainSlice = createSlice({
       clearFakeWords(state, action){
         state.fakeWords = []
       },
+      clearDefinition(state, action){
+        state.definition = {}
+      },
     },
     extraReducers: (builder)=>{
         builder

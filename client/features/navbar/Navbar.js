@@ -5,6 +5,7 @@ import { logout } from '../../app/store';
 
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
+import { Typography } from '@mui/material';
 
 
 const Navbar = () => {
@@ -17,14 +18,15 @@ const Navbar = () => {
   };
 
   return (
-    <Card id = "header" color="primary">
-      <h1 id = "title">BALDERDASH</h1>
+    <Card id = "header" color="seconday" sx={{ boxShadow: 20}}>
+      <Typography id = "title" color="secondary"sx={{fontSize: 100, fontWeight: "bold", textDecoration: "underline", }}>BALDERDASH</Typography>
       <nav id="nav">
         {isLoggedIn ? (
           <div >
             {/* The navbar will show these links after you log in */}
-            <Link to="/home">Home</Link>
-            <Button type="button" onClick={logoutAndRedirectHome}>
+            
+            <Button type="button" color='secondary' sx={{textDecoration: "underline", fontWeight: "bold"}} onClick={()=> navigate('/home')}>Home</Button>
+            <Button type="button" color='secondary' sx={{textDecoration: "underline", fontWeight: "bold"}} onClick={logoutAndRedirectHome}>
               Logout
             </Button>
           </div>

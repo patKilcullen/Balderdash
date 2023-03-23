@@ -33,15 +33,15 @@ require('dotenv').config();
 //     }
 //   );
   router.get('/:word', async (req,res,next)=>{
-    console.log("HIT THE GETMER2 ROUTE")
+    // console.log("HIT THE GETMER2 ROUTE")
     try{
-        console.log("PROCESS ENV: ", process.env.dictionaryKey)
+        // console.log("PROCESS ENV: ", process.env.dictionaryKey)
     const  {data}  = await axios.get(`https://www.dictionaryapi.com/api/v3/references/collegiate/json/${req.params.word}?key=${process.env.dictionaryKey}`);
-    console.log("DATA IN MERI ROUTE: ", data)
+    // console.log("DATA IN MERI ROUTE: ", data)
     const turd = [...data]
-    console.log("DATA destructured: ", turd.shortdef)
+    // console.log("DATA destructured: ", turd.shortdef)
     }catch(error){
-        console.log("EROR IN Get MERi DEFINITIOM")
+        // console.log("EROR IN Get MERi DEFINITIOM")
         next(error)
     }
   })
