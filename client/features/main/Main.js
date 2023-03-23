@@ -217,16 +217,18 @@ let scoreArray = []
         Score: {score}/{round}
       </h1>
       <h1>{reply}</h1>
-      <Button onClick={() => handleGetWord()}  sx={{ fontSize: 30 }}>Get Word</Button>
+      <Button  className={!wordX || !wordX.length  ? "pulse": null} 
+      
+      onClick={() => handleGetWord()}  sx={{ fontSize: 30 }}>Get Word</Button>
       <h2>{wordX ? wordX : ""}</h2>
-     {wordX && wordX.length ? <Button onClick={() => handleGetDefs()}>Get Definition</Button> : null}
+     {wordX && wordX.length ? <Button className={!defDisplayed.length   ? "pulse": null}  onClick={() => handleGetDefs()} sx={{ fontSize: 30 }}>Get Definition</Button> : null}
 
       {/* <h3>{typeof definition === "string" ? definition : " "}</h3>
     { typeof definition === "string" ?  <Button onClick={() => play()}>Play</Button> : null} */}
 
     <h3>{typeof defDisplayed === "string" ? defDisplayed : " "}</h3>
     {/* { typeof defDisplayed === "string" ?  <Button onClick={() => play()}>Play</Button> : null} */}
-    { defDisplayed.length ?  <Button onClick={() => play()}>Play</Button> : null}
+    { defDisplayed.length ?  <Button  className="pulse" onClick={() => play()}sx={{ fontSize: 30 }}>Play</Button> : null}
       <div></div>
       <div id="definitions">
         {dater && dater.length
