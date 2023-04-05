@@ -56,6 +56,51 @@ form div {
   justify-content: space-around;
   
 }
+/* .playerName {
+  display: flex;
+align-items: center;
+gap: 5px;
+}
+.playerScore {
+  display: flex;
+align-items: center;
+gap: 5px;
+} */
+
+
+
+
+.replyAnimate {
+  align-self: center;
+  font-size: 240px;
+
+  animation-name: grow-spin-disappear;
+  animation-duration: 10s;
+  z-index: 1;
+  /* animation-timing-function: ease-in-out; */
+}
+.reply {
+  display: none;
+}
+
+@keyframes grow-spin-disappear {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(5) rotate(360deg);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+
+
+
 
 
 .buttons {

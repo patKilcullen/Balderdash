@@ -20,7 +20,6 @@ import { selectMe } from "../auth/authSlice";
 import socket from "socket.io-client";
 
 // Material UI
-
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -33,9 +32,21 @@ const Main = () => {
   const word = useSelector(selectWord);
   const me = useSelector(selectMe);
   const username = me.username;
+
+
+  useEffect(()=>{
+    const round = localStorage.getItem(`round`)
+    round ? null :  localStorage.setItem(`round`, 0);
+setRound(round)
+
+  },[round])
+
   useEffect(() => {
-    localStorage.setItem(`${username}`, 0);
-  }, []);
+    const score = localStorage.getItem(`${username}`)
+  score ? null :  localStorage.setItem(`${username}`, 0);
+  // score ? setScore(score) : setScore(0)
+  setScore(score)
+  }, [score]);
 
   // SOCKET
   // socket.emit('word', word)
@@ -51,9 +62,10 @@ const Main = () => {
   const [score, setScore] = useState(0);
   const [round, setRound] = useState(0);
   const [reply, setReply] = useState("");
+  
 
   const [wordX, setWordX] = useState([]);
-
+console.log(`${username} WORD X: ${wordX}`)
   const handleGetDefs = () => {
     dispatch(getDefinition(word[0]))
       .then(() => {
@@ -75,7 +87,7 @@ const Main = () => {
     }
   };
 
-  useEffect(() => {}, [handleGetFakeDefinitions]);
+  // useEffect(() => {}, [handleGetFakeDefinitions]);
 
   const handleGetWord = () => {
     dispatch(getWord()).then(() => {
@@ -123,26 +135,41 @@ const Main = () => {
   };
 
   const handleChooseWord = (def) => {
+     const scoreX = localStorage.getItem(`${username}`);
+     const roundX = localStorage.getItem(`round`);
     allDefs = [];
     setWordX([]);
     setDefArray([]);
     setDater([]);
     setDefDisplayed("");
-    setRound(round + 1);
+    localStorage.setItem(`round`, Number(roundX) + 1)
+    const newRound = localStorage.getItem(`round`);
     setReply("CORRECT!");
     def === definitionX
-      ? setScore(score + 1)
+    ? localStorage.setItem(`${username}`, Number(scoreX) + 1)
       : setReply(`Wrongo! The definition of ${wordX} is "${definitionX}"`);
+
+      const newScore = localStorage.getItem(`${username}`);
+      setScore(newScore)
+      setRound(newRound)
+
+   
   };
+
+
+
+
 
   // SOCKET
   // const clientSocket = socket(window.location.origin);
   const clientSocket = socket.connect("http://localhost:8080");
 
-  useEffect(() => {
-    const scoreX = localStorage.getItem(`${username}`);
-    localStorage.setItem(`${username}`, Number(scoreX) + 1);
-  }, [score]);
+
+  
+  // useEffect(() => {
+  //   const scoreX = localStorage.getItem(`${username}`);
+  //   localStorage.setItem(`${username}`, Number(scoreX) + 1);
+  // }, [score]);
 
   useEffect(() => {
     clientSocket.emit("send_score", { score: score, username: username });
@@ -200,18 +227,17 @@ const Main = () => {
           color="secondary"
           sx={{ fontSize: 30 }}
         >
-          Player: {username}
+          Player:<Typography sx={{ fontSize: 50, fontWeight: "bold" }}> {username}</Typography>
         </Typography>
-        <Typography
+        <Card
           className="playerScore"
           color="secondary"
-          sx={{ fontSize: 30 }}
         >
-          Score: {score}/{round}
-        </Typography>
+         <Typography sx={{ fontSize: 30, textDecoration: "underline" }}> Score </Typography><Typography sx={{ fontSize: 50, fontWeight: "bold" }}>{score}/{round}</Typography>
+        </Card>
       </Card>
 
-      <Typography>{reply}</Typography>
+      <Typography >{reply}</Typography>
 
       <Card className="buttons">
         <Button
@@ -224,7 +250,7 @@ const Main = () => {
             Get Word
           </Typography>
         </Button>
-        <Typography color={"secondary"} sx={{ fontSize: 30, fontWeight: "bold" }}>{wordX ? `word: ${wordX}` : ""}</Typography>
+        <Typography color={"secondary"} sx={{ fontSize: 30, fontWeight: "bold" }}>{wordX && wordX.length ? `word: ${wordX}` : ""}</Typography>
         <h2>{wordX ? wordX : ""}</h2>
         {wordX && wordX.length ? (
           <Button
