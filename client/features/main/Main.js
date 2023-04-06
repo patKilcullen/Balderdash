@@ -35,6 +35,13 @@ const Main = () => {
 
   const [tempWord, setTempWord] = useState("")
 
+
+  const [displayDef, setDisplayDef] = useState(false)
+
+useEffect(()=>{
+console.log("DisplayDEFFFFF: ", displayDef)
+}, [displayDef])
+
   useEffect(() => {
     const round = localStorage.getItem(`round`);
     round ? null : localStorage.setItem(`round`, 0);
@@ -68,6 +75,8 @@ const Main = () => {
 
   const [wordX, setWordX] = useState([]);
   console.log(`${username} WORD X: ${wordX}`);
+
+
   const handleGetDefs = () => {
     dispatch(getDefinition(word[0]))
       .then(() => {
@@ -94,6 +103,7 @@ const Main = () => {
   const handleGetWord = () => {
     dispatch(getWord()).then(() => {
       handleGetFakeWords();
+      setDisplayDef(true)
     });
   };
 
@@ -189,7 +199,9 @@ const Main = () => {
     clientSocket.emit("send_word", word);
   }, [word]);
 
+  
   useEffect(() => {
+    console.log("DEFFERNIXON: ", definition)
     clientSocket.emit("send_definition", definition);
   }, [definition]);
 
@@ -227,6 +239,7 @@ const Main = () => {
       }
     });
   }, [clientSocket]);
+
 
   return (
     <Card className="main">
@@ -320,7 +333,10 @@ const Main = () => {
           </Card>
         </div>
 
-        {wordX && wordX.length ? (
+<Typography>{displayDef ? "HOLE" : ""}</Typography>
+
+
+        {wordX && wordX.length && displayDef ? (
           <Button
             className={!defDisplayed.length ? "pulse" : null}
             onClick={() => handleGetDefs()}
