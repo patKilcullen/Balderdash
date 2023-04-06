@@ -33,19 +33,19 @@ const Main = () => {
   const me = useSelector(selectMe);
   const username = me.username;
 
-
-  useEffect(()=>{
-    const round = localStorage.getItem(`round`)
-    round ? null :  localStorage.setItem(`round`, 0);
-setRound(round)
-
-  },[round])
+  const [tempWord, setTempWord] = useState("")
 
   useEffect(() => {
-    const score = localStorage.getItem(`${username}`)
-  score ? null :  localStorage.setItem(`${username}`, 0);
-  // score ? setScore(score) : setScore(0)
-  setScore(score)
+    const round = localStorage.getItem(`round`);
+    round ? null : localStorage.setItem(`round`, 0);
+    setRound(round);
+  }, [round]);
+
+  useEffect(() => {
+    const score = localStorage.getItem(`${username}`);
+    score ? null : localStorage.setItem(`${username}`, 0);
+    // score ? setScore(score) : setScore(0)
+    setScore(score);
   }, [score]);
 
   // SOCKET
@@ -62,10 +62,12 @@ setRound(round)
   const [score, setScore] = useState(0);
   const [round, setRound] = useState(0);
   const [reply, setReply] = useState("");
-  const [replyAnimation, setReplyAnimation] = useState(false)
+  const [replyAnimation, setReplyAnimation] = useState(false);
+  const [replyDef, setReplyDef] = useState("");
+  const [replyAnimationDef, setReplyAnimationDef] = useState(false);
 
   const [wordX, setWordX] = useState([]);
-console.log(`${username} WORD X: ${wordX}`)
+  console.log(`${username} WORD X: ${wordX}`);
   const handleGetDefs = () => {
     dispatch(getDefinition(word[0]))
       .then(() => {
@@ -135,41 +137,45 @@ console.log(`${username} WORD X: ${wordX}`)
   };
 
   const handleChooseWord = (def) => {
-     const scoreX = localStorage.getItem(`${username}`);
-     const roundX = localStorage.getItem(`round`);
+    const scoreX = localStorage.getItem(`${username}`);
+    const roundX = localStorage.getItem(`round`);
+    setTempWord(word)
     allDefs = [];
     setWordX([]);
     setDefArray([]);
     setDater([]);
     setDefDisplayed("");
-    localStorage.setItem(`round`, Number(roundX) + 1)
+    localStorage.setItem(`round`, Number(roundX) + 1);
     const newRound = localStorage.getItem(`round`);
     setReply("CORRECT!");
     def === definitionX
-    ? localStorage.setItem(`${username}`, Number(scoreX) + 1)
-      : setReply(`Wrongo! The definition of ${wordX} is "${definitionX}"`);
+      ? localStorage.setItem(`${username}`, Number(scoreX) + 1)
+      : setReply(`Wrong!`);
 
-      const newScore = localStorage.getItem(`${username}`);
-      setScore(newScore)
-      setRound(newRound)
+    const newScore = localStorage.getItem(`${username}`);
+    setScore(newScore);
+    setRound(newRound);
 
-      setReplyAnimation(true);
+    setReplyAnimation(true);
     setTimeout(() => {
       setReplyAnimation(false);
-    }, 10000);
+      setReplyAnimationDef(true);
+      setTimeout(() => {
+        setReplyAnimationDef(false);
+      }, 5000)
 
+    }, 5000)
+
+    // setReplyAnimationDef(true);
+    // setTimeout(() => {
+    //   setReplyAnimationDef(false);
+    // }, 10000)
   };
-
-
-
-
 
   // SOCKET
   // const clientSocket = socket(window.location.origin);
   const clientSocket = socket.connect("http://localhost:8080");
 
-
-  
   // useEffect(() => {
   //   const scoreX = localStorage.getItem(`${username}`);
   //   localStorage.setItem(`${username}`, Number(scoreX) + 1);
@@ -226,22 +232,56 @@ console.log(`${username} WORD X: ${wordX}`)
     <Card className="main">
       {/* <Typography >Let's BALDERDASH!!!</Typography> */}
       <Card className="playerInfo">
-        <Typography
+        {/* <Typography
           className="playerName"
           color="secondary"
-          sx={{ fontSize: 30 }}
+          sx={{ fontSize: 30, textDecoration: "underline" }}
         >
-          Player:<Typography sx={{ fontSize: 50, fontWeight: "bold" }}> {username}</Typography>
-        </Typography>
-        <Card
-          className="playerScore"
-          color="secondary"
-        >
-         <Typography sx={{ fontSize: 30, textDecoration: "underline" }}> Score </Typography><Typography sx={{ fontSize: 50, fontWeight: "bold" }}>{score}/{round}</Typography>
+          Player:
+          <Typography
+            sx={{ fontSize: 50, fontWeight: "bold", textDecoration: "none" }}
+          >
+            {" "}
+            
+          </Typography>
+        </Typography> */}
+
+
+        <Card className="playerScore" color="secondary">
+          <Typography sx={{ fontSize: 30, textDecoration: "underline" }} color="secondary">
+            {" "}
+            Player:{" "}
+          </Typography>
+          <Typography sx={{ fontSize: 50, fontWeight: "bold" }} color="secondary">
+          {username}
+          </Typography>
+        </Card>
+
+        <Card className="playerScore" color="secondary">
+          <Typography sx={{ fontSize: 30, textDecoration: "underline" }} color="secondary">
+            {" "}
+            Score{" "}
+          </Typography>
+          <Typography sx={{ fontSize: 50, fontWeight: "bold" }} color="secondary">
+            {score}/{round}
+          </Typography>
         </Card>
       </Card>
 
-      <Typography className={replyAnimation ? 'replyAnimate' : 'reply'} color="secondary">{reply}</Typography>
+      <Typography
+        className={replyAnimation ? "replyAnimate" : "reply"}
+        color="secondary"
+      >
+        {reply}
+      </Typography>
+
+      <Typography
+        className={replyAnimationDef ? "replyAnimateDef" : "replyDef"}
+        color="secondary"
+      >
+        {`The definition of ${tempWord} is "${definitionX}"`}
+      </Typography>
+
 
       <Card className="buttons">
         <Button
@@ -254,8 +294,32 @@ console.log(`${username} WORD X: ${wordX}`)
             Get Word
           </Typography>
         </Button>
-        <Typography color={"secondary"} sx={{ fontSize: 30, fontWeight: "bold" }}>{wordX && wordX.length ? `word: ${wordX}` : ""}</Typography>
-        <h2>{wordX ? wordX : ""}</h2>
+        {/* <Typography color={"secondary"} sx={{ fontSize: 30, fontWeight: "bold" }}>{wordX && wordX.length ? `word: ${wordX}` : ""}</Typography> */}
+        <div className="wordBox">
+          <Typography
+            color={"secondary"}
+            sx={{ fontSize: 30, fontWeight: "bold" }}
+          >
+            {wordX && wordX.length ? `word: ` : ""}
+          </Typography>
+          <Card id="word" color={"primary"}>
+          {wordX && wordX.length ? <Typography
+              color={"secondary"}
+              sx={{
+              height: "20vh",
+                fontSize: 75,
+                fontWeight: "bold",
+                // border: "2px solid green",
+                // backgroundColor: "secondary.main",
+                
+              }}
+            >
+               {wordX}
+            </Typography>
+            : ""}
+          </Card>
+        </div>
+
         {wordX && wordX.length ? (
           <Button
             className={!defDisplayed.length ? "pulse" : null}

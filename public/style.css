@@ -67,6 +67,15 @@ align-items: center;
 gap: 5px;
 } */
 
+.wordBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px
+}
+#word {
+
+}
 
 
 
@@ -75,11 +84,23 @@ gap: 5px;
   font-size: 240px;
 
   animation-name: grow-spin-disappear;
-  animation-duration: 10s;
+  animation-duration: 5s;
   z-index: 1;
   /* animation-timing-function: ease-in-out; */
 }
 .reply {
+  display: none;
+}
+.replyAnimateDef {
+  align-self: center;
+  font-size: 350px;
+
+  /* animation-name: grow-spin-disappear;
+  animation-duration: 10s;
+  z-index: 1; */
+  /* animation-timing-function: ease-in-out; */
+}
+.replyDef {
   display: none;
 }
 
@@ -90,7 +111,8 @@ gap: 5px;
   }
   50% {
     transform: scale(5) rotate(360deg);
-    opacity: 0.5;
+    /* opacity: 0.5; */
+    opacity: 1;
   }
   100% {
     transform: scale(0) rotate(720deg);
