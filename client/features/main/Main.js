@@ -62,7 +62,7 @@ setRound(round)
   const [score, setScore] = useState(0);
   const [round, setRound] = useState(0);
   const [reply, setReply] = useState("");
-  
+  const [replyAnimation, setReplyAnimation] = useState(false)
 
   const [wordX, setWordX] = useState([]);
 console.log(`${username} WORD X: ${wordX}`)
@@ -153,7 +153,11 @@ console.log(`${username} WORD X: ${wordX}`)
       setScore(newScore)
       setRound(newRound)
 
-   
+      setReplyAnimation(true);
+    setTimeout(() => {
+      setReplyAnimation(false);
+    }, 10000);
+
   };
 
 
@@ -237,7 +241,7 @@ console.log(`${username} WORD X: ${wordX}`)
         </Card>
       </Card>
 
-      <Typography >{reply}</Typography>
+      <Typography className={replyAnimation ? 'replyAnimate' : 'reply'} color="secondary">{reply}</Typography>
 
       <Card className="buttons">
         <Button
