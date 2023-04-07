@@ -35,12 +35,14 @@ const Main = () => {
 
   const [tempWord, setTempWord] = useState("")
 
+  // useEffect(()=>{
+  //   console.log("TERMP WERDDDDD: ", tempWord)
+  //   }, [tempWord])
+
 
   const [displayDef, setDisplayDef] = useState(false)
 
-useEffect(()=>{
-console.log("DisplayDEFFFFF: ", displayDef)
-}, [displayDef])
+
 
   useEffect(() => {
     const round = localStorage.getItem(`round`);
@@ -103,6 +105,7 @@ console.log("DisplayDEFFFFF: ", displayDef)
   const handleGetWord = () => {
     dispatch(getWord()).then(() => {
       handleGetFakeWords();
+      // setTempWord(word)
       setDisplayDef(true)
     });
   };
@@ -146,10 +149,15 @@ console.log("DisplayDEFFFFF: ", displayDef)
     dispatch(clearFakeDefs());
   };
 
+  const [thisWord, setThisWord] = useState("")
   const handleChooseWord = (def) => {
     const scoreX = localStorage.getItem(`${username}`);
     const roundX = localStorage.getItem(`round`);
-    setTempWord(word)
+    console.log("HIIIII: ", wordX)
+    setTempWord(wordX)
+    // NECESSARY??????
+    // console.log("TEMPEMPME HERE: ", word)
+    // setTempWord(word)
     allDefs = [];
     setWordX([]);
     setDefArray([]);
@@ -227,7 +235,9 @@ console.log("DisplayDEFFFFF: ", displayDef)
     // });
 
     clientSocket.on("receive_word", (data) => {
+
       setWordX(data[0]);
+      //  setTempWord(data[0])
     });
     clientSocket.on("receive_definition", (data) => {
       setDefinitionX(data);
@@ -333,7 +343,6 @@ console.log("DisplayDEFFFFF: ", displayDef)
           </Card>
         </div>
 
-<Typography>{displayDef ? "HOLE" : ""}</Typography>
 
 
         {wordX && wordX.length && displayDef ? (
