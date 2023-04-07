@@ -252,9 +252,9 @@ const Main = () => {
 
 
   return (
-    <Card className="main">
+    <Card className="main " sx={{boxShadow: "none"}}>
       {/* <Typography >Let's BALDERDASH!!!</Typography> */}
-      <Card className="playerInfo">
+      <Card className="playerInfo" sx={{boxShadow: "none"}}>
         {/* <Typography
           className="playerName"
           color="secondary"
@@ -270,7 +270,7 @@ const Main = () => {
         </Typography> */}
 
 
-        <Card className="playerScore" color="secondary">
+        <Card className="playerScore" color="secondary" sx={{boxShadow: "none"}}>
           <Typography sx={{ fontSize: 30, textDecoration: "underline" }} color="secondary">
             {" "}
             Player:{" "}
@@ -280,7 +280,7 @@ const Main = () => {
           </Typography>
         </Card>
 
-        <Card className="playerScore" color="secondary">
+        <Card className="playerScore" color="secondary"sx={{boxShadow: "none"}}>
           <Typography sx={{ fontSize: 30, textDecoration: "underline" }} color="secondary">
             {" "}
             Score{" "}
@@ -294,19 +294,23 @@ const Main = () => {
       <Typography
         className={replyAnimation ? "replyAnimate" : "reply"}
         color="secondary"
+        sx={{boxShadow: "none"}}
       >
         {reply}
       </Typography>
 
+     
+
       <Typography
         className={replyAnimationDef ? "replyAnimateDef" : "replyDef"}
         color="secondary"
+        sx={{fontSize: 40, boxShadow: "none"}}
       >
         {`The definition of ${tempWord} is "${definitionX}"`}
       </Typography>
 
 
-      <Card className="buttons">
+      <Card className="buttons " sx={{boxShadow: "none"}}>
         <Button
           className={!wordX || !wordX.length ? "pulse" : null}
           onClick={() => handleGetWord()}

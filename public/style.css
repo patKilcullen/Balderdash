@@ -82,7 +82,7 @@ gap: 5px;
 .replyAnimate {
   align-self: center;
   font-size: 240px;
-
+border: none;
   animation-name: grow-spin-disappear;
   animation-duration: 5s;
   z-index: 1;
@@ -93,7 +93,9 @@ gap: 5px;
 }
 .replyAnimateDef {
   align-self: center;
-  font-size: 350px;
+  max-width: 75vw;
+  overflow: auto;
+
 
   /* animation-name: grow-spin-disappear;
   animation-duration: 10s;
