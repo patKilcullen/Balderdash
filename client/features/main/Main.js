@@ -34,14 +34,17 @@ const Main = () => {
   const username = me.username;
 
   const [tempWord, setTempWord] = useState("")
-
-  // useEffect(()=>{
-  //   console.log("TERMP WERDDDDD: ", tempWord)
-  //   }, [tempWord])
-
-
   const [displayDef, setDisplayDef] = useState(false)
-
+  const [defDisplayed, setDefDisplayed] = useState("");
+  const [defArray, setDefArray] = useState([]);
+  const [score, setScore] = useState(0);
+  const [round, setRound] = useState(0);
+  const [reply, setReply] = useState("");
+  const [wordX, setWordX] = useState([]);
+  const [replyAnimation, setReplyAnimation] = useState(false);
+  const [replyAnimationDef, setReplyAnimationDef] = useState(false);
+  const [dater, setDater] = useState([]);
+  const [definitionX, setDefinitionX] = useState("");
 
 
   useEffect(() => {
@@ -65,18 +68,8 @@ const Main = () => {
     setDefDisplayed(definition);
   }, [definition]);
 
-  const [defDisplayed, setDefDisplayed] = useState("");
-
-  const [defArray, setDefArray] = useState([]);
-  const [score, setScore] = useState(0);
-  const [round, setRound] = useState(0);
-  const [reply, setReply] = useState("");
-  const [replyAnimation, setReplyAnimation] = useState(false);
-  const [replyDef, setReplyDef] = useState("");
-  const [replyAnimationDef, setReplyAnimationDef] = useState(false);
-
-  const [wordX, setWordX] = useState([]);
-  console.log(`${username} WORD X: ${wordX}`);
+ 
+  
 
 
   const handleGetDefs = () => {
@@ -100,7 +93,7 @@ const Main = () => {
     }
   };
 
-  // useEffect(() => {}, [handleGetFakeDefinitions]);
+
 
   const handleGetWord = () => {
     dispatch(getWord()).then(() => {
@@ -112,8 +105,6 @@ const Main = () => {
 
   const handleGetFakeWords = () => {
     dispatch(clearFakeWords());
-    // dispatch(clearFakeDefs())
-
     allDefs = [];
     let count = 0;
     while (count < 5) {
@@ -149,15 +140,12 @@ const Main = () => {
     dispatch(clearFakeDefs());
   };
 
-  const [thisWord, setThisWord] = useState("")
+
   const handleChooseWord = (def) => {
     const scoreX = localStorage.getItem(`${username}`);
     const roundX = localStorage.getItem(`round`);
     console.log("HIIIII: ", wordX)
     setTempWord(wordX)
-    // NECESSARY??????
-    // console.log("TEMPEMPME HERE: ", word)
-    // setTempWord(word)
     allDefs = [];
     setWordX([]);
     setDefArray([]);
@@ -169,7 +157,6 @@ const Main = () => {
     def === definitionX
       ? localStorage.setItem(`${username}`, Number(scoreX) + 1)
       : setReply(`Wrong!`);
-
     const newScore = localStorage.getItem(`${username}`);
     setScore(newScore);
     setRound(newRound);
@@ -184,20 +171,12 @@ const Main = () => {
 
     }, 5000)
 
-    // setReplyAnimationDef(true);
-    // setTimeout(() => {
-    //   setReplyAnimationDef(false);
-    // }, 10000)
   };
 
   // SOCKET
   // const clientSocket = socket(window.location.origin);
   const clientSocket = socket.connect("http://localhost:8080");
 
-  // useEffect(() => {
-  //   const scoreX = localStorage.getItem(`${username}`);
-  //   localStorage.setItem(`${username}`, Number(scoreX) + 1);
-  // }, [score]);
 
   useEffect(() => {
     clientSocket.emit("send_score", { score: score, username: username });
@@ -207,9 +186,8 @@ const Main = () => {
     clientSocket.emit("send_word", word);
   }, [word]);
 
-  
+ 
   useEffect(() => {
-    console.log("DEFFERNIXON: ", definition)
     clientSocket.emit("send_definition", definition);
   }, [definition]);
 
@@ -217,8 +195,7 @@ const Main = () => {
     clientSocket.emit("send_defArray", defArray);
   }, [defArray]);
 
-  const [dater, setDater] = useState([]);
-  const [definitionX, setDefinitionX] = useState("");
+  
 
   useEffect(() => {
     clientSocket.on("receive_score", (data) => {
@@ -252,7 +229,7 @@ const Main = () => {
 
 
   return (
-    <Card className="main " sx={{boxShadow: "none"}}>
+    <Card className="main " sx={{boxShadow: "none",overflow: "visible" }}>
       {/* <Typography >Let's BALDERDASH!!!</Typography> */}
       <Card className="playerInfo" sx={{boxShadow: "none"}}>
         {/* <Typography
@@ -294,7 +271,7 @@ const Main = () => {
       <Typography
         className={replyAnimation ? "replyAnimate" : "reply"}
         color="secondary"
-        sx={{boxShadow: "none"}}
+        sx={{boxShadow: "none", overflow: "visible"}}
       >
         {reply}
       </Typography>
