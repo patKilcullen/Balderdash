@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Main from "../main/Main";
 import { Link } from "react-router-dom";
 
+import AllGames from "../games/AllGames";
 /**
  * COMPONENT
  */
@@ -14,6 +15,7 @@ const Home = () => {
       <h3>Welcome, {username}</h3>
 
       <Link to={"/main"}>Start a new game</Link>
+<AllGames></AllGames>
       {/* <Main /> */}
     </div>
   );

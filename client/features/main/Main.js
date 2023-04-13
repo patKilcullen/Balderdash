@@ -47,6 +47,10 @@ const Main = () => {
   const [definitionX, setDefinitionX] = useState("");
 
 
+
+
+
+
   useEffect(() => {
     const round = localStorage.getItem(`round`);
     round ? null : localStorage.setItem(`round`, 0);
@@ -205,11 +209,26 @@ const Main = () => {
 
   let scoreArray = [];
 
-  useEffect(() => {
-    // clientSocket.on("receive_score", (data) => {
 
-    //   scoreArray.push(data)
-    // });
+  // USER ARRAY
+// 
+const userArray = []
+let newUserArray = []
+
+useEffect(()=>{
+console.log("usrARRAY: ", userArray)
+
+}, [userArray])
+
+
+  useEffect(() => {
+    clientSocket.on("receive_score", (data) => {
+
+      userArray.push([data])
+      // userArray.push({username: data.username, score: data.score})
+
+
+    });
 
     clientSocket.on("receive_word", (data) => {
 
@@ -286,6 +305,17 @@ const Main = () => {
         {`The definition of ${tempWord} is "${definitionX}"`}
       </Typography>
 
+      
+        <Typography>Scoresss</Typography>
+        {userArray[0] ? (userArray[0].map((user)=> (
+          <div>
+ <div>{user}</div>
+ </div>
+        )
+        )
+        ): null}
+     
+
 
       <Card className="buttons " sx={{boxShadow: "none"}}>
         <Button
@@ -313,9 +343,7 @@ const Main = () => {
               height: "20vh",
                 fontSize: 75,
                 fontWeight: "bold",
-                // border: "2px solid green",
-                // backgroundColor: "secondary.main",
-                
+  
               }}
             >
                {wordX}
@@ -373,14 +401,7 @@ const Main = () => {
               })
             : ""}
         </div>
-        {scoreArray.map((score) => {
-          return (
-            <div>
-              <h1>User: {score.username}</h1>
-              <h1>Score: {score.score}</h1>
-            </div>
-          );
-        })}
+    
       </Card>
     </Card>
   );
