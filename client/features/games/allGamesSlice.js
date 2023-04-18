@@ -19,10 +19,10 @@ export const fetchAllGames = createAsyncThunk(
 // CREATE A GAME
   export const createGame = createAsyncThunk(
     "createGame",
-    async ({name, rounds, winner, started, complete}) => {
-        console.log("HIT CREAT EGAME THUNKKKKK")
+    async ({userId, name, rounds, winner, started, complete}) => {
+        console.log("HIT CREAT EGAME THUNKKKKK", name, rounds)
       try {
-        const { data } = await axios.post("/api/games",{name, rounds, winner, started, complete});
+        const { data } = await axios.post("/api/games",{userId, name, rounds, winner, started, complete});
       
         return data;
       } catch (error) {

@@ -4,6 +4,8 @@ import { Route, Routes } from 'react-router-dom';
 import AuthForm from '../features/auth/AuthForm';
 import Home from '../features/home/Home';
 import Main from '../features/main/Main';
+import CreateGame from '../features/games/CreateGame';
+
 import { me } from './store';
 
 /**
@@ -25,6 +27,8 @@ const AppRoutes = () => {
           <Route path="/*" element={<Home />} />
           <Route to="/home" element={<Home />} />
           <Route path="/main" element={<Main />} />
+
+          <Route path="/create-game" element={<CreateGame />} />
         </Routes>
       ) : (
         <Routes>

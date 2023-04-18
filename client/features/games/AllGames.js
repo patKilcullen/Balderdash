@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { useSelector, useDispatch } from "react-redux";
+import { Link} from 'react-router-dom'
 
 
 import { fetchAllGames, selectAllGames } from './allGamesSlice'
@@ -46,12 +47,9 @@ gamesX.map((game)=> (
 : null}
 
 
-<div></div>
-<div></div>
-<div></div>
-<div></div>
-    <button>Create a NEW GAME</button>
-    <CreateGame></CreateGame>
+
+  <Link to="/create-game"> <button >Create a NEW GAME</button></Link> 
+    
 
     </div>
   )

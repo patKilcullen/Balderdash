@@ -6,9 +6,20 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
     try {
-      const users = await Score.findAll({include: [User,Score]})
-      res.json(users)
+      const scores = await Score.findAll({include: [User,Score]})
+      res.json(scores)
     } catch (err) {
       next(err)
     }
   })
+
+  router.post('/', async (req, res, next) => {
+    try {
+      const score = await Score.create(req.body)
+      res.json(score)
+    } catch (err) {
+      next(err)
+    }
+  })
+
+  
