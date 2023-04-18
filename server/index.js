@@ -31,6 +31,9 @@ const init = async () => {
       socket.on("send_defArray", (data)=>{
          socket.broadcast.emit("receive_defArray", data)
       })
+      socket.on("send_new_game", (data)=>{
+        socket.broadcast.emit("receive_new_game", data)
+     })
     });
     
 

@@ -20,6 +20,7 @@ export const fetchAllGames = createAsyncThunk(
   export const createGame = createAsyncThunk(
     "createGame",
     async ({name, rounds, winner, started, complete}) => {
+        console.log("HIT CREAT EGAME THUNKKKKK")
       try {
         const { data } = await axios.post("/api/games",{name, rounds, winner, started, complete});
       
@@ -41,7 +42,8 @@ extraReducers: (builder)=>{
         return action.payload
     }),
     builder.addCase(createGame.fulfilled, (state, action)=>{
-        state.allGames.push(action.payload)
+        console.log("AXION: ", action.payload)
+        state.push(action.payload)
     })
 }
 

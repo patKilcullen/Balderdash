@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
 
     try {
       const games = await Game.findAll({include: [User,Score]})
-      console.log("GAMES IN API: ", games)
+     
       res.json(games)
     } catch (err) {
       next(err)
@@ -17,7 +17,8 @@ router.get('/', async (req, res, next) => {
 
 
   router.post('/', async (req, res, next) => {
-  
+  console.log("HIT POST GAME")
+  console.log("REQ BODY: ", req.body)
       try {
         const game = await Game.create(req.body)
         console.log("Created game in API: ", game)
