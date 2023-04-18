@@ -6,9 +6,9 @@ const User = require('./models/User')
 const Game = require('./models/Game')
 const Score = require('./models/Score')
 
-User.hasMany(Game)
+User.belongsToMany(Game, {through: Score})
 // should be Game belong to user???
-Game.belongsTo(User)
+Game.belongsToMany(User, {through: Score})
 // Game.hasMany(User)
 
 Game.hasMany(Score)

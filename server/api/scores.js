@@ -6,7 +6,7 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
     try {
-      const scores = await Score.findAll({include: [User,Score]})
+      const scores = await Score.findAll({include: [User, Game]})
       res.json(scores)
     } catch (err) {
       next(err)

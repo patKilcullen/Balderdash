@@ -9,6 +9,10 @@ const Score = db.define("score", {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
+    accepted: {
+       type: Sequelize.BOOLEAN,
+        defaultValue: false
+    }
  
 })
 

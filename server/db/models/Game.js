@@ -22,8 +22,13 @@ const Game = db.define("game", {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false 
-
+    },
+    public: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true 
     }
+
+    // could add an ownerId depending on associations.. but the eager laoding wouldnt work
 })
 
 module.exports = Game

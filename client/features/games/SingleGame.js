@@ -20,6 +20,9 @@ dispatch(fetchSingleGame(gameId.id))
     <div>
     <div>{game.name}</div>
    {game.user ? <div>Owner: {game.user.username}</div>:null}
+   {game.users ? <div>Owner: {game.users.map((user)=>(
+    <div>{user.username}</div>
+   ))}</div>:null}
     </div>
   )
 }
