@@ -12,3 +12,4 @@ For each play to get turn, they can be a player array with eahc of their names o
 PROBLEMS: when first couple of games are created, the gmaes are listed more thatn once....
 
 LAST UPDATE: change user/game asssociaion to belongstomany through Score
+added accepted to score and public to game.  GAME could also have an owner id, but because of association eager loading wouldnt work
