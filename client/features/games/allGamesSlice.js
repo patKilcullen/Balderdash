@@ -17,6 +17,7 @@ export const fetchAllGames = createAsyncThunk(
 
 
 // CREATE A GAME
+// might make more sense in single gmae???
   export const createGame = createAsyncThunk(
     "createGame",
     async ({userId, name, rounds, winner, started, complete}) => {

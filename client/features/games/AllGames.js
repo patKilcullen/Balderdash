@@ -6,6 +6,7 @@ import { Link} from 'react-router-dom'
 import { fetchAllGames, selectAllGames } from './allGamesSlice'
 
 import CreateGame from './CreateGame';
+import SingleGame from './SingleGame';
 
 import socket from "socket.io-client";
 
@@ -41,7 +42,7 @@ clientSocket.on("receive_new_game", (data) => {
     <div>All Games</div>
 {gamesX && gamesX.length ? 
 gamesX.map((game)=> (
-    <div>{game.id} :   {game.name}</div>
+   <Link to={`/games/${game.id}`}> <div>{game.id} :   {game.name}</div></Link>
 ))
 
 : null}

@@ -6,4 +6,7 @@ Databacse woudl include a game table and player table. a game would have many pl
 
 The main page would get all the games that are either open(not started) or the has a foreigh key of the player(userss) ID. OR each game can have arandom code generated and the creator of the game give it to friends to play. Creator can alos decide if game should be publi or not if they're looking for people to play with.
 
-For each play to get turn, they can be a player array with eahc of their names or numbers, the 0 index gets to play and after their turn, their name.index gets mover to the end of the array
+For each play to get turn, they can be a player array with eahc of their names or numbers, the 0 index gets to play and after their turn, their name.index gets mover to the end of the 
+
+
+PROBLEMS: when first couple of games are created, the gmaes are listed more thatn once....
