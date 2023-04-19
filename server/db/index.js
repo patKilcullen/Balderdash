@@ -9,13 +9,12 @@ const Score = require('./models/Score')
 // Game.hasMany(User)
 // User.hasMany(Game)
 
-// User.belongsToMany(Game, {through: Score})
-// Game.belongsToMany(User, {through: Score})
-
 
 User.belongsToMany(Game, {through: Score})
-Game.belongsTo(User)
+Game.belongsTo(User, {through: Score})
 
+// User.belongsToMany(Game, {through: Score})
+// Game.belongsToMany(User, {through: Score})
 
 Game.hasMany(Score)
 Score.belongsTo(Game)
