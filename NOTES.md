@@ -9,11 +9,18 @@ The main page would get all the games that are either open(not started) or the h
 For each play to get turn, they can be a player array with eahc of their names or numbers, the 0 index gets to play and after their turn, their name.index gets mover to the end of the 
 
 
-PROBLEMS: when first couple of games are created, the gmaes are listed more thatn once....
-Refreshing loses all the GAMES IN LIST OF GAMESSSS!!!!!!!!
+PROBLEMS: when first couple of games are created, the gmaes are listed more thatn once.... sometimes...
+
+
 
 LAST UPDATE: Changed associations which required changing games api and probbaly other apis
 
+WHAT TO DO:
+get all users games=> do this in api or thunk? 
+!!!!!ASSOCAITION STILL MAY BE WRONG!!! can;t find all users through game like before(with old association commentee out)so..
+need to set it up so game have multip users and one owner
+maye be accessible through scores???
+HOWEVER>>>>> logging the user gets games!!!!!!!!!!!!!!!!! 
 
-HOW TO ACCESS ALL USERS GAMES:   would Game/User associaiton have to change
-would have to get user and include games!!!!!!!!!
+
+get public games
