@@ -19,8 +19,13 @@ dispatch(fetchSingleGame(gameId.id))
   return (
     <div>
     <div>{game.name}</div>
-   {game.user ? <div>Owner: {game.user.username}</div>:null}
-   {game.users ? <div>Owner: {game.users.map((user)=>(
+   {game.owner ? <div>Owner: {game.owner.username}</div>:null}
+   {/* {game.users ? <div>Owner: {game.users.map((user)=>(
+    <div>{user.owner.username}</div>
+   ))}</div>:null} */}
+
+
+   {game.users ? <div>Players: {game.users.map((user)=>(
     <div>{user.username}</div>
    ))}</div>:null}
     </div>

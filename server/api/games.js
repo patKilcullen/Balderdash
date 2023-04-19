@@ -49,7 +49,10 @@ router.get("/:id", async (req, res, next) => {
         },
         {
           model: User,
-      
+        },
+        {
+          model: User,
+         as: "owner",
         },
       ],
     });
