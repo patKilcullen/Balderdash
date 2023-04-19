@@ -7,8 +7,10 @@ module.exports = router
 router.get('/', async (req, res, next) => {
 
     try {
-      const games = await Game.findAll({include: [User,Score]})
-     
+      console.log("HI ON BACK ENDS")
+      const games = await Game.findAll({include: [{ model: User, as: 'owner' }]})
+      
+    
       res.json(games)
     } catch (err) {
       next(err)
@@ -23,12 +25,12 @@ router.get('/', async (req, res, next) => {
       const games = await Game.findByPk(req.params.id, {include: [{
         model: Score,
         include: [{
-          model: User,
+          model: User, 
           // attributes: ['username']
         }]
       },
       {
-        model: User,
+        model: User, as: 'owner'
         // include: [{
         //   model: User,
         //   // attributes: ['username']

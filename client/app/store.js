@@ -4,12 +4,14 @@ import authReducer from "../features/auth/authSlice";
 import mainReducer from "../features/main/mainSlice";
 import allGamesSlice from "../features/games/allGamesSlice";
 import singleGameSlice from "../features/games/singleGameSlice";
+import singleUserSlice from "../features/users/singleUserSlice";
 
 const store = configureStore({
   reducer: { auth: authReducer, 
     main: mainReducer, 
     allGames: allGamesSlice,
-  singleGame: singleGameSlice },
+  singleGame: singleGameSlice,
+singleUser: singleUserSlice },
 
 
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),

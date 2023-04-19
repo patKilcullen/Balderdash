@@ -10,6 +10,10 @@ For each play to get turn, they can be a player array with eahc of their names o
 
 
 PROBLEMS: when first couple of games are created, the gmaes are listed more thatn once....
+Refreshing loses all the GAMES IN LIST OF GAMESSSS!!!!!!!!
 
-LAST UPDATE: change user/game asssociaion to belongstomany through Score
-added accepted to score and public to game.  GAME could also have an owner id, but because of association eager loading wouldnt work
+LAST UPDATE: Changed associations which required changing games api and probbaly other apis
+
+
+HOW TO ACCESS ALL USERS GAMES:   would Game/User associaiton have to change
+would have to get user and include games!!!!!!!!!

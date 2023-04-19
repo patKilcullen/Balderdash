@@ -5,21 +5,38 @@ import { Link} from 'react-router-dom'
 
 import { fetchAllGames, selectAllGames } from './allGamesSlice'
 
+import { fetchSingleUser, selectSingleUser } from '../users/singleUserSlice';
+
 import CreateGame from './CreateGame';
 import SingleGame from './SingleGame';
 
 import socket from "socket.io-client";
 
 const AllGames = () => {
+  // userID should be props????????
+   const userId = useSelector((state) => state.auth.me.id);
+   const games = useSelector(selectAllGames)
+  // const user = useSelector((state) => state.auth)
+  // console.log("USER::::: ", user)
+
+
+
 const dispatch = useDispatch()
-const games = useSelector(selectAllGames)
+
+const user = useSelector(selectSingleUser)
+console.log("USERRR: ", user)
 
 const [gamesX, setGamesX] = useState([]) 
-
+console.log("GAMES: ", games)
+console.log("GAMESX: ", gamesX)
 
 useEffect(()=>{
 dispatch(fetchAllGames())
 
+},[])
+
+useEffect(()=>{
+  dispatch(fetchSingleUser(userId))
 },[])
 
  // SOCKET
@@ -33,7 +50,7 @@ useEffect(() => {
   }, [games]);
 
 clientSocket.on("receive_new_game", (data) => {
-    console.log("HI FROM RECEIVE NEW RAMCE", data)
+
     setGamesX(data)
     
 })
@@ -46,6 +63,7 @@ gamesX.map((game)=> (
 ))
 
 : null}
+
 
 
 
