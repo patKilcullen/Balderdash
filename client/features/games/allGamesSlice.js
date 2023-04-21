@@ -30,6 +30,9 @@ export const fetchAllGames = createAsyncThunk(
     }
   );
 
+
+
+
   //  All Users Games includind not owned
   export const fetchAllUserGames = createAsyncThunk(
     "allUserGames",
@@ -37,8 +40,7 @@ export const fetchAllGames = createAsyncThunk(
       try {
         const { data } = await axios.get("/api/games");
 
-
-        console.log("ALL GAMES IN THUNK: ", data)
+        console.log("fetchAllUserGames: ", data)
         return data;
       } catch (error) {
         console.log("ERROR IN FETCH ALL GAMES THUNK: ", error);

@@ -48,6 +48,21 @@ form div {
   display: inline-block;
 }
 
+
+
+#games {
+  display: flex;
+}
+.game-sort {
+  display: flex;
+  flex-direction: column;
+  color: red
+}
+
+
+
+
+
 #definitions {
   display: flex;
   flex-direction: column;

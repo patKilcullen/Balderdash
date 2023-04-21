@@ -16,11 +16,10 @@ PROBLEMS: when first couple of games are created, the gmaes are listed more that
 LAST UPDATE: Changed associations which required changing games api and probbaly other apis
 
 WHAT TO DO:
-get all users games=> do this in api or thunk? 
-!!!!!ASSOCAITION STILL MAY BE WRONG!!! can;t find all users through game like before(with old association commentee out)so..
-need to set it up so game have multip users and one owner
-maye be accessible through scores???
-HOWEVER>>>>> logging the user gets games!!!!!!!!!!!!!!!!! 
+get all users games=> do this in api or thunk? (can now do it through user...)
+GET all users of a game who have not been accepted(right now it's null in db, but could probably just be false and owner either turns to true or delets).  CAn either get all user on the front end with filter, or in a thunk, or in an API.... maybe api is the best?? 
+ALL GAMES line 87.... getting only accepted games to render.
+
 
 
 get public games

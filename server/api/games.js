@@ -21,7 +21,7 @@ router.get("/", async (req, res, next) => {
 // Get All Users Games
 // router.get("/", async (req, res, next) => {
 //   try {
-//     const games = await Game.findAll({
+//     const games = await Game.findAll({ where: {},
 //       include: [{ model: User, as: "owner" }],
 //     });
 

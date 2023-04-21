@@ -11,9 +11,9 @@ const Score = db.define("score", {
     },
     accepted: {
        type: Sequelize.BOOLEAN,
-        defaultValue: false
-    }
- 
+        defaultValue: null
+    },
+  
 })
 
 module.exports = Score

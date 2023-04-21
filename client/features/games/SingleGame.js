@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom'
 import { selectSingleGame,fetchSingleGame } from './singleGameSlice'
 
 const SingleGame = () => {
+  // put user ID in props????
+  const userId = useSelector((state) => state.auth.me.id);
 const gameId = useParams()
 
 const dispatch = useDispatch()
@@ -20,14 +22,19 @@ dispatch(fetchSingleGame(gameId.id))
     <div>
     <div>{game.name}</div>
    {game.owner ? <div>Owner: {game.owner.username}</div>:null}
-   {/* {game.users ? <div>Owner: {game.users.map((user)=>(
-    <div>{user.owner.username}</div>
-   ))}</div>:null} */}
-
-
    {game.users ? <div>Players: {game.users.map((user)=>(
-    <div>{user.username}</div>
+    <div>{user.username} {user.score.score}</div>
    ))}</div>:null}
+
+{game.ownerId === userId ? 
+// Should filet there scores here or in a think or on backend??
+<div>{game.users ? <div>Players Requests: {game.users.map((user)=>(
+    <div>{user.username} {user.score.score}</div>
+   ))}</div>:null}</div>
+:null}
+
+
+
     </div>
   )
 }
