@@ -13,7 +13,7 @@ PROBLEMS: when first couple of games are created, the gmaes are listed more that
 
 
 
-LAST UPDATE: Changed associations which required changing games api and probbaly other apis
+LAST UPDATE: All public games and all users games
 
 WHAT TO DO:
 get all users games=> do this in api or thunk? (can now do it through user...)
@@ -22,4 +22,4 @@ ALL GAMES line 87.... getting only accepted games to render.
 
 
 
-get public games
+ORDER:   player to create games goes first.  Whoever wins, goes next(turn is set to true)

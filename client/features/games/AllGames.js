@@ -25,9 +25,9 @@ const AllGames = () => {
   const dispatch = useDispatch();
 
   const user = useSelector(selectSingleUser);
-  const gamess = user.games;
+  // const gamess = user.games;
   console.log("USER: ", user);
-  console.log("GAMESSSXXSXS: ", gamess);
+
 
   const [gamesX, setGamesX] = useState([]);
 
@@ -60,10 +60,22 @@ const AllGames = () => {
   return (
     <div>
       <div id="games">
+        {/* <div className="game-sort">
+          <div className="game-sort">All Public Games</div>
+          {user.games && user.games.length
+            ? user.games.map((game) => (
+                <Link to={`/games/${game.id}`}>
+                  {" "}
+                  <div>{game.name}</div>
+                </Link>
+              ))
+            : null}
+        </div> */}
         <div className="game-sort">
-          <div className="game-sort">All Games</div>
+          <div className="game-sort">All Public Games</div>
           {gamesX && gamesX.length
-            ? gamesX.map((game) => (
+          
+            ? gamesX.filter((game) => game.public).map((game) => (
                 <Link to={`/games/${game.id}`}>
                   {" "}
                   <div>{game.name}</div>
@@ -71,6 +83,8 @@ const AllGames = () => {
               ))
             : null}
         </div>
+
+
         <div className="game-sort">
           <div>All Users Games</div>
           {user.games
@@ -87,8 +101,8 @@ const AllGames = () => {
 
         <div className="game-sort">
           <div>Started Games</div>
-          {gamess
-            ? gamess
+          {user.games
+            ? user.games
                 .filter((game) => game.started === false)
                 .map((game) => {
                   return (
@@ -103,8 +117,8 @@ const AllGames = () => {
 
         <div className="game-sort">
           <div>Owned Games</div>
-          {gamess
-            ? gamess
+          {user.games
+            ? user.games
                 .filter((game) => game.started === false)
                 .map((game) => {
                   return (

@@ -24,7 +24,8 @@ const CreateGame = () => {
         winner: "null",
         started: false,
         complete: false,
-        ownerId: userId
+        ownerId: userId, 
+        turn: false 
       })
     //   creates score for game owner
     ).then((res) => {
