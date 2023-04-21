@@ -13,7 +13,11 @@ const Score = db.define("score", {
        type: Sequelize.BOOLEAN,
         defaultValue: null
     },
-  
+    turn: {
+        type: Sequelize.BOOLEAN,
+         defaultValue: false
+     }
+ 
 })
 
 module.exports = Score
