@@ -30,7 +30,7 @@ const CreateGame = () => {
     //   creates score for game owner
     ).then((res) => {
       dispatch(
-        createScore({ score: 0, gameId: res.payload.id, userId: userId })
+        createScore({ score: 0, accepted: true, gameId: res.payload.id, userId: userId })
       );
     });
 

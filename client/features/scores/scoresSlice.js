@@ -19,10 +19,10 @@ export const fetchAllScores = createAsyncThunk(
 // CREATE A GAME
   export const createScore = createAsyncThunk(
     "createScore",
-    async ({score, gameId, userId}) => {
+    async ({score, accepted, gameId, userId}) => {
         
       try {
-        const { data } = await axios.post("/api/scores",{score,gameId,userId});
+        const { data } = await axios.post("/api/scores",{score, accepted, gameId,userId});
       
         return data;
       } catch (error) {

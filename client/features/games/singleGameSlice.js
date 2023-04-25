@@ -7,7 +7,7 @@ export const fetchSingleGame = createAsyncThunk(
     async (id) => {
       try {
         const { data } = await axios.get(`/api/games/${id}`);
-       console.log("DATAT IN THIUNKDDDDDDDDDDD:", data)
+  
         return data;
       } catch (error) {
         console.log("ERROR IN SINBGLE GAME THUNK: ", error);
