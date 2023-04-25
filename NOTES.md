@@ -13,7 +13,7 @@ PROBLEMS: when first couple of games are created, the gmaes are listed more that
 
 
 
-LAST UPDATE: All public games and all users games
+LAST UPDATE: Accept usr/score.... make sure its updating correctly... also, handleAccept should also reload state.... to that 
 
 WHAT TO DO:
 get all users games=> do this in api or thunk? (can now do it through user...)

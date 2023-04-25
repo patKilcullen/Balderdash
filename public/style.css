@@ -56,7 +56,7 @@ form div {
 .game-sort {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   color: red;
   gap: 5px;
   width: 100%;

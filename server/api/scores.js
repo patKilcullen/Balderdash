@@ -22,4 +22,16 @@ router.get('/', async (req, res, next) => {
     }
   })
 
+router.put('/:id', async(req,res,next)=>{
+  try {
+    const score = await Score.findOne({where: {userId: req.body.userId, gameId: req.body.gameId} })
+    console.log("SCOREdfef: ", score)
+    res.send(await score.update(req.body));
+    res.json(score)
+  } catch (err) {
+    next(err)
+  }
+
+
+})
   

@@ -100,7 +100,7 @@ const AllGames = () => {
         {/* HEREEEEEEEEEEEE */}
 
         <div className="game-sort">
-          <div>Started Games</div>
+          <div>Unstarted Games</div>
           {user.games
             ? user.games
                 .filter((game) => game.started === false)
@@ -116,10 +116,26 @@ const AllGames = () => {
         </div>
 
         <div className="game-sort">
+          <div>Started Games</div>
+          {user.games
+            ? user.games
+                .filter((game) => game.started === true)
+                .map((game) => {
+                  return (
+                    <Link to={`/games/${game.id}`}>
+                      {" "}
+                      <div>{game.name}</div>
+                    </Link>
+                  );
+                })
+            : null}
+        </div>
+
+        <div className="game-sort">
           <div>Owned Games</div>
           {user.games
             ? user.games
-                .filter((game) => game.started === false)
+                .filter((game) => game.ownerId === userId)
                 .map((game) => {
                   return (
                     <Link to={`/games/${game.id}`}>

@@ -31,6 +31,21 @@ export const fetchAllScores = createAsyncThunk(
     }
   );
 
+  // Edit Score
+  export const editScore = createAsyncThunk(
+    "editScore",
+    async (score) => {
+ console.log("SCORE: ", score)
+      try {
+        const { data } = await axios.put(`/api/scores/${score.userId}`, score);
+        console.log("DATAAAA: ", data)
+        return data;
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  );
+
 
 
 const allScoresSlice = createSlice({
@@ -42,9 +57,11 @@ extraReducers: (builder)=>{
         return action.payload
     }),
     builder.addCase(createScore.fulfilled, (state, action)=>{
-        
         state.push(action.payload)
-    })
+    }),
+    builder.addCase(editScore.fulfilled, (state, action)=>{
+      state.push(action.payload)
+  })
 }
 
 
