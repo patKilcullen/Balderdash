@@ -22,6 +22,7 @@ router.get('/', async (req, res, next) => {
     }
   })
 
+  // doesn't use params
 router.put('/:id', async(req,res,next)=>{
   try {
     const score = await Score.findOne({where: {userId: req.body.userId, gameId: req.body.gameId} })
@@ -31,7 +32,17 @@ router.put('/:id', async(req,res,next)=>{
   } catch (err) {
     next(err)
   }
-
-
 })
-  
+ 
+// DELETE SCORE API
+router.delete('/:gameId/:userId', async(req,res,next)=>{
+  try {
+
+    const score = await Score.findOne({where: {userId: req.params.userId, gameId: req.params.gameId} })
+    console.log("SCORE TO DELETEEEE: ", score)
+    res.send(await score.destroy());
+    res.json(score)
+  } catch (err) {
+    next(err)
+  }
+})

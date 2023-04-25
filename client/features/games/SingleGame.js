@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { selectSingleGame, fetchSingleGame } from "./singleGameSlice";
-import { editScore } from "../scores/scoresSlice";
+import { editScore, deleteScore } from "../scores/scoresSlice";
 
 const SingleGame = () => {
   // put user ID in props????
@@ -21,6 +21,11 @@ const handleAcceptRequest =(id)=>{
     console.log("IDDDD: ", id)
 dispatch(editScore({userId: id, gameId: game.id, accepted: true}))
 dispatch(fetchSingleGame(gameId.id))
+  }
+  const handleDeclineRequest =(id)=>{
+     console.log("DECLINE: ", id)
+dispatch(deleteScore({userId: id, gameId: game.id}))
+ dispatch(fetchSingleGame(gameId.id))
   }
 
   return (
@@ -51,7 +56,7 @@ dispatch(fetchSingleGame(gameId.id))
       <div>
         {score.user.username}
         <button onClick={()=>handleAcceptRequest(score.user.id)}>Accept</button>
-        <button>Decline</button>
+        <button onClick={()=>handleDeclineRequest(score.user.id)}>Decline</button>
       </div>
     ))}
   </div>

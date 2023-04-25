@@ -35,7 +35,7 @@ export const fetchAllScores = createAsyncThunk(
   export const editScore = createAsyncThunk(
     "editScore",
     async (score) => {
- console.log("SCORE: ", score)
+
       try {
         const { data } = await axios.put(`/api/scores/${score.userId}`, score);
         console.log("DATAAAA: ", data)
@@ -45,6 +45,22 @@ export const fetchAllScores = createAsyncThunk(
       }
     }
   );
+
+  export const deleteScore = createAsyncThunk(
+    "deleteScore",
+    async (score) => {
+      console.log("SCORE in deltel thunk: ", score)
+      try {
+         await axios.delete(`/api/scores/${score.gameId}/${score.userId}`);
+        
+        //  What to return???  should core table have its own ID?
+        return score.userId;
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  );
+
 
 
 
@@ -62,6 +78,7 @@ extraReducers: (builder)=>{
     builder.addCase(editScore.fulfilled, (state, action)=>{
       state.push(action.payload)
   })
+  
 }
 
 
