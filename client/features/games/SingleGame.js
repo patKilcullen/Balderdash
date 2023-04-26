@@ -77,7 +77,7 @@ dispatch(deleteScore({userId: id, gameId: game.id}))
 {/* PLayer Requests */}
 {game.ownerId === userId && !game.started ?<div>Player Requests</div> :null}
 
-{game.ownerId === userId && !game.started ?
+{/* {game.ownerId === userId && !game.started ?
 <div>
 {game.users ? (
   <div>
@@ -93,17 +93,14 @@ dispatch(deleteScore({userId: id, gameId: game.id}))
   </div>
 ) : null}
 </div>
+:null} */}
 
 
-
-:null}
-
-
-{/* {game.ownerId === userId && !game.started ?
+{game.ownerId === userId && !game.started ?
 <div>
 {scores ? (
   <div>
-    {game.scores.filter((score)=> !score.accepted)
+    {scores.filter((score)=> !score.accepted)
     
     .map((score) => (
       <div>
@@ -115,7 +112,7 @@ dispatch(deleteScore({userId: id, gameId: game.id}))
   </div>
 ) : null}
 </div>
-:null} */}
+:null}
 
     </div>
   );
