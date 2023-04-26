@@ -38,6 +38,7 @@ dispatch(fetchAllGameScores(gameId))
      console.log("DECLINE: ", id)
 dispatch(deleteScore({userId: id, gameId: game.id}))
  dispatch(fetchSingleGame(gameId))
+ dispatch(fetchAllGameScores(gameId))
   }
 
   return (
@@ -66,6 +67,7 @@ dispatch(deleteScore({userId: id, gameId: game.id}))
            <div> {user.user ?
             <div>
               {user.user.username} {user.score}
+              <button onClick={()=>handleDeclineRequest(user.user.id)}>Remove Player</button>
             </div>
             : null}
             </div>
