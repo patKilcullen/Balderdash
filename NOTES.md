@@ -13,12 +13,15 @@ PROBLEMS: when first couple of games are created, the gmaes are listed more that
 
 
 
-LAST UPDATE: Accept usr/score.... make sure its updating correctly... also, handleAccept should also reload state.... to that 
+LAST UPDATE: decline request deletes score from database and reloads.  It works, but what should be done with the return? Should score have its own ID? should stae have all scores associated with game, and when deteler, it filters ou
+DECLINE DOESNT ALWAYS REFRESH CORRECTLY
+
+
 
 WHAT TO DO:
 get all users games=> do this in api or thunk? (can now do it through user...)
 GET all users of a game who have not been accepted(right now it's null in db, but could probably just be false and owner either turns to true or delets).  CAn either get all user on the front end with filter, or in a thunk, or in an API.... maybe api is the best?? 
-ALL GAMES line 87.... getting only accepted games to render.
+
 
 
 

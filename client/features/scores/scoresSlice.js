@@ -1,13 +1,26 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// GET ALL GAMES
+// GET ALL SCORES.... probably won't need
 export const fetchAllScores = createAsyncThunk(
     "allScores",
     async () => {
       try {
         const { data } = await axios.get("/api/scores");
         console.log("ALL SCOREs IN THUNK: ", data)
+        return data;
+      } catch (error) {
+        console.log("ERROR IN FETCH ALL SCORES THUNK: ", error);
+      }
+    }
+  );
+
+  export const fetchAllGameScores = createAsyncThunk(
+    "allScores",
+    async (gameId) => {
+      try {
+        const { data } = await axios.get(`/api/scores/game/${gameId}`);
+        console.log("ALL GAMES SCOREs IN THUNK: ", data)
         return data;
       } catch (error) {
         console.log("ERROR IN FETCH ALL SCORES THUNK: ", error);
@@ -54,7 +67,7 @@ export const fetchAllScores = createAsyncThunk(
          await axios.delete(`/api/scores/${score.gameId}/${score.userId}`);
         
         //  What to return???  should core table have its own ID?
-        return score.userId;
+        return {gameId: score.gameId, userId: score.userId };
       } catch (err) {
         console.log(err);
       }
@@ -69,14 +82,25 @@ name: "allScores",
 initialState: [],
 reducers: {},
 extraReducers: (builder)=>{
-    builder.addCase(fetchAllScores.fulfilled, (state, action)=>{
-        return action.payload
-    }),
+    // builder.addCase(fetchAllScores.fulfilled, (state, action)=>{
+    //     return action.payload
+    // }),
+    builder.addCase(fetchAllGameScores.fulfilled, (state, action)=>{
+      return action.payload
+  }),
     builder.addCase(createScore.fulfilled, (state, action)=>{
         state.push(action.payload)
     }),
     builder.addCase(editScore.fulfilled, (state, action)=>{
       state.push(action.payload)
+  }),
+  builder.addCase(deleteScore.fulfilled, (state, action) => {
+    console.log("AX PAY: ", action.payload)
+    // state.allScores = state.allScores.filter(score =>{
+
+    //   return score !== action.payload
+    // });
+    console.log("STATE: ", state.allScores)
   })
   
 }

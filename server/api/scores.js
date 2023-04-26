@@ -12,6 +12,15 @@ router.get('/', async (req, res, next) => {
       next(err)
     }
   })
+// All Score by GAme 
+  router.get('/game/:gameId', async (req, res, next) => {
+    try {
+      const scores = await Score.findAll( {where: {gameId: req.params.gameId},include: [User, Game]})
+      res.json(scores)
+    } catch (err) {
+      next(err)
+    }
+  })
 
   router.post('/', async (req, res, next) => {
     try {
@@ -28,7 +37,7 @@ router.put('/:id', async(req,res,next)=>{
     const score = await Score.findOne({where: {userId: req.body.userId, gameId: req.body.gameId} })
     console.log("SCOREdfef: ", score)
     res.send(await score.update(req.body));
-    res.json(score)
+    // res.json(score)
   } catch (err) {
     next(err)
   }
@@ -41,7 +50,7 @@ router.delete('/:gameId/:userId', async(req,res,next)=>{
     const score = await Score.findOne({where: {userId: req.params.userId, gameId: req.params.gameId} })
     console.log("SCORE TO DELETEEEE: ", score)
     res.send(await score.destroy());
-    res.json(score)
+    // res.json(score)
   } catch (err) {
     next(err)
   }
