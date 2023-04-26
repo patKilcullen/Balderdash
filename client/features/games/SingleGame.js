@@ -46,7 +46,7 @@ dispatch(deleteScore({userId: id, gameId: game.id}))
       {game.owner ? <div>Owner: {game.owner.username}</div> : null}
 
       {/* Players and Score */}
-      {game.users ? (
+      {/* {game.users ? (
         <div>
           Players:{" "}
           {game.users.map((user) => (
@@ -55,10 +55,24 @@ dispatch(deleteScore({userId: id, gameId: game.id}))
             </div>
           ))}
         </div>
+      ) : null} */}
+
+
+      {scores  ? (
+        <div>
+          Playffers:{" "}
+          {scores.filter(score=> score.accepted)
+          .map((user) => (
+           <div> {user.user ?
+            <div>
+              {user.user.username} {user.score}
+            </div>
+            : null}
+            </div>
+          ))}
+        </div>
       ) : null}
 
-
-    
 
 {/* PLayer Requests */}
 {game.ownerId === userId && !game.started ?<div>Player Requests</div> :null}
