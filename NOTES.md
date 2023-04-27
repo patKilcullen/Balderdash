@@ -20,6 +20,7 @@ DECLINE DOESNT ALWAYS REFRESH CORRECTLY
 
 
 WHAT TO DO:
+WHEn signedu p two used create games, sometimes when one views the others SingleGame, get cannot read props of undefines username erroe occurs.. possibly solved it with username error comments in SingleGame
 WHEN PLAYER REQUESTS TO JOIN...  use socket to notify game owner
 Get a users score for game by SINGLESCORESLICE and displya that on page when not owner(or probably when owner too)
 and when not owner use it to determine if non-owner can ask to play..

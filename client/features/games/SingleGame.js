@@ -53,11 +53,13 @@ const SingleGame = () => {
 
   return (
     <div>
+      {/* USERSORE ERROR */}
       <div>{userScore && userScore.user ? <div>USER NAMEEEEEEEE{userScore.user.username}</div>: null}</div>
       <div>{game.name}</div>
       {game.owner ? <div>Owner: {game.owner.username}</div> : null}
 
 {/* User Score */}
+{/* USERSORE ERROR */}
 {userScore && userScore.user ? <div> Your Score {userScore.user.username}</div> : null}
       {/* Players and Score */}
       {scores ? (
