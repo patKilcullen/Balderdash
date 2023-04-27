@@ -7,6 +7,10 @@ import singleGameSlice from "../features/games/singleGameSlice";
 import singleUserSlice from "../features/users/singleUserSlice";
 import allScoreSlice from "../features/scores/scoresSlice"
 
+
+
+
+
 const store = configureStore({
   reducer: { auth: authReducer, 
     main: mainReducer, 

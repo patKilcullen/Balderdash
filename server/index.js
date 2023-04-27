@@ -15,6 +15,8 @@ const init = async () => {
       await db.sync()
     }
     const server = app.listen(PORT, () => console.log(`Mixing it up on port ${PORT}`))
+
+    // SOCKET
     const serverSocket = socket(server);
     serverSocket.on('connection', (socket) => {
       console.log(`Connection from client ${socket.id}`);

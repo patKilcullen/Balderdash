@@ -6,15 +6,21 @@ import axios from 'axios';
 */
 const TOKEN = 'token';
 
+
+
+
 /*
   THUNKS
 */
+// REFRESH => add username argument to thunk and use that to getItem(username)
 export const me = createAsyncThunk('auth/me', async () => {
   const token = window.localStorage.getItem(TOKEN);
+
   try {
     if (token) {
       const res = await axios.get('/auth/me', {
         headers: {
+          // REFRESH => authorization: username
           authorization: token,
         },
       });
@@ -36,8 +42,11 @@ export const authenticate = createAsyncThunk(
   async ({ username, password, method }, thunkAPI) => {
     try {
       const res = await axios.post(`/auth/${method}`, { username, password });
+      // REFRESH => window.localStorage.setItem(username, res.data.token);
       window.localStorage.setItem(TOKEN, res.data.token);
+      // REFRESH =>  thunkAPI.dispatch(me(username));
       thunkAPI.dispatch(me());
+     
     } catch (err) {
       if (err.response.data) {
         return thunkAPI.rejectWithValue(err.response.data);
@@ -45,7 +54,9 @@ export const authenticate = createAsyncThunk(
         return 'There was an issue with your request.';
       }
     }
+    
   }
+  
 );
 
 /*
@@ -59,6 +70,7 @@ export const authSlice = createSlice({
   },
   reducers: {
     logout(state, action) {
+      // REFRESH =>   how to use username instead of tokent
       window.localStorage.removeItem(TOKEN);
       state.me = {};
       state.error = null;

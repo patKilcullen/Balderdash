@@ -17,6 +17,7 @@ import {
 import { selectMe } from "../auth/authSlice";
 
 // SOCKET
+// could/should this be imported from app/socket.js??????
 import socket from "socket.io-client";
 
 // Material UI

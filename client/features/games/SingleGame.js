@@ -23,6 +23,8 @@ const SingleGame = () => {
   const dispatch = useDispatch();
   const game = useSelector(selectSingleGame);
   const scores = useSelector(selectAllScores);
+  const userScore = scores.find(score=>score.userId === userId)
+  console.log("USER SCORE: ", userScore)
 
   useEffect(() => {
     dispatch(fetchSingleGame(gameId));
@@ -51,16 +53,18 @@ const SingleGame = () => {
 
   return (
     <div>
+      <div>{userScore && userScore.user ? <div>USER NAMEEEEEEEE{userScore.user.username}</div>: null}</div>
       <div>{game.name}</div>
       {game.owner ? <div>Owner: {game.owner.username}</div> : null}
 
+{/* User Score */}
+{userScore && userScore.user ? <div> Your Score {userScore.user.username}</div> : null}
       {/* Players and Score */}
-
       {scores ? (
         <div>
           Playffers:{" "}
           {scores
-            .filter((score) => score.accepted)
+            .filter((score) => score.accepted && score.userId !== userId)
             .map((user) => (
               <div>
                 {" "}
@@ -106,8 +110,17 @@ const SingleGame = () => {
 
 
       {/* IF NOT GAME OWNER  and Game NOT STARTED: REQUEST TO JOIN*/}
-{game.ownerId !== userId && !game.started ?
+{game.ownerId !== userId && !game.started && !userScore?
+
+
+// ADD additional conditional to determine if request already sent
+// Should make singleScore for user!!!! check for that to determing if can send
+
 <button onClick={handleAskJoin} >Ask to join this game</button>
+
+
+
+
 :null}
 
     </div>

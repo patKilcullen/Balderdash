@@ -15,14 +15,19 @@ PROBLEMS: when first couple of games are created, the gmaes are listed more that
 
 LAST UPDATE: decline request deletes score from database and reloads.  It works, but what should be done with the return? Should score have its own ID? should stae have all scores associated with game, and when deteler, it filters ou
 DECLINE DOESNT ALWAYS REFRESH CORRECTLY
-
+ 
+ OPEN 2 INCOGNITO, both incognito END UP WITH SAME NAME>>>>>
 
 
 WHAT TO DO:
-get all users games=> do this in api or thunk? (can now do it through user...)
-GET all users of a game who have not been accepted(right now it's null in db, but could probably just be false and owner either turns to true or delets).  CAn either get all user on the front end with filter, or in a thunk, or in an API.... maybe api is the best?? 
-
+WHEN PLAYER REQUESTS TO JOIN...  use socket to notify game owner
+Get a users score for game by SINGLESCORESLICE and displya that on page when not owner(or probably when owner too)
+and when not owner use it to determine if non-owner can ask to play..
+Probably dont have to make new slice, just het single score... thought that might change all score slice(might have to split up initial state)OR just fitler for users scofre in component an display it that way.. wouuld that change rendering????
 
 
 
 ORDER:   player to create games goes first.  Whoever wins, goes next(turn is set to true)
+
+REFRESH => when logged in users fresh and more that one are logged in on chrom or incognito, they sometimes because signed in as other user because they TOKEN in authentication is the same.  search "REFRESH" to find where can try to fix, should be in approutes and authSlice.  can set local storage to players name, as in the "REFRESH" comments, but when fresh they get logged out.  
+Probabbly only a big deal because signing in to multi[le accounts at same time on same device, wont really be a bug otherwise, hopefully...]
