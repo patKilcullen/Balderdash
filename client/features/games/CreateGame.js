@@ -25,12 +25,14 @@ const CreateGame = () => {
         started: false,
         complete: false,
         ownerId: userId, 
-        turn: false 
+        publicX: true,
+        numPlayers: 1,
+        turn: 1 
       })
-    //   creates score for game owner
     ).then((res) => {
+      console.log("RES: ", res)
       dispatch(
-        createScore({ score: 0, accepted: true, gameId: res.payload.id, userId: userId })
+        createScore({ score: 0, accepted: true,turn: true, turnNum: 1, gameId: res.payload.id, userId: userId })
       );
     });
 

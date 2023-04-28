@@ -16,7 +16,7 @@ import { me } from './store';
 
 const AppRoutes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
-  const username = useSelector((state) => state.auth.me.username)
+ 
 
   const dispatch = useDispatch();
 

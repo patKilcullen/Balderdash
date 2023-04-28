@@ -71,11 +71,12 @@ const AllGames = () => {
               ))
             : null}
         </div> */}
+        
         <div className="game-sort">
           <div className="game-sort">All Public Games</div>
-          {gamesX && gamesX.length
+          {gamesX && gamesX.length 
           
-            ? gamesX.filter((game) => game.public).map((game) => (
+            ? gamesX.filter((game) => game.publicX).map((game) => (
                 <Link to={`/games/${game.id}`}>
                   {" "}
                   <div>{game.name}</div>

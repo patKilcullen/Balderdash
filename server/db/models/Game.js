@@ -23,10 +23,17 @@ const Game = db.define("game", {
         allowNull: false,
         defaultValue: false 
     },
-    public: {
+    publicX: {
         type: Sequelize.BOOLEAN,
         defaultValue: true 
-    }
+    },
+    numPlayers: {
+        type: Sequelize.INTEGER,
+
+    },
+    turn: {
+        type: Sequelize.INTEGER,
+    },
 
     // could add an ownerId depending on associations.. but the eager laoding wouldnt work
 })

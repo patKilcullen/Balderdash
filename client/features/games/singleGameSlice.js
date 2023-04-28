@@ -15,6 +15,35 @@ export const fetchSingleGame = createAsyncThunk(
     }
   );
 
+  // export const addGamePlayer = createAsyncThunk(
+  //   "addGamePlayer",
+  //   async (gameId) => {
+  //     try {
+  //       const { data } = await axios.put(`/api/games/${gameId}`,{
+
+  //       });
+  
+  //       return data;
+  //     } catch (error) {
+  //       console.log("ERROR IN SINBGLE GAME THUNK: ", error);
+  //     }
+  //   }
+  // );
+
+  export const editGame = createAsyncThunk(
+    "editGame",
+    async (game) => {
+
+      try {
+        const { data } = await axios.put(`/api/games/${game.id}`, game);
+        console.log("DATAAAA: ", data)
+        return data;
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  );
+
 
 // CREATE A GAME 
 // might make more sense if this is here instead of all games

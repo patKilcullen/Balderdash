@@ -18,6 +18,32 @@ router.get("/", async (req, res, next) => {
 });
 
 
+// UPDATE NUM OF PLAYERSSSSSS> return 
+// router.put("/addPlayer/:gameId", async (req, res, next) => {
+//   try {
+//     const game = await Game.findByPk(req.params.gameId);
+//     console.log(game.numPlayers)
+//     // const updatedGame = await game.update(req.body)
+
+//     // res.json(games);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+
+
+// UPDATE GAME
+router.put('/:gameId', async(req,res,next)=>{
+  try {
+    const game = await Game.findByPk(req.params.gameId)
+    
+    res.send(await game.update(req.body));
+    // res.json(score)
+  } catch (err) {
+    next(err)
+  }
+})
+
 // Get All Users Games
 // router.get("/", async (req, res, next) => {
 //   try {

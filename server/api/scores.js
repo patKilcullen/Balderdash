@@ -23,8 +23,11 @@ router.get('/', async (req, res, next) => {
   })
 
   router.post('/', async (req, res, next) => {
+    
     try {
+      console.log("HIT YOU HIT HITTTSTSTSTTD")
       const score = await Score.create(req.body)
+      console.log("SCORE: ", score)
       res.json(score)
     } catch (err) {
       next(err)

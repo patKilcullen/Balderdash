@@ -29,14 +29,15 @@ export const fetchAllScores = createAsyncThunk(
   );
 
 
-// CREATE A GAME
+// CREATE A Score
   export const createScore = createAsyncThunk(
     "createScore",
-    async ({score, accepted, gameId, userId}) => {
+    async ({score, accepted, turn,  turnNum, gameId, userId}) => {
         
       try {
-        const { data } = await axios.post("/api/scores",{score, accepted, gameId,userId});
-      
+
+        const { data } = await axios.post("/api/scores",{score, accepted, turn, turnNum, gameId, userId});
+      console.log("data: ",data)
         return data;
       } catch (error) {
         console.log("ERROR IN CREAT Score THUNK: ", error);

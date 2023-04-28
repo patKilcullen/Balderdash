@@ -48,16 +48,18 @@ export const fetchAllGames = createAsyncThunk(
     }
   );
 
+  
+
 
 
 // CREATE A GAME
 // might make more sense in single gmae???
   export const createGame = createAsyncThunk(
     "createGame",
-    async ({userId, name, rounds, winner, started, complete, ownerId, turn}) => {
+    async ({userId, name, rounds, winner, started, complete, ownerId, publicX, numPlayers, turn}) => {
         console.log("HIT CREAT EGAME THUNKKKKK", name, rounds)
       try {
-        const { data } = await axios.post("/api/games",{userId, name, rounds, winner, started, complete, ownerId, turn});
+        const { data } = await axios.post("/api/games",{userId, name, rounds, winner, started, complete, ownerId, publicX, numPlayers, turn});
       
         return data;
       } catch (error) {
