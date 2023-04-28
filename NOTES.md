@@ -10,21 +10,22 @@ For each play to get turn, they can be a player array with eahc of their names o
 
 
 PROBLEMS: when first couple of games are created, the gmaes are listed more thatn once.... sometimes...
-
-
-
-LAST UPDATE: decline request deletes score from database and reloads.  It works, but what should be done with the return? Should score have its own ID? should stae have all scores associated with game, and when deteler, it filters ou
 DECLINE DOESNT ALWAYS REFRESH CORRECTLY
  
  OPEN 2 INCOGNITO, both incognito END UP WITH SAME NAME>>>>>
 
 
+LAST UPDATE: 
+OWner can accept a playr and it ups playerNum on game and turnNum on score
+
+
+
 WHAT TO DO:
-WHEn signedu p two used create games, sometimes when one views the others SingleGame, get cannot read props of undefines username erroe occurs.. possibly solved it with username error comments in SingleGame
-WHEN PLAYER REQUESTS TO JOIN...  use socket to notify game owner
-Get a users score for game by SINGLESCORESLICE and displya that on page when not owner(or probably when owner too)
-and when not owner use it to determine if non-owner can ask to play..
-Probably dont have to make new slice, just het single score... thought that might change all score slice(might have to split up initial state)OR just fitler for users scofre in component an display it that way.. wouuld that change rendering????
+Don't let non owner see remove player from single game
+Maker sure decline player works..
+START games
+
+
 
 
 

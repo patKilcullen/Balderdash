@@ -163,11 +163,17 @@ const SingleGame = () => {
   // WHEN ACCEPT HAVE TO EDIT THE GAME AND THE SCORE>>>> coudl get response from game edit to edit score..
   const handleAcceptRequest = (id) => {
     console.log("IDDDD: ", id);
- dispatch(editGame({id: game.id, numPlayers: (game.numPlayers + 1 )}))
-    dispatch(editScore({ userId: id,turnNum: (game.numPlayers + 1), gameId: game.id, accepted: true }));
-    
-    dispatch(fetchSingleGame(gameId));
+ dispatch(editGame({id: game.id, numPlayers: (game.numPlayers + 1 )})).then((res)=>{
+console.log("RESSSSSSS", res)
+ dispatch(editScore({ userId: id,turnNum: res.payload.numPlayers, gameId: game.id, accepted: true }));
+ }).then(()=>{
+  dispatch(fetchSingleGame(gameId));
     dispatch(fetchAllGameScores(gameId));
+ })
+    // dispatch(editScore({ userId: id,turnNum: (game.numPlayers + 1), gameId: game.id, accepted: true }));
+    
+    // dispatch(fetchSingleGame(gameId));
+    // dispatch(fetchAllGameScores(gameId));
 
   };
   const handleDeclineRequest = (id) => {
@@ -211,7 +217,8 @@ const SingleGame = () => {
                 {user.user ? (
                   <div>
                     {user.user.username} {user.score}
-                    {user.user.id !== userId ? (
+                    {/* Dont let non owner */}
+                    {user.user.id !== userId  && userId === game.ownerId? (
                       <button
                         onClick={() => handleDeclineRequest(user.user.id)}
                       >
