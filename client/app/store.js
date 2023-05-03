@@ -6,6 +6,7 @@ import allGamesSlice from "../features/games/allGamesSlice";
 import singleGameSlice from "../features/games/singleGameSlice";
 import singleUserSlice from "../features/users/singleUserSlice";
 import allScoreSlice from "../features/scores/scoresSlice"
+import gamePlaySlice from "../features/gamePlay/gamePlaySlice";
 
 
 
@@ -17,7 +18,8 @@ const store = configureStore({
     allGames: allGamesSlice,
   singleGame: singleGameSlice,
 singleUser: singleUserSlice,
-allScores: allScoreSlice },
+allScores: allScoreSlice,
+gamePlay: gamePlaySlice },
 
 
 

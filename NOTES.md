@@ -26,7 +26,7 @@ Maker sure decline player works..
 START games
 
 
-
+May not need turn true.false on score because jsut see if the turnNum on Score matches turn on Game
 
 
 ORDER:   player to create games goes first.  Whoever wins, goes next(turn is set to true)

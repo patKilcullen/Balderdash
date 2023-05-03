@@ -139,6 +139,9 @@ import {
   createScore,
 } from "../scores/scoresSlice";
 
+import Main from "../main/Main";
+import GamePlay from "../gamePlay/GamePlay";
+
 const SingleGame = () => {
   // put user ID in props????
   const userId = useSelector((state) => state.auth.me.id);
@@ -148,10 +151,10 @@ const SingleGame = () => {
   const dispatch = useDispatch();
   const game = useSelector(selectSingleGame);
   const scores = useSelector(selectAllScores);
-  console.log("SCORES: ", scores)
+  
   const userScore = scores.find((score) => score.userId === userId);
 
-
+console.log("USER SCORE SINGLE GAME: ", userScore)
 
 
   useEffect(() => {
@@ -162,9 +165,9 @@ const SingleGame = () => {
 
   // WHEN ACCEPT HAVE TO EDIT THE GAME AND THE SCORE>>>> coudl get response from game edit to edit score..
   const handleAcceptRequest = (id) => {
-    console.log("IDDDD: ", id);
+
  dispatch(editGame({id: game.id, numPlayers: (game.numPlayers + 1 )})).then((res)=>{
-console.log("RESSSSSSS", res)
+
  dispatch(editScore({ userId: id,turnNum: res.payload.numPlayers, gameId: game.id, accepted: true }));
  }).then(()=>{
   dispatch(fetchSingleGame(gameId));
@@ -288,7 +291,10 @@ console.log("RESSSSSSS", res)
 
       {/* GAME PLAY */}
       { (game.started === true && game.ownerId === userId) ||(game.started === true && userScore) ?
+<>
 <div>Dis where the game would be</div>
+<GamePlay userId={userId} game={game} userScore={userScore}/>
+</>
       :null}
     </div>
   );

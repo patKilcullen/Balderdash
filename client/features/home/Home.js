@@ -14,7 +14,7 @@ const Home = () => {
     <div>
       <h3>Welcome, {username}</h3>
 
-      <Link to={"/main"}>Start a new game</Link>
+      {/* <Link to={"/main"}>Start a new game</Link> */}
 <AllGames></AllGames>
       {/* <Main /> */}
     </div>
