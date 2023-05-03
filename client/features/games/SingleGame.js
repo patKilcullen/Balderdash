@@ -176,6 +176,7 @@ console.log("RESSSSSSS", res)
     // dispatch(fetchAllGameScores(gameId));
 
   };
+  // DECLINE REQUEST TO PLAY
   const handleDeclineRequest = (id) => {
     console.log("DECLINE: ", id);
     dispatch(deleteScore({ userId: id, gameId: game.id }));
@@ -183,12 +184,19 @@ console.log("RESSSSSSS", res)
     dispatch(fetchAllGameScores(gameId));
   };
 
- 
+//  ASK TO JOIN GAME 
   const handleAskJoin = () => {
     dispatch(
       createScore({ score: 0, accepted: false, turn: false, turnNum: null, gameId: gameId, userId: userId })
     );
   };
+
+  // START GAME
+  const handleStartGame = ()=>{
+    dispatch(editGame({id: game.id, started: true})).then(()=>{
+      dispatch(fetchSingleGame(gameId))
+    })
+  }
 
   return (
     <div>
@@ -218,7 +226,7 @@ console.log("RESSSSSSS", res)
                   <div>
                     {user.user.username} {user.score}
                     {/* Dont let non owner */}
-                    {user.user.id !== userId  && userId === game.ownerId? (
+                    {user.user.id !== userId  && userId === game.ownerId && game.started === false? (
                       <button
                         onClick={() => handleDeclineRequest(user.user.id)}
                       >
@@ -272,8 +280,16 @@ console.log("RESSSSSSS", res)
         <button onClick={handleAskJoin}>Ask to join this game</button>
       ) : null}
 
-
+{/* START GAME - If game owner and more than one player*/}
+{game.ownerId === userId &&  game.numPlayers > 1 && game.started === false?
+<button onClick={handleStartGame}>Start Game</button>
+: null}
       
+
+      {/* GAME PLAY */}
+      { (game.started === true && game.ownerId === userId) ||(game.started === true && userScore) ?
+<div>Dis where the game would be</div>
+      :null}
     </div>
   );
 };
