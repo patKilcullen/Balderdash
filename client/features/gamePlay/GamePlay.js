@@ -287,7 +287,7 @@ console.log("usrARRAY: ", userArray)
 
 
 {/* GET WORD BUTTON -  only visible if it is userScore's turn*/}
-        {/* {game && userScore && game.turn === userScore.turnNum ? */}
+        {game && userScore && game.turn === userScore.turnNum ?
         <Button
           className={!wordX || !wordX.length ? "pulse" : null}
           onClick={() => handleGetWord()}
@@ -298,7 +298,7 @@ console.log("usrARRAY: ", userArray)
             Get Word
           </Typography>
         </Button>
-{/* :null} */}
+:null}
 
         {/* <Typography color={"secondary"} sx={{ fontSize: 30, fontWeight: "bold" }}>{wordX && wordX.length ? `word: ${wordX}` : ""}</Typography> */}
         <div className="wordBox">
