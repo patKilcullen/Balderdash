@@ -8,7 +8,9 @@ import { createScore } from "../scores/scoresSlice";
 const CreateGame = () => {
   const userId = useSelector((state) => state.auth.me.id);
   const [gameName, setGameName] = useState("");
-  const [rounds, setRounds] = useState(0);
+  const [rounds, setRounds] = useState(1);
+  const [error, setError] = useState("")
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -16,6 +18,7 @@ const CreateGame = () => {
   const handleCreateGame = (e) => {
     e.preventDefault();
 
+    !isNaN(rounds) && rounds > 0 ?
     dispatch(
       createGame({
         userId: userId,
@@ -34,10 +37,12 @@ const CreateGame = () => {
       dispatch(
         createScore({ score: 0, accepted: true,turn: true, turnNum: 1, gameId: res.payload.id, userId: userId })
       );
-    });
-
-    navigate("/home");
-  };
+    }).then(()=>{
+      navigate("/home")
+    })
+   : setError("Rounds must be a postive integer");
+  }
+  console.log("Error Message: ", error)
 
   return (
     <div>
@@ -58,12 +63,17 @@ const CreateGame = () => {
             type="number"
             name="rounds"
             value={rounds}
-            onChange={(e) => setRounds(e.target.value)}
+            onChange={(e) => setRounds(parseInt(e.target.value))}
           />
         </label>
 
         <input type="submit" value="Submit" />
       </form>
+      
+      {error ?
+   
+      <div>{error}</div> 
+      : null}
     </div>
   );
 };
