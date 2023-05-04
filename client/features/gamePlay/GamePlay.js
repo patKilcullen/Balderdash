@@ -51,6 +51,9 @@ const GamePlay = ({userId, game, userScore}) => {
   const [dater, setDater] = useState([]);
   const [definitionX, setDefinitionX] = useState("");
 
+//   NEW
+const [playerDef, setPlayerDef] = useState("")
+
 
 
 
@@ -92,23 +95,25 @@ const GamePlay = ({userId, game, userScore}) => {
 
 
 
-  const handleGetWord = () => {
-    dispatch(getWord()).then(() => {
-      handleGetFakeWords();
-      // setTempWord(word)
-      setDisplayDef(true)
-    });
-  };
 
-  const handleGetFakeWords = () => {
-    dispatch(clearFakeWords());
-    allDefs = [];
-    let count = 0;
-    while (count < 5) {
-      dispatch(getFakeWords());
-      count++;
-    }
-  };
+
+//   const handleGetWord = () => {
+//     dispatch(getWord()).then(() => {
+//       handleGetFakeWords();
+//       // setTempWord(word)
+//       setDisplayDef(true)
+//     });
+//   };
+
+//   const handleGetFakeWords = () => {
+//     dispatch(clearFakeWords());
+//     allDefs = [];
+//     let count = 0;
+//     while (count < 5) {
+//       dispatch(getFakeWords());
+//       count++;
+//     }
+//   };
   const fakeWords = useSelector(selectFakeWords);
 
   const handleGetFakeDefinitions = () => {
@@ -125,7 +130,7 @@ const GamePlay = ({userId, game, userScore}) => {
 
   let allDefs;
   // let finalArr = (finalArr = Object.values(defArray));
-  let finalArr = Object.values(defArray);
+ 
 
   const play = () => {
     let allDefs = Object.values(fakeDefinitions);
@@ -154,6 +159,7 @@ const GamePlay = ({userId, game, userScore}) => {
     def === definitionX
       ? localStorage.setItem(`${username}`, Number(scoreX) + 1)
       : setReply(`Wrong!`);
+
     const newScore = localStorage.getItem(`${username}`);
     setScore(newScore);
     setRound(newRound);
@@ -175,68 +181,101 @@ const GamePlay = ({userId, game, userScore}) => {
   const clientSocket = socket.connect("http://localhost:8080");
 
 
-  useEffect(() => {
-    clientSocket.emit("send_score", { score: score, username: username });
-  }, [round]);
+// NEW!!!!!
 
-  useEffect(() => {
-    clientSocket.emit("send_word", word);
+  const handleGetWord = () => {
+    dispatch(getWord()).then(() => {
+      handleGetFakeWords();
+      // setTempWord(word)
+      setDisplayDef(true)
+    });
+  };
+
+  const handleGetFakeWords = () => {
+    dispatch(clearFakeWords());
+    allDefs = [];
+    let count = 0;
+    while (count < 5) {
+      dispatch(getFakeWords());
+      count++;
+    }
+  };
+
+ useEffect(() => {
+    game && userScore && game.turn === userScore.turnNum  ?
+    clientSocket.emit(`send_word`, word)
+    : null
   }, [word]);
 
- 
-  useEffect(() => {
-    clientSocket.emit("send_definition", definition);
-  }, [definition]);
 
-  useEffect(() => {
-    clientSocket.emit("send_defArray", defArray);
-  }, [defArray]);
+
+
+//   useEffect(() => {
+//     clientSocket.emit("send_score", { score: score, username: username });
+//   }, [round]);
+
+
+
+//   useEffect(() => {
+//     clientSocket.emit("send_word", word);
+//   }, [word]);
+
+ 
+//   useEffect(() => {
+//     clientSocket.emit("send_definition", definition);
+//   }, [definition]);
+
+//   useEffect(() => {
+//     clientSocket.emit("send_defArray", defArray);
+//   }, [defArray]);
 
   
 
-  useEffect(() => {
-    clientSocket.on("receive_score", (data) => {
-      scoreArray.push(data);
-    });
-  }, [score]);
+//   useEffect(() => {
+//     clientSocket.on("receive_score", (data) => {
+//       scoreArray.push(data);
+//     });
+//   }, [score]);
 
-  let scoreArray = [];
+//   let scoreArray = [];
 
 
   // USER ARRAY
 // 
-const userArray = []
-let newUserArray = []
+// const userArray = []
+// let newUserArray = []
 
-useEffect(()=>{
-console.log("usrARRAY: ", userArray)
+// useEffect(()=>{
+// console.log("usrARRAY: ", userArray)
 
-}, [userArray])
+// }, [userArray])
 
 
+// SOCKET - Receive info from client socket
   useEffect(() => {
-    clientSocket.on("receive_score", (data) => {
+    // clientSocket.on("receive_score", (data) => {
 
-      userArray.push([data])
-      // userArray.push({username: data.username, score: data.score})
+    //   userArray.push([data])
+    //   // userArray.push({username: data.username, score: data.score})
 
 
-    });
+    // });
 
     clientSocket.on("receive_word", (data) => {
-
-      setWordX(data[0]);
-      //  setTempWord(data[0])
-    });
-    clientSocket.on("receive_definition", (data) => {
-      setDefinitionX(data);
+        userScore.gameId === game.id  ?
+      setWordX(data[0])
+     : null
     });
 
-    clientSocket.on("receive_defArray", (data) => {
-      if (data && data.length) {
-        setDater(data);
-      }
-    });
+    // clientSocket.on("receive_definition", (data) => {
+    //   setDefinitionX(data);
+    // });
+
+    // clientSocket.on("receive_defArray", (data) => {
+    //   if (data && data.length) {
+    //     setDater(data);
+    //   }
+    // });
   }, [clientSocket]);
 
 
@@ -299,6 +338,27 @@ console.log("usrARRAY: ", userArray)
           </Typography>
         </Button>
 :null}
+
+
+{/* SHOW THIS AFTER PLAYER TUNR PICS WORD!!!!!!!! */}
+{/* ENTER PLAYER DEFINTION fof non-turn players */}
+{game && userScore && game.turn !== userScore.turnNum ?
+<form onSubmit={console.log("harry")}>
+        <label>
+          Enter you fake Def here:
+          <input
+            type="textarea"
+            name="name"
+            value={playerDef}
+             onChange={(e) => setPlayerDef(e.target.value)}
+          />
+        </label>
+        
+        <input type="submit" value="Submit" />
+      </form>
+      :null}
+
+
 
         {/* <Typography color={"secondary"} sx={{ fontSize: 30, fontWeight: "bold" }}>{wordX && wordX.length ? `word: ${wordX}` : ""}</Typography> */}
         <div className="wordBox">

@@ -25,9 +25,9 @@ router.get('/', async (req, res, next) => {
   router.post('/', async (req, res, next) => {
     
     try {
-      console.log("HIT YOU HIT HITTTSTSTSTTD")
+     
       const score = await Score.create(req.body)
-      console.log("SCORE: ", score)
+
       res.json(score)
     } catch (err) {
       next(err)
@@ -38,7 +38,7 @@ router.get('/', async (req, res, next) => {
 router.put('/:id', async(req,res,next)=>{
   try {
     const score = await Score.findOne({where: {userId: req.body.userId, gameId: req.body.gameId} })
-    console.log("SCOREdfef: ", score)
+  
     res.send(await score.update(req.body));
     // res.json(score)
   } catch (err) {
@@ -51,7 +51,7 @@ router.delete('/:gameId/:userId', async(req,res,next)=>{
   try {
 
     const score = await Score.findOne({where: {userId: req.params.userId, gameId: req.params.gameId} })
-    console.log("SCORE TO DELETEEEE: ", score)
+
     res.send(await score.destroy());
     // res.json(score)
   } catch (err) {

@@ -11,19 +11,23 @@ For each play to get turn, they can be a player array with eahc of their names o
 
 PROBLEMS: when first couple of games are created, the gmaes are listed more thatn once.... sometimes...
 DECLINE DOESNT ALWAYS REFRESH CORRECTLY
+
+ACCEPT PLAYER TO game doesnt automatically clear it from page every time...maybe first time..
  
  OPEN 2 INCOGNITO, both incognito END UP WITH SAME NAME>>>>>
 
 
 LAST UPDATE: 
-OWner can accept a playr and it ups playerNum on game and turnNum on score
+owner can start new game... all players can see gameplay... only player who turnNum === game turn can get word
+
 
 
 
 WHAT TO DO:
-Don't let non owner see remove player from single game
+
 Maker sure decline player works..
-START games
+Create input for definition that non turn players can add to def array
+Input needs to show up only when player with turn accepts word....
 
 
 May not need turn true.false on score because jsut see if the turnNum on Score matches turn on Game

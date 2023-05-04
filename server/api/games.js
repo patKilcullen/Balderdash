@@ -95,7 +95,7 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const game = await Game.create(req.body);
-    console.log("Created game in API: ", game);
+   
     res.json(game);
   } catch (err) {
     next(err);

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { createGame } from "./allGamesSlice";
 import { createScore } from "../scores/scoresSlice";
 
+import socket from "socket.io-client";
 const CreateGame = () => {
   const userId = useSelector((state) => state.auth.me.id);
   const [gameName, setGameName] = useState("");
@@ -14,6 +15,9 @@ const CreateGame = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // Socket
+  const clientSocket = socket.connect("http://localhost:8080");
 
   const handleCreateGame = (e) => {
     e.preventDefault();
@@ -34,6 +38,7 @@ const CreateGame = () => {
       })
     ).then((res) => {
       console.log("RES: ", res)
+      clientSocket.emit('joinGameRoom', { roomId: res.payload.id, userId: userId })
       dispatch(
         createScore({ score: 0, accepted: true,turn: true, turnNum: 1, gameId: res.payload.id, userId: userId })
       );

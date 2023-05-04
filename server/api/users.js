@@ -24,11 +24,11 @@ router.get('/', async (req, res, next) => {
 
 
 router.get('/:id', async (req, res, next) => {
-console.log("HELLLEEEEEEOOO", req.params.id)
+
   try {
     // const games = await Game.findByPk(req.params.id, {include: [User,Score]})
     const user = await User.findByPk(req.params.id, {include: [Game, Score]})
-    console.log("USERRRRRR: ", user)
+
    
     res.json(user)
   } catch (err) {

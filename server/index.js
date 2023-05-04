@@ -6,6 +6,11 @@ const seed = require('../script/seed');
 // SOCKET
 const socket = require('socket.io')
 
+
+
+
+
+
 const init = async () => {
   try {
     if(process.env.SEED === 'true'){
@@ -18,9 +23,27 @@ const init = async () => {
 
     // SOCKET
     const serverSocket = socket(server);
+
+
+    // NEW
+    // serverSocket.on('connection', (socket) => {
+    //   // socket.on('joinGameRoom', ({ roomId, userId }) => {
+    //   //   socket.join(roomId);
+    //   //   console.log(`User ${userId} joined room ${roomId}`);
+    //   // });
+    // });
+
+
     serverSocket.on('connection', (socket) => {
       console.log(`Connection from client ${socket.id}`);
      
+// NEW
+socket.on('joinGameRoom', ({ roomId, userId }) => {
+  socket.join(roomId);
+  console.log(`User ${userId} joined room ${roomId}`);
+});
+
+
       socket.on("send_score", (data)=>{
         socket.broadcast.emit("receive_score", data)
       })

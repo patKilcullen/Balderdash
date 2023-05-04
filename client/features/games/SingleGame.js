@@ -142,6 +142,8 @@ import {
 import Main from "../main/Main";
 import GamePlay from "../gamePlay/GamePlay";
 
+import socket from "socket.io-client";
+
 const SingleGame = () => {
   // put user ID in props????
   const userId = useSelector((state) => state.auth.me.id);
@@ -163,6 +165,11 @@ console.log("USER SCORE SINGLE GAME: ", userScore)
     dispatch(fetchAllGameScores(gameId));
   }, []);
 
+  
+  
+  
+  const clientSocket = socket.connect("http://localhost:8080");
+
   // WHEN ACCEPT HAVE TO EDIT THE GAME AND THE SCORE>>>> coudl get response from game edit to edit score..
   const handleAcceptRequest = (id) => {
 
@@ -173,11 +180,7 @@ console.log("USER SCORE SINGLE GAME: ", userScore)
   dispatch(fetchSingleGame(gameId));
     dispatch(fetchAllGameScores(gameId));
  })
-    // dispatch(editScore({ userId: id,turnNum: (game.numPlayers + 1), gameId: game.id, accepted: true }));
-    
-    // dispatch(fetchSingleGame(gameId));
-    // dispatch(fetchAllGameScores(gameId));
-
+ clientSocket.emit('joinGameRoom', { roomId: gameId, userId: id });
   };
   // DECLINE REQUEST TO PLAY
   const handleDeclineRequest = (id) => {
