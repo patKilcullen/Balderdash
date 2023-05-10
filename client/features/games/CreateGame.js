@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { createGame } from "./allGamesSlice";
 import { createScore } from "../scores/scoresSlice";
 
+// SOCKET
 import socket from "socket.io-client";
+// import { SocketContext } from "../../app/App";
+import { SocketContext } from "../../app/SocketProvider";
+
 const CreateGame = () => {
   const userId = useSelector((state) => state.auth.me.id);
   const [gameName, setGameName] = useState("");
@@ -16,8 +20,9 @@ const CreateGame = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Socket
-  const clientSocket = socket.connect("http://localhost:8080");
+  // SOCKET
+  //  const clientSocket = socket.connect("http://localhost:8080");
+  const clientSocket = useContext(SocketContext)
 
   const handleCreateGame = (e) => {
     e.preventDefault();
@@ -37,8 +42,10 @@ const CreateGame = () => {
         turn: 1 
       })
     ).then((res) => {
-      console.log("RES: ", res)
-      clientSocket.emit('joinGameRoom', { roomId: res.payload.id, userId: userId })
+     console.log("RES PAY LOOOODDDDDD: ", res.payload.id)
+      // clientSocket.emit('joinGameRoom', { roomId: res.payload.id, userId: userId })
+      clientSocket.emit('join_room', { roomId: res.payload.id, userId: userId })
+      clientSocket.emit("join-da-room", res.payload.id)
       dispatch(
         createScore({ score: 0, accepted: true,turn: true, turnNum: 1, gameId: res.payload.id, userId: userId })
       );
@@ -47,7 +54,7 @@ const CreateGame = () => {
     })
    : setError("Rounds must be a postive integer");
   }
-  console.log("Error Message: ", error)
+  
 
   return (
     <div>

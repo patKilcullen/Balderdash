@@ -95,6 +95,12 @@ const gamePlaySlice = createSlice({
         state.definition = {}
       },
     },
+    // NEW
+    addWordPlayerNotTurn(state,action){
+        state.word = action.payload
+    },
+
+
     extraReducers: (builder)=>{
         builder
         .addCase('/getWord/fulfilled', (state, action) => {

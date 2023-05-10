@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -19,6 +19,8 @@ import { selectMe } from "../auth/authSlice";
 // SOCKET
 // could/should this be imported from app/socket.js??????
 import socket from "socket.io-client";
+// import { SocketContext } from "../../app/App";
+import { SocketContext } from "../../app/SocketProvider";
 
 // Material UI
 import Card from "@mui/material/Card";
@@ -34,9 +36,7 @@ const GamePlay = ({userId, game, userScore}) => {
   const me = useSelector(selectMe);
   const username = me.username;
 
-  console.log("USSSSAAAAAA IDEE: ", userId)
-  console.log("GAMMEEEEE: ", game)
-  console.log("User Score Game Play: ", userScore)
+
 
   const [tempWord, setTempWord] = useState("")
   const [displayDef, setDisplayDef] = useState(false)
@@ -60,8 +60,7 @@ const [playerDef, setPlayerDef] = useState("")
 
 
 
-  // SOCKET
-  // socket.emit('word', word)
+  
   const definition = useSelector(selectDefinition);
 
   useEffect(() => {
@@ -146,7 +145,7 @@ const [playerDef, setPlayerDef] = useState("")
   const handleChooseWord = (def) => {
     const scoreX = localStorage.getItem(`${username}`);
     const roundX = localStorage.getItem(`round`);
-    console.log("HIIIII: ", wordX)
+  
     setTempWord(wordX)
     allDefs = [];
     setWordX([]);
@@ -178,18 +177,38 @@ const [playerDef, setPlayerDef] = useState("")
 
   // SOCKET
   // const clientSocket = socket(window.location.origin);
-  const clientSocket = socket.connect("http://localhost:8080");
-
+  // const clientSocket = socket.connect("http://localhost:8080");
+  const clientSocket = useContext(SocketContext)
 
 // NEW!!!!!
+const [newWord, setNewWord] = useState("")
+//   const handleGetWord = () => {
+//     dispatch(getWord()).then(() => {
+//       handleGetFakeWords();
+//       // setTempWord(word)
+//       setDisplayDef(true)
+//     });
+//   };
 
-  const handleGetWord = () => {
-    dispatch(getWord()).then(() => {
+// Right now, it gets the word and puts it in state, 
+const handleGetWord = () => {
+
+    dispatch(getWord()).then((res) => {
+
+console.log("WORD: ",res.payload[0])
+console.log("GAME ID: ",game.id)
+
+clientSocket.emit("send-user-name", {roomId: game.id, username: res.payload[0]})
+// clientSocket.emit('send_word', (res.payload, game.id))
+clientSocket.emit('send_word', ({word: res.payload[0],room: game.id}))
+
+setNewWord(res.payload)
       handleGetFakeWords();
       // setTempWord(word)
       setDisplayDef(true)
     });
   };
+
 
   const handleGetFakeWords = () => {
     dispatch(clearFakeWords());
@@ -201,11 +220,11 @@ const [playerDef, setPlayerDef] = useState("")
     }
   };
 
- useEffect(() => {
-    game && userScore && game.turn === userScore.turnNum  ?
-    clientSocket.emit(`send_word`, word)
-    : null
-  }, [word]);
+//  useEffect(() => {
+//     game && userScore && game.turn === userScore.turnNum  ?
+//     clientSocket.emit(`send_word`, word)
+//     : null
+//   }, [word]);
 
 
 
@@ -261,15 +280,41 @@ const [playerDef, setPlayerDef] = useState("")
 
     // });
 
-    clientSocket.on("receive_word", (data) => {
-        userScore.gameId === game.id  ?
-      setWordX(data[0])
-     : null
-    });
-
-    // clientSocket.on("receive_definition", (data) => {
-    //   setDefinitionX(data);
+    // clientSocket.on("receive_word", (data) => {
+    //     userScore.gameId === game.id  ?
+    //   setWordX(data[0])
+    //  : null
     // });
+
+    // clientSocket.on("receive_new_word", (data) => {
+        
+    //   console.log("GOT IT BABY: ", data)
+    
+    // });
+
+    clientSocket.on("assfuck", (data) => {
+      console.log("assfuck", data)
+       });
+
+    clientSocket.on("receive_word", (data) => {
+     console.log("RECEIVE WORD", data)
+      });
+
+    // clientSocket.on('receive_new_word', (word) => {
+    //     console.log(`Received the new word "${word}"`);
+    //     // do something with the new word, such as displaying it in the UI
+    //   });
+
+
+    // clientSocket.on('receive_new_word', ({ room, word }) => {
+    //     if (room === game.id) {
+    //       console.log(`Received the word "${word}" in the "${room}" room`);
+    //       // do something with the word message, such as displaying it in the UI
+    //     }
+    //   });
+
+
+    
 
     // clientSocket.on("receive_defArray", (data) => {
     //   if (data && data.length) {
@@ -278,6 +323,29 @@ const [playerDef, setPlayerDef] = useState("")
     // });
   }, [clientSocket]);
 
+
+
+
+  const handleEnterFakeDef = ()=>{
+    console.log("AAAAAA")
+  }
+
+
+
+  console.log("GAME ID", game.id)
+
+
+const handleJoinRoom = ()=>{
+
+  console.log("jjGAME ID IN handle join roommm: ", game.id)
+  console.log("typeof  handle join roommm: ",typeof game.id)
+clientSocket.emit("join-da-room", game.id)
+
+}
+
+const handleSendUsername = ()=>{
+  clientSocket.emit("send-user-name", {roomId: game.id, username: username})
+}
 
   return (
     <Card className="main " sx={{boxShadow: "none",overflow: "visible" }}>
@@ -343,7 +411,7 @@ const [playerDef, setPlayerDef] = useState("")
 {/* SHOW THIS AFTER PLAYER TUNR PICS WORD!!!!!!!! */}
 {/* ENTER PLAYER DEFINTION fof non-turn players */}
 {game && userScore && game.turn !== userScore.turnNum ?
-<form onSubmit={console.log("harry")}>
+<form onSubmit={handleEnterFakeDef}>
         <label>
           Enter you fake Def here:
           <input
@@ -435,8 +503,11 @@ const [playerDef, setPlayerDef] = useState("")
         </div>
     
       </Card>
+      <button onClick={handleJoinRoom}>join ROONM</button>
+      <button onClick={handleSendUsername}>send user.id</button>
     </Card>
   );
 };
+
 
 export default GamePlay;
