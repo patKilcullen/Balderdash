@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -31,11 +29,8 @@ const SingleGame = () => {
   const dispatch = useDispatch();
   const game = useSelector(selectSingleGame);
   const scores = useSelector(selectAllScores);
-  
+
   const userScore = scores.find((score) => score.userId === userId);
-
-
-
 
   useEffect(() => {
     dispatch(fetchSingleGame(gameId));
@@ -43,69 +38,64 @@ const SingleGame = () => {
     dispatch(fetchAllGameScores(gameId));
   }, []);
 
-  
-  
   // SOCKET
   //  const clientSocket = socket.connect("http://localhost:8080");
-   const clientSocket = useContext(SocketContext)
+  const clientSocket = useContext(SocketContext);
 
   // WHEN ACCEPT HAVE TO EDIT THE GAME AND THE SCORE>>>> coudl get response from game edit to edit score..
   const handleAcceptRequest = (id) => {
-
- dispatch(editGame({id: game.id, numPlayers: (game.numPlayers + 1 )})).then((res)=>{
-  clientSocket.emit('join_room', { roomId: game.id, userId: id })
- dispatch(editScore({ userId: id,turnNum: res.payload.numPlayers, gameId: game.id, accepted: true }));
- }).then(()=>{
-  dispatch(fetchSingleGame(gameId));
-    dispatch(fetchAllGameScores(gameId));
- })
-
+    dispatch(editGame({ id: game.id, numPlayers: game.numPlayers + 1 }))
+      .then((res) => {
+        dispatch(
+          editScore({
+            userId: id,
+            turnNum: res.payload.numPlayers,
+            gameId: game.id,
+            accepted: true,
+          })
+        );
+      })
+      .then(() => {
+        dispatch(fetchSingleGame(gameId));
+        dispatch(fetchAllGameScores(gameId));
+      });
   };
   // DECLINE REQUEST TO PLAY
   const handleDeclineRequest = (id) => {
-
     dispatch(deleteScore({ userId: id, gameId: game.id }));
     dispatch(fetchSingleGame(gameId));
     dispatch(fetchAllGameScores(gameId));
   };
 
-//  ASK TO JOIN GAME 
+  //  ASK TO JOIN GAME
   const handleAskJoin = () => {
     dispatch(
-      createScore({ score: 0, accepted: false, turn: false, turnNum: null, gameId: gameId, userId: userId })
-    ).then(()=>{
-      handleJoinRoom(gameId)
-    })
-    // console.log("why no work????")
-     console.log("GAME ID IN ASK TO JOIN: ", game.id)
-    // console.log("TYPE OF GAME ID IN ASK TO JOIN: ", typeof game.id)
-    // clientSocket.emit('join_room', { roomId: gameId, userId: userId})
+      createScore({
+        score: 0,
+        accepted: false,
+        turn: false,
+        turnNum: null,
+        gameId: gameId,
+        userId: userId,
+      })
+    )
    
-    clientSocket.emit("join-da-room", game.id)
   };
 
   // START GAME
-  const handleStartGame = ()=>{
-    dispatch(editGame({id: game.id, started: true})).then(()=>{
-      dispatch(fetchSingleGame(gameId))
-    })
-  }
+  const handleStartGame = () => {
+    dispatch(editGame({ id: game.id, started: true })).then(() => {
+      dispatch(fetchSingleGame(gameId));
+    });
+  };
 
-
-
-  const handleJoinRoom = (gameId)=>{
-
-    console.log("jjGAME ID IN handle join roommm: ", game.id)
-    console.log("typeof  handle join roommm: ",typeof game.id)
-  clientSocket.emit("join-da-room", gameId)
   
-  }
 
   return (
     <div>
       <div>
         {userScore && userScore.user ? (
-          <div>USER NAMEEEEEEEE{userScore.user.username}</div>
+          <div>USER NAME: {userScore.user.username}</div>
         ) : null}
       </div>
       <div>{game.name}</div>
@@ -117,7 +107,7 @@ const SingleGame = () => {
       ) : null}
 
       {/* Players and Score */}
-      {scores  ? (
+      {scores ? (
         <div>
           Playffers:{" "}
           {scores
@@ -129,7 +119,9 @@ const SingleGame = () => {
                   <div>
                     {user.user.username} {user.score}
                     {/* Dont let non owner */}
-                    {user.user.id !== userId  && userId === game.ownerId && game.started === false? (
+                    {user.user.id !== userId &&
+                    userId === game.ownerId &&
+                    game.started === false ? (
                       <button
                         onClick={() => handleDeclineRequest(user.user.id)}
                       >
@@ -147,7 +139,6 @@ const SingleGame = () => {
       {game.ownerId === userId && !game.started ? (
         <div>Player Requests</div>
       ) : null}
-
 
       {game.ownerId === userId && !game.started ? (
         <div>
@@ -172,9 +163,6 @@ const SingleGame = () => {
         </div>
       ) : null}
 
-
-
-
       {/* IF NOT GAME OWNER  and Game NOT STARTED: REQUEST TO JOIN*/}
       {game.ownerId !== userId && !game.started && !userScore ? (
         // ADD additional conditional to determine if request already sent
@@ -183,19 +171,21 @@ const SingleGame = () => {
         <button onClick={handleAskJoin}>Ask to join this game</button>
       ) : null}
 
-{/* START GAME - If game owner and more than one player*/}
-{game.ownerId === userId &&  game.numPlayers > 1 && game.started === false?
-<button onClick={handleStartGame}>Start Game</button>
-: null}
-      
+      {/* START GAME - If game owner and more than one player*/}
+      {game.ownerId === userId &&
+      game.numPlayers > 1 &&
+      game.started === false ? (
+        <button onClick={handleStartGame}>Start Game</button>
+      ) : null}
 
       {/* GAME PLAY */}
-      { (game.started === true && game.ownerId === userId) ||(game.started === true && userScore) ?
-<>
-<div>Dis where the game would be</div>
-<GamePlay userId={userId} game={game} userScore={userScore}/>
-</>
-      :null}
+      {(game.started === true && game.ownerId === userId) ||
+      (game.started === true && userScore) ? (
+        <>
+    
+          <GamePlay userId={userId} game={game} userScore={userScore} />
+        </>
+      ) : null}
     </div>
   );
 };

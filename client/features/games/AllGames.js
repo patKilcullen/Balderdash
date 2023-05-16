@@ -19,14 +19,11 @@ const AllGames = () => {
   // userID should be props????????
   const userId = useSelector((state) => state.auth.me.id);
   const games = useSelector(selectAllGames);
-  // const user = useSelector((state) => state.auth)
-  // console.log("USER::::: ", user)
 
   const dispatch = useDispatch();
 
   const user = useSelector(selectSingleUser);
-  // const gamess = user.games;
-  console.log("USER: ", user);
+
 
 
   const [gamesX, setGamesX] = useState([]);

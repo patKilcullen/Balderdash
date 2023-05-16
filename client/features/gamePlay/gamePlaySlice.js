@@ -94,11 +94,13 @@ const gamePlaySlice = createSlice({
       clearDefinition(state, action){
         state.definition = {}
       },
+      addWordPlayerNotTurn(state,action){
+        console.log("ACTION IN ADD WORD", action.payload)
+          state.word = action.payload
+          console.log("STATRT WORD: ", state.word)
+      },
     },
-    // NEW
-    addWordPlayerNotTurn(state,action){
-        state.word = action.payload
-    },
+  
 
 
     extraReducers: (builder)=>{
@@ -120,7 +122,7 @@ const gamePlaySlice = createSlice({
 })
 
 export const selectWord = (state)=>{
-    return state.main.word
+    return state.gamePlay.word
 }
 export const selectDefinition = (state)=>{
     return state.main.definition
@@ -131,6 +133,8 @@ export const selectFakeDefinitions = (state)=>{
 export const selectFakeWords = (state)=>{
   return state.main.fakeWords
 }
-export const { clearFakeDefs, clearFakeWords } = gamePlaySlice.actions;
+
+
+export const { clearFakeDefs, clearFakeWords, addWordPlayerNotTurn } = gamePlaySlice.actions;
 
 export default gamePlaySlice.reducer

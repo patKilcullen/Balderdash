@@ -23,34 +23,17 @@ const init = async () => {
     serverSocket.on("connection", (socket) => {
       // console.log(`Connection from client ${socket.id}`);
 
-socket.on("join-da-room", (room)=>{
-  console.log(`sumbody joined ${room}`)
+socket.on("join_room", (room)=>{
+
   socket.join(room)
 })
 
-socket.on("send-user-name", ({roomId, username})=>{
-  console.log("USER NAMEMEMEM: ", username)
-  console.log("ROOMA IDDDD: ", roomId)
-  socket.to(roomId).emit("assfuck", username);
-})
+
 
       // NEW
 
-      socket.on("join_room", ({ roomId, userId }) => {
-
-        console.log(`User ${userId} joined room ${roomId}`);
-        socket.join(roomId);
-        
-      });
       socket.on("send_word", ({word, room}) => {
-        // if(room === ''){
-        //   socket.broadcast.emit("receive_word", word)
-        // } else {
-        //   socket.to(room).emit("receive_word", word)
-        // }
 
-        console.log("word", word);
-         console.log("room", room);
         socket.to(room).emit("receive_word", word);
        
       });

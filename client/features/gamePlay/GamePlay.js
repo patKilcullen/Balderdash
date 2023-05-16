@@ -13,6 +13,7 @@ import {
   clearFakeDefs,
   clearFakeWords,
   clearDefinition,
+ addWordPlayerNotTurn
 } from "./gamePlaySlice";
 import { selectMe } from "../auth/authSlice";
 
@@ -173,14 +174,6 @@ const GamePlay = ({ userId, game, userScore }) => {
   // Right now, it gets the word and puts it in state,
   const handleGetWord = () => {
     dispatch(getWord()).then((res) => {
-      console.log("WORD: ", res.payload[0]);
-      console.log("GAME ID: ", game.id);
-
-      clientSocket.emit("send-user-name", {
-        roomId: game.id,
-        username: res.payload[0],
-      });
-      // clientSocket.emit('send_word', (res.payload, game.id))
       clientSocket.emit("send_word", { word: res.payload[0], room: game.id });
 
       setNewWord(res.payload);
@@ -204,7 +197,7 @@ const GamePlay = ({ userId, game, userScore }) => {
 useEffect(()=>{
 userScore ? 
 
-clientSocket.emit("join-da-room", game.id)
+clientSocket.emit("join_room", game.id)
 :null
 
 },[])
@@ -224,11 +217,14 @@ clientSocket.emit("join-da-room", game.id)
     });
 
     clientSocket.on("receive_word", (data) => {
-      console.log("RECEIVE WORD", data);
+
+      dispatch(addWordPlayerNotTurn(data))
+dispatch(selectWord())
     });
 
 
   }, [clientSocket]);
+
 
 
 
@@ -238,18 +234,7 @@ clientSocket.emit("join-da-room", game.id)
 
  
 
-  const handleJoinRoom = () => {
-    console.log("jjGAME ID IN handle join roommm: ", game.id);
-    console.log("typeof  handle join roommm: ", typeof game.id);
-    clientSocket.emit("join-da-room", game.id);
-  };
-
-  const handleSendUsername = () => {
-    clientSocket.emit("send-user-name", {
-      roomId: game.id,
-      username: username,
-    });
-  };
+console.log("WORDDDDDDD:", word)
 
   return (
     <Card className="main " sx={{ boxShadow: "none", overflow: "visible" }}>
@@ -305,6 +290,27 @@ clientSocket.emit("join-da-room", game.id)
             </Typography>
           </Button>
         ) : null}
+
+        {/* WORD */}
+        {game && word && word.length ? (
+       
+        
+           
+       <Card
+       className="playerScore"
+       color="secondary"
+       sx={{ boxShadow: "none" }}
+     >
+       <Typography
+         sx={{ fontSize: 50, fontWeight: "bold" }}
+         color="secondary"
+       >
+         {word}
+       </Typography>
+     </Card>
+         
+        ) : null}
+
 
         {/* SHOW THIS AFTER PLAYER TUNR PICS WORD!!!!!!!! */}
         {/* ENTER PLAYER DEFINTION fof non-turn players */}
@@ -398,8 +404,7 @@ clientSocket.emit("join-da-room", game.id)
             : ""}
         </div>
       </Card>
-      <button onClick={handleJoinRoom}>join ROONM</button>
-      <button onClick={handleSendUsername}>send user.id</button>
+
     </Card>
   );
 };
