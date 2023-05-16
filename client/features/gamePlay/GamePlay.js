@@ -30,16 +30,15 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-const GamePlay = ({userId, game, userScore}) => {
+const GamePlay = ({ userId, game, userScore }) => {
   const dispatch = useDispatch();
   const word = useSelector(selectWord);
   const me = useSelector(selectMe);
   const username = me.username;
+  const definition = useSelector(selectDefinition);
 
-
-
-  const [tempWord, setTempWord] = useState("")
-  const [displayDef, setDisplayDef] = useState(false)
+  const [tempWord, setTempWord] = useState("");
+  const [displayDef, setDisplayDef] = useState(false);
   const [defDisplayed, setDefDisplayed] = useState("");
   const [defArray, setDefArray] = useState([]);
   const [score, setScore] = useState(0);
@@ -51,25 +50,14 @@ const GamePlay = ({userId, game, userScore}) => {
   const [dater, setDater] = useState([]);
   const [definitionX, setDefinitionX] = useState("");
 
-//   NEW
-const [playerDef, setPlayerDef] = useState("")
+  //   NEW
+  const [playerDef, setPlayerDef] = useState("");
 
 
-
-
-
-
-
-  
-  const definition = useSelector(selectDefinition);
 
   useEffect(() => {
     setDefDisplayed(definition);
   }, [definition]);
-
- 
-  
-
 
   const handleGetDefs = () => {
     dispatch(getDefinition(word[0]))
@@ -92,27 +80,23 @@ const [playerDef, setPlayerDef] = useState("")
     }
   };
 
+  //   const handleGetWord = () => {
+  //     dispatch(getWord()).then(() => {
+  //       handleGetFakeWords();
+  //       // setTempWord(word)
+  //       setDisplayDef(true)
+  //     });
+  //   };
 
-
-
-
-//   const handleGetWord = () => {
-//     dispatch(getWord()).then(() => {
-//       handleGetFakeWords();
-//       // setTempWord(word)
-//       setDisplayDef(true)
-//     });
-//   };
-
-//   const handleGetFakeWords = () => {
-//     dispatch(clearFakeWords());
-//     allDefs = [];
-//     let count = 0;
-//     while (count < 5) {
-//       dispatch(getFakeWords());
-//       count++;
-//     }
-//   };
+  //   const handleGetFakeWords = () => {
+  //     dispatch(clearFakeWords());
+  //     allDefs = [];
+  //     let count = 0;
+  //     while (count < 5) {
+  //       dispatch(getFakeWords());
+  //       count++;
+  //     }
+  //   };
   const fakeWords = useSelector(selectFakeWords);
 
   const handleGetFakeDefinitions = () => {
@@ -129,7 +113,6 @@ const [playerDef, setPlayerDef] = useState("")
 
   let allDefs;
   // let finalArr = (finalArr = Object.values(defArray));
- 
 
   const play = () => {
     let allDefs = Object.values(fakeDefinitions);
@@ -141,12 +124,11 @@ const [playerDef, setPlayerDef] = useState("")
     dispatch(clearFakeDefs());
   };
 
-
   const handleChooseWord = (def) => {
     const scoreX = localStorage.getItem(`${username}`);
     const roundX = localStorage.getItem(`round`);
-  
-    setTempWord(wordX)
+
+    setTempWord(wordX);
     allDefs = [];
     setWordX([]);
     setDefArray([]);
@@ -169,46 +151,44 @@ const [playerDef, setPlayerDef] = useState("")
       setReplyAnimationDef(true);
       setTimeout(() => {
         setReplyAnimationDef(false);
-      }, 5000)
-
-    }, 5000)
-
+      }, 5000);
+    }, 5000);
   };
 
   // SOCKET
   // const clientSocket = socket(window.location.origin);
   // const clientSocket = socket.connect("http://localhost:8080");
-  const clientSocket = useContext(SocketContext)
+  const clientSocket = useContext(SocketContext);
 
-// NEW!!!!!
-const [newWord, setNewWord] = useState("")
-//   const handleGetWord = () => {
-//     dispatch(getWord()).then(() => {
-//       handleGetFakeWords();
-//       // setTempWord(word)
-//       setDisplayDef(true)
-//     });
-//   };
+  // NEW!!!!!
+  const [newWord, setNewWord] = useState("");
+  //   const handleGetWord = () => {
+  //     dispatch(getWord()).then(() => {
+  //       handleGetFakeWords();
+  //       // setTempWord(word)
+  //       setDisplayDef(true)
+  //     });
+  //   };
 
-// Right now, it gets the word and puts it in state, 
-const handleGetWord = () => {
-
+  // Right now, it gets the word and puts it in state,
+  const handleGetWord = () => {
     dispatch(getWord()).then((res) => {
+      console.log("WORD: ", res.payload[0]);
+      console.log("GAME ID: ", game.id);
 
-console.log("WORD: ",res.payload[0])
-console.log("GAME ID: ",game.id)
+      clientSocket.emit("send-user-name", {
+        roomId: game.id,
+        username: res.payload[0],
+      });
+      // clientSocket.emit('send_word', (res.payload, game.id))
+      clientSocket.emit("send_word", { word: res.payload[0], room: game.id });
 
-clientSocket.emit("send-user-name", {roomId: game.id, username: res.payload[0]})
-// clientSocket.emit('send_word', (res.payload, game.id))
-clientSocket.emit('send_word', ({word: res.payload[0],room: game.id}))
-
-setNewWord(res.payload)
+      setNewWord(res.payload);
       handleGetFakeWords();
       // setTempWord(word)
-      setDisplayDef(true)
+      setDisplayDef(true);
     });
   };
-
 
   const handleGetFakeWords = () => {
     dispatch(clearFakeWords());
@@ -220,213 +200,129 @@ setNewWord(res.payload)
     }
   };
 
-//  useEffect(() => {
-//     game && userScore && game.turn === userScore.turnNum  ?
-//     clientSocket.emit(`send_word`, word)
-//     : null
-//   }, [word]);
 
+useEffect(()=>{
+userScore ? 
 
+clientSocket.emit("join-da-room", game.id)
+:null
 
+},[])
 
-//   useEffect(() => {
-//     clientSocket.emit("send_score", { score: score, username: username });
-//   }, [round]);
-
-
-
-//   useEffect(() => {
-//     clientSocket.emit("send_word", word);
-//   }, [word]);
-
- 
-//   useEffect(() => {
-//     clientSocket.emit("send_definition", definition);
-//   }, [definition]);
-
-//   useEffect(() => {
-//     clientSocket.emit("send_defArray", defArray);
-//   }, [defArray]);
+  //  useEffect(() => {
+  //     game && userScore && game.turn === userScore.turnNum  ?
+  //     clientSocket.emit(`send_word`, word)
+  //     : null
+  //   }, [word]);
 
   
-
-//   useEffect(() => {
-//     clientSocket.on("receive_score", (data) => {
-//       scoreArray.push(data);
-//     });
-//   }, [score]);
-
-//   let scoreArray = [];
-
-
-  // USER ARRAY
-// 
-// const userArray = []
-// let newUserArray = []
-
-// useEffect(()=>{
-// console.log("usrARRAY: ", userArray)
-
-// }, [userArray])
-
-
-// SOCKET - Receive info from client socket
+  // SOCKET - Receive info from client socket
   useEffect(() => {
-    // clientSocket.on("receive_score", (data) => {
-
-    //   userArray.push([data])
-    //   // userArray.push({username: data.username, score: data.score})
-
-
-    // });
-
-    // clientSocket.on("receive_word", (data) => {
-    //     userScore.gameId === game.id  ?
-    //   setWordX(data[0])
-    //  : null
-    // });
-
-    // clientSocket.on("receive_new_word", (data) => {
-        
-    //   console.log("GOT IT BABY: ", data)
-    
-    // });
 
     clientSocket.on("assfuck", (data) => {
-      console.log("assfuck", data)
-       });
+      console.log("assfuck", data);
+    });
 
     clientSocket.on("receive_word", (data) => {
-     console.log("RECEIVE WORD", data)
-      });
-
-    // clientSocket.on('receive_new_word', (word) => {
-    //     console.log(`Received the new word "${word}"`);
-    //     // do something with the new word, such as displaying it in the UI
-    //   });
+      console.log("RECEIVE WORD", data);
+    });
 
 
-    // clientSocket.on('receive_new_word', ({ room, word }) => {
-    //     if (room === game.id) {
-    //       console.log(`Received the word "${word}" in the "${room}" room`);
-    //       // do something with the word message, such as displaying it in the UI
-    //     }
-    //   });
-
-
-    
-
-    // clientSocket.on("receive_defArray", (data) => {
-    //   if (data && data.length) {
-    //     setDater(data);
-    //   }
-    // });
   }, [clientSocket]);
 
 
 
+  const handleEnterFakeDef = () => {
+    console.log("AAAAAA");
+  };
 
-  const handleEnterFakeDef = ()=>{
-    console.log("AAAAAA")
-  }
+ 
 
+  const handleJoinRoom = () => {
+    console.log("jjGAME ID IN handle join roommm: ", game.id);
+    console.log("typeof  handle join roommm: ", typeof game.id);
+    clientSocket.emit("join-da-room", game.id);
+  };
 
-
-  console.log("GAME ID", game.id)
-
-
-const handleJoinRoom = ()=>{
-
-  console.log("jjGAME ID IN handle join roommm: ", game.id)
-  console.log("typeof  handle join roommm: ",typeof game.id)
-clientSocket.emit("join-da-room", game.id)
-
-}
-
-const handleSendUsername = ()=>{
-  clientSocket.emit("send-user-name", {roomId: game.id, username: username})
-}
+  const handleSendUsername = () => {
+    clientSocket.emit("send-user-name", {
+      roomId: game.id,
+      username: username,
+    });
+  };
 
   return (
-    <Card className="main " sx={{boxShadow: "none",overflow: "visible" }}>
-
-      <Card className="playerInfo" sx={{boxShadow: "none"}}>
-     
-
-
-        <Card className="playerScore" color="secondary" sx={{boxShadow: "none"}}>
-         
-          <Typography sx={{ fontSize: 50, fontWeight: "bold" }} color="secondary">
-          {username}
+    <Card className="main " sx={{ boxShadow: "none", overflow: "visible" }}>
+      <Card className="playerInfo" sx={{ boxShadow: "none" }}>
+        <Card
+          className="playerScore"
+          color="secondary"
+          sx={{ boxShadow: "none" }}
+        >
+          <Typography
+            sx={{ fontSize: 50, fontWeight: "bold" }}
+            color="secondary"
+          >
+            {username}
           </Typography>
         </Card>
 
-        <Card className="playerScore" color="secondary"sx={{boxShadow: "none"}}>
-        
-     
-        </Card>
+        <Card
+          className="playerScore"
+          color="secondary"
+          sx={{ boxShadow: "none" }}
+        ></Card>
       </Card>
 
       <Typography
         className={replyAnimation ? "replyAnimate" : "reply"}
         color="secondary"
-        sx={{boxShadow: "none", overflow: "visible"}}
+        sx={{ boxShadow: "none", overflow: "visible" }}
       >
         {reply}
       </Typography>
 
-     
-
       <Typography
         className={replyAnimationDef ? "replyAnimateDef" : "replyDef"}
         color="secondary"
-        sx={{fontSize: 40, boxShadow: "none"}}
+        sx={{ fontSize: 40, boxShadow: "none" }}
       >
         {`The definition of ${tempWord} is "${definitionX}"`}
       </Typography>
 
-      
-      
-     
+      {/* BUTTONS */}
+      <Card className="buttons " sx={{ boxShadow: "none" }}>
+        {/* GET WORD BUTTON -  only visible if it is userScore's turn*/}
+        {game && userScore && game.turn === userScore.turnNum ? (
+          <Button
+            className={!wordX || !wordX.length ? "pulse" : null}
+            onClick={() => handleGetWord()}
+            sx={{ fontSize: 30 }}
+            variant="contained"
+          >
+            <Typography color={"secondary"} sx={{ fontSize: 30 }}>
+              Get Word
+            </Typography>
+          </Button>
+        ) : null}
 
-{/* BUTTONS */}
-      <Card className="buttons " sx={{boxShadow: "none"}}>
+        {/* SHOW THIS AFTER PLAYER TUNR PICS WORD!!!!!!!! */}
+        {/* ENTER PLAYER DEFINTION fof non-turn players */}
+        {game && userScore && game.turn !== userScore.turnNum ? (
+          <form onSubmit={handleEnterFakeDef}>
+            <label>
+              Enter you fake Def here:
+              <input
+                type="textarea"
+                name="name"
+                value={playerDef}
+                onChange={(e) => setPlayerDef(e.target.value)}
+              />
+            </label>
 
-
-{/* GET WORD BUTTON -  only visible if it is userScore's turn*/}
-        {game && userScore && game.turn === userScore.turnNum ?
-        <Button
-          className={!wordX || !wordX.length ? "pulse" : null}
-          onClick={() => handleGetWord()}
-          sx={{ fontSize: 30 }}
-          variant="contained"
-        >
-          <Typography color={"secondary"} sx={{ fontSize: 30 }}>
-            Get Word
-          </Typography>
-        </Button>
-:null}
-
-
-{/* SHOW THIS AFTER PLAYER TUNR PICS WORD!!!!!!!! */}
-{/* ENTER PLAYER DEFINTION fof non-turn players */}
-{game && userScore && game.turn !== userScore.turnNum ?
-<form onSubmit={handleEnterFakeDef}>
-        <label>
-          Enter you fake Def here:
-          <input
-            type="textarea"
-            name="name"
-            value={playerDef}
-             onChange={(e) => setPlayerDef(e.target.value)}
-          />
-        </label>
-        
-        <input type="submit" value="Submit" />
-      </form>
-      :null}
-
-
+            <input type="submit" value="Submit" />
+          </form>
+        ) : null}
 
         {/* <Typography color={"secondary"} sx={{ fontSize: 30, fontWeight: "bold" }}>{wordX && wordX.length ? `word: ${wordX}` : ""}</Typography> */}
         <div className="wordBox">
@@ -437,22 +333,22 @@ const handleSendUsername = ()=>{
             {wordX && wordX.length ? `word: ` : ""}
           </Typography>
           <Card id="word" color={"primary"}>
-          {wordX && wordX.length ? <Typography
-              color={"secondary"}
-              sx={{
-              height: "20vh",
-                fontSize: 75,
-                fontWeight: "bold",
-  
-              }}
-            >
-               {wordX}
-            </Typography>
-            : ""}
+            {wordX && wordX.length ? (
+              <Typography
+                color={"secondary"}
+                sx={{
+                  height: "20vh",
+                  fontSize: 75,
+                  fontWeight: "bold",
+                }}
+              >
+                {wordX}
+              </Typography>
+            ) : (
+              ""
+            )}
           </Card>
         </div>
-
-
 
         {wordX && wordX.length && displayDef ? (
           <Button
@@ -501,13 +397,11 @@ const handleSendUsername = ()=>{
               })
             : ""}
         </div>
-    
       </Card>
       <button onClick={handleJoinRoom}>join ROONM</button>
       <button onClick={handleSendUsername}>send user.id</button>
     </Card>
   );
 };
-
 
 export default GamePlay;
