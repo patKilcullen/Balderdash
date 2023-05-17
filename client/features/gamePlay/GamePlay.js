@@ -54,7 +54,7 @@ const GamePlay = ({ userId, game, userScore }) => {
   //   NEW
   const [playerDef, setPlayerDef] = useState("");
 
-
+const [thisWord, setThisWord] = useState("")
 
   useEffect(() => {
     setDefDisplayed(definition);
@@ -157,9 +157,10 @@ const GamePlay = ({ userId, game, userScore }) => {
   // Right now, it gets the word and puts it in state,
   const handleGetWord = () => {
     dispatch(getWord()).then((res) => {
-      localStorage.setItem(`word`, res.payload[0]);
+      console.log("GAME ID IN GET WORD: ", game.id)
+      localStorage.setItem(`${game.id}-word`, res.payload[0]);
       clientSocket.emit("send_word", { word: res.payload[0], room: game.id });
-
+setThisWord(res.payload[0])
    
       handleGetFakeWords();
       // setTempWord(word)
@@ -179,14 +180,19 @@ const GamePlay = ({ userId, game, userScore }) => {
 
 
 useEffect(()=>{
-  const wordFromStorage  = localStorage.getItem(`word`)
+  const wordFromStorage  = localStorage.getItem(`${game.id}-word`)
   dispatch(addWordPlayerNotTurn(wordFromStorage))
+  setThisWord(wordFromStorage)
 userScore ? 
 
 clientSocket.emit("join_room", game.id)
 
 :null
 
+},[])
+
+useEffect(()=>{
+console.log("FUCKING GAME ID: ", game.id)
 },[])
 
   //  useEffect(() => {
@@ -201,10 +207,18 @@ clientSocket.emit("join_room", game.id)
 
 
 
-    clientSocket.on("receive_word", (data) => {
+    clientSocket.on("receive_word", ({word, room}) => {
+console.log("RECEIVED WORD: ", word)
+console.log("RECEIVED room: ", room)
+console.log("RECEIVED game.id: ", game.id)
 
-      dispatch(addWordPlayerNotTurn(data))
-      localStorage.setItem(`word`, data);
+
+room === game.id ? 
+
+setThisWord(word)
+: null
+      // dispatch(addWordPlayerNotTurn(data))
+      // localStorage.setItem(`${game.id}-word`, data);
 
     });
 
@@ -295,6 +309,23 @@ console.log("PLAYER DEFFFFFF: ", data)
          color="secondary"
        >
          {word}
+       </Typography>
+     </Card>
+         
+        ) : null}
+
+{/* THIS WORD */}
+{game && thisWord && thisWord.length ? (    
+       <Card
+       className="playerScore"
+       color="secondary"
+       sx={{ boxShadow: "none" }}
+     >
+       <Typography
+         sx={{ fontSize: 50, fontWeight: "bold" }}
+         color="secondary"
+       >
+         {thisWord}
        </Typography>
      </Card>
          

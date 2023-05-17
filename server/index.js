@@ -24,7 +24,7 @@ const init = async () => {
       // console.log(`Connection from client ${socket.id}`);
 
 socket.on("join_room", (room)=>{
-
+console.log("MOFO JOINED THE RRROM")
   socket.join(room)
 })
 
@@ -34,7 +34,7 @@ socket.on("join_room", (room)=>{
 
       socket.on("send_word", ({word, room}) => {
 
-        socket.to(room).emit("receive_word", word);
+        socket.to(room).emit("receive_word", {word, room});
        
       });
 

@@ -14,7 +14,7 @@ import {
 
 import Main from "../main/Main";
 import GamePlay from "../gamePlay/GamePlay";
-
+import XGamePlay from "../gamePlay/XGamePlay";
 // SOCKET
 import socket from "socket.io-client";
 // import { SocketContext } from "../../app/App";

@@ -18,8 +18,10 @@ ACCEPT PLAYER TO game doesnt automatically clear it from page every time...maybe
 
 
 LAST UPDATE: 
-users join games socket room on refresh is players
-when user gets word its sent to other player socket and can render, but getting TypeError, cannot read props of undefined (reading 'gamePlay) which probably comes from gamePlay slice.  The word still renders though and is in gamePlay state.    
+when user enters other game page they need to refresh to get updated words
+AND if they fresh and then go back to their game, the other games word updates their word
+ WOULD putting work in the database solve this problem????  
+
 SUBmitting players own def gets sent to server but not being received by other players
 
 
