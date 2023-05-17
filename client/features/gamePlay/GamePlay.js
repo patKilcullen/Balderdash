@@ -81,23 +81,6 @@ const GamePlay = ({ userId, game, userScore }) => {
     }
   };
 
-  //   const handleGetWord = () => {
-  //     dispatch(getWord()).then(() => {
-  //       handleGetFakeWords();
-  //       // setTempWord(word)
-  //       setDisplayDef(true)
-  //     });
-  //   };
-
-  //   const handleGetFakeWords = () => {
-  //     dispatch(clearFakeWords());
-  //     allDefs = [];
-  //     let count = 0;
-  //     while (count < 5) {
-  //       dispatch(getFakeWords());
-  //       count++;
-  //     }
-  //   };
   const fakeWords = useSelector(selectFakeWords);
 
   const handleGetFakeDefinitions = () => {
@@ -162,7 +145,7 @@ const GamePlay = ({ userId, game, userScore }) => {
   const clientSocket = useContext(SocketContext);
 
   // NEW!!!!!
-  const [newWord, setNewWord] = useState("");
+
   //   const handleGetWord = () => {
   //     dispatch(getWord()).then(() => {
   //       handleGetFakeWords();
@@ -174,9 +157,10 @@ const GamePlay = ({ userId, game, userScore }) => {
   // Right now, it gets the word and puts it in state,
   const handleGetWord = () => {
     dispatch(getWord()).then((res) => {
+      localStorage.setItem(`word`, res.payload[0]);
       clientSocket.emit("send_word", { word: res.payload[0], room: game.id });
 
-      setNewWord(res.payload);
+   
       handleGetFakeWords();
       // setTempWord(word)
       setDisplayDef(true);
@@ -195,9 +179,12 @@ const GamePlay = ({ userId, game, userScore }) => {
 
 
 useEffect(()=>{
+  const wordFromStorage  = localStorage.getItem(`word`)
+  dispatch(addWordPlayerNotTurn(wordFromStorage))
 userScore ? 
 
 clientSocket.emit("join_room", game.id)
+
 :null
 
 },[])
@@ -212,14 +199,17 @@ clientSocket.emit("join_room", game.id)
   // SOCKET - Receive info from client socket
   useEffect(() => {
 
-    clientSocket.on("assfuck", (data) => {
-      console.log("assfuck", data);
-    });
+
 
     clientSocket.on("receive_word", (data) => {
 
       dispatch(addWordPlayerNotTurn(data))
-dispatch(selectWord())
+      localStorage.setItem(`word`, data);
+
+    });
+
+    clientSocket.on("receive_player_def", (data) => {
+console.log("PLAYER DEFFFFFF: ", data)
     });
 
 
@@ -228,13 +218,12 @@ dispatch(selectWord())
 
 
 
-  const handleEnterFakeDef = () => {
-    console.log("AAAAAA");
+  const handleEnterFakeDef = (e) => {
+    e.preventDefault()
+    console.log("AAAAAA: ", playerDef);
+    clientSocket.emit("send_player_def", {room: game.id, playerDef: playerDef})
   };
 
- 
-
-console.log("WORDDDDDDD:", word)
 
   return (
     <Card className="main " sx={{ boxShadow: "none", overflow: "visible" }}>

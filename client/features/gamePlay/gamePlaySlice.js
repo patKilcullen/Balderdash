@@ -15,6 +15,11 @@ export const getWord = createAsyncThunk(
     }
   }
 );
+
+
+
+
+
 export const getFakeWords = createAsyncThunk(
   '/getFakeWords',
   async () => {
@@ -97,7 +102,6 @@ const gamePlaySlice = createSlice({
       addWordPlayerNotTurn(state,action){
         console.log("ACTION IN ADD WORD", action.payload)
           state.word = action.payload
-          console.log("STATRT WORD: ", state.word)
       },
     },
   
@@ -125,13 +129,13 @@ export const selectWord = (state)=>{
     return state.gamePlay.word
 }
 export const selectDefinition = (state)=>{
-    return state.main.definition
+    return state.gamePlay.definition
 }
 export const selectFakeDefinitions = (state)=>{
-    return state.main.fakeDefinitions
+    return state.gamePlay.fakeDefinitions
 }
 export const selectFakeWords = (state)=>{
-  return state.main.fakeWords
+  return state.gamePlay.fakeWords
 }
 
 

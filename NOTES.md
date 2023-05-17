@@ -18,8 +18,9 @@ ACCEPT PLAYER TO game doesnt automatically clear it from page every time...maybe
 
 
 LAST UPDATE: 
-owner can start new game... all players can see gameplay... only player who turnNum === game turn can get word
-
+users join games socket room on refresh is players
+when user gets word its sent to other player socket and can render, but getting TypeError, cannot read props of undefined (reading 'gamePlay) which probably comes from gamePlay slice.  The word still renders though and is in gamePlay state.    
+SUBmitting players own def gets sent to server but not being received by other players
 
 
 

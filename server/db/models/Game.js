@@ -35,6 +35,7 @@ const Game = db.define("game", {
         type: Sequelize.INTEGER,
     },
 
+
     // could add an ownerId depending on associations.. but the eager laoding wouldnt work
 })
 

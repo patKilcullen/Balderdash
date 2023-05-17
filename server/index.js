@@ -38,22 +38,18 @@ socket.on("join_room", (room)=>{
        
       });
 
-
-
-
-      socket.on("joinGameRoom", ({ roomId, userId }) => {
-        socket.join(`${roomId}`);
-        socket.emit("greeting", `User ${userId} joined room ${roomId}`);
-        console.log(`User ${userId} joined room ${roomId}`);
+      socket.on("send_player_def", ({room, playerDef}) => {
+console.log("PLAYER EF AND ROOM: ", playerDef, room)
+        socket.to(room).emit("receive_player_def", playerDef);
+       
       });
 
-      socket.on("sendWord", ({ roomId, word }) => {
-        console.log("RoomID, word", roomId, word);
-        socket.to(roomId).emit("assfuck", word);
-        console.log(
-          `User ${socket.id} sent the word "${word}" to room ${roomId}`
-        );
-      });
+
+
+
+    
+
+   
 
       // socket.on("send_score", (data) => {
       //   socket.broadcast.emit("receive_score", data);
