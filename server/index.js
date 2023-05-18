@@ -28,21 +28,25 @@ console.log(`${userName} joined room ${room}`)
   socket.join(room)
 })
 
-
-
-      // NEW
-
       socket.on("send_word", ({word, room}) => {
 
         socket.to(room).emit("receive_word", {word, room});
        
       });
 
+// Countdown Socket
+socket.on("send_countdown", ({countdown, gameName})=>{
+  socket.to(gameName).emit("receive_countdown", {countdown})
+})
+
+
+
+
+// IN DBGamePlay
       socket.on("send_player_def", ({room, playerDef}) => {
 console.log("PLAYER EF AND ROOM: ", playerDef, room)
         socket.to(room).emit("receive_player_def", playerDef);
       
-        
       });
 
 
