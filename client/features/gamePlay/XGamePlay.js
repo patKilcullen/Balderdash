@@ -47,6 +47,12 @@ const [definition, setDefinition] = useState("")
 const playerTurn = game.scores.filter((score)=> score.turn === true)
 const playerTurnName = playerTurn[0].user.username
 
+const fakeWords = useSelector(selectFakeWords)
+console.log("FAKE WORDS: ", fakeWords)
+
+const fakeDefinitions = useSelector(selectFakeDefinitions)
+console.log("fake Definitions: ", fakeDefinitions)
+
 
   // SOCKET
   const clientSocket = useContext(SocketContext);
@@ -57,15 +63,21 @@ const playerTurnName = playerTurn[0].user.username
   const handleGetWord = () => {
     dispatch(getWord()).then((res) => {
         // localStorage.setItem(`${gameName}-word`, res.payload[0]);
-        clientSocket.emit("send_word", { word: res.payload[0], room: gameName });
+        // clientSocket.emit("send_word", { word: res.payload[0], room: gameName });
         // setWordOwner(res.payload[0])
         setWord(res.payload[0])
         dispatch(getDefinition(res.payload[0])).then((res)=>{
-            console.log("DEFINTIONEEE: ", res.payload)
             setDefinition(res.payload)
         })
     })
+   
+  };
+
+
+  const handleChooseWord = () => {
     handleGetFakeWords()  
+    clientSocket.emit("send_word", { word: word, room: gameName })
+
   };
 
 
@@ -79,6 +91,7 @@ const playerTurnName = playerTurn[0].user.username
       dispatch(getFakeWords());
       count++;
     }
+
   };
 
 
@@ -195,7 +208,17 @@ useEffect(() => {
             </Typography>
 
 
-
+{definition ?
+    <Button
+            className={"pulse"}
+            onClick={() => handleChooseWord()}
+            sx={{ fontSize: 30 }}
+            variant="contained"
+          >
+            <Typography color={"secondary"} sx={{ fontSize: 30 }}>
+              Choose Word
+            </Typography>
+          </Button>: null}
        
 
 
