@@ -1,3 +1,5 @@
+
+// CURRENTLY INCLUDES SOCKET LOGIC for use owf word, but could be used for putting the word in that database
 import React, { useEffect, useState, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -31,59 +33,35 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-const XGamePlay = ({ userId, game, userScore }) => {
+const DBGamePlay = ({ userId, game, userScore }) => {
   const dispatch = useDispatch();
   const me = useSelector(selectMe);
   const username = me.username;
 const gameName = game.name
 const [word, setWord] = useState("")
-const [definition, setDefinition] = useState("")
-
-// const [wordOwner, setWordOwner] = useState("")
-// const [wordSocket, setWordSocket] = useState("")
-// const [wordStorage, setWordStorage] = useState("")
-
-// Player whose turn it is  
-const playerTurn = game.scores.filter((score)=> score.turn === true)
-const playerTurnName = playerTurn[0].user.username
-
-
+const [wordOwner, setWordOwner] = useState("")
+const [wordSocket, setWordSocket] = useState("")
+const [wordStorage, setWordStorage] = useState("")
   // SOCKET
   const clientSocket = useContext(SocketContext);
 
 
-
-
   const handleGetWord = () => {
     dispatch(getWord()).then((res) => {
-        // localStorage.setItem(`${gameName}-word`, res.payload[0]);
+
+        localStorage.setItem(`${gameName}-word`, res.payload[0]);
         clientSocket.emit("send_word", { word: res.payload[0], room: gameName });
-        // setWordOwner(res.payload[0])
+        setWordOwner(res.payload[0])
         setWord(res.payload[0])
-        dispatch(getDefinition(res.payload[0])).then((res)=>{
-            console.log("DEFINTIONEEE: ", res.payload)
-            setDefinition(res.payload)
-        })
-    })
-    handleGetFakeWords()  
+
+    });
+  
   };
-
-
-
-  let allDefs;
-  const handleGetFakeWords = () => {
-    dispatch(clearFakeWords());
-    allDefs = [];
-    let count = 0;
-    while (count < 5) {
-      dispatch(getFakeWords());
-      count++;
-    }
-  };
-
-
   
 // Player joins socket room every time the gameName changes
+
+
+
 
   useEffect(() => {
     
@@ -99,6 +77,23 @@ const playerTurnName = playerTurn[0].user.username
      
   }, [gameName]);
 
+  // SOCKET - Receive info from client socket
+//   useEffect(() => {
+//     clientSocket.on("receive_word", ({ word, room }) => {
+//         // console.log(`B-WORD: ${word} B-ROOM: ${room} B-GameNAme: ${gameName}`)
+
+//        if(room === gameName) {
+//         // console.log(`A-WORD: ${word} A-ROOM: ${room} A-GameNAme: ${gameName}`)
+//             setWordSocket(`WORDL ${word} Room: ${room} gameName: ${gameName}`)
+//             setWord(word)
+        
+//     }else{
+//          setWordSocket('')
+//          setWord('')
+//     }
+//     });
+
+//   }, [clientSocket, gameName]);
 
 useEffect(() => {
     clientSocket.on("receive_word", ({ word, room }) => {
@@ -106,14 +101,12 @@ useEffect(() => {
 
     room === gameName ?
         // console.log(`A-WORD: ${word} A-ROOM: ${room} A-GameNAme: ${gameName}`)
-        //     setWordSocket(`WORDL ${word} Room: ${room} gameName: ${gameName}`)
-        //   &&  
-          setWord(word)
+            setWordSocket(`WORDL ${word} Room: ${room} gameName: ${gameName}`)
+          &&  setWord(word)
         
     :
-        //  setWordSocket('')
-         setWord('')
-        
+         setWordSocket('')
+        //  setWord('')
     
     });
 
@@ -127,7 +120,70 @@ useEffect(() => {
 
 
 
+//   REcEIVE WORD ALREADY PLAYEDD
 
+const playerTurn = game.scores.filter((score)=> score.turn === true)
+useEffect(()=>{
+   
+    clientSocket.emit('requestInfo', {playerTurn: playerTurn[0].user.username, userName: username, room: gameName})
+  
+}, [gameName])
+
+
+clientSocket.on('request_word',({playerTurn,userName, room})=>{
+    console.log("REQUEST WORDDDDDD")
+console.log("INFOOO: ", playerTurn,userName, room)
+if(playerTurn === username){
+    console.log("player turn and user name the same")
+clientSocket.emit('send_existing_word',{word: word, room: room, userName: userName} )
+
+}else{
+console.log("dd")
+}
+})
+
+clientSocket.on("retrieve_eixsting_word", ({word, userName})=>{
+if(userName === username){
+    console.log("EXISTING WORRRRRRDDDDDD: ", word)
+}
+
+})
+
+    // clientSocket.on('requestInfo', () => {
+    //     // Gather the required information
+    //     const info = 'Some information';
+      
+    //     // Emit response event directly to the requesting socket
+    //     clientSocket.emit('infoRequestReceived', info);
+    //   });
+
+      clientSocket.on('requestInfo', () => {
+        // Gather the required information
+        const info = 'Some information';
+      
+        // Emit response event directly to the requesting socket
+        socket.emit('infoRequestReceived', info);
+      });
+
+   
+
+      clientSocket.on('infoRequestReceived', (response) => {
+        console.log("did response", response); // Handle the received information
+      }); 
+
+
+  
+  console.log("player turn: ", playerTurn[0].user.username)
+
+  useEffect(()=>{
+
+     clientSocket.emit('requestInfo', playerTurn[0].user.username);
+
+    // Listen for response event from the server
+ 
+    
+
+  },[clientSocket, gameName])
 
 
 
@@ -179,7 +235,7 @@ useEffect(() => {
         <Typography color={"secondary"} sx={{ fontSize: 30 }}>
              {`Word: ${word}`}
             </Typography>
-        {/* <Typography color={"secondary"} sx={{ fontSize: 30 }}>
+        <Typography color={"secondary"} sx={{ fontSize: 30 }}>
              {`Owner: ${wordOwner}`}
             </Typography>
         <Typography color={"secondary"} sx={{ fontSize: 30 }}>
@@ -187,17 +243,25 @@ useEffect(() => {
             </Typography>
             <Typography color={"secondary"} sx={{ fontSize: 30 }}>
             {`Storage: ${wordStorage}`}
-            </Typography> */}
-
-        {/* DEFINITION */}
-        <Typography color={"secondary"} sx={{ fontSize: 30 }}>
-             {`Definition: ${definition}`}
             </Typography>
+        {/* {game && word && word.length ? (
+          
+       <Card
+       className="playerScore"
+       color="secondary"
+       sx={{ boxShadow: "none" }}
+     >
+       <Typography
+         sx={{ fontSize: 50, fontWeight: "bold" }}
+         color="secondary"
+       >
+         {}
+       </Typography>
+     </Card>
+        ) : null} */}
 
-
-
-       
-
+        {/* <h3>{typeof definition === "string" ? definition : " "}</h3>
+    { typeof definition === "string" ?  <Button onClick={() => play()}>Play</Button> : null} */}
 
       
 
@@ -208,4 +272,4 @@ useEffect(() => {
   );
 };
 
-export default XGamePlay;
+export default DBGamePlay;

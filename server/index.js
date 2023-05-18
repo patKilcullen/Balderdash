@@ -23,8 +23,8 @@ const init = async () => {
     serverSocket.on("connection", (socket) => {
       // console.log(`Connection from client ${socket.id}`);
 
-socket.on("join_room", (room)=>{
-console.log("MOFO JOINED THE RRROM")
+socket.on("join_room", ({room, userName})=>{
+console.log(`${userName} joined room ${room}`)
   socket.join(room)
 })
 
@@ -41,10 +41,30 @@ console.log("MOFO JOINED THE RRROM")
       socket.on("send_player_def", ({room, playerDef}) => {
 console.log("PLAYER EF AND ROOM: ", playerDef, room)
         socket.to(room).emit("receive_player_def", playerDef);
-       
+      
+        
       });
 
 
+      socket.on('requestInfo', ({playerTurn, userName, room}) => {
+        console.log("REQUEST INFOOOOO")
+        socket.to(room).emit("request_word", {playerTurn,userName, room});
+        
+        // socket.to(targetSocketId).emit('infoRequestReceived', 'Request received!')
+
+        // console.log("BONNNNERRRRRRR", targetSocketId)
+        // const targetSocket = serverSocket.get(targetSocketId);
+        // console.log("TARGET SOCKET: ", targetSocket)
+        // if (targetSocket) {
+        //   console.log("FUCK YOU")
+        //   // Emit request event to the target socket
+        //   targetSocket.emit('infoRequestReceived', 'Request received!');
+        // }
+      })
+     socket.on('send_existing_word', ({word,room,userName})=>{
+console.log("SEND EXISTING WORD", word)
+      socket.to(room).emit("retrieve_eixsting_word", {word,userName})
+     })
 
 
     

@@ -22,7 +22,10 @@ when user enters other game page they need to refresh to get updated words
 AND if they fresh and then go back to their game, the other games word updates their word
  WOULD putting work in the database solve this problem????  
 
+ 
+
 SUBmitting players own def gets sent to server but not being received by other players
+
 
 
 

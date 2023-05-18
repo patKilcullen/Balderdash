@@ -89,7 +89,6 @@ const SingleGame = () => {
     });
   };
 
-  
 
   return (
     <div>
@@ -183,7 +182,8 @@ const SingleGame = () => {
       (game.started === true && userScore) ? (
         <>
     
-          <GamePlay userId={userId} game={game} userScore={userScore} />
+          {/* <GamePlay userId={userId} game={game} userScore={userScore} /> */}
+          <XGamePlay userId={userId} game={game} userScore={userScore} />
         </>
       ) : null}
     </div>
