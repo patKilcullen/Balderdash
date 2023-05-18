@@ -16,6 +16,7 @@ import {
   addWordPlayerNotTurn,
 } from "./gamePlaySlice";
 import { selectMe } from "../auth/authSlice";
+import Timer from "./Timer";
 
 // SOCKET
 // could/should this be imported from app/socket.js??????
@@ -38,6 +39,7 @@ const XGamePlay = ({ userId, game, userScore }) => {
 const gameName = game.name
 const [word, setWord] = useState("")
 const [definition, setDefinition] = useState("")
+const [timer, setTimer] = useState(false)
 
 // const [wordOwner, setWordOwner] = useState("")
 // const [wordSocket, setWordSocket] = useState("")
@@ -77,6 +79,7 @@ console.log("fake Definitions: ", fakeDefinitions)
   const handleChooseWord = () => {
     handleGetFakeWords()  
     clientSocket.emit("send_word", { word: word, room: gameName })
+setTimer(true)
 
   };
 
@@ -147,6 +150,11 @@ useEffect(() => {
 
   return (
     <Card className="main " sx={{ boxShadow: "none", overflow: "visible" }}>
+
+        {/* TIMER */}
+      {timer ?   <Timer />: null}
+
+
       <Card className="playerInfo" sx={{ boxShadow: "none" }}>
         <Card
           className="playerScore"
