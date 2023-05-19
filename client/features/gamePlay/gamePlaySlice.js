@@ -125,10 +125,20 @@ const gamePlaySlice = createSlice({
          state.fakeWords.push(action.payload)
       })
       .addCase('/getFakeDefinitions/fulfilled', (state, action) => {
-       state.fakeDefinitions.push({fake: action.payload})
+        // const randomIndex = Math.floor(Math.random() * (state.fakeDefinitions.length))
+        // state.fakeDefinitions.splice(randomIndex,0,{fake: action.payload})
+        state.fakeDefinitions.push({fake: action.payload})
+        state.fakeDefinitions = randomizeArray(state.fakeDefinitions)
     })
     }
 })
+function randomizeArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 
 export const selectWord = (state)=>{
     return state.gamePlay.word

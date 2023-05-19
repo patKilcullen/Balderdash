@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { SocketContext } from "../../app/SocketProvider";
 import DefInputBox from './DefInputBox';
 import GuessDefs from './GuessDefs';
-import { selectFakeWords, getFakeDefinitions } from './gamePlaySlice';
+import { selectFakeWords, getFakeDefinitions, selectFakeDefinitions } from './gamePlaySlice';
 
 const Timer = ({userId, userScore, gameName, playerTurnName}) => {
   const [countdown, setCountdown] = useState(10); // Initial countdown value    
@@ -12,11 +12,12 @@ const Timer = ({userId, userScore, gameName, playerTurnName}) => {
   const [playGame, setPlayGame] = useState(false)
 
   const clientSocket = useContext(SocketContext);
-
+  const dispatch = useDispatch()
 
 
   const fakeWords = useSelector(selectFakeWords)
-  const dispatch = useDispatch()
+  const fakeDefinitions = useSelector(selectFakeDefinitions)
+  
 
   const handleGetFakeDefinitions = () => {
     fakeWords
