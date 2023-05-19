@@ -18,20 +18,30 @@ const Timer = ({gameName}) => {
   }, [countdown]);
 
 
+  useEffect(()=>{
+    clientSocket.emit("start_countdown", {gameName})
+      },[])
+
 
 //   may not need to send this countdown if can just ssend sock that starts others countdown...
-  useEffect(()=>{
-clientSocket.emit("send_countdown", {countdown: countdown, gameName: gameName})
-  },[countdown])
+//   useEffect(()=>{
+// clientSocket.emit("send_countdown", {countdown: countdown, gameName: gameName})
+//   },[countdown])
 
-  useEffect(()=>{
 
-  
-  clientSocket.on("receive_countdown",(countdown)=>{
-    console.log("Countdown: ", countdown)
-     setCountdown(countdown.countdown)
-  })
-},[clientSocket])
+
+//   useEffect(()=>{
+
+// //   This sends the actual count, but it may not be necessayr 
+// // because it start other socket time when it sets tot true
+// // could possibly add bolean to timer component...it can be changed through props
+//   clientSocket.on("receive_countdown",(countdown)=>{
+//     console.log("Countdown: ", countdown)
+//      setCountdown(countdown.countdown)
+//   })
+// },[clientSocket])
+
+
 //   useEffect(() => {
     
 

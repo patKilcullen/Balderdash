@@ -137,12 +137,15 @@ useEffect(() => {
 
 
 
-  clientSocket.on("receive_countdown",(countdown)=>{
+//   clientSocket.on("receive_countdown",(countdown)=>{
     
+//     setTimer(true)
+//   })
+
+  clientSocket.on("receive_start_countdown",(countdown)=>{
+    console.log("RECEIVE START COUNTDWONNNNNNNNNNIIGGAGAGA")
     setTimer(true)
   })
-
-
 
 
 

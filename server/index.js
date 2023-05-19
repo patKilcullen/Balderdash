@@ -35,10 +35,13 @@ console.log(`${userName} joined room ${room}`)
       });
 
 // Countdown Socket
-socket.on("send_countdown", ({countdown, gameName})=>{
-  socket.to(gameName).emit("receive_countdown", {countdown})
+// socket.on("send_countdown", ({countdown, gameName})=>{
+//   socket.to(gameName).emit("receive_countdown", {countdown})
+// })
+socket.on("start_countdown", (gameName)=>{
+  console.log("GAME NAME IN RECUESVE STATR: ", gameName)
+  socket.to(gameName.gameName).emit("receive_start_countdown", )
 })
-
 
 
 
