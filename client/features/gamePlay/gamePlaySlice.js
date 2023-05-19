@@ -99,6 +99,10 @@ const gamePlaySlice = createSlice({
       clearDefinition(state, action){
         state.definition = {}
       },
+      addDefinition(state, action){
+        state.fakeDefinitions.push(action.payload)
+      },
+
       addWordPlayerNotTurn(state,action){
         console.log("ACTION IN ADD WORD", action.payload)
           state.word = action.payload
@@ -139,6 +143,6 @@ export const selectFakeWords = (state)=>{
 }
 
 
-export const { clearFakeDefs, clearFakeWords, addWordPlayerNotTurn } = gamePlaySlice.actions;
+export const { clearFakeDefs, clearFakeWords, addWordPlayerNotTurn, addDefinition } = gamePlaySlice.actions;
 
 export default gamePlaySlice.reducer

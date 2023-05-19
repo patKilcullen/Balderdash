@@ -14,6 +14,7 @@ import {
   clearFakeWords,
   clearDefinition,
   addWordPlayerNotTurn,
+  addDefinition
 } from "./gamePlaySlice";
 import { selectMe } from "../auth/authSlice";
 import Timer from "./Timer";
@@ -53,7 +54,7 @@ const XGamePlay = ({ userId, game, userScore }) => {
   console.log("FAKE WORDS: ", fakeWords);
 
   const fakeDefinitions = useSelector(selectFakeDefinitions);
-
+console.log("FAKE DEFS:", fakeDefinitions)
   // SOCKET
   const clientSocket = useContext(SocketContext);
 
@@ -73,7 +74,8 @@ const XGamePlay = ({ userId, game, userScore }) => {
 
 
   const handleChooseWord = () => {
-    handleGetFakeWords();
+    handleGetFakeWords()
+    
     clientSocket.emit("send_word", { word: word, room: gameName });
     setTimer(true)
   };
@@ -88,6 +90,19 @@ const XGamePlay = ({ userId, game, userScore }) => {
       count++;
     }
   };
+
+  const handleGetFakeDefinitions = () => {
+    fakeWords
+      .forEach((word) => {
+        dispatch(getFakeDefinitions(word));
+      })
+    //   .then(() => {
+    //     getFakeDefinitions(word);
+    //   });
+  };
+
+
+
 
   // Player (and play turn)joins socket room every time the gameName changes
   useEffect(() => {
@@ -121,8 +136,8 @@ const XGamePlay = ({ userId, game, userScore }) => {
         console.log("PlayerTURNNAR" + playerTurnName + "username" + username);
         room === gameName && playerTurnName === username
           ? 
-          
-          console.log("player def: ", playerDef)
+          dispatch(addDefinition(playerDef))
+         
           : console.log("NO HOIMO");
       }
     );
@@ -141,7 +156,7 @@ const XGamePlay = ({ userId, game, userScore }) => {
           playerTurnName={playerTurnName}
         />
       ) : null}
-
+<button onClick={handleGetFakeDefinitions}>GET FAKE DEFSS</button>
       <Card className="playerInfo" sx={{ boxShadow: "none" }}>
         <Card
           className="playerScore"
