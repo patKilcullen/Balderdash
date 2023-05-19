@@ -143,7 +143,7 @@ useEffect(() => {
 //   })
 
   clientSocket.on("receive_start_countdown",(countdown)=>{
-    console.log("RECEIVE START COUNTDWONNNNNNNNNNIIGGAGAGA")
+    
     setTimer(true)
   })
 
@@ -158,7 +158,7 @@ useEffect(() => {
     <Card className="main " sx={{ boxShadow: "none", overflow: "visible" }}>
 
         {/* TIMER */}
-      {timer ?   <Timer gameName={gameName}/>: null}
+      {timer ?   <Timer userId={userId} userScore={userScore} gameName={gameName} />: null}
 
 
       <Card className="playerInfo" sx={{ boxShadow: "none" }}>

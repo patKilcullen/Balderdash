@@ -1,20 +1,31 @@
 import React, { useState, useEffect, useContext } from 'react';
-import socket from "socket.io-client";
+// import socket from "socket.io-client";
 import { SocketContext } from "../../app/SocketProvider";
+import DefInputBox from './DefInputBox';
 
-const Timer = ({gameName}) => {
-  const [countdown, setCountdown] = useState(120); // Initial countdown value
+const Timer = ({userId, userScore, gameName}) => {
+  const [countdown, setCountdown] = useState(10); // Initial countdown value    
+  const [defInput, setDefInput] = useState(false)
+
   const clientSocket = useContext(SocketContext);
+  
+  console.log("GAMENAME IN TIEMS: ", gameName, userId, userScore)
 
   useEffect(() => {
     const timer = setTimeout(() => {
+        
       if (countdown > 0) {
+        setDefInput(true)
         setCountdown(countdown - 1); // Decrease countdown value
+      }else{
+        setDefInput(false)
       }
-    }, 1000); // Update countdown every second
 
+    }, 1000)
+    
     // Cleanup the timer when the component unmounts
-    return () => clearTimeout(timer);
+    // NEEDED?
+     return () => clearTimeout(timer);
   }, [countdown]);
 
 
@@ -54,7 +65,11 @@ const Timer = ({gameName}) => {
 //     };
 //   }, []);
 
-  return <div>{countdown}</div>; // Display countdown on the UI
-};
+  return (
+    <div>
+  <div>{countdown}</div> 
+ { defInput && !userScore.turn ?<DefInputBox gameName={gameName}/>: null}
+  </div>
+)};
 
 export default Timer;

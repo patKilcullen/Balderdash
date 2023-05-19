@@ -14,8 +14,9 @@ DECLINE DOESNT ALWAYS REFRESH CORRECTLY
 
 ACCEPT PLAYER TO game doesnt automatically clear it from page every time...maybe first time..
  
- OPEN 2 INCOGNITO, both incognito END UP WITH SAME NAME>>>>>
 
+
+TIMER: when game is player,  neeed to set timer back to false
 
 LAST UPDATE: 
 when user enters other game page they need to refresh to get updated words
@@ -33,6 +34,8 @@ WHAT TO DO:
 HERE:  need to share the same socket between components....
 
 PROBLEM HERE is that refreshing the page loses the socket
+
+
 
 <!-- ChatGP -->
 
