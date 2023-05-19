@@ -130,6 +130,8 @@ console.log("FAKE DEFS:", fakeDefinitions)
       room === gameName ? setTimer(true) : setTimer(false);
     });
 
+    // if players turn, recieve other players fake definitions and add the to fake def arr
+    // with key associated with player id so they can later be awarded point
     clientSocket.on(
       "receive_player_fake_def",
       ({ playerDef, room, userId, playerTurnName }) => {

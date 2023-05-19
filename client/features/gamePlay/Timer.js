@@ -1,13 +1,33 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useSelector, useDispatch } from "react-redux"
 // import socket from "socket.io-client";
 import { SocketContext } from "../../app/SocketProvider";
 import DefInputBox from './DefInputBox';
+import GuessDefs from './GuessDefs';
+import { selectFakeWords, getFakeDefinitions } from './gamePlaySlice';
 
 const Timer = ({userId, userScore, gameName, playerTurnName}) => {
   const [countdown, setCountdown] = useState(10); // Initial countdown value    
   const [defInput, setDefInput] = useState(false)
+  const [playGame, setPlayGame] = useState(false)
 
   const clientSocket = useContext(SocketContext);
+
+
+
+  const fakeWords = useSelector(selectFakeWords)
+  const dispatch = useDispatch()
+
+  const handleGetFakeDefinitions = () => {
+    fakeWords
+      .forEach((word) => {
+        dispatch(getFakeDefinitions(word));
+      })
+    //   .then(() => {
+    //     getFakeDefinitions(word);
+    //   });
+  };
+
   
 //   console.log("GAMENAME IN TIEMS: ", gameName, userId, userScore)
 
@@ -17,7 +37,12 @@ const Timer = ({userId, userScore, gameName, playerTurnName}) => {
       if (countdown > 0) {
         setDefInput(true)
         setCountdown(countdown - 1); // Decrease countdown value
-      }else{
+      }
+      else if(countdown === 0){
+        handleGetFakeDefinitions()
+setPlayGame(true)
+      }
+      else{
         setDefInput(false)
       }
 
@@ -71,6 +96,7 @@ const Timer = ({userId, userScore, gameName, playerTurnName}) => {
     <div>
   <div>{countdown}</div> 
  { defInput && !userScore.turn ?<DefInputBox gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null}
+ {playGame ? <GuessDefs />: null}
   </div>
 )};
 
