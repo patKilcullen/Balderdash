@@ -3,13 +3,13 @@ import React, { useState, useEffect, useContext } from 'react';
 import { SocketContext } from "../../app/SocketProvider";
 import DefInputBox from './DefInputBox';
 
-const Timer = ({userId, userScore, gameName}) => {
+const Timer = ({userId, userScore, gameName, playerTurnName}) => {
   const [countdown, setCountdown] = useState(10); // Initial countdown value    
   const [defInput, setDefInput] = useState(false)
 
   const clientSocket = useContext(SocketContext);
   
-  console.log("GAMENAME IN TIEMS: ", gameName, userId, userScore)
+//   console.log("GAMENAME IN TIEMS: ", gameName, userId, userScore)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -68,7 +68,7 @@ const Timer = ({userId, userScore, gameName}) => {
   return (
     <div>
   <div>{countdown}</div> 
- { defInput && !userScore.turn ?<DefInputBox gameName={gameName}/>: null}
+ { defInput && !userScore.turn ?<DefInputBox gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null}
   </div>
 )};
 

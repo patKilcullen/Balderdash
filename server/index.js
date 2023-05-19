@@ -23,11 +23,18 @@ const init = async () => {
     serverSocket.on("connection", (socket) => {
       // console.log(`Connection from client ${socket.id}`);
 
+      socket.on("send_new_game", (data) => {
+        socket.broadcast.emit("receive_new_game", data);
+      });
+    
 socket.on("join_room", ({room, userName})=>{
 console.log(`${userName} joined room ${room}`)
   socket.join(room)
 })
-
+  socket.on("send_new_game", (data) => {
+        socket.broadcast.emit("receive_new_game", data);
+      });
+    
       socket.on("send_word", ({word, room}) => {
 
         socket.to(room).emit("receive_word", {word, room});
@@ -35,13 +42,20 @@ console.log(`${userName} joined room ${room}`)
       });
 
 // Countdown Socket
-// socket.on("send_countdown", ({countdown, gameName})=>{
-//   socket.to(gameName).emit("receive_countdown", {countdown})
-// })
-socket.on("start_countdown", (gameName)=>{
+
+socket.on("start_countdown", ({gameName})=>{
   console.log("GAME NAME IN RECUESVE STATR: ", gameName)
-  socket.to(gameName.gameName).emit("receive_start_countdown", )
+  socket.to(gameName).emit("receive_start_countdown", gameName)
 })
+
+
+// PLAYER DEFINITIONS
+socket.on("send_player_fake_def", ({playerDef, gameName, userId,playerTurnName})=>{
+  console.log("HIYYYAAAAA: ", playerDef, gameName, userId,playerTurnName)
+  socket.to(gameName).emit("receive_player_fake_def", )
+})
+
+
 
 
 
@@ -93,9 +107,10 @@ console.log("SEND EXISTING WORD", word)
       // socket.on("send_defArray", (data) => {
       //   socket.broadcast.emit("receive_defArray", data);
       // });
-      socket.on("send_new_game", (data) => {
-        socket.broadcast.emit("receive_new_game", data);
-      });
+
+
+
+
     
 
       

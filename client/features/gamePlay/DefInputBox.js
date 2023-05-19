@@ -1,17 +1,24 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 
 import { SocketContext } from "../../app/SocketProvider";
 
-const DefInputBox = () => {
+const DefInputBox = ({gameName, userId,playerTurnName}) => {
     const [playerDef, setPlayerDef] = useState("")
+    const [seeInput, setSeeInput] = useState(true)
 
-const handleEnterFakeDef = ()=>{
+    const clientSocket = useContext(SocketContext);
 
+const handleEnterFakeDef = (e)=>{
+e.preventDefault()
+clientSocket.emit("send_player_fake_def", {playerDef, gameName, userId, playerTurnName})
+
+setSeeInput(false)
+setPlayerDef("")
 }
 
   return (
     <div>
-         <form onSubmit={handleEnterFakeDef}>
+        {seeInput ? <form onSubmit={handleEnterFakeDef}>
             <label>
               Enter you fake Def here:
               <input
@@ -23,7 +30,7 @@ const handleEnterFakeDef = ()=>{
             </label>
 
             <input type="submit" value="Submit" />
-          </form>
+          </form> :null}
     </div>
   )
 }

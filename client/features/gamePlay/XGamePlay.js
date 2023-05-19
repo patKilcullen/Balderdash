@@ -53,7 +53,7 @@ const fakeWords = useSelector(selectFakeWords)
 console.log("FAKE WORDS: ", fakeWords)
 
 const fakeDefinitions = useSelector(selectFakeDefinitions)
-console.log("fake Definitions: ", fakeDefinitions)
+
 
 
   // SOCKET
@@ -103,8 +103,8 @@ setTimer(true)
 
   useEffect(() => {
     
-      const wordFromStorage  = localStorage.getItem(`${game.id}-word`)
-      console.log("WORD FROM STORAGE: ", wordFromStorage )
+    //   const wordFromStorage  = localStorage.getItem(`${game.id}-word`)
+    //   console.log("WORD FROM STORAGE: ", wordFromStorage )
     //   dispatch(addWordPlayerNotTurn(wordFromStorage))
     //   setThisWord(wordFromStorage)
      userScore ?
@@ -133,6 +133,13 @@ useEffect(() => {
     
     });
 
+    clientSocket.on("receive_start_countdown",(room)=>{
+        console.log("receive_start_countdown: ", room, gameName)
+        room === gameName ?
+        setTimer(true)
+        : setTimer(false)
+      })
+
   }, [clientSocket, gameName]);
 
 
@@ -142,11 +149,17 @@ useEffect(() => {
 //     setTimer(true)
 //   })
 
-  clientSocket.on("receive_start_countdown",(countdown)=>{
-    
-    setTimer(true)
-  })
+//   clientSocket.on("receive_start_countdown",(room)=>{
+//     console.log("receive_start_countdown: ", room, gameName)
+//     room === gameName ?
+//     setTimer(true)
+//     : null
+//   })
 
+  const [test, setTest] = useState(false)
+  clientSocket.on("receive_player_fake_def",({playerDef, gameName, userId,playerTurnName})=>{
+    
+  } )
 
 
 
@@ -158,7 +171,7 @@ useEffect(() => {
     <Card className="main " sx={{ boxShadow: "none", overflow: "visible" }}>
 
         {/* TIMER */}
-      {timer ?   <Timer userId={userId} userScore={userScore} gameName={gameName} />: null}
+      {timer ?   <Timer userId={userId} userScore={userScore} gameName={gameName} playerTurnName={playerTurnName}/>: null}
 
 
       <Card className="playerInfo" sx={{ boxShadow: "none" }}>
