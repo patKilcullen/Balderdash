@@ -115,7 +115,7 @@ const gamePlaySlice = createSlice({
     extraReducers: (builder)=>{
         builder
         .addCase('/getWord/fulfilled', (state, action) => {
-            console.log("ACtion Paylod ", action.payload)
+            
            state.word = action.payload
         })
         .addCase('/getDefinition/fulfilled', (state, action) => {

@@ -66,6 +66,7 @@ console.log("FAKE DEFS:", fakeDefinitions)
       setWord(res.payload[0]);
       dispatch(getDefinition(res.payload[0])).then((res) => {
         setDefinition(res.payload);
+        dispatch(addDefinition({real : res.payload}))
       });
     });
   };
@@ -156,6 +157,7 @@ console.log("FAKE DEFS:", fakeDefinitions)
           userScore={userScore}
           gameName={gameName}
           playerTurnName={playerTurnName}
+          definition={definition}
         />
       ) : null}
 <button onClick={handleGetFakeDefinitions}>GET FAKE DEFSS</button>
@@ -186,7 +188,7 @@ console.log("FAKE DEFS:", fakeDefinitions)
         {game && userScore && game.turn === userScore.turnNum ? (
           <Button
             // className={!wordX || !wordX.length ? "pulse" : null}
-            onClick={() => handleGetWord()}
+            onClick={handleGetWord}
             sx={{ fontSize: 30 }}
             variant="contained"
           >
