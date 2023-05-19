@@ -75,12 +75,12 @@ const fakeDefinitions = useSelector(selectFakeDefinitions)
    
   };
 
-
+const [receiveDefs, setReceiveDefs] = useState(false)
   const handleChooseWord = () => {
     handleGetFakeWords()  
     clientSocket.emit("send_word", { word: word, room: gameName })
 setTimer(true)
-
+setReceiveDefs(true)
   };
 
 
@@ -107,7 +107,7 @@ setTimer(true)
     //   console.log("WORD FROM STORAGE: ", wordFromStorage )
     //   dispatch(addWordPlayerNotTurn(wordFromStorage))
     //   setThisWord(wordFromStorage)
-     userScore ?
+     userScore || playerTurnName === username ?
     clientSocket.emit("join_room", {room: gameName, userName: username} )
      :null
 
@@ -116,6 +116,10 @@ setTimer(true)
   }, [gameName]);
 
 
+
+  const [test, setTest] = useState(false)
+//   This useEffect ensures sockets dont render on the wrong game for client who 
+// belong(or have visited?) more than one game
 useEffect(() => {
     clientSocket.on("receive_word", ({ word, room }) => {
         // console.log(`B-WORD: ${word} B-ROOM: ${room} B-GameNAme: ${gameName}`)
@@ -134,36 +138,53 @@ useEffect(() => {
     });
 
     clientSocket.on("receive_start_countdown",(room)=>{
-        console.log("receive_start_countdown: ", room, gameName)
+       
         room === gameName ?
         setTimer(true)
         : setTimer(false)
-      })
+      });
 
+    //   clientSocket.on("receive_player_fake_def",(gameName)=>{
+    //    console.log("ROOOOOMMMM: ")
+    //     // room === gameName ?
+    //     // setTimer(true)
+    //     // : setTimer(false)
+    //   })
+    
+ 
   }, [clientSocket, gameName]);
 
+useEffect(()=>{
+    console.log("SOCKET S!")
+    clientSocket.on("receive_player_fake_def",({playerDef, gameName, userId,playerTurnName})=>{
+        console.log("WELL HELLO WE MADE ITTTTTTTTTT: ", gameName)
+        // console.log(" in receive_player_fake_def", playerDef, gameName, userIdSent,playerTurnName)
+        // console.log("user ID ", userId)
+      } )
+},[clientSocket, timer])
+
+  
+// clientSocket.on("receive_player_fake_def",(gameName)=>{
+//     console.log("ROOOOOMMMM: " )
+//      // room === gameName ?
+//      // setTimer(true)
+//      // : setTimer(false)
+//    },[])
 
 
-//   clientSocket.on("receive_countdown",(countdown)=>{
-    
-//     setTimer(true)
-//   })
+const handleTest = ()=>{
+    clientSocket.emit("send_test", {gameName: gameName})
 
-//   clientSocket.on("receive_start_countdown",(room)=>{
-//     console.log("receive_start_countdown: ", room, gameName)
-//     room === gameName ?
-//     setTimer(true)
-//     : null
-//   })
+}
+useEffect(()=>{
 
-  const [test, setTest] = useState(false)
-  clientSocket.on("receive_player_fake_def",({playerDef, gameName, userId,playerTurnName})=>{
-    
+
+clientSocket.on("receive_test",({gameName})=>{
+    console.log("WELL TESTTTTTTTTTT: ", gameName)
+    // console.log(" in receive_player_fake_def", playerDef, gameName, userIdSent,playerTurnName)
+    // console.log("user ID ", userId)
   } )
-
-
-
-
+}, [])
 
 
 
@@ -172,7 +193,7 @@ useEffect(() => {
 
         {/* TIMER */}
       {timer ?   <Timer userId={userId} userScore={userScore} gameName={gameName} playerTurnName={playerTurnName}/>: null}
-
+<button onClick={handleTest}>TEST</button>
 
       <Card className="playerInfo" sx={{ boxShadow: "none" }}>
         <Card

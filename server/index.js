@@ -52,9 +52,14 @@ socket.on("start_countdown", ({gameName})=>{
 // PLAYER DEFINITIONS
 socket.on("send_player_fake_def", ({playerDef, gameName, userId,playerTurnName})=>{
   console.log("HIYYYAAAAA: ", playerDef, gameName, userId,playerTurnName)
-  socket.to(gameName).emit("receive_player_fake_def", )
+  socket.to(gameName).emit("receive_player_fake_def", gameName)
+  // socket.to(gameName).emit("receive_player_fake_def",{playerDef, gameName, userId, playerTurnName})
 })
-
+socket.on("send_test", ({gameName})=>{
+  console.log("HIYYYAAAAA TEST: ", gameName)
+  socket.to(gameName).emit("receive_test", gameName)
+  // socket.to(gameName).emit("receive_player_fake_def",{playerDef, gameName, userId, playerTurnName})
+})
 
 
 
