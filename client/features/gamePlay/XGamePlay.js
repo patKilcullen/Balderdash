@@ -133,12 +133,12 @@ console.log("FAKE DEFS:", fakeDefinitions)
     clientSocket.on(
       "receive_player_fake_def",
       ({ playerDef, room, userId, playerTurnName }) => {
-        console.log("PlayerTURNNAR" + playerTurnName + "username" + username);
+        let playerId = userId
         room === gameName && playerTurnName === username
           ? 
-          dispatch(addDefinition(playerDef))
+          dispatch(addDefinition({[playerId] : playerDef}))
          
-          : console.log("NO HOIMO");
+          : null;
       }
     );
   }, [clientSocket, gameName]);

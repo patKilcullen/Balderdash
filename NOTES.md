@@ -19,6 +19,8 @@ ACCEPT PLAYER TO game doesnt automatically clear it from page every time...maybe
 TIMER: when game is player,  neeed to set timer back to false
 
 LAST UPDATE: 
+Added players fake def to fake def array.  CAn get other fake defs when play after the times is up.  habe to mix all the defs... the players fake defs should be attached to their userId so that they can earn points if someone gueess their definition.
+
 Added playerTurnName === username in XGamePlay to useEffect to join room... make sure it doesn mis up room.....
 
 when user enters other game page they need to refresh to get updated words
