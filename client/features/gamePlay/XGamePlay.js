@@ -36,54 +36,47 @@ const XGamePlay = ({ userId, game, userScore }) => {
   const dispatch = useDispatch();
   const me = useSelector(selectMe);
   const username = me.username;
-const gameName = game.name
-const [word, setWord] = useState("")
-const [definition, setDefinition] = useState("")
-const [timer, setTimer] = useState(false)
+  const gameName = game.name;
+  const [word, setWord] = useState("");
+  const [definition, setDefinition] = useState("");
+  const [timer, setTimer] = useState(false);
 
-// const [wordOwner, setWordOwner] = useState("")
-// const [wordSocket, setWordSocket] = useState("")
-// const [wordStorage, setWordStorage] = useState("")
+  // const [wordOwner, setWordOwner] = useState("")
+  // const [wordSocket, setWordSocket] = useState("")
+  // const [wordStorage, setWordStorage] = useState("")
 
-// Player whose turn it is  
-const playerTurn = game.scores.filter((score)=> score.turn === true)
-const playerTurnName = playerTurn[0].user.username
+  // Player whose turn it is
+  const playerTurn = game.scores.filter((score) => score.turn === true);
+  const playerTurnName = playerTurn[0].user.username;
 
-const fakeWords = useSelector(selectFakeWords)
-console.log("FAKE WORDS: ", fakeWords)
+  const fakeWords = useSelector(selectFakeWords);
+  console.log("FAKE WORDS: ", fakeWords);
 
-const fakeDefinitions = useSelector(selectFakeDefinitions)
-
-
+  const fakeDefinitions = useSelector(selectFakeDefinitions);
 
   // SOCKET
   const clientSocket = useContext(SocketContext);
 
-
-
-
   const handleGetWord = () => {
     dispatch(getWord()).then((res) => {
-        // localStorage.setItem(`${gameName}-word`, res.payload[0]);
-        // clientSocket.emit("send_word", { word: res.payload[0], room: gameName });
-        // setWordOwner(res.payload[0])
-        setWord(res.payload[0])
-        dispatch(getDefinition(res.payload[0])).then((res)=>{
-            setDefinition(res.payload)
-        })
-    })
-   
+      // localStorage.setItem(`${gameName}-word`, res.payload[0]);
+      // clientSocket.emit("send_word", { word: res.payload[0], room: gameName });
+      // setWordOwner(res.payload[0])
+      setWord(res.payload[0]);
+      dispatch(getDefinition(res.payload[0])).then((res) => {
+        setDefinition(res.payload);
+      });
+    });
   };
 
-const [receiveDefs, setReceiveDefs] = useState(false)
+
+
+
   const handleChooseWord = () => {
-    handleGetFakeWords()  
-    clientSocket.emit("send_word", { word: word, room: gameName })
-setTimer(true)
-setReceiveDefs(true)
+    handleGetFakeWords();
+    clientSocket.emit("send_word", { word: word, room: gameName });
+    setTimer(true)
   };
-
-
 
   let allDefs;
   const handleGetFakeWords = () => {
@@ -94,106 +87,60 @@ setReceiveDefs(true)
       dispatch(getFakeWords());
       count++;
     }
-
   };
 
-
-  
-// Player joins socket room every time the gameName changes
-
+  // Player (and play turn)joins socket room every time the gameName changes
   useEffect(() => {
-    
-    //   const wordFromStorage  = localStorage.getItem(`${game.id}-word`)
-    //   console.log("WORD FROM STORAGE: ", wordFromStorage )
-    //   dispatch(addWordPlayerNotTurn(wordFromStorage))
-    //   setThisWord(wordFromStorage)
-     userScore || playerTurnName === username ?
-    clientSocket.emit("join_room", {room: gameName, userName: username} )
-     :null
-
-
-     
+    userScore || playerTurnName === username
+      ? clientSocket.emit("join_room", { room: gameName, userName: username })
+      : null;
   }, [gameName]);
 
 
 
-  const [test, setTest] = useState(false)
-//   This useEffect ensures sockets dont render on the wrong game for client who 
-// belong(or have visited?) more than one game
-useEffect(() => {
-    clientSocket.on("receive_word", ({ word, room }) => {
-        // console.log(`B-WORD: ${word} B-ROOM: ${room} B-GameNAme: ${gameName}`)
 
-    room === gameName ?
-        // console.log(`A-WORD: ${word} A-ROOM: ${room} A-GameNAme: ${gameName}`)
-        //     setWordSocket(`WORDL ${word} Room: ${room} gameName: ${gameName}`)
-        //   &&  
+  // This useEffect ensures sockets dont render on the wrong game for client who
+  // belong(or have visited?) more than one game
+  useEffect(() => {
+    clientSocket.on("receive_word", ({ word, room }) => {
+      room === gameName
+        ? //     setWordSocket(`WORDL ${word} Room: ${room} gameName: ${gameName}`)
+          //   &&
           setWord(word)
-        
-    :
-        //  setWordSocket('')
-         setWord('')
-        
-    
+        : //  setWordSocket('')
+          setWord("");
     });
 
-    clientSocket.on("receive_start_countdown",(room)=>{
-       
-        room === gameName ?
-        setTimer(true)
-        : setTimer(false)
-      });
+    clientSocket.on("receive_start_countdown", (room) => {
+      room === gameName ? setTimer(true) : setTimer(false);
+    });
 
-    //   clientSocket.on("receive_player_fake_def",(gameName)=>{
-    //    console.log("ROOOOOMMMM: ")
-    //     // room === gameName ?
-    //     // setTimer(true)
-    //     // : setTimer(false)
-    //   })
-    
- 
+    clientSocket.on(
+      "receive_player_fake_def",
+      ({ playerDef, room, userId, playerTurnName }) => {
+        console.log("PlayerTURNNAR" + playerTurnName + "username" + username);
+        room === gameName && playerTurnName === username
+          ? 
+          
+          console.log("player def: ", playerDef)
+          : console.log("NO HOIMO");
+      }
+    );
   }, [clientSocket, gameName]);
-
-useEffect(()=>{
-    console.log("SOCKET S!")
-    clientSocket.on("receive_player_fake_def",({playerDef, gameName, userId,playerTurnName})=>{
-        console.log("WELL HELLO WE MADE ITTTTTTTTTT: ", gameName)
-        // console.log(" in receive_player_fake_def", playerDef, gameName, userIdSent,playerTurnName)
-        // console.log("user ID ", userId)
-      } )
-},[clientSocket, timer])
-
-  
-// clientSocket.on("receive_player_fake_def",(gameName)=>{
-//     console.log("ROOOOOMMMM: " )
-//      // room === gameName ?
-//      // setTimer(true)
-//      // : setTimer(false)
-//    },[])
-
-
-const handleTest = ()=>{
-    clientSocket.emit("send_test", {gameName: gameName})
-
-}
-useEffect(()=>{
-
-
-clientSocket.on("receive_test",({gameName})=>{
-    console.log("WELL TESTTTTTTTTTT: ", gameName)
-    // console.log(" in receive_player_fake_def", playerDef, gameName, userIdSent,playerTurnName)
-    // console.log("user ID ", userId)
-  } )
-}, [])
 
 
 
   return (
     <Card className="main " sx={{ boxShadow: "none", overflow: "visible" }}>
-
-        {/* TIMER */}
-      {timer ?   <Timer userId={userId} userScore={userScore} gameName={gameName} playerTurnName={playerTurnName}/>: null}
-<button onClick={handleTest}>TEST</button>
+      {/* TIMER */}
+      {timer ? (
+        <Timer
+          userId={userId}
+          userScore={userScore}
+          gameName={gameName}
+          playerTurnName={playerTurnName}
+        />
+      ) : null}
 
       <Card className="playerInfo" sx={{ boxShadow: "none" }}>
         <Card
@@ -214,15 +161,12 @@ clientSocket.on("receive_test",({gameName})=>{
             {`gameNAme in XGamePlay: ${gameName}`}
           </Typography>
         </Card>
-
-        
       </Card>
 
       {/* BUTTONS */}
       <Card className="buttons " sx={{ boxShadow: "none" }}>
-
- {/* GET WORD BUTTON -  only visible if it is userScore's turn*/}
- {game && userScore && game.turn === userScore.turnNum ? (
+        {/* GET WORD BUTTON -  only visible if it is userScore's turn*/}
+        {game && userScore && game.turn === userScore.turnNum ? (
           <Button
             // className={!wordX || !wordX.length ? "pulse" : null}
             onClick={() => handleGetWord()}
@@ -235,11 +179,10 @@ clientSocket.on("receive_test",({gameName})=>{
           </Button>
         ) : null}
 
-
         {/* WORD */}
         <Typography color={"secondary"} sx={{ fontSize: 30 }}>
-             {`Word: ${word}`}
-            </Typography>
+          {`Word: ${word}`}
+        </Typography>
         {/* <Typography color={"secondary"} sx={{ fontSize: 30 }}>
              {`Owner: ${wordOwner}`}
             </Typography>
@@ -252,12 +195,11 @@ clientSocket.on("receive_test",({gameName})=>{
 
         {/* DEFINITION */}
         <Typography color={"secondary"} sx={{ fontSize: 30 }}>
-             {`Definition: ${definition}`}
-            </Typography>
+          {`Definition: ${definition}`}
+        </Typography>
 
-
-{definition ?
-    <Button
+        {definition ? (
+          <Button
             className={"pulse"}
             onClick={() => handleChooseWord()}
             sx={{ fontSize: 30 }}
@@ -266,14 +208,8 @@ clientSocket.on("receive_test",({gameName})=>{
             <Typography color={"secondary"} sx={{ fontSize: 30 }}>
               Choose Word
             </Typography>
-          </Button>: null}
-       
-
-
-      
-
-      
-      
+          </Button>
+        ) : null}
       </Card>
     </Card>
   );

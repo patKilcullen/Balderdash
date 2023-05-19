@@ -10,7 +10,7 @@ const DefInputBox = ({gameName, userId,playerTurnName}) => {
 
 const handleEnterFakeDef = (e)=>{
 e.preventDefault()
-clientSocket.emit("send_player_fake_def", {playerDef, gameName, userId, playerTurnName})
+clientSocket.emit("send_player_fake_def", {playerDef,room: gameName, userId, playerTurnName})
 
 setSeeInput(false)
 setPlayerDef("")

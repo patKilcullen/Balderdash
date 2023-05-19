@@ -19,6 +19,8 @@ ACCEPT PLAYER TO game doesnt automatically clear it from page every time...maybe
 TIMER: when game is player,  neeed to set timer back to false
 
 LAST UPDATE: 
+Added playerTurnName === username in XGamePlay to useEffect to join room... make sure it doesn mis up room.....
+
 when user enters other game page they need to refresh to get updated words
 AND if they fresh and then go back to their game, the other games word updates their word
  WOULD putting work in the database solve this problem????  
