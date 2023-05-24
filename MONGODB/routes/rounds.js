@@ -43,7 +43,8 @@ router.post('/', async (req,res)=>{
     // console.log("hHEERERERERERE", req.body.round)
 const round = new Round({
     gameName: req.body.gameName,
-    round: req.body.round
+    roundNumber: req.body.round,
+    definitions: req.body.definitions
 })
 try{
 const newRound = await round.save()
