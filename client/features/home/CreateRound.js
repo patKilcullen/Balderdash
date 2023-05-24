@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const CreateRound = () => {
-  const [game, setGame] = useState('');
-  const [round, setRound] = useState('');
+  const [gameName, setGameName] = useState('');
+  const [roundNumber, setRoundNumber] = useState('');
+  const [word, setWord] = useState('');
   const [definitions, setDefinitions] = useState('');
 
   const handleSubmit = async (e) => {
@@ -11,33 +12,57 @@ const CreateRound = () => {
 
     try {
       // Send the POST request to the server API endpoint
-      await axios.post('http://localhost:3000/rounds', { game, round});
+      await axios.post('http://localhost:3000/rounds', { gameName, roundNumber});
 
       // Clear the form fields
-      setGame('');
-      setRound('');
+      setGameName('');
+      setRoundNumber('');
+      setWord('');
     //   setDefinitions('');
     } catch (error) {
       console.error('Error creating round:', error);
     }
   };
 
+  const handleGetRounds = async ()=>{
+  
+
+    try {
+      // Send the POST request to the server API endpoint
+     const rounds = await axios.get('http://localhost:3000/rounds', { gameName, round});
+
+      console.log("ROUNDS: ", rounds.data)
+    } catch (error) {
+      console.error('Error get rounds round:', error);
+    }
+
+  }
+
   return (
+    <div>
     <form onSubmit={handleSubmit}>
       <label>
         Game Name:
         <input
           type="text"
-          value={game}
-          onChange={(e) => setGame(e.target.value)}
+          value={gameName}
+          onChange={(e) => setGameName(e.target.value)}
+        />
+      </label>
+      <label>
+        Round:
+        <input
+          type="text"
+          value={roundNumber}
+          onChange={(e) => setRoundNumber(e.target.value)}
         />
       </label>
       <label>
         Word:
         <input
           type="text"
-          value={round}
-          onChange={(e) => setRound(e.target.value)}
+          value={word}
+          onChange={(e) => setWord(e.target.value)}
         />
       </label>
       {/* <label>
@@ -50,6 +75,8 @@ const CreateRound = () => {
       </label> */}
       <button type="submit">Create Round</button>
     </form>
+    <button onClick={handleGetRounds} >get rounds </button>
+    </div>
   );
 };
 
@@ -59,7 +86,7 @@ export default CreateRound;
 // import React, { useState } from 'react';
 
 // const CreateRound = () => {
-//   const [game, setGame] = useState('');
+//   const [game, setGameName] = useState('');
 //   const [round, setRound] = useState('');
 // //   const [definitions, setDefinitions] = useState('');
 
