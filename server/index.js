@@ -64,7 +64,7 @@ socket.on("start_countdown", ({gameName})=>{
 socket.on("send_fake_defs", ({fakeDefinitions, gameName})=>{
   console.log("Gam in send fake defs: ", gameName)
   console.log("fake defs in send fake defs: ", fakeDefinitions)
-  // socket.to(gameName).emit("receive_start_countdown", gameName)
+  socket.to(gameName).emit("receive_fake_defs", fakeDefinitions)
 })
 
 
