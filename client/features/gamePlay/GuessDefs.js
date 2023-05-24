@@ -10,7 +10,8 @@ const GuessDefs = ({fakeDefinitions, gameName}) => {
   const clientSocket = useContext(SocketContext);
 
   const [fakeDefs, setFakeDefs] = useState([])
-
+  const [correct, setCorrect] = useState(null)
+  // const [incorrect, setIncorrect] = useState(false)
   // const fakeDefinitions = useSelector(selectFakeDefinitions)
   console.log("FAke defs in guess defs: ", fakeDefinitions)
 
@@ -25,9 +26,18 @@ setFakeDefs(fakeDefinitions)
 const handleChooseWord = (def)=>{
   console.log("DEF: ", Object.values(def)[0])
   console.log("KEY: ", Object.keys(def)[0])
+  Object.keys(def)[0] === 'real' ?
+setCorrect(true)
+: setCorrect(false)
+
+// HERE
+// Object.keys(def)[0] !== 'real' && Object.keys(def)[0] !== 'fakke' ?
+//  add point in databse to userID that === Object.keys(def)[0]
+// : null
+
 }
 
-
+console.log("CORRECT: ", correct)
 
 
 useEffect(()=>{
@@ -68,7 +78,7 @@ useEffect(()=>{
                 );
               })
             : ""} */}
-
+{correct === true  ? <div>fuck yea</div> : correct === false  ? <div>idiot</div> : null }
 {fakeDefs && fakeDefs.length
             ? fakeDefs.map((def) => {
               const value = Object.values(def)[0]

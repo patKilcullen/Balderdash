@@ -12,7 +12,7 @@
 
 //     try {
 //       // Send the POST request to the server API endpoint
-//       await axios.post('http://localhost:3000/rounds', { gameName, roundNumber});
+//       await axios.post(process.env.Mongo_URL, { gameName, roundNumber});
 
 //       // Clear the form fields
 //       setGameName('');
@@ -29,7 +29,7 @@
 
 //     try {
 //       // Send the POST request to the server API endpoint
-//      const rounds = await axios.get('http://localhost:3000/rounds', { gameName, round});
+//      const rounds = await axios.get(process.env.Mongo_URL, { gameName, round});
 
 //       console.log("ROUNDS: ", rounds.data)
 //     } catch (error) {
@@ -125,7 +125,7 @@
 //       };
 
 //       // Send the POST request using fetch
-//       const response = await fetch('http://localhost:3000/rounds', {
+//       const response = await fetch(process.env.Mongo_URL, {
 //         method: 'POST',
 //         mode: "no-cors",
 //         headers: {
@@ -216,10 +216,8 @@ const CreateRound = () => {
         word,
         definitions,
       };
-
-      const response = await axios.post('http://localhost:3000/rounds', roundData);
-
-      console.log('Round created successfully');
+      const response = await axios.post(process.env.Mongo_URL, roundData);
+      console.log('Round created successfully. ROUND: ', response);
       // Reset the form
       setGameName('');
       setRoundNumber('');
