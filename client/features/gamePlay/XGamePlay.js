@@ -92,15 +92,7 @@ console.log("FAKE DEFS:", fakeDefinitions)
     }
   };
 
-  const handleGetFakeDefinitions = () => {
-    fakeWords
-      .forEach((word) => {
-        dispatch(getFakeDefinitions(word));
-      })
-    //   .then(() => {
-    //     getFakeDefinitions(word);
-    //   });
-  };
+
 
 
 
@@ -151,34 +143,16 @@ console.log("FAKE DEFS:", fakeDefinitions)
   return (
     <Card className="main " sx={{ boxShadow: "none", overflow: "visible" }}>
       {/* TIMER */}
-      {timer ? (
-        <Timer
-          userId={userId}
-          userScore={userScore}
-          gameName={gameName}
-          playerTurnName={playerTurnName}
-          definition={definition}
-        />
-      ) : null}
-<button onClick={handleGetFakeDefinitions}>GET FAKE DEFSS</button>
+      
+
       <Card className="playerInfo" sx={{ boxShadow: "none" }}>
         <Card
           className="playerScore"
           color="secondary"
           sx={{ boxShadow: "none" }}
         >
-          <Typography
-            sx={{ fontSize: 50, fontWeight: "bold" }}
-            color="secondary"
-          >
-            {`USERNAME: ${username}`}
-          </Typography>
-          <Typography
-            sx={{ fontSize: 50, fontWeight: "bold" }}
-            color="secondary"
-          >
-            {`gameNAme in XGamePlay: ${gameName}`}
-          </Typography>
+       
+          
         </Card>
       </Card>
 
@@ -229,6 +203,15 @@ console.log("FAKE DEFS:", fakeDefinitions)
             </Typography>
           </Button>
         ) : null}
+        {timer ? (
+        <Timer
+          userId={userId}
+          userScore={userScore}
+          gameName={gameName}
+          playerTurnName={playerTurnName}
+          definition={definition}
+        />
+      ) : null}
       </Card>
     </Card>
   );

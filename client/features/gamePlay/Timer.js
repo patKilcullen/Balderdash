@@ -6,6 +6,8 @@ import DefInputBox from './DefInputBox';
 import GuessDefs from './GuessDefs';
 import { selectFakeWords, getFakeDefinitions, selectFakeDefinitions } from './gamePlaySlice';
 
+
+
 const Timer = ({userId, userScore, gameName, playerTurnName, definition}) => {
   const [countdown, setCountdown] = useState(10); // Initial countdown value    
   const [defInput, setDefInput] = useState(false)
@@ -97,7 +99,7 @@ setPlayGame(true)
     <div>
   <div>{countdown}</div> 
  { defInput && !userScore.turn ?<DefInputBox gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null}
- {playGame ? <GuessDefs />: null}
+ {playGame ? <GuessDefs fakeDefinitions={fakeDefinitions} gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null}
   </div>
 )};
 

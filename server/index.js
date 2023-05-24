@@ -56,6 +56,16 @@ socket.on("send_player_fake_def", ({playerDef, room, userId,playerTurnName})=>{
   // socket.to(gameName).emit("receive_player_fake_def",{playerDef, gameName, userId, playerTurnName})
 })
 
+socket.on("start_countdown", ({gameName})=>{
+  console.log("GAME NAME IN RECUESVE STATR: ", gameName)
+  socket.to(gameName).emit("receive_start_countdown", gameName)
+})
+
+socket.on("send_fake_defs", ({fakeDefinitions, gameName})=>{
+  console.log("Gam in send fake defs: ", gameName)
+  console.log("fake defs in send fake defs: ", fakeDefinitions)
+  // socket.to(gameName).emit("receive_start_countdown", gameName)
+})
 
 
 
