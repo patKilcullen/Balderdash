@@ -3,26 +3,48 @@ import mongodb from "mongodb"
 import dotend from "dotenv"
 dotend.config()
 
+
+import RoundsDAO from "./dao/roundsDAO.js"
+import RestaurantsDAO from "./dao/restaurantsDAO.js"
+
 const MongoClient = mongodb.MongoClient
 
 const port = process.env.PORT || 4000
 
-MongoClient.connect(
-    process.env.Balderdash_NOSQL_URI,
-    {
-        // poolSize: 50,
-        wtimeout: 2500,
-        // useNewUrlParse: true
-    }
-).catch(err=>{
-    console.error(err.stack)
-    process.exit()
-})
-.then(async client =>{
-    app.listen(port, ()=>{
-        console.log("linstening on port" + port)
-    })
-})
+// MongoClient.connect(
+//     process.env.Balderdash_NOSQL_URI,
+//     {
+//         // poolSize: 50,
+//         wtimeout: 2500,
+//         // useNewUrlParse: true
+//     }
+// ).catch(err=>{
+//     console.error(err.stack)
+//     process.exit()
+// })
+// .then(async client =>{
+//     console.log("linstening on port" + client.connection)
+// // HEREEEEE
+// await RoundsDAO.injectDB(client)
+// await RestaurantsDAO.injectDB(client)
+//     app.listen(port, ()=>{
+//         console.log("linstening on port" + port)
+//     })
+// })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // import { MongoClient, ServerApiVersion } from 'mongodb';
 // const uri = "mongodb+srv://patrickjkilcullen:Throbbing1349!@balderdash0.0i6ywmq.mongodb.net/rounds?retryWrites=true&w=majority";

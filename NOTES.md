@@ -19,6 +19,13 @@ ACCEPT PLAYER TO game doesnt automatically clear it from page every time...maybe
 TIMER: when game is player,  neeed to set timer back to false
 
 LAST UPDATE: 
+MONGODD LINKS:
+https://cloud.mongodb.com/v2/646c3fcb2cc21d7f9a5af495#/metrics/replicaSet/646c40d57d4ee04da523a6f6/explorer/sample_airbnb/listingsAndReviews/find
+
+https://www.youtube.com/watch?v=mrHNSanmqQ4
+ https://github.com/beaucarnes/restaurant-reviews/blob/master/backend/dao/reviewsDAO.js
+
+
 Did below... now need to add real def
 Added players fake def to fake def array.  CAn get other fake defs when play after the times is up.  habe to mix all the defs... the players fake defs should be attached to their userId so that they can earn points if someone gueess their definition.
 

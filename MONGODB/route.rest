@@ -1,0 +1,13 @@
+GET http://localhost:3000/rounds
+
+
+###
+
+
+POST http://localhost:3000/rounds
+Content-Type: application/json
+
+{
+    "game" : "NEfffW ASrrrrrS GAME",
+    "round" : 69
+}

@@ -4,6 +4,8 @@ import Main from "../main/Main";
 import { Link } from "react-router-dom";
 
 import AllGames from "../games/AllGames";
+
+import CreateRound from "./CreateRound";
 /**
  * COMPONENT
  */
@@ -16,6 +18,7 @@ const Home = () => {
 
       {/* <Link to={"/main"}>Start a new game</Link> */}
 <AllGames></AllGames>
+<CreateRound />
       {/* <Main /> */}
     </div>
   );
