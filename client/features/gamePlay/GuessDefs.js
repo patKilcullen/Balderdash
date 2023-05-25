@@ -36,9 +36,9 @@ const handleChooseWord = (def)=>{
 
 
 // HERE
-// Object.keys(def)[0] !== 'real' && Object.keys(def)[0] !== 'fakke' ?
-//  add point in databse to userID that === Object.keys(def)[0]
-// : null
+Object.keys(def)[0] !== 'real' && Object.keys(def)[0] !== 'fake' ?
+dispatch(addPoint({userId: Object.keys(def)[0], gameId: gameId}))
+: null
 
 }
 
