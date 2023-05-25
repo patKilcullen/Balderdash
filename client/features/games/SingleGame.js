@@ -116,7 +116,7 @@ const SingleGame = () => {
                 {" "}
                 {user.user ? (
                   <div>
-                    {user.user.username} {user.score}
+                    {user.user.username} Score: {user.score}
                     {/* Dont let non owner */}
                     {user.user.id !== userId &&
                     userId === game.ownerId &&

@@ -13,11 +13,41 @@ const GuessDefs = ({userId, fakeDefinitions, gameName, gameId }) => {
 
   const [fakeDefs, setFakeDefs] = useState([])
   const [correct, setCorrect] = useState(null)
+  const [defList, setDefList] = useState(null)
   // const [incorrect, setIncorrect] = useState(false)
   // const fakeDefinitions = useSelector(selectFakeDefinitions)
   console.log("FAke defs in guess defs: ", fakeDefinitions)
 
 const dispatch = useDispatch()
+
+
+
+
+
+const [countdown, setCountdown] = useState(20);
+useEffect(() => {
+  const timer = setTimeout(() => {
+      
+    if (countdown > 0) {
+      setDefList(true)
+      setCountdown(countdown - 1); // Decrease countdown value
+    }
+    else if(countdown === 0){
+      // handleGetFakeDefinitions()
+      setDefList(false)
+    }
+    else{
+      // setDefList(false)
+    }
+
+  }, 1000)
+  
+  // Cleanup the timer when the component unmounts
+  // NEEDED?
+   return () => clearTimeout(timer);
+}, [countdown]);
+
+
 
 useEffect(()=>{
 setFakeDefs(fakeDefinitions)
@@ -83,8 +113,8 @@ useEffect(()=>{
                 );
               })
             : ""} */}
-{correct === true  ? <div>fuck yea</div> : correct === false  ? <div>idiot</div> : null }
-{fakeDefs && fakeDefs.length
+{correct === true  ? <div>Correctamundo!!!</div> : correct === false  ? <div>Wrong, idiot!</div> : null }
+{defList === true && fakeDefs && fakeDefs.length
             ? fakeDefs.map((def) => {
               const value = Object.values(def)[0]
                 return (
