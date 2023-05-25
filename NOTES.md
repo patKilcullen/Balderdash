@@ -14,6 +14,8 @@ ACCEPT PLAYER TO game doesnt automatically clear it from page every time...maybe
 
 TIMER: when game is player,  neeed to set timer back to false
 
+
+
 LAST UPDATE: 
 if not working, check CreateRound... changed lovalhost link to process.env variable
 

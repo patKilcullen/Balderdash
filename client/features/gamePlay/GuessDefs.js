@@ -3,10 +3,12 @@ import { useSelector, useDispatch } from "react-redux"
 import { selectFakeWords, getFakeDefinitions, selectFakeDefinitions } from './gamePlaySlice';
 import { SocketContext } from "../../app/SocketProvider";
 
+import { editScore, addPoint } from '../scores/scoresSlice';
+
 
 import Button from "@mui/material/Button";
 
-const GuessDefs = ({fakeDefinitions, gameName}) => {
+const GuessDefs = ({userId, fakeDefinitions, gameName, gameId }) => {
   const clientSocket = useContext(SocketContext);
 
   const [fakeDefs, setFakeDefs] = useState([])
@@ -15,7 +17,7 @@ const GuessDefs = ({fakeDefinitions, gameName}) => {
   // const fakeDefinitions = useSelector(selectFakeDefinitions)
   console.log("FAke defs in guess defs: ", fakeDefinitions)
 
-
+const dispatch = useDispatch()
 
 useEffect(()=>{
 setFakeDefs(fakeDefinitions)
@@ -27,8 +29,11 @@ const handleChooseWord = (def)=>{
   console.log("DEF: ", Object.values(def)[0])
   console.log("KEY: ", Object.keys(def)[0])
   Object.keys(def)[0] === 'real' ?
-setCorrect(true)
+  dispatch(addPoint({userId, gameId}))
+// dispatch(editScore({userId, gameId}))
+// setCorrect(true)
 : setCorrect(false)
+
 
 // HERE
 // Object.keys(def)[0] !== 'real' && Object.keys(def)[0] !== 'fakke' ?

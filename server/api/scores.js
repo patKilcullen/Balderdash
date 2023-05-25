@@ -45,6 +45,27 @@ router.put('/:id', async(req,res,next)=>{
     next(err)
   }
 })
+
+// Add Point 
+router.put('/:id/addPoint', async(req,res,next)=>{
+  console.log("HIT ADD POINT: ", req.body )
+  try {
+    const score = await Score.findOne({where: {userId: req.body.userId, gameId: req.body.gameId} })
+  
+    score.score += 1;
+    res.send(await score.save());
+    // or
+// res.send(await score.update(score));
+// original
+    // res.send(await score.update(req.body)); 
+
+    // res.json(score)
+  } catch (err) {
+    next(err)
+  }
+})
+
+
  
 // DELETE SCORE API
 router.delete('/:gameId/:userId', async(req,res,next)=>{

@@ -49,9 +49,24 @@ export const fetchAllScores = createAsyncThunk(
   export const editScore = createAsyncThunk(
     "editScore",
     async (score) => {
-
+console.log("")
       try {
         const { data } = await axios.put(`/api/scores/${score.userId}`, score);
+        console.log("DATAAAA: ", data)
+        return data;
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  );
+
+// ADD POINT
+  export const addPoint = createAsyncThunk(
+    "editScore",
+    async ({userId, gameId}) => {
+console.log("ADD POINT THUNK: ", userId, gameId)
+      try {
+        const { data } = await axios.put(`/api/scores/${userId}/addPoint`, {userId, gameId});
         console.log("DATAAAA: ", data)
         return data;
       } catch (err) {

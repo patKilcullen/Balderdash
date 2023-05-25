@@ -208,6 +208,7 @@ console.log("FAKE DEFS:", fakeDefinitions)
           userId={userId}
           userScore={userScore}
           gameName={gameName}
+          gameId={game.id}
           playerTurnName={playerTurnName}
           definition={definition}
         />
