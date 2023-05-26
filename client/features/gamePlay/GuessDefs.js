@@ -35,6 +35,12 @@ useEffect(() => {
     else if(countdown === 0){
       // handleGetFakeDefinitions()
       setDefList(false)
+
+      
+      // HERE   NEEd to update the game turn, if its 1, it needs to be set to numPlayers, otherwise it needs to subtrack by 1
+      // will need to change or scores turn as well, but that may take a lot becuse you have to firt
+      // get the sore with turn and set to ti false and then get soce with same turnnum as game turn
+      // instead of ever using the score turn, can just compare their turn num to the game turn
     }
     else{
       // setDefList(false)

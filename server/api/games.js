@@ -44,6 +44,19 @@ router.put('/:gameId', async(req,res,next)=>{
   }
 })
 
+
+router.patch('/:gameId/changeTurn', async(req,res,next)=>{
+  console.log("REQ BOFYY: ", req.body)
+  try {
+    const game = await Game.findByPk(req.params.gameId)
+    
+    res.send(await game.update(req.body));
+    // res.json(score)
+  } catch (err) {
+    next(err)
+  }
+})
+
 // Get All Users Games
 // router.get("/", async (req, res, next) => {
 //   try {

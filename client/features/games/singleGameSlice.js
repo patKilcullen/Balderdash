@@ -12,6 +12,7 @@ export const fetchSingleGame = createAsyncThunk("singleGame", async (id) => {
   }
 });
 
+
 // export const addGamePlayer = createAsyncThunk(
 //   "addGamePlayer",
 //   async (gameId) => {
@@ -31,6 +32,7 @@ export const fetchSingleGame = createAsyncThunk("singleGame", async (id) => {
 
 
 export const editGame = createAsyncThunk("editGame", async (game) => {
+  console.log("GAME MOFO: ", game)
   try {
     const { data } = await axios.put(`/api/games/${game.id}`, game);
     console.log("DATAAAA: ", data);
@@ -39,6 +41,32 @@ export const editGame = createAsyncThunk("editGame", async (game) => {
     console.log(err);
   }
 });
+
+
+export const editGameTurn = createAsyncThunk("editGame", async ({gameId, turn}) => {
+  console.log("GAME MOFO: ", gameId, turn)
+  try {
+    const { data } = await axios.patch(`/api/games/${gameId}/changeTurn`, {turn});
+    console.log("DATAAAA: ", data);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+// export const changeGameTurn = createAsyncThunk(
+//   "changeGameTun",
+//   async (gameId) => {
+// console.log("Change Score THUNK: ", gameId)
+//     try {
+//       const { data } = await axios.put(`/api/games/${gameId}/changeScore`, );
+//       console.log("DATAAAA: ", data)
+//       return data;
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   }
+// );
 
 
 

@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { selectSingleGame, fetchSingleGame, editGame } from "./singleGameSlice";
+import { selectSingleGame, fetchSingleGame, editGame, editGameTurn } from "./singleGameSlice";
 import {
   fetchAllScores,
   selectAllScores,
@@ -89,9 +89,18 @@ const SingleGame = () => {
     });
   };
 
+const handleChangeGameScore =()=>{
+  console.log("GAMEID: ", gameId)
+  console.log("GAM TURN: ", game.turn)
+  console.log("GAM NUM PLAYER: ", game.numPlayers)
+  game.turn === 1 ? 
+  dispatch(editGameTurn({gameId: gameId, turn: game.numPlayers}))
+  : dispatch(editGameTurn({gameId: gameId,turn: (game.turn - 1)}))
+}
 
   return (
     <div>
+      <button onClick={handleChangeGameScore}>CHANGE GAME TURN</button>
       <div>
         {userScore && userScore.user ? (
           <div>USER NAME: {userScore.user.username}</div>

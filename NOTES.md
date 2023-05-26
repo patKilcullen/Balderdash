@@ -19,6 +19,14 @@ TIMER: when game is player,  neeed to set timer back to false
 LAST UPDATE: 
 if not working, check CreateRound... changed lovalhost link to process.env variable
 
+users pick def and get point if guess right and give other player point if they guess their def
+time is put on the Guess def component to give limited time to guess
+
+// HERE   NEEd to update the game turn, if its 1, it needs to be set to numPlayers, otherwise it needs to subtrack by 1
+      // will need to change or scores turn as well, but that may take a lot becuse you have to firt
+      // get the sore with turn and set to ti false and then get soce with same turnnum as game turn
+      // instead of ever using the score turn, can just compare their turn num to the game turn
+
 added mongodb, can get rounds and post rounds
 fake definition is sent to all other users. when user chooses a word, if it it the 'real' word, it sets correct to true,.. this shoudl add a point to the score in the databse.  
 also should check if the word is not fake... if it is not, should add a point to the score in the datavbase that shares the userID as the key of the answer
