@@ -76,13 +76,14 @@ const handleChooseWord = (def)=>{
   console.log("DEF: ", Object.values(def)[0])
   console.log("KEY: ", Object.keys(def)[0])
   Object.keys(def)[0] === 'real' ?
-  dispatch(addPoint({userId, gameId}))
+  dispatch(addPoint({userId, gameId})).then(()=>{
+ setCorrect(true)
+  })
 // dispatch(editScore({userId, gameId}))
-// setCorrect(true)
+
 : setCorrect(false)
 
 
-// HERE
 Object.keys(def)[0] !== 'real' && Object.keys(def)[0] !== 'fake' ?
 dispatch(addPoint({userId: Object.keys(def)[0], gameId: gameId}))
 : null

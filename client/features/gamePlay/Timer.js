@@ -95,10 +95,12 @@ setPlayGame(true)
 //     };
 //   }, []);
 
+console.log("USERSCORE: ", userScore.turnNum)
   return (
     <div>
   <div>{countdown}</div> 
- { defInput && !userScore.turn ?<DefInputBox gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null}
+ {/* { defInput && !userScore.turn ?<DefInputBox gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null} */}
+ { defInput && userScore.turnNum !== game.turn ?<DefInputBox gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null}
  {playGame ? <GuessDefs game={game} fakeDefinitions={fakeDefinitions} gameName={gameName} gameId={gameId} userId={userId} playerTurnName={playerTurnName}/>: null}
   </div>
 )};

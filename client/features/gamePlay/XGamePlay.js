@@ -47,7 +47,8 @@ const XGamePlay = ({ userId, game, userScore }) => {
   // const [wordStorage, setWordStorage] = useState("")
 
   // Player whose turn it is
-  const playerTurn = game.scores.filter((score) => score.turn === true);
+
+  const playerTurn = game.scores.filter((score) => score.turnNum === game.turn);
   const playerTurnName = playerTurn[0].user.username;
 
   const fakeWords = useSelector(selectFakeWords);
