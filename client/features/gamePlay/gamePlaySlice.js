@@ -7,10 +7,11 @@ export const getWord = createAsyncThunk(
   '/getWord',
   async () => {
     try {
-      const { data } = await axios.get(`https://random-word-api.herokuapp.com/word`);
+      const { data } = await axios.get(`https://random-word-api.vercel.app/api?words=1`);
+      console.log("DATAAAAAA IN GET WORD: ", data)
       return data
     } catch (error) {
-      console.log("ERROR IN GET WORD")
+      console.log("ERROR IN GET WdddddddORD", error)
       return error.message;
     }
   }

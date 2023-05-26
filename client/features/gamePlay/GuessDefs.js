@@ -4,6 +4,7 @@ import { selectFakeWords, getFakeDefinitions, selectFakeDefinitions } from './ga
 import { SocketContext } from "../../app/SocketProvider";
 
 import { editScore, addPoint } from '../scores/scoresSlice';
+import { editGameTurn } from '../games/singleGameSlice';
 
 
 import Button from "@mui/material/Button";
@@ -34,9 +35,10 @@ useEffect(() => {
     }
     else if(countdown === 0){
       // handleGetFakeDefinitions()
+      
       setDefList(false)
 
-      
+      handleChangeGameScore()
       // HERE   NEEd to update the game turn, if its 1, it needs to be set to numPlayers, otherwise it needs to subtrack by 1
       // will need to change or scores turn as well, but that may take a lot becuse you have to firt
       // get the sore with turn and set to ti false and then get soce with same turnnum as game turn
@@ -53,6 +55,15 @@ useEffect(() => {
    return () => clearTimeout(timer);
 }, [countdown]);
 
+
+const handleChangeGameScore =()=>{
+  console.log("GAMEID: ", gameId)
+  console.log("GAM TURN: ", game.turn)
+  console.log("GAM NUM PLAYER: ", game.numPlayers)
+  game.turn === 1 ? 
+  dispatch(editGameTurn({gameId: gameId, turn: game.numPlayers}))
+  : dispatch(editGameTurn({gameId: gameId,turn: (game.turn - 1)}))
+}
 
 
 useEffect(()=>{

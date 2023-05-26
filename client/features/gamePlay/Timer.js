@@ -8,7 +8,7 @@ import { selectFakeWords, getFakeDefinitions, selectFakeDefinitions } from './ga
 
 
 
-const Timer = ({userId, userScore, gameName, gameId, playerTurnName, definition}) => {
+const Timer = ({game, userId, userScore, gameName, gameId, playerTurnName, definition}) => {
   const [countdown, setCountdown] = useState(10); // Initial countdown value    
   const [defInput, setDefInput] = useState(false)
   const [playGame, setPlayGame] = useState(false)
@@ -99,7 +99,7 @@ setPlayGame(true)
     <div>
   <div>{countdown}</div> 
  { defInput && !userScore.turn ?<DefInputBox gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null}
- {playGame ? <GuessDefs fakeDefinitions={fakeDefinitions} gameName={gameName} gameId={gameId} userId={userId} playerTurnName={playerTurnName}/>: null}
+ {playGame ? <GuessDefs game={game} fakeDefinitions={fakeDefinitions} gameName={gameName} gameId={gameId} userId={userId} playerTurnName={playerTurnName}/>: null}
   </div>
 )};
 

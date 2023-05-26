@@ -205,6 +205,7 @@ console.log("FAKE DEFS:", fakeDefinitions)
         ) : null}
         {timer ? (
         <Timer
+        game={game}
           userId={userId}
           userScore={userScore}
           gameName={gameName}
