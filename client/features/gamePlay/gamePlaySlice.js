@@ -25,7 +25,7 @@ export const getFakeWords = createAsyncThunk(
   '/getFakeWords',
   async () => {
     try {
-      const { data } = await axios.get(`https://random-word-api.herokuapp.com/word`);
+      const { data } = await axios.get(`https://random-word-api.vercel.app/api?words=1`);
       return data
     } catch (error) {
       console.log("EROR IN GET FAKES WORDS")
