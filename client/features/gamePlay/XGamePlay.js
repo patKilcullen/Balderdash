@@ -47,15 +47,17 @@ const XGamePlay = ({ userId, game, userScore }) => {
   // const [wordStorage, setWordStorage] = useState("")
 
   // Player whose turn it is
-
-  const playerTurn = game.scores.filter((score) => score.turnNum === game.turn);
+  // PLAYER_TURN_PROBLEM
+   const playerTurn = game.scores.filter((score) => score.turnNum === game.turn);
+  // Player turn never changes with one below//
+  // const playerTurn = game.scores.filter((score) => score.turn === true);
   const playerTurnName = playerTurn[0].user.username;
+  console.log("PLAYER TURN: ", playerTurnName)
 
   const fakeWords = useSelector(selectFakeWords);
-  console.log("FAKE WORDS: ", fakeWords);
 
   const fakeDefinitions = useSelector(selectFakeDefinitions);
-console.log("FAKE DEFS:", fakeDefinitions)
+
   // SOCKET
   const clientSocket = useContext(SocketContext);
 
@@ -97,13 +99,15 @@ console.log("FAKE DEFS:", fakeDefinitions)
 
 
 
-
+console.log("USERSCORE: ", userScore)
   // Player (and play turn)joins socket room every time the gameName changes
   useEffect(() => {
-    userScore || playerTurnName === username
+    userScore 
+    || playerTurnName === username
       ? clientSocket.emit("join_room", { room: gameName, userName: username })
       : null;
-  }, [gameName]);
+      // ADING playTURN BEFORE MAY HAVE SOLVED PLAYER_TURN_PROBLEM
+  }, [gameName, playerTurn]);
 
 
 
@@ -130,7 +134,8 @@ console.log("FAKE DEFS:", fakeDefinitions)
       "receive_player_fake_def",
       ({ playerDef, room, userId, playerTurnName }) => {
         let playerId = userId
-        room === gameName && playerTurnName === username
+        room === gameName 
+        && playerTurnName === username
           ? 
           dispatch(addDefinition({[playerId] : playerDef}))
          

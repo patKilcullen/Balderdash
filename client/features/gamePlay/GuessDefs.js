@@ -17,7 +17,7 @@ const GuessDefs = ({game, userId, fakeDefinitions, gameName, gameId }) => {
   const [defList, setDefList] = useState(null)
   // const [incorrect, setIncorrect] = useState(false)
   // const fakeDefinitions = useSelector(selectFakeDefinitions)
-  console.log("FAke defs in guess defs: ", fakeDefinitions)
+
 
 const dispatch = useDispatch()
 
@@ -25,7 +25,7 @@ const dispatch = useDispatch()
 
 
 
-const [countdown, setCountdown] = useState(20);
+const [countdown, setCountdown] = useState(15);
 useEffect(() => {
   const timer = setTimeout(() => {
       
@@ -38,7 +38,7 @@ useEffect(() => {
       
       setDefList(false)
 
-      handleChangeGameScore()
+      handleChangeGameTurn()
       // HERE   NEEd to update the game turn, if its 1, it needs to be set to numPlayers, otherwise it needs to subtrack by 1
       // will need to change or scores turn as well, but that may take a lot becuse you have to firt
       // get the sore with turn and set to ti false and then get soce with same turnnum as game turn
@@ -56,10 +56,8 @@ useEffect(() => {
 }, [countdown]);
 
 
-const handleChangeGameScore =()=>{
-  console.log("GAMEID: ", gameId)
-  console.log("GAM TURN: ", game.turn)
-  console.log("GAM NUM PLAYER: ", game.numPlayers)
+const handleChangeGameTurn =()=>{
+
   game.turn === 1 ? 
   dispatch(editGameTurn({gameId: gameId, turn: game.numPlayers}))
   : dispatch(editGameTurn({gameId: gameId,turn: (game.turn - 1)}))
@@ -72,25 +70,46 @@ setFakeDefs(fakeDefinitions)
 
 
 
+// const handleChooseWord = (def)=>{
+//   console.log("DEF: ", Object.values(def)[0])
+//   console.log("KEY: ", Object.keys(def)[0])
+
+
+//   Object.keys(def)[0] === 'real' ?
+//   dispatch(addPoint({userId, gameId})).then(()=>{
+//  setCorrect(true)
+//   })
+// // dispatch(editScore({userId, gameId}))
+
+// : setCorrect(false)
+
+
+// Object.keys(def)[0] !== 'real' && Object.keys(def)[0] !== 'fake' ?
+// dispatch(addPoint({userId: Object.keys(def)[0], gameId: gameId}))
+// : null
+// Object.keys(def)[0] !== 'fake' ? setCorrect(false) : null
+// }
+
+
+// THIS DOES NOT WORK, if choose both righ with two plays, one gets multiple points and the other gets none
 const handleChooseWord = (def)=>{
-  console.log("DEF: ", Object.values(def)[0])
-  console.log("KEY: ", Object.keys(def)[0])
-  Object.keys(def)[0] === 'real' ?
-  dispatch(addPoint({userId, gameId})).then(()=>{
- setCorrect(true)
-  })
-// dispatch(editScore({userId, gameId}))
+  // const def = Object.values(def)[0]
+  const userKey =  Object.keys(def)[0]
 
-: setCorrect(false)
+  // USETKEY IS A STRING AND userid is A NuMBER>>>
+console.log("userKey: ",typeof userKey)
+console.log("userId: ",typeof userId) 
+  userKey === 'fake' ? null :
+  userKey === 'real' ?
+  dispatch(addPoint({userId, gameId}))
+: userKey !== 'fake' && userKey !== 'real' ?
+dispatch(addPoint({userId: userKey, gameId: gameId}))
 
-
-Object.keys(def)[0] !== 'real' && Object.keys(def)[0] !== 'fake' ?
-dispatch(addPoint({userId: Object.keys(def)[0], gameId: gameId}))
 : null
 
 }
 
-console.log("CORRECT: ", correct)
+
 
 
 useEffect(()=>{
@@ -107,7 +126,7 @@ useEffect(()=>{
 //     }, [clientSocket,fakeDefinitions, gameName]);
 
     clientSocket.on("receive_fake_defs", ( fakeDefinitions) => {
-      console.log("CAME BACK BABAY", fakeDefinitions)
+   
       setFakeDefs(fakeDefinitions)
      });
  

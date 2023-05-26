@@ -16,6 +16,12 @@ TIMER: when game is player,  neeed to set timer back to false
 
 
 
+IMPORTANT: 
+when player turn changes and page refresh,  the other user doesnt get the word after the first refresh... it appears to only happend when the people choosing the word is NOT the owner of the game
+search PLAYER_TURN_PROBLEM,  it worrks when it goes by score.turn, but not when it compares game.turn to score.turnNum
+when playerNAme if score.turn... the def doesnt send if the user who turn it is is not the owner
+POSSIBLY SOLVED IT by addind playerTurn to dependency array of useEffect for join_room socket in XGamePlay
+
 LAST UPDATE: 
 if not working, check CreateRound... changed lovalhost link to process.env variable
 

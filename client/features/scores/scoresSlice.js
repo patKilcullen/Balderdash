@@ -52,7 +52,7 @@ export const fetchAllScores = createAsyncThunk(
 console.log("")
       try {
         const { data } = await axios.put(`/api/scores/${score.userId}`, score);
-        console.log("DATAAAA: ", data)
+       
         return data;
       } catch (err) {
         console.log(err);
@@ -67,7 +67,7 @@ console.log("")
 console.log("ADD POINT THUNK: ", userId, gameId)
       try {
         const { data } = await axios.put(`/api/scores/${userId}/addPoint`, {userId, gameId});
-        console.log("DATAAAA: ", data)
+     
         return data;
       } catch (err) {
         console.log(err);
