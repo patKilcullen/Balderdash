@@ -9,7 +9,7 @@ import { editGameTurn } from '../games/singleGameSlice';
 
 import Button from "@mui/material/Button";
 
-const GuessDefs = ({userId, fakeDefinitions, gameName, gameId }) => {
+const GuessDefs = ({game, userId, fakeDefinitions, gameName, gameId }) => {
   const clientSocket = useContext(SocketContext);
 
   const [fakeDefs, setFakeDefs] = useState([])
