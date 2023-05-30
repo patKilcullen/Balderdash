@@ -14,7 +14,8 @@ import {
   clearFakeWords,
   clearDefinition,
   addWordPlayerNotTurn,
-  addDefinition
+  addDefinition, 
+
 } from "./gamePlaySlice";
 import { selectMe } from "../auth/authSlice";
 import Timer from "./Timer";
@@ -33,7 +34,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-const XGamePlay = ({ userId, game, userScore }) => {
+const XGamePlay = ({ userId, game, userScore, reload }) => {
   const dispatch = useDispatch();
   const me = useSelector(selectMe);
   const username = me.username;
@@ -41,6 +42,7 @@ const XGamePlay = ({ userId, game, userScore }) => {
   const [word, setWord] = useState("");
   const [definition, setDefinition] = useState("");
   const [timer, setTimer] = useState(false);
+  const [choseWord, setChoseWord] = useState(false)
 
   // const [wordOwner, setWordOwner] = useState("")
   // const [wordSocket, setWordSocket] = useState("")
@@ -51,8 +53,15 @@ const XGamePlay = ({ userId, game, userScore }) => {
    const playerTurn = game.scores.filter((score) => score.turnNum === game.turn);
   // Player turn never changes with one below//
   // const playerTurn = game.scores.filter((score) => score.turn === true);
-  const playerTurnName = playerTurn[0].user.username;
+  let playerTurnName = playerTurn[0].user.username;
   console.log("PLAYER TURN: ", playerTurnName)
+
+  useEffect(()=>{
+    const playerTurn = game.scores.filter((score) => score.turnNum === game.turn);
+
+    playerTurnName = playerTurn[0].user.username;
+
+  },[game])
 
   const fakeWords = useSelector(selectFakeWords);
 
@@ -62,6 +71,7 @@ const XGamePlay = ({ userId, game, userScore }) => {
   const clientSocket = useContext(SocketContext);
 
   const handleGetWord = () => {
+    dispatch(clearFakeDefs())
     dispatch(getWord()).then((res) => {
       // localStorage.setItem(`${gameName}-word`, res.payload[0]);
       // clientSocket.emit("send_word", { word: res.payload[0], room: gameName });
@@ -82,6 +92,7 @@ const XGamePlay = ({ userId, game, userScore }) => {
     
     clientSocket.emit("send_word", { word: word, room: gameName });
     setTimer(true)
+    setChoseWord(true)
   };
 
   let allDefs;
@@ -197,7 +208,7 @@ const XGamePlay = ({ userId, game, userScore }) => {
           {`Definition: ${definition}`}
         </Typography>
 
-        {definition ? (
+        {definition && !choseWord ? (
           <Button
             className={"pulse"}
             onClick={() => handleChooseWord()}
@@ -218,6 +229,11 @@ const XGamePlay = ({ userId, game, userScore }) => {
           gameId={game.id}
           playerTurnName={playerTurnName}
           definition={definition}
+          reload={reload}
+          setDefinition={setDefinition}
+          setWord={setWord}
+          setTimer={setTimer}
+          setChoseWord={setChoseWord}
         />
       ) : null}
       </Card>

@@ -8,8 +8,8 @@ import { selectFakeWords, getFakeDefinitions, selectFakeDefinitions } from './ga
 
 
 
-const Timer = ({game, userId, userScore, gameName, gameId, playerTurnName, definition}) => {
-  const [countdown, setCountdown] = useState(1); // Initial countdown value    
+const Timer = ({game, userId, userScore, gameName, gameId, playerTurnName,  reload, setDefinition, setWord, setTimer, setChoseWord}) => {
+  const [countdown, setCountdown] = useState(1)  
   const [defInput, setDefInput] = useState(false)
   const [playGame, setPlayGame] = useState(false)
 
@@ -26,20 +26,17 @@ const Timer = ({game, userId, userScore, gameName, gameId, playerTurnName, defin
       .forEach((word) => {
         dispatch(getFakeDefinitions(word));
       })
-    //   .then(() => {
-    //     getFakeDefinitions(word);
-    //   });
+
   };
 
-  
-//   console.log("GAMENAME IN TIEMS: ", gameName, userId, userScore)
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
         
       if (countdown > 0) {
         setDefInput(true)
-        setCountdown(countdown - 1); // Decrease countdown value
+        setCountdown(countdown - 1); 
       }
       else if(countdown === 0){
         handleGetFakeDefinitions()
@@ -64,36 +61,7 @@ setPlayGame(true)
 
       
 
-//   may not need to send this countdown if can just ssend sock that starts others countdown...
-//   useEffect(()=>{
-// clientSocket.emit("send_countdown", {countdown: countdown, gameName: gameName})
-//   },[countdown])
 
-
-
-//   useEffect(()=>{
-
-// //   This sends the actual count, but it may not be necessayr 
-// // because it start other socket time when it sets tot true
-// // could possibly add bolean to timer component...it can be changed through props
-//   clientSocket.on("receive_countdown",(countdown)=>{
-//     console.log("Countdown: ", countdown)
-//      setCountdown(countdown.countdown)
-//   })
-// },[clientSocket])
-
-
-//   useEffect(() => {
-    
-
-//     clientSocket.on('countdownUpdate', (newCountdown) => {
-//       setCountdown(newCountdown);
-//     });
-
-//     return () => {
-//       socket.disconnect();
-//     };
-//   }, []);
 
 
   return (
@@ -101,7 +69,7 @@ setPlayGame(true)
   <div>{countdown}</div> 
  {/* { defInput && !userScore.turn ?<DefInputBox gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null} */}
  { defInput && userScore.turnNum !== game.turn ?<DefInputBox gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null}
- {playGame ? <GuessDefs game={game} fakeDefinitions={fakeDefinitions} gameName={gameName} gameId={gameId} userId={userId} Name={playerTurnName}/>: null}
+ {playGame ? <GuessDefs game={game} fakeDefinitions={fakeDefinitions} gameName={gameName} gameId={gameId} userId={userId} Name={playerTurnName} reload={reload} setDefinition={setDefinition} setWord={setWord} setTimer={setTimer} setPlayGame={setPlayGame} setChoseWord={setChoseWord}/>: null}
   </div>
 )};
 

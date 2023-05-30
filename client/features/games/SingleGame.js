@@ -38,6 +38,19 @@ const SingleGame = () => {
     // dispatch(fetchAllScores())
     dispatch(fetchAllGameScores(gameId));
   }, []);
+  
+  useEffect(() => {
+    dispatch(fetchSingleGame(gameId));
+    // dispatch(fetchAllScores())
+    dispatch(fetchAllGameScores(gameId));
+  }, [gameId]);
+
+  const reload = ()=>{
+  console.log("HIT RELOAD")
+    dispatch(fetchSingleGame(gameId));
+    // dispatch(fetchAllScores())
+    dispatch(fetchAllGameScores(gameId));
+  }
 
   // SOCKET
   //  const clientSocket = socket.connect("http://localhost:8080");
@@ -186,7 +199,7 @@ console.log("USER SCOROROROROROR: ", userScore)
         <>
     
           {/* <GamePlay userId={userId} game={game} userScore={userScore} /> */}
-          <XGamePlay userId={userId} game={game} userScore={userScore} />
+          <XGamePlay userId={userId} game={game} userScore={userScore} reload={reload}/>
         </>
       ) : null}
     </div>
