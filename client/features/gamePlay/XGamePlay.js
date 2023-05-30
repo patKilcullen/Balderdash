@@ -99,14 +99,14 @@ const XGamePlay = ({ userId, game, userScore }) => {
 
 
 
-console.log("USERSCORE: ", userScore)
+
   // Player (and play turn)joins socket room every time the gameName changes
   useEffect(() => {
     userScore 
     || playerTurnName === username
       ? clientSocket.emit("join_room", { room: gameName, userName: username })
       : null;
-      // ADING playTURN BEFORE MAY HAVE SOLVED PLAYER_TURN_PROBLEM
+      // ADING playTURN BEFORE MAY HAVE SOLVERS PLAYER_TURN_PROBLEM
   }, [gameName, playerTurn]);
 
 

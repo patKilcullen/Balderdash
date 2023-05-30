@@ -15,6 +15,7 @@ const GuessDefs = ({game, userId, fakeDefinitions, gameName, gameId }) => {
   const [fakeDefs, setFakeDefs] = useState([])
   const [correct, setCorrect] = useState(null)
   const [defList, setDefList] = useState(null)
+  const [guessed, setGuessed] = useState(false)
   // const [incorrect, setIncorrect] = useState(false)
   // const fakeDefinitions = useSelector(selectFakeDefinitions)
 
@@ -25,7 +26,7 @@ const dispatch = useDispatch()
 
 
 
-const [countdown, setCountdown] = useState(15);
+const [countdown, setCountdown] = useState(7);
 useEffect(() => {
   const timer = setTimeout(() => {
       
@@ -93,19 +94,23 @@ setFakeDefs(fakeDefinitions)
 
 // THIS DOES NOT WORK, if choose both righ with two plays, one gets multiple points and the other gets none
 const handleChooseWord = (def)=>{
+  setGuessed(true)
+  console.log("CHISES IIFIFI IFI FI IFI I")
   // const def = Object.values(def)[0]
-  const userKey =  Object.keys(def)[0]
+  const userKey = Object.keys(def)[0]
 
   // USETKEY IS A STRING AND userid is A NuMBER>>>
-console.log("userKey: ",typeof userKey)
+console.log("userKey: ", userKey)
 console.log("userId: ",typeof userId) 
   userKey === 'fake' ? null :
   userKey === 'real' ?
   dispatch(addPoint({userId, gameId}))
-: userKey !== 'fake' && userKey !== 'real' ?
-dispatch(addPoint({userId: userKey, gameId: gameId}))
+: 
+// userKey !== 'fake' && userKey !== 'real' ?
+// dispatch(addPoint({userId: userKey, gameId: gameId}))
 
-: null
+// :
+ null
 
 }
 
@@ -151,7 +156,7 @@ useEffect(()=>{
               })
             : ""} */}
 {correct === true  ? <div>Correctamundo!!!</div> : correct === false  ? <div>Wrong, idiot!</div> : null }
-{defList === true && fakeDefs && fakeDefs.length
+{guessed === false && defList === true && fakeDefs && fakeDefs.length
             ? fakeDefs.map((def) => {
               const value = Object.values(def)[0]
                 return (
