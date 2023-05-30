@@ -39,8 +39,8 @@ const GuessDefs = ({
   const dispatch = useDispatch();
 
   const [countdown, setCountdown] = useState(3);
-  useEffect(() => {
-    const timer = setTimeout(() => {
+  useEffect( () => {
+    const timer = setTimeout(async () => {
       if (countdown > 0) {
         setDefList(true);
         setCountdown(countdown - 1); // Decrease countdown value
@@ -48,24 +48,27 @@ const GuessDefs = ({
         // handleGetFakeDefinitions()
 
         setDefList(false);
-
-        handleChangeGameTurn()
+        console.log("GAME BEFORE: ", game )
+     handleChangeGameTurn()
+console.log("GAME AFTER: ", game )
+          // reload();
+       
       
-          location.reload()
+          // location.reload()
      
 
         // window.reload()
-        // reload();
-        // setDefinition("");
-        // setWord("");
+        
+        setDefinition("");
+        setWord("");
 
-        // setGuessed(false);
-        // setDefList(null);
-        // setFakeDefs([]);
-        // setTimer(false);
-        // setPlayGame(false);
-        // setChoseWord(false)
-        // dispatch(clearFakeWords());
+        setGuessed(false);
+        setDefList(null);
+        setFakeDefs([]);
+        setTimer(false);
+        setPlayGame(false);
+        setChoseWord(false)
+        dispatch(clearFakeWords());
 
         
         // dispatch(fetchSingleGame(gameId));

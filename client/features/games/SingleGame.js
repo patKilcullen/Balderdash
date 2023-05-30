@@ -13,8 +13,8 @@ import {
 } from "../scores/scoresSlice";
 
 import Main from "../main/Main";
-import GamePlay from "../gamePlay/GamePlay";
-import XGamePlay from "../gamePlay/XGamePlay";
+import GamePlay from "../gamePlay/GamePlayOLD";
+import XGamePlay from "../gamePlay/GamePlay";
 // SOCKET
 import socket from "socket.io-client";
 // import { SocketContext } from "../../app/App";
@@ -38,7 +38,7 @@ const SingleGame = () => {
     // dispatch(fetchAllScores())
     dispatch(fetchAllGameScores(gameId));
   }, []);
-  
+
   useEffect(() => {
     dispatch(fetchSingleGame(gameId));
     // dispatch(fetchAllScores())
@@ -46,10 +46,13 @@ const SingleGame = () => {
   }, [gameId]);
 
   const reload = ()=>{
-  console.log("HIT RELOAD")
-    dispatch(fetchSingleGame(gameId));
-    // dispatch(fetchAllScores())
-    dispatch(fetchAllGameScores(gameId));
+  console.log("HIT RELAORD: ", Date())
+    dispatch(fetchSingleGame(gameId))
+    
+   
+   
+   
+    console.log("GAME Turn IN RELOAD: ", game.turn )
   }
 
   // SOCKET

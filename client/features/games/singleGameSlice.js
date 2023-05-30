@@ -78,6 +78,9 @@ const singleGameSlice = createSlice({
     builder.addCase(fetchSingleGame.fulfilled, (state, action) => {
       return action.payload;
     });
+    builder.addCase(editGameTurn.fulfilled, (state, action) => {
+      return action.payload;
+    })
   },
 });
 

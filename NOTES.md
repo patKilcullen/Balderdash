@@ -24,6 +24,8 @@ POSSIBLY SOLVED IT by addind playerTurn to dependency array of useEffect for joi
 NOWWWWWW add to scores function not working.  one gets multiple points... possibly beacuse of socket???? or logic doubled somewhere possible thunk or route
 
 LAST UPDATE: 
+use location.reload() to change turns for now.  probably not the best practive because has to reload everything and it loses state, but it workd for now.
+
 if not working, check CreateRound... changed lovalhost link to process.env variable
 
 users pick def and get point if guess right and give other player point if they guess their def
