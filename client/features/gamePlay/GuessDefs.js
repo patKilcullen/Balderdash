@@ -26,7 +26,7 @@ const dispatch = useDispatch()
 
 
 
-const [countdown, setCountdown] = useState(7);
+const [countdown, setCountdown] = useState(12);
 useEffect(() => {
   const timer = setTimeout(() => {
       
@@ -70,7 +70,9 @@ setFakeDefs(fakeDefinitions)
 },[fakeDefinitions])
 
 
-
+console.log("FAKE ADDS SD OFOFOODEFFFFS: ", fakeDefs)
+const boner = fakeDefs.filter((def)=> !def.hasOwnProperty(`${userId}`))
+console.log("OBNER: ", boner)
 // const handleChooseWord = (def)=>{
 //   console.log("DEF: ", Object.values(def)[0])
 //   console.log("KEY: ", Object.keys(def)[0])
@@ -95,23 +97,32 @@ setFakeDefs(fakeDefinitions)
 // THIS DOES NOT WORK, if choose both righ with two plays, one gets multiple points and the other gets none
 const handleChooseWord = (def)=>{
   setGuessed(true)
-  console.log("CHISES IIFIFI IFI FI IFI I")
-  // const def = Object.values(def)[0]
+
+
   const userKey = Object.keys(def)[0]
 
-  // USETKEY IS A STRING AND userid is A NuMBER>>>
 console.log("userKey: ", userKey)
-console.log("userId: ",typeof userId) 
-  userKey === 'fake' ? null :
-  userKey === 'real' ?
-  dispatch(addPoint({userId, gameId}))
-: 
-// userKey !== 'fake' && userKey !== 'real' ?
-// dispatch(addPoint({userId: userKey, gameId: gameId}))
+console.log("userId: ", userId) 
+//   userKey === 'fake' ? null :
+//   userKey === 'real' ?
+//   console.log(`REAL: userId: ${userId}, gameId: ${gameId}` )
+//   // dispatch(addPoint({userId: userId, gameId: gameId}))
+// : 
+//  userKey !== 'fake' && userKey !== 'real' ?
+// dispatch(addPoint({userId: , gameId: gameId}))
 
-// :
- null
-
+//  :
+//  null
+if(userKey === 'fake'){
+  console.log("FAKEEEEe")
+} if (userKey === 'real'){
+  console.log("REAL")
+  dispatch(addPoint({userId: userId, gameId: gameId}))
+}
+if(userKey !== 'fake' && userKey !== 'real'){
+  console.log(`REAL: userId: ${userKey}, gameId: ${gameId}` )
+  dispatch(addPoint({userId: userKey, gameId: gameId}))
+}
 }
 
 
@@ -157,7 +168,9 @@ useEffect(()=>{
             : ""} */}
 {correct === true  ? <div>Correctamundo!!!</div> : correct === false  ? <div>Wrong, idiot!</div> : null }
 {guessed === false && defList === true && fakeDefs && fakeDefs.length
-            ? fakeDefs.map((def) => {
+            ? 
+            fakeDefs.filter((def)=> !def.hasOwnProperty(`${userId}`))
+            .map((def) => {
               const value = Object.values(def)[0]
                 return (
                   <Button

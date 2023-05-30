@@ -19,6 +19,7 @@ import XGamePlay from "../gamePlay/XGamePlay";
 import socket from "socket.io-client";
 // import { SocketContext } from "../../app/App";
 import { SocketContext } from "../../app/SocketProvider";
+import { use } from "chai";
 
 const SingleGame = () => {
   // put user ID in props????
@@ -89,7 +90,7 @@ const SingleGame = () => {
     });
   };
 
-
+console.log("USER SCOROROROROROR: ", userScore)
   return (
     <div>
     
@@ -102,8 +103,9 @@ const SingleGame = () => {
       {game.owner ? <div>Owner: {game.owner.username}</div> : null}
 
       {/* User Score */}
-      {userScore && userScore.user ? (
-        <div> Your Score {userScore.user.username}</div>
+      {userScore && userScore.score ? (
+        // <div> Your Score {userScore.user.username} </div>
+        <div> Your Score {userScore.score} </div>
       ) : null}
 
       {/* Players and Score */}
