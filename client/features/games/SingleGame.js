@@ -47,8 +47,10 @@ const SingleGame = () => {
 
   const reload = ()=>{
   console.log("HIT RELAORD: ", Date())
-    dispatch(fetchSingleGame(gameId))
-    
+    dispatch(fetchSingleGame(gameId)).then(()=>{
+      dispatch(fetchAllGameScores(gameId))
+    })
+    // 
    
    
    

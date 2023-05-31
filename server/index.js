@@ -35,9 +35,9 @@ console.log(`${userName} joined room ${room}`)
         socket.broadcast.emit("receive_new_game", data);
       });
     
-      socket.on("send_word", ({word, room}) => {
-
-        socket.to(room).emit("receive_word", {word, room});
+      socket.on("send_word", ({word, room, playerTurnName}) => {
+console.log("PLAYER TURN NAME IN SEND WORD: ", playerTurnName)
+        socket.to(room).emit("receive_word", {word, room,playerTurnName });
        
       });
 
@@ -67,6 +67,12 @@ socket.on("send_fake_defs", ({fakeDefinitions, gameName})=>{
   socket.to(gameName).emit("receive_fake_defs", fakeDefinitions)
 })
 
+
+
+socket.on("send_player_turn_name", ({playerTurnName, gameName})=>{
+console.log("SEND PLAYER TURN NAME: ", playerTurnName)
+  socket.to(gameName).emit("receive_player_turn_name", {playerTurnName, gameName})
+})
 
 
 

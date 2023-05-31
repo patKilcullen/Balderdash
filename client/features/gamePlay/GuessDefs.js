@@ -38,7 +38,7 @@ const GuessDefs = ({
 
   const dispatch = useDispatch();
 
-  const [countdown, setCountdown] = useState(3);
+  const [countdown, setCountdown] = useState(15);
   useEffect( () => {
     const timer = setTimeout(async () => {
       if (countdown > 0) {
@@ -48,10 +48,10 @@ const GuessDefs = ({
         // handleGetFakeDefinitions()
 
         setDefList(false);
-        console.log("GAME BEFORE: ", game )
+   
      handleChangeGameTurn()
-console.log("GAME AFTER: ", game )
-          // reload();
+
+          //  reload();
        
       
           // location.reload()
@@ -101,12 +101,15 @@ console.log("GAME AFTER: ", game )
     const userKey = Object.keys(def)[0];
 
     if (userKey === "fake") {
+      console.log("FAKE")
       null;
     }
     if (userKey === "real") {
+      console.log("REAL")
       dispatch(addPoint({ userId: userId, gameId: gameId }));
     }
     if (userKey !== "fake" && userKey !== "real") {
+      dispatch(addPoint({ userId: userKey, gameId: gameId }))
       console.log(`REAL: userId: ${userKey}, gameId: ${gameId}`);
     }
   };

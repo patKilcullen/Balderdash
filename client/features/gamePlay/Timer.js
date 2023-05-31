@@ -9,7 +9,7 @@ import { selectFakeWords, getFakeDefinitions, selectFakeDefinitions } from './ga
 
 
 const Timer = ({game, userId, userScore, gameName, gameId, playerTurnName,  reload, setDefinition, setWord, setTimer, setChoseWord}) => {
-  const [countdown, setCountdown] = useState(1)  
+  const [countdown, setCountdown] = useState(10)  
   const [defInput, setDefInput] = useState(false)
   const [playGame, setPlayGame] = useState(false)
 
@@ -28,6 +28,8 @@ const Timer = ({game, userId, userScore, gameName, gameId, playerTurnName,  relo
       })
 
   };
+
+
 
 
 
@@ -68,7 +70,7 @@ setPlayGame(true)
     <div>
   <div>{countdown}</div> 
  {/* { defInput && !userScore.turn ?<DefInputBox gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null} */}
- { defInput && userScore.turnNum !== game.turn ?<DefInputBox gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null}
+ { defInput && userScore.turnNum !== game.turn ?<DefInputBox game={game} gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null}
  {playGame ? <GuessDefs game={game} fakeDefinitions={fakeDefinitions} gameName={gameName} gameId={gameId} userId={userId} Name={playerTurnName} reload={reload} setDefinition={setDefinition} setWord={setWord} setTimer={setTimer} setPlayGame={setPlayGame} setChoseWord={setChoseWord}/>: null}
   </div>
 )};

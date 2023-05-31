@@ -55,7 +55,6 @@ const GamePlay = ({ userId, game, userScore, reload }) => {
 const [playerTurn, setPlayerTurn] = useState("")
 const [playerTurnName, setPlayerTurnName] = useState("")
 useEffect(()=>{
-console.log("GAME IN GAME PLAY: ", game, Date())
 game && game.scores ? setPlayerTurn(game.scores.filter((score) => score.turnNum === game.turn)) : null
 // const playerTurnX = game.scores.filter((score) => score.turnNum === game.turn);
 // setPlayerTurn(playerTurnX)
@@ -63,11 +62,14 @@ game && game.scores ? setPlayerTurn(game.scores.filter((score) => score.turnNum 
 playerTurn ? 
 setPlayerTurnName(playerTurn[0].user.username)
 : null
-},[game])
+
+},[game, ])
 
 
 
-
+useEffect(()=>{
+  clientSocket.emit("send_player_turn_name", {playerTurnName, gameName})
+},[playerTurnName])
 
 
 
@@ -109,7 +111,7 @@ setPlayerTurnName(playerTurn[0].user.username)
   const handleChooseWord = () => {
     handleGetFakeWords()
     
-    clientSocket.emit("send_word", { word: word, room: gameName });
+    clientSocket.emit("send_word", { word: word, room: gameName, playerTurnName: username });
     setTimer(true)
     setChoseWord(true)
   };
@@ -145,13 +147,17 @@ setPlayerTurnName(playerTurn[0].user.username)
   // This useEffect ensures sockets dont render on the wrong game for client who
   // belong(or have visited?) more than one game
   useEffect(() => {
-    clientSocket.on("receive_word", ({ word, room }) => {
+    clientSocket.on("receive_word", ({ word, room, playerTurnName }) => {
+playerTurnName !== username ? setPlayerTurnName(playerTurnName) : null
       room === gameName
         ? //     setWordSocket(`WORDL ${word} Room: ${room} gameName: ${gameName}`)
           //   &&
           setWord(word)
+
         : //  setWordSocket('')
           setWord("");
+
+          room === gameName
     });
 
     clientSocket.on("receive_start_countdown", (room) => {
@@ -163,15 +169,23 @@ setPlayerTurnName(playerTurn[0].user.username)
     clientSocket.on(
       "receive_player_fake_def",
       ({ playerDef, room, userId, playerTurnName }) => {
+
+        console.log(`RECEIVER PLAYER FAKE DEFS: ,def  ${playerDef},room: ${room}, userId ${userId}, playerTurnName ${playerTurnName}`)
+console.log("usename: ", username)
         let playerId = userId
         room === gameName 
         && playerTurnName === username
           ? 
           dispatch(addDefinition({[playerId] : playerDef}))
          
-          : null;
+          : console.log("DIDIDIDIDIID WORKKK");
       }
     );
+
+    clientSocket.on("receive_player_turn_name", ({playerTurnName, room}) => {
+      console.log("SOCKKY WORKYY")
+      room === gameName ? setPlayerTurnName(playerTurnName) : null;
+    });
   }, [clientSocket, gameName]);
 
 

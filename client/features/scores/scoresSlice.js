@@ -62,7 +62,7 @@ console.log("")
 
 // ADD POINT
   export const addPoint = createAsyncThunk(
-    "editScore",
+    "addPoint",
     async ({userId, gameId}) => {
 console.log("ADD POINT THUNK: ", userId, gameId)
       try {
@@ -118,7 +118,9 @@ extraReducers: (builder)=>{
     // });
     console.log("STATE: ", state.allScores)
   })
-  
+//   builder.addCase(addPoint.fulfilled, (state, action)=>{
+//     state.push(action.payload)
+// })
 }
 
 
