@@ -69,10 +69,6 @@ socket.on("send_fake_defs", ({fakeDefinitions, gameName})=>{
 
 
 
-socket.on("send_player_turn_name", ({playerTurnName, gameName})=>{
-console.log("SEND PLAYER TURN NAME: ", playerTurnName)
-  socket.to(gameName).emit("receive_player_turn_name", {playerTurnName, gameName})
-})
 
 
 

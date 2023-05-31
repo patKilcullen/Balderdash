@@ -51,7 +51,7 @@ const GuessDefs = ({
    
      handleChangeGameTurn()
 
-          //  reload();
+           reload();
        
       
           // location.reload()

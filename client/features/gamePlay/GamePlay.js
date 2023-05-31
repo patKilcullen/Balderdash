@@ -73,14 +73,6 @@ useEffect(()=>{
 
 
 
-// useEffect(()=>{
-//   const playerTurnX = game.scores.filter((score) => score.turnNum === game.turn);
-//   setPlayerTurn(playerTurnX)
-//   // Player turn never changes with one below//
-//   // const playerTurn = game.scores.filter((score) => score.turn === true);
-//  let playerTurnNameX = playerTurn[0].user.username
-// setPlayerTurnName(playerTurnNameX)
-// }, [game])
 
 
 
@@ -170,22 +162,18 @@ playerTurnName !== username ? setPlayerTurnName(playerTurnName) : null
       "receive_player_fake_def",
       ({ playerDef, room, userId, playerTurnName }) => {
 
-        console.log(`RECEIVER PLAYER FAKE DEFS: ,def  ${playerDef},room: ${room}, userId ${userId}, playerTurnName ${playerTurnName}`)
-console.log("usename: ", username)
+       
         let playerId = userId
         room === gameName 
         && playerTurnName === username
           ? 
           dispatch(addDefinition({[playerId] : playerDef}))
          
-          : console.log("DIDIDIDIDIID WORKKK");
+          : console.log("ERROR: Failed to add player definition");
       }
     );
 
-    clientSocket.on("receive_player_turn_name", ({playerTurnName, room}) => {
-      console.log("SOCKKY WORKYY")
-      room === gameName ? setPlayerTurnName(playerTurnName) : null;
-    });
+   
   }, [clientSocket, gameName]);
 
 

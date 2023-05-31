@@ -117,10 +117,11 @@ extraReducers: (builder)=>{
     //   return score !== action.payload
     // });
     console.log("STATE: ", state.allScores)
-  })
-//   builder.addCase(addPoint.fulfilled, (state, action)=>{
-//     state.push(action.payload)
-// })
+  }),
+  builder.addCase(addPoint.fulfilled, (state, action)=>{
+    console.log("ASS PAYLOAD IN APP{OPINT TJHINKK: ", action.payload)
+    state.push(action.payload)
+})
 }
 
 
