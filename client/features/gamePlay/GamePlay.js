@@ -130,8 +130,8 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
   return (
     <Card className="main " sx={{ boxShadow: "none", overflow: "visible" }}>
       <Card className="buttons " sx={{ boxShadow: "none" }}>
-        
-        {/* GET WORD BUTTON -  only visible if it is userScore's turn*/}
+
+        {/* GET WORD BUTTON -  only visible if it is players turn*/}
         {game && userScore && game.turn === userScore.turnNum ? (
           <Button
             // className={!wordX || !wordX.length ? "pulse" : null}
@@ -139,21 +139,22 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
             sx={{ fontSize: 30 }}
             variant="contained"
           >
-            <Typography color={"secondary"} sx={{ fontSize: 30 }}>
+            <Typography  className={!word|| !word.length ? "pulse" : null} color={"secondary"} sx={{ fontSize: 30 }}>
               Get Word
             </Typography>
           </Button>
         ) : null}
 
         {/* WORD */}
-        <Typography color={"secondary"} sx={{ fontSize: 30 }}>
+        <Typography
+        className={(!word || !word.length)  && game && userScore && game.turn !== userScore.turnNum ? "pulse" : null} color={"secondary"} sx={{ fontSize: 30 }}>
           {`Word: ${word}`}
         </Typography>
 
         {/* DEFINITION */}
-        <Typography color={"secondary"} sx={{ fontSize: 30 }}>
+       {game && userScore && game.turn === userScore.turnNum ? <Typography color={"secondary"} sx={{ fontSize: 30 }}>
           {`Definition: ${definition}`}
-        </Typography>
+        </Typography>: null}
 
         {definition && !choseWord ? (
           <Button
