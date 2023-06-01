@@ -26,8 +26,40 @@ background-color: #88ebe6
 
 body {
   font-family: sans-serif;
-  border: 5px solid black;
-  height: 100vh;
+  /* border: 5px solid black;
+  height: 100vh; */
+  margin: 0;
+  padding: 0;
+  
+}
+/* .border {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 10px solid black;
+  z-index: 9999;
+  pointer-events: none;
+  margin: -5px;
+} */
+
+.border-container {
+  position: fixed;
+ 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  z-index: 9999;
+}
+
+.border {
+  border: 5px solid #571122;
+  margin: 10px; /* Adjust margin to control the spacing between the content and border */
+  /* box-shadow: 200; */
+  /* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), -2px -2px 4px rgba(255, 255, 255, 0.5); */
 }
 
 a {
@@ -52,6 +84,8 @@ form div {
 
 #games {
   display: flex;
+  height: 100vh;
+
 }
 .game-sort {
   display: flex;

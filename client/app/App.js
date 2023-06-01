@@ -35,16 +35,20 @@ const theme = createTheme({
 
 const App = () => {
   return (
-    //  <SocketContext.Provider >
+
+    <div className='border-container'>
+      <div className='border'>
     <SocketProvider >
     <ThemeProvider theme={theme}>
-    <div>
+    <div >
+      
       <Navbar />
       <AppRoutes />
     </div>
     </ThemeProvider>
     </SocketProvider>
-    // </SocketContext.Provider>
+    </div>
+    </div>
   );
 };
 

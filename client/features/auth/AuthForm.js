@@ -21,7 +21,7 @@ const AuthForm = ({ name, displayName }) => {
   };
 
   return (
-    <div>
+    <div style={{  overflow: "visible", height: "100vh"}}>
       <form onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="username">

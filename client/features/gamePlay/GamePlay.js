@@ -128,7 +128,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
   }, [clientSocket, gameName]);
 
   return (
-    <Card className="main " sx={{ boxShadow: "none", overflow: "visible" }}>
+    <Card className="main " sx={{ boxShadow: "none", overflow: "visible", height: "100vh"}}>
       <Card className="buttons " sx={{ boxShadow: "none" }}>
 
         {/* GET WORD BUTTON -  only visible if it is players turn*/}

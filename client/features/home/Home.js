@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import AllGames from "../games/AllGames";
 
-
+import CreateRound from "./CreateRound";
 
 /**
  * COMPONENT
@@ -14,7 +14,7 @@ const Home = () => {
   const username = useSelector((state) => state.auth.me.username);
 
   return (
-    <div>
+    <div >
       <h3>Welcome, {username}</h3>
 
       {/* <Link to={"/main"}>Start a new game</Link> */}

@@ -56,6 +56,10 @@ const AllGames = () => {
   });
   return (
     <div>
+      <Link to="/create-game">
+        {" "}
+        <button>Create a NEW GAME</button>
+      </Link>
       <div id="games">
         {/* <div className="game-sort">
           <div className="game-sort">All Public Games</div>
@@ -146,10 +150,7 @@ const AllGames = () => {
         </div>
       </div>
 
-      <Link to="/create-game">
-        {" "}
-        <button>Create a NEW GAME</button>
-      </Link>
+      
     </div>
   );
 };
