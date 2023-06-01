@@ -13,8 +13,8 @@ import {
 } from "../scores/scoresSlice";
 
 import Main from "../main/Main";
-import GamePlay from "../gamePlay/GamePlayOLD";
-import XGamePlay from "../gamePlay/GamePlay";
+// import GamePlay from "../gamePlay/GamePlayOLD";
+import GamePlay from "../gamePlay/GamePlay";
 // SOCKET
 import socket from "socket.io-client";
 // import { SocketContext } from "../../app/App";
@@ -45,16 +45,13 @@ const SingleGame = () => {
     dispatch(fetchAllGameScores(gameId));
   }, [gameId]);
 
-  const reload = ()=>{
-  console.log("HIT RELAORD: ", Date())
-    dispatch(fetchSingleGame(gameId)).then(()=>{
-      dispatch(fetchAllGameScores(gameId))
-    })
-    // 
-   
-   
-   
-    console.log("GAME Turn IN RELOAD: ", game.turn )
+
+  // Updates scores when 
+  const reloadScores = ()=>{
+    // dispatch(fetchSingleGame(gameId)).then(()=>{
+    //   dispatch(fetchAllGameScores(gameId))
+    // })
+    dispatch(fetchAllGameScores(gameId))
   }
 
   // SOCKET
@@ -121,7 +118,9 @@ console.log("USER SCOROROROROROR: ", userScore)
       {game.owner ? <div>Owner: {game.owner.username}</div> : null}
 
       {/* User Score */}
-      {userScore && userScore.score ? (
+      {/* probably don't need userScore.score below... see nothing when score is 0??? */}
+      {/* {userScore && userScore.score ? ( */}
+      {userScore ? (
         // <div> Your Score {userScore.user.username} </div>
         <div> Your Score {userScore.score} </div>
       ) : null}
@@ -204,7 +203,7 @@ console.log("USER SCOROROROROROR: ", userScore)
         <>
     
           {/* <GamePlay userId={userId} game={game} userScore={userScore} /> */}
-          <XGamePlay userId={userId} game={game} userScore={userScore} reload={reload}/>
+          <GamePlay userId={userId} game={game} userScore={userScore} reloadScores={reloadScores}/>
         </>
       ) : null}
     </div>

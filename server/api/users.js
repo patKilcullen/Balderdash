@@ -26,7 +26,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
 
   try {
-    // const games = await Game.findByPk(req.params.id, {include: [User,Score]})
+   
     const user = await User.findByPk(req.params.id, {include: [Game, Score]})
 
    
@@ -35,21 +35,3 @@ router.get('/:id', async (req, res, next) => {
      next(err)
   }
 })
-
-// const games = await Game.findByPk(req.params.id, {include: [{
-//   model: Score,
-//   include: [{
-//     model: User,
-//     // attributes: ['username']
-//   }]
-// },
-// {
-//   model: User,
-//   // include: [{
-//   //   model: User,
-//   //   // attributes: ['username']
-//   // }]
-// }
-
-
-// ]})

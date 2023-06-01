@@ -20,7 +20,7 @@ const GuessDefs = ({
   fakeDefinitions,
   gameName,
   gameId,
-  reload,
+  reloadScores,
   setDefinition,
   setWord,
   setTimer,
@@ -51,7 +51,7 @@ const GuessDefs = ({
    
      handleChangeGameTurn()
 
-           reload();
+           reloadScores();
        
       
           // location.reload()
