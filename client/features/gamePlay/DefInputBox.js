@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react'
+import React, {useState, useContext, useEffect, useRef} from 'react'
 
 import { SocketContext } from "../../app/SocketProvider";
 
@@ -8,8 +8,12 @@ const DefInputBox = ({gameName, userId, playerTurnName}) => {
 
     const clientSocket = useContext(SocketContext);
     
+const inputRef = useRef()
 
-
+// puts focus on the input box when page loads
+useEffect(()=>{
+inputRef.current.focus()
+}, [])
    
 
 const handleEnterFakeDef = (e)=>{
@@ -30,6 +34,7 @@ setPlayerDef("")
             <label>
               Enter you fake Def here:
               <input
+              ref={inputRef}
                 type="textarea"
                 name="name"
                 value={playerDef}

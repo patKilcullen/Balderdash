@@ -134,7 +134,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
         {/* GET WORD BUTTON -  only visible if it is players turn*/}
         {game && userScore && game.turn === userScore.turnNum ? (
           <Button
-            // className={!wordX || !wordX.length ? "pulse" : null}
+       
             onClick={handleGetWord}
             sx={{ fontSize: 30 }}
             variant="contained"
@@ -148,13 +148,20 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
         {/* WORD */}
         <Typography
         className={(!word || !word.length)  && game && userScore && game.turn !== userScore.turnNum ? "pulse" : null} color={"secondary"} sx={{ fontSize: 30 }}>
-          {`Word: ${word}`}
+          Word: 
+          <span style={{ fontSize: "35px", fontWeight: "bold" }}>
+       {` ${word}`}
+    </span>
         </Typography>
 
         {/* DEFINITION */}
        {game && userScore && game.turn === userScore.turnNum ? <Typography color={"secondary"} sx={{ fontSize: 30 }}>
-          {`Definition: ${definition}`}
+          Definition: 
+          <span style={{ fontSize: "35px", fontWeight: "bold" }}>
+       {` ${definition}`}
+    </span>
         </Typography>: null}
+
 
         {definition && !choseWord ? (
           <Button
