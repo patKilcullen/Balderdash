@@ -224,7 +224,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
      }} > 
      <Card id = "header" color="seconday" sx={{ boxShadow: "20", padding: "10px"}}> */}
 
-      <Card className="buttons " sx={{ boxShadow: "none" }}>
+      <Card className="buttons " sx={{ boxShadow: "none"}}>
         {/* GET WORD BUTTON -  only visible if it is players turn*/}
         {game && userScore && game.turn === userScore.turnNum ? (
           <Button
@@ -257,7 +257,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
           fontWeight: "bold",
           height: "80vh",
           width: "25vw",
-          overflow: "scroll"
+          
         }}>
           <Card  sx={{ 
     padding: "10px",
@@ -266,7 +266,8 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
           "#88ebe6" : "#e6e8dc", 
          height: "95%",
          width: "90%",
-         borderRadius: "50px"
+         borderRadius: "50px",
+         overflow: "scroll"
      }} >
         
 
@@ -314,6 +315,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
             setWord={setWord}
             setTimer={setTimer}
             setChoseWord={setChoseWord}
+            
           />
         ) : null}
         </Card>

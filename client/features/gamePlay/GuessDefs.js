@@ -123,14 +123,15 @@ const GuessDefs = ({
   });
 
   return (
-    <div>
-      <div>Definitions</div>
+    <div >
+      <div >Definitions</div>
 
       {correct === true ? (
         <div>Correctamundo!!!</div>
       ) : correct === false ? (
         <div>Wrong, idiot!</div>
       ) : null}
+      
       {guessed === false && defList === true && fakeDefs && fakeDefs.length
         ? fakeDefs
             .filter((def) => !def.hasOwnProperty(`${userId}`))
@@ -148,7 +149,8 @@ const GuessDefs = ({
               );
             })
         : ""}
-    </div>
+        </div>
+  
   );
 };
 
