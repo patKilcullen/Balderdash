@@ -2,6 +2,8 @@ import React, {useState, useContext, useEffect, useRef} from 'react'
 
 import { SocketContext } from "../../app/SocketProvider";
 
+import TextField from "@mui/material/TextField";
+
 const DefInputBox = ({gameName, userId, playerTurnName}) => {
     const [playerDef, setPlayerDef] = useState("")
     const [seeInput, setSeeInput] = useState(true)
@@ -33,7 +35,7 @@ setPlayerDef("")
         {seeInput ? <form onSubmit={handleEnterFakeDef}>
             <label>
               Enter you fake Def here:
-              <input
+              <TextField
               ref={inputRef}
                 type="textarea"
                 name="name"

@@ -127,54 +127,179 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
     );
   }, [clientSocket, gameName]);
 
-  return (
-    <Card className="main " sx={{ boxShadow: "none", overflow: "visible", height: "100vh"}}>
-      <Card className="buttons " sx={{ boxShadow: "none" }}>
+  // return (
+  //   <Card
+  //     className="main "
+  //     sx={{ boxShadow: "none", overflow: "visible", height: "100vh" }}
+  //   >
+  //     <Card className="buttons " sx={{ boxShadow: "none" }}>
+  //       {/* GET WORD BUTTON -  only visible if it is players turn*/}
+  //       {game && userScore && game.turn === userScore.turnNum ? (
+  //         <Button
+  //           onClick={handleGetWord}
+  //           sx={{ fontSize: 30 }}
+  //           variant="contained"
+  //         >
+  //           <Typography
+  //             className={!word || !word.length ? "pulse" : null}
+  //             color={"secondary"}
+  //             sx={{ fontSize: 30 }}
+  //           >
+  //             Get Word
+  //           </Typography>
+  //         </Button>
+  //       ) : null}
 
+  //       {/* WORD */}
+  //       <Typography
+  //         className={
+  //           (!word || !word.length) &&
+  //           game &&
+  //           userScore &&
+  //           game.turn !== userScore.turnNum
+  //             ? "pulse"
+  //             : null
+  //         }
+  //         color={"secondary"}
+  //         sx={{ fontSize: 30 }}
+  //       >
+  //         Word:
+  //         <span style={{ fontSize: "35px", fontWeight: "bold" }}>
+  //           {` ${word}`}
+  //         </span>
+  //       </Typography>
+
+  //       {/* DEFINITION */}
+  //       {game && userScore && game.turn === userScore.turnNum ? (
+  //         <Typography color={"secondary"} sx={{ fontSize: 30 }}>
+  //           Definition:
+  //           <span style={{ fontSize: "35px", fontWeight: "bold" }}>
+  //             {` ${definition}`}
+  //           </span>
+  //         </Typography>
+  //       ) : null}
+
+  //       {definition && !choseWord ? (
+  //         <Button
+  //           className={"pulse"}
+  //           onClick={() => handleChooseWord()}
+  //           sx={{ fontSize: 30 }}
+  //           variant="contained"
+  //         >
+  //           <Typography color={"secondary"} sx={{ fontSize: 30 }}>
+  //             Choose Word
+  //           </Typography>
+  //         </Button>
+  //       ) : null}
+  //       {timer ? (
+  //         <Timer
+  //           game={game}
+  //           userId={userId}
+  //           userScore={userScore}
+  //           gameName={gameName}
+  //           gameId={game.id}
+  //           playerTurnName={playerTurnName}
+  //           definition={definition}
+  //           reloadScores={reloadScores}
+  //           setDefinition={setDefinition}
+  //           setWord={setWord}
+  //           setTimer={setTimer}
+  //           setChoseWord={setChoseWord}
+  //         />
+  //       ) : null}
+  //     </Card>
+  //   </Card>
+  // );
+
+  return (
+    <Card
+      className="main "
+      sx={{ boxShadow: "none", overflow: "visible", height: "100vh" }}
+    >
+
+{/* <Card sx={{ boxShadow: "20", border: "2px solid black"}}>
+      <Card   sx={{ 
+    padding: "10px",
+         backgroundColor: "#88ebe6"
+     }} > 
+     <Card id = "header" color="seconday" sx={{ boxShadow: "20", padding: "10px"}}> */}
+
+      <Card className="buttons " sx={{ boxShadow: "none" }}>
         {/* GET WORD BUTTON -  only visible if it is players turn*/}
         {game && userScore && game.turn === userScore.turnNum ? (
           <Button
-       
             onClick={handleGetWord}
             sx={{ fontSize: 30 }}
             variant="contained"
           >
-            <Typography  className={!word|| !word.length ? "pulse" : null} color={"secondary"} sx={{ fontSize: 30 }}>
+            <Typography
+              className={!word || !word.length ? "pulse" : null}
+              color={"secondary"}
+              sx={{ fontSize: 30 }}
+            >
               Get Word
             </Typography>
           </Button>
         ) : null}
+        <Card  sx={{
+          // marginTop: 3,
+          // marginBottom: 3,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          backgroundColor: (!word || !word.length) 
+              ?
+           "#e6e8dc": "#88ebe6",
+          padding: "1em 1em",
+          borderRadius: "50px",
+          border: "5px solid black",
+          boxShadow: "20",
+          fontWeight: "bold",
+          height: "80vh",
+          width: "25vw",
+          overflow: "scroll"
+        }}>
+          <Card  sx={{ 
+    padding: "10px",
+    backgroundColor: (!word || !word.length) 
+              ?
+          "#88ebe6" : "#e6e8dc", 
+         height: "95%",
+         width: "90%",
+         borderRadius: "50px"
+     }} >
+        
 
         {/* WORD */}
         <Typography
-        className={(!word || !word.length)  && game && userScore && game.turn !== userScore.turnNum ? "pulse" : null} color={"secondary"} sx={{ fontSize: 30 }}>
-          Word: 
+          className={
+            (!word || !word.length) &&
+            game &&
+            userScore &&
+            game.turn !== userScore.turnNum
+              ? "pulse"
+              : null
+          }
+          color={"secondary"}
+          sx={{ fontSize: 30 }}
+        >
+          Word:
           <span style={{ fontSize: "35px", fontWeight: "bold" }}>
-       {` ${word}`}
-    </span>
+            {` ${word}`}
+          </span>
         </Typography>
 
         {/* DEFINITION */}
-       {game && userScore && game.turn === userScore.turnNum ? <Typography color={"secondary"} sx={{ fontSize: 30 }}>
-          Definition: 
-          <span style={{ fontSize: "35px", fontWeight: "bold" }}>
-       {` ${definition}`}
-    </span>
-        </Typography>: null}
-
-
-        {definition && !choseWord ? (
-          <Button
-            className={"pulse"}
-            onClick={() => handleChooseWord()}
-            sx={{ fontSize: 30 }}
-            variant="contained"
-          >
-            <Typography color={"secondary"} sx={{ fontSize: 30 }}>
-              Choose Word
-            </Typography>
-          </Button>
+        {game && userScore && game.turn === userScore.turnNum ? (
+          <Typography color={"secondary"} sx={{ fontSize: 30 }}>
+            Definition:
+            <span style={{ fontSize: "35px", fontWeight: "bold" }}>
+              {` ${definition}`}
+            </span>
+          </Typography>
         ) : null}
+
+      
         {timer ? (
           <Timer
             game={game}
@@ -191,7 +316,22 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
             setChoseWord={setChoseWord}
           />
         ) : null}
+        </Card>
+        </Card>
+        {definition && !choseWord ? (
+          <Button
+            className={"pulse"}
+            onClick={() => handleChooseWord()}
+            sx={{ fontSize: 30}}
+            variant="contained"
+          >
+            <Typography color={"secondary"} sx={{ fontSize: 30 }}>
+              Choose Word
+            </Typography>
+          </Button>
+        ) : null}
       </Card>
+    
     </Card>
   );
 };

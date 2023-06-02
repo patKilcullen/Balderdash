@@ -23,6 +23,7 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { fontSize, height } from "@mui/system";
+import Card from "@mui/material/Card";
 ////////////////
 
 const CreateGame = () => {
@@ -78,40 +79,15 @@ const CreateGame = () => {
           })
       : setError("Rounds must be a postive integer");
   };
+  console.log("ERROR: ", error);
 
   return (
-    // <div>
-    //   <div>CreateGame</div>
-    //   <form onSubmit={handleCreateGame}>
-    //     <label>
-    //       Name:
-    //       <input
-    //         type="text"
-    //         name="name"
-    //         value={gameName}
-    //         onChange={(e) => setGameName(e.target.value)}
-    //       />
-    //     </label>
-    //     <label>
-    //       Rounds:
-    //       <input
-    //         type="number"
-    //         name="rounds"
-    //         value={rounds}
-    //         onChange={(e) => setRounds(parseInt(e.target.value))}
-    //       />
-    //     </label>
-
-    //     <input type="submit" value="Submit" />
-    //   </form>
-
-    //   {error ?
-
-    //   <div>{error}</div>
-    //   : null}
-    // </div>
-
-    <Container component="main" maxWidth="sm" sx={{height: "100vh"}}>
+    <Container
+      color="secondary"
+      component="main"
+      maxWidth="sm"
+      sx={{ height: "100vh" }}
+    >
       <Box
         sx={{
           marginTop: 3,
@@ -123,85 +99,110 @@ const CreateGame = () => {
           padding: "1em 1em",
           borderRadius: "50px",
           border: "5px solid black",
-          boxShadow: "20"
-          
+          boxShadow: "20",
+          fontWeight: "bold",
         }}
       >
-        {/* <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
-    
-        </Avatar> */}
-        <Typography color="secondary" component="h1" variant="h4">
+        
+        <Typography
+          color="secondary"
+          component="h1"
+          variant="h4"
+          sx={{
+            textDecoration: "underline",
+            fontWeight: "bold",
+            fontSize: "40px",
+          }}
+        >
           Create a New Game
         </Typography>
         <Box
           component="form"
           onSubmit={handleCreateGame}
           noValidate
-          sx={{ mt: 3}}
+          sx={{ mt: 3 }}
         >
-         
-          
-               <label>Game Name
-          <input 
+    
+          <Typography
+            color="black"
+            component="h2"
+            variant="h5"
+            sx={{ fontWeight: "bold" }}
+          >
+            Game Name:
+          </Typography>
+          <input
             style={{
               backgroundColor: "white",
               border: "2px solid black",
               borderRadius: "50px",
-          
+              fontWeight: "bold",
+              font: "200px",
               width: "100%",
               height: "50px",
               fontSize: "20px",
             }}
             placeholder="pick a fun game name..."
-            //  margin="normal"
+          
 
             type="text"
             name="name"
             value={gameName}
             onChange={(e) => setGameName(e.target.value)}
             required
-            //   fullWidth="true"
-            // variant="standard"
-            //   label="game name"
-            //   value={name}
-            //   name="name"
-            // inputProps={{
-            //   maxLength: CHARACTER_LIMIT
-            // }}
-            // helperText={`${title.length}/${CHARACTER_LIMIT}`}
-            // onChange={(e) => setTitle(e.target.value) && handleChange(title)}
           />
-          </label>
+  
 
-          <label>Rounds:</label>
-
+          <Typography
+            color="black"
+            component="h2"
+            variant="h5"
+            sx={{ fontWeight: "bold" }}
+          >
+            Rounds:
+          </Typography>
           <input
+            style={{
+              backgroundColor: "white",
+              border: "2px solid black",
+              borderRadius: "50px",
 
-style={{
-  backgroundColor: "white",
-  border: "2px solid black",
-  borderRadius: "50px",
-
-  height: "50px",
-  fontSize: "20px",
-}}
+              height: "50px",
+              fontSize: "20px",
+            }}
             type="number"
             name="rounds"
             value={rounds}
             onChange={(e) => setRounds(parseInt(e.target.value))}
           />
 
-         
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2, height: "60px", fontSize: "1.25rem", boxShadow: "20", border: "2px solid black", borderRadius: "25px" }}
+            sx={{
+              mt: 3,
+              mb: 2,
+              height: "60px",
+              fontSize: "1.25rem",
+              boxShadow: "20",
+              border: "2px solid black",
+              borderRadius: "25px",
+            }}
             color="primary"
           >
-            Create Game
+            <Typography
+              color="secondary"
+              component="h2"
+              variant="h5"
+              sx={{ fontWeight: "bold" }}
+            >
+              Create Game
+            </Typography>
           </Button>
         </Box>
+        {/* </Card> */}
+        {error ? <div style={{ color: "red" }}>{error}</div> : null}
       </Box>
     </Container>
   );

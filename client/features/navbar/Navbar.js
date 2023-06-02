@@ -19,9 +19,9 @@ const Navbar = () => {
 
   return (
      <Card sx={{ boxShadow: "20", border: "2px solid black"}}>
-      <Card   style={{ 
+      <Card   sx={{ 
     padding: "10px",
-        color: "black",
+        // color: "black",
          backgroundColor: "#88ebe6"
      }} > 
      <Card id = "header" color="seconday" sx={{ boxShadow: "20", padding: "10px"}}>

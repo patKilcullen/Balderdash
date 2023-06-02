@@ -67,8 +67,8 @@ setPlayGame(true)
 
 
   return (
-    <div>
-  <div>{countdown}</div> 
+    <div style={{position: "realtive"}}>
+  <div style={{position: "fixed", left: "50px", top: "50px", color: "red"}}>Time: {countdown}</div> 
  {/* { defInput && !userScore.turn ?<DefInputBox gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null} */}
  { defInput && userScore.turnNum !== game.turn ?<DefInputBox game={game} gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null}
  {playGame ? <GuessDefs game={game} fakeDefinitions={fakeDefinitions} gameName={gameName} gameId={gameId} userId={userId} Name={playerTurnName} reloadScores={reloadScores} setDefinition={setDefinition} setWord={setWord} setTimer={setTimer} setPlayGame={setPlayGame} setChoseWord={setChoseWord}/>: null}
