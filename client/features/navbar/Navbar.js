@@ -18,7 +18,13 @@ const Navbar = () => {
   };
 
   return (
-    <Card id = "header" color="seconday" sx={{ boxShadow: 20}}>
+     <Card sx={{ boxShadow: "20", border: "2px solid black"}}>
+      <Card   style={{ 
+    padding: "10px",
+        color: "black",
+         backgroundColor: "#88ebe6"
+     }} > 
+     <Card id = "header" color="seconday" sx={{ boxShadow: "20", padding: "10px"}}>
       <Typography id = "title" color="secondary"sx={{fontSize: 100, fontWeight: "bold", textDecoration: "underline", }}>BALDERDASH</Typography>
       <nav id="nav">
         {isLoggedIn ? (
@@ -39,7 +45,9 @@ const Navbar = () => {
         )}
       </nav>
       <hr />
-    </Card>
+      </Card>
+      </Card>
+     </Card>
   );
 };
 

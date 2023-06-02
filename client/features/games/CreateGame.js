@@ -111,7 +111,7 @@ const CreateGame = () => {
     //   : null}
     // </div>
 
-    <Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="sm" sx={{height: "100vh"}}>
       <Box
         sx={{
           marginTop: 3,
@@ -123,6 +123,8 @@ const CreateGame = () => {
           padding: "1em 1em",
           borderRadius: "50px",
           border: "5px solid black",
+          boxShadow: "20"
+          
         }}
       >
         {/* <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
@@ -194,7 +196,7 @@ style={{
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2, height: "60px", fontSize: "1.25rem" }}
+            sx={{ mt: 3, mb: 2, height: "60px", fontSize: "1.25rem", boxShadow: "20", border: "2px solid black", borderRadius: "25px" }}
             color="primary"
           >
             Create Game
