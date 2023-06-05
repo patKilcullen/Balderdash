@@ -216,15 +216,14 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
       className="main "
       sx={{ boxShadow: "none", overflow: "visible", height: "100vh" }}
     >
-
-{/* <Card sx={{ boxShadow: "20", border: "2px solid black"}}>
+      {/* <Card sx={{ boxShadow: "20", border: "2px solid black"}}>
       <Card   sx={{ 
     padding: "10px",
          backgroundColor: "#88ebe6"
      }} > 
      <Card id = "header" color="seconday" sx={{ boxShadow: "20", padding: "10px"}}> */}
 
-      <Card className="buttons " sx={{ boxShadow: "none"}}>
+      <Card className="buttons " sx={{ boxShadow: "none" }}>
         {/* GET WORD BUTTON -  only visible if it is players turn*/}
         {game && userScore && game.turn === userScore.turnNum ? (
           <Button
@@ -241,90 +240,159 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
             </Typography>
           </Button>
         ) : null}
-        <Card  sx={{
-          // marginTop: 3,
-          // marginBottom: 3,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          backgroundColor: (!word || !word.length) 
-              ?
-           "#e6e8dc": "#88ebe6",
-          padding: "1em 1em",
-          borderRadius: "50px",
-          border: "5px solid black",
-          boxShadow: "20",
-          fontWeight: "bold",
-          height: "80vh",
-          width: "25vw",
-          
-        }}>
-          <Card  sx={{ 
-    padding: "10px",
-    backgroundColor: (!word || !word.length) 
-              ?
-          "#88ebe6" : "#e6e8dc", 
-         height: "95%",
-         width: "90%",
-         borderRadius: "50px",
-         overflow: "scroll"
-     }} >
-        
+        <Card
+          sx={{
+            // marginTop: 3,
+            // marginBottom: 3,
+            display: "flex",
 
-        {/* WORD */}
-        <Typography
-          className={
-            (!word || !word.length) &&
+            flexDirection: "column",
+            alignItems: "center",
+            backgroundColor: !word || !word.length ? "#e6e8dc" : "#88ebe6",
+            padding: "1em 1em",
+            borderRadius: "50px",
+            border: "5px solid black",
+            boxShadow: "20",
+            fontWeight: "bold",
+            height: "80vh",
+            width: "25vw",
+          }}
+        >
+          <Card
+            sx={{
+              padding: "10px",
+              backgroundColor: !word || !word.length ? "#88ebe6" : "#e6e8dc",
+              height: "95%",
+              width: "90%",
+              borderRadius: "50px",
+              overflow: "scroll",
+              display: "flex",
+              flexDirection: "column",
+              alignContent: "center",
+              alignItems: "center",
+              border: "2px solid red"
+            }}
+          >
+            {/* TEST CARD TITLE */}
+            {/* WORD */}
+
+            {(!word || !word.length) &&
             game &&
             userScore &&
-            game.turn !== userScore.turnNum
-              ? "pulse"
-              : null
-          }
-          color={"secondary"}
-          sx={{ fontSize: 30 }}
-        >
-          Word:
-          <span style={{ fontSize: "35px", fontWeight: "bold" }}>
-            {` ${word}`}
-          </span>
-        </Typography>
+            game.turn !== userScore.turnNum ? (
+              <div
+                className="card-logo"
+                style={{display: "flew", flexDirection: "column"}}
+              >
 
-        {/* DEFINITION */}
-        {game && userScore && game.turn === userScore.turnNum ? (
-          <Typography color={"secondary"} sx={{ fontSize: 30 }}>
-            Definition:
+                
+                <Typography
+                className="card-logo-text"
+                style={{fontSize: "100px", fontWeight: "bold"}}
+                  color={"secondary"}
+                
+                >
+                  Balder...
+                  {/* <span style={{ fontSize: "35px", fontWeight: "bold" }}>
+                {` ${word}`}
+              </span> */}
+                </Typography>
+
+                <Typography
+                className="card-logo-text"
+                style={{fontSize: "100px", fontWeight: "bold"}}
+                  color={"secondary"}
+                
+                >
+                  ...dash
+                </Typography>
+              </div>
+            ) :
+            
+            <Typography
+            className={
+              (!word || !word.length) &&
+              game &&
+              userScore &&
+              game.turn !== userScore.turnNum
+                ? "pulse"
+                : null
+            }
+            color={"secondary"}
+            sx={{ fontSize: 30 }}
+          >
+            Word:
             <span style={{ fontSize: "35px", fontWeight: "bold" }}>
-              {` ${definition}`}
+              {` ${word}`}
             </span>
           </Typography>
-        ) : null}
-
-      
-        {timer ? (
-          <Timer
-            game={game}
-            userId={userId}
-            userScore={userScore}
-            gameName={gameName}
-            gameId={game.id}
-            playerTurnName={playerTurnName}
-            definition={definition}
-            reloadScores={reloadScores}
-            setDefinition={setDefinition}
-            setWord={setWord}
-            setTimer={setTimer}
-            setChoseWord={setChoseWord}
             
-          />
-        ) : null}
-        </Card>
+          
+            
+            
+            
+            }
+
+
+
+
+
+
+
+
+
+            {/* WORD */}
+            {/* <Typography
+              className={
+                (!word || !word.length) &&
+                game &&
+                userScore &&
+                game.turn !== userScore.turnNum
+                  ? "pulse"
+                  : null
+              }
+              color={"secondary"}
+              sx={{ fontSize: 30 }}
+            >
+              Word:
+              <span style={{ fontSize: "35px", fontWeight: "bold" }}>
+                {` ${word}`}
+              </span>
+            </Typography> */}
+
+            {/* DEFINITION */}
+            {game && userScore && game.turn === userScore.turnNum ? (
+              <Typography color={"secondary"} sx={{ fontSize: 30 }}>
+                Definition:
+                <span style={{ fontSize: "35px", fontWeight: "bold" }}>
+                  {` ${definition}`}
+                </span>
+              </Typography>
+            ) : null}
+
+            {timer ? (
+              <Timer
+                game={game}
+                userId={userId}
+                userScore={userScore}
+                gameName={gameName}
+                gameId={game.id}
+                playerTurnName={playerTurnName}
+                definition={definition}
+                reloadScores={reloadScores}
+                setDefinition={setDefinition}
+                setWord={setWord}
+                setTimer={setTimer}
+                setChoseWord={setChoseWord}
+              />
+            ) : null}
+          </Card>
         </Card>
         {definition && !choseWord ? (
           <Button
             className={"pulse"}
             onClick={() => handleChooseWord()}
-            sx={{ fontSize: 30}}
+            sx={{ fontSize: 30 }}
             variant="contained"
           >
             <Typography color={"secondary"} sx={{ fontSize: 30 }}>
@@ -333,7 +401,6 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
           </Button>
         ) : null}
       </Card>
-    
     </Card>
   );
 };

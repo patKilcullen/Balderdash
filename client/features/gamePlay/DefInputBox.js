@@ -3,6 +3,7 @@ import React, {useState, useContext, useEffect, useRef} from 'react'
 import { SocketContext } from "../../app/SocketProvider";
 
 import TextField from "@mui/material/TextField";
+import TextareaAutosize from '@mui/base/TextareaAutosize'
 
 const DefInputBox = ({gameName, userId, playerTurnName}) => {
     const [playerDef, setPlayerDef] = useState("")
@@ -35,13 +36,18 @@ setPlayerDef("")
         {seeInput ? <form onSubmit={handleEnterFakeDef}>
             <label>
               Enter you fake Def here:
-              <TextField
+            
+              <TextareaAutosize
+              placeholder='Write your definition here...'
+              minRows={10}
               ref={inputRef}
+              style={{backgroundColor: "white", width: "100%"}}
                 type="textarea"
                 name="name"
                 value={playerDef}
                 onChange={(e) => setPlayerDef(e.target.value)}
               />
+           
             </label>
 
             <input type="submit" value="Submit" />
