@@ -278,8 +278,9 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
 
             {(!word || !word.length) &&
             game &&
-            userScore &&
-            game.turn !== userScore.turnNum ? (
+            userScore 
+            // && game.turn !== userScore.turnNum 
+            ? (
               <div
                 className="card-logo"
                 style={{display: "flew", flexDirection: "column"}}
@@ -361,7 +362,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
             </Typography> */}
 
             {/* DEFINITION */}
-            {game && userScore && game.turn === userScore.turnNum ? (
+            {word.length && game && userScore && game.turn === userScore.turnNum ? (
               <Typography color={"secondary"} sx={{ fontSize: 30 }}>
                 Definition:
                 <span style={{ fontSize: "35px", fontWeight: "bold" }}>
