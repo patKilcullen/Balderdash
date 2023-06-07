@@ -309,7 +309,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
               >
                 <Typography
                   className="card-logo-text"
-                  style={{ fontSize: "100px", fontWeight: "bold" }}
+                  style={{ fontSize: "65px", fontWeight: "bold" }}
                   color={"secondary"}
                 >
                   Balder...
@@ -320,7 +320,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
 
                 <Typography
                   className="card-logo-text"
-                  style={{ fontSize: "100px", fontWeight: "bold" }}
+                  style={{ fontSize: "65px", fontWeight: "bold" }}
                   color={"secondary"}
                 >
                   ...dash

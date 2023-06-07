@@ -200,7 +200,7 @@ border: none;
   display: flex;
   justify-content: center;
   align-items: center;
- 
+  /* margin-top: 50px; */
 
 }
 
@@ -213,6 +213,8 @@ border: none;
   white-space: nowrap;
   overflow: hidden;
   text-shadow: 5px 5px #558ABB;
+
+
   /* text-shadow: 1px 1px 2px black, 0 0 1em #88ebe6, 0 0 0.2em #571122; */
 } 
 
