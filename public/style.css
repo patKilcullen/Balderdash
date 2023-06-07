@@ -61,6 +61,7 @@ body {
   margin: 10px; /* Adjust margin to control the spacing between the content and border */
   /* box-shadow: 200; */
   /* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), -2px -2px 4px rgba(255, 255, 255, 0.5); */
+  
 }
 
 a {
@@ -98,6 +99,16 @@ form div {
 }
 
 
+
+/* #scores-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 5px solid black;
+  border-radius: 25px;
+  background-color: #e6e8dc;
+ 
+} */
 
 
 
@@ -186,7 +197,7 @@ border: none;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5%;
+  /* gap: 5%; */
 
   
 }

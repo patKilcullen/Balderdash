@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { selectSingleGame, fetchSingleGame, editGame, } from "./singleGameSlice";
+import { selectSingleGame, fetchSingleGame, editGame } from "./singleGameSlice";
 import {
   fetchAllScores,
   selectAllScores,
@@ -20,6 +20,11 @@ import socket from "socket.io-client";
 // import { SocketContext } from "../../app/App";
 import { SocketContext } from "../../app/SocketProvider";
 import { use } from "chai";
+
+// Material UI
+import Card from "@mui/material/Card";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 const SingleGame = () => {
   // put user ID in props????
@@ -45,14 +50,13 @@ const SingleGame = () => {
     dispatch(fetchAllGameScores(gameId));
   }, [gameId]);
 
-
-  // Updates scores when 
-  const reloadScores = ()=>{
+  // Updates scores when
+  const reloadScores = () => {
     // dispatch(fetchSingleGame(gameId)).then(()=>{
     //   dispatch(fetchAllGameScores(gameId))
     // })
-    dispatch(fetchAllGameScores(gameId))
-  }
+    dispatch(fetchAllGameScores(gameId));
+  };
 
   // SOCKET
   //  const clientSocket = socket.connect("http://localhost:8080");
@@ -94,8 +98,7 @@ const SingleGame = () => {
         gameId: gameId,
         userId: userId,
       })
-    )
-   
+    );
   };
 
   // START GAME
@@ -105,10 +108,10 @@ const SingleGame = () => {
     });
   };
 
-console.log("USER SCOROROROROROR: ", userScore)
+  console.log("USER SCOROROROROROR: ", userScore);
   return (
-    <div>
-    
+    <Card >
+      <Card id="scores-card">
       <div>
         {userScore && userScore.user ? (
           <div>USER NAME: {userScore.user.username}</div>
@@ -197,16 +200,22 @@ console.log("USER SCOROROROROROR: ", userScore)
         <button onClick={handleStartGame}>Start Game</button>
       ) : null}
 
+</Card>
+
       {/* GAME PLAY */}
       {(game.started === true && game.ownerId === userId) ||
       (game.started === true && userScore) ? (
         <>
-    
           {/* <GamePlay userId={userId} game={game} userScore={userScore} /> */}
-          <GamePlay userId={userId} game={game} userScore={userScore} reloadScores={reloadScores}/>
+          <GamePlay
+            userId={userId}
+            game={game}
+            userScore={userScore}
+            reloadScores={reloadScores}
+          />
         </>
       ) : null}
-    </div>
+    </Card>
   );
 };
 

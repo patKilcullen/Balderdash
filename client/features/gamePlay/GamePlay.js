@@ -237,13 +237,13 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
         {game && userScore && game.turn === userScore.turnNum ? (
           <Button
             onClick={handleGetWord}
-            sx={{ fontSize: 30 }}
+            sx={{ fontSize: 30, marginBottom: "15px"  }}
             variant="contained"
           >
             <Typography
               className={!word || !word.length ? "pulse" : null}
               color={"secondary"}
-              sx={{ fontSize: 30 }}
+              sx={{ fontSize: 30, }}
             >
               Get Word
             </Typography>
@@ -320,7 +320,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
 
                 <Typography
                   className="card-logo-text"
-                  style={{ fontSize: "65px", fontWeight: "bold" }}
+                  style={{ fontSize: "70px", fontWeight: "bold" }}
                   color={"secondary"}
                 >
                   ...dash
