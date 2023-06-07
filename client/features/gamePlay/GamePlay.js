@@ -22,6 +22,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { minWidth } from "@mui/system";
 
 const GamePlay = ({ userId, game, userScore, reloadScores }) => {
   const dispatch = useDispatch();
@@ -54,12 +55,14 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
   // GET WORD  first clears defs from last round then gets word from API, sets it in state, then gets the definition throug API
   // then set that in state for player whose turn it is, and then add it the the definition array with the key "real" to distinguish it from othere
   const handleGetWord = () => {
+    setFlip(true);
     dispatch(clearFakeDefs());
     dispatch(getWord()).then((res) => {
       setWord(res.payload[0]);
       dispatch(getDefinition(res.payload[0])).then((res) => {
         setDefinition(res.payload);
         dispatch(addDefinition({ real: res.payload }));
+        setFlip(false);
       });
     });
   };
@@ -106,6 +109,10 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
         ? setWord(word)
         : // could this be null? I belive it served a purpose as is but cant recreate it
           setWord("");
+      room === gameName
+        ? setFlip(true)
+        : // could this be null? I belive it served a purpose as is but cant recreate it
+          setFlip(false);
     });
 
     // RECEIVE START COUNTDOWN players receive this from player turn when thet start Timer countdown
@@ -211,6 +218,8 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
   //   </Card>
   // );
 
+  const [flip, setFlip] = useState(false);
+
   return (
     <Card
       className="main "
@@ -254,13 +263,29 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
             border: "5px solid black",
             boxShadow: "20",
             fontWeight: "bold",
-            height: "80vh",
-            width: "25vw",
+            // height: "80vh",
+            // width: "25vw",
+            height: "100%",
+           minHeight: "300px",
+            
+             maxHeight: "350px",
+            maxWidth: "200px",
+       
+
+            transformStyle: "preserve-3d",
+            transition: "0.6s",
+            transformOrigin: "center center",
+            transform: flip ? "rotateY(360deg) " : null,
+
+            // transform: flip ? "rotateY(180deg) translateX(-50%)" : null,
+            // transform: flip ? "translateX(-50%)" : null
+            // transform: translateX(-50%);
           }}
         >
           <Card
             sx={{
               padding: "10px",
+              // backgroundColor: !word || !word.length ? "#88ebe6" : "#e6e8dc",
               backgroundColor: !word || !word.length ? "#88ebe6" : "#e6e8dc",
               height: "95%",
               width: "90%",
@@ -270,28 +295,22 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
               flexDirection: "column",
               alignContent: "center",
               alignItems: "center",
-              border: "2px solid red"
+              border: "2px solid black",
             }}
           >
             {/* TEST CARD TITLE */}
             {/* WORD */}
 
-            {(!word || !word.length) &&
-            game &&
-            userScore 
-            // && game.turn !== userScore.turnNum 
-            ? (
+            {(!word || !word.length) && game && userScore ? (
+              // && game.turn !== userScore.turnNum
               <div
                 className="card-logo"
-                style={{display: "flew", flexDirection: "column"}}
+                style={{ display: "flew", flexDirection: "column" }}
               >
-
-                
                 <Typography
-                className="card-logo-text"
-                style={{fontSize: "100px", fontWeight: "bold"}}
+                  className="card-logo-text"
+                  style={{ fontSize: "100px", fontWeight: "bold" }}
                   color={"secondary"}
-                
                 >
                   Balder...
                   {/* <span style={{ fontSize: "35px", fontWeight: "bold" }}>
@@ -300,47 +319,32 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
                 </Typography>
 
                 <Typography
-                className="card-logo-text"
-                style={{fontSize: "100px", fontWeight: "bold"}}
+                  className="card-logo-text"
+                  style={{ fontSize: "100px", fontWeight: "bold" }}
                   color={"secondary"}
-                
                 >
                   ...dash
                 </Typography>
               </div>
-            ) :
-            
-            <Typography
-            className={
-              (!word || !word.length) &&
-              game &&
-              userScore &&
-              game.turn !== userScore.turnNum
-                ? "pulse"
-                : null
-            }
-            color={"secondary"}
-            sx={{ fontSize: 30 }}
-          >
-            Word:
-            <span style={{ fontSize: "35px", fontWeight: "bold" }}>
-              {` ${word}`}
-            </span>
-          </Typography>
-            
-          
-            
-            
-            
-            }
-
-
-
-
-
-
-
-
+            ) : (
+              <Typography
+                className={
+                  (!word || !word.length) &&
+                  game &&
+                  userScore &&
+                  game.turn !== userScore.turnNum
+                    ? "pulse"
+                    : null
+                }
+                color={"secondary"}
+                sx={{ fontSize: 30 }}
+              >
+                Word:
+                <span style={{ fontSize: "35px", fontWeight: "bold" }}>
+                  {` ${word}`}
+                </span>
+              </Typography>
+            )}
 
             {/* WORD */}
             {/* <Typography
@@ -362,7 +366,10 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
             </Typography> */}
 
             {/* DEFINITION */}
-            {word.length && game && userScore && game.turn === userScore.turnNum ? (
+            {word.length &&
+            game &&
+            userScore &&
+            game.turn === userScore.turnNum ? (
               <Typography color={"secondary"} sx={{ fontSize: 30 }}>
                 Definition:
                 <span style={{ fontSize: "35px", fontWeight: "bold" }}>
@@ -389,7 +396,20 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
             ) : null}
           </Card>
         </Card>
-        {definition && !choseWord ? (
+        {/* {definition && !choseWord ? (
+          <Button
+            className={"pulse"}
+            onClick={() => handleChooseWord()}
+            sx={{ fontSize: 30 }}
+            variant="contained"
+          >
+            <Typography color={"secondary"} sx={{ fontSize: 30 }}>
+              Choose Word
+            </Typography>
+          </Button>
+        ) : null} */}
+      </Card>
+      {definition && !choseWord ? (
           <Button
             className={"pulse"}
             onClick={() => handleChooseWord()}
@@ -401,7 +421,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
             </Typography>
           </Button>
         ) : null}
-      </Card>
+      
     </Card>
   );
 };

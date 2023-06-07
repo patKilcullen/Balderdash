@@ -28,7 +28,8 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: 'Ubuntu'
+    // fontFamily: 'Copperplate'
+   fontFamily: 'Ubuntu',
   },
  
 })
