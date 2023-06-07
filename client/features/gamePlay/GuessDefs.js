@@ -105,7 +105,7 @@ const GuessDefs = ({
     const userKey = Object.keys(def)[0];
 
     if (userKey === "fake") {
-      // clientSocket.emit("send_score_card_info", {gameId: gameId, message: `${username} guessed the WRONG answer!`})
+       clientSocket.emit("send_score_card_info", {gameId: gameId, message: `${username} guessed the WRONG answer!`})
       console.log("FAKE")
       null;
     }
@@ -113,17 +113,17 @@ const GuessDefs = ({
       console.log("REAL")
       dispatch(addPoint({ userId: userId, gameId: gameId }));
 
-      // clientSocket.emit("send_score_card_info", {gameId: gameId, message: `${username} guessed the CORRECT answer!`})
+       clientSocket.emit("send_score_card_info", {gameId: gameId, message: `${username} guessed the CORRECT answer and gets 1 point!`})
     }
     if (userKey !== "fake" && userKey !== "real") {
       dispatch(addPoint({ userId: userKey, gameId: gameId })).then((res)=>{
 console.log("ADD POINBT RESPONSE: ", res.payload.user.username)
-
+clientSocket.emit("send_score_card_info", {gameId: gameId, message: `${username} guessed ${res.payload.user.username}'s fake definition... ${res.payload.user.username} gets 1 point!!`})
       })
       console.log(`REAL: userId: ${userKey}, gameId: ${gameId}`);
 
 
-      // clientSocket.emit("send_score_card_info", {gameId: gameId, message: `${username} guessed `})
+      
     }
   };
 

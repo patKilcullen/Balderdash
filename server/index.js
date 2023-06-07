@@ -51,22 +51,26 @@ socket.on("start_countdown", ({gameName})=>{
 
 // PLAYER DEFINITIONS
 socket.on("send_player_fake_def", ({playerDef, room, userId,playerTurnName})=>{
-  console.log("HIYYYAAAAA: ", playerDef, room, userId,playerTurnName)
+
   socket.to(room).emit("receive_player_fake_def", {playerDef, room, userId,playerTurnName})
   // socket.to(gameName).emit("receive_player_fake_def",{playerDef, gameName, userId, playerTurnName})
 })
 
 socket.on("start_countdown", ({gameName})=>{
-  console.log("GAME NAME IN RECUESVE STATR: ", gameName)
+
   socket.to(gameName).emit("receive_start_countdown", gameName)
 })
 
 socket.on("send_fake_defs", ({fakeDefinitions, gameName})=>{
-  console.log("Gam in send fake defs: ", gameName)
-  console.log("fake defs in send fake defs: ", fakeDefinitions)
+
   socket.to(gameName).emit("receive_fake_defs", fakeDefinitions)
 })
 
+socket.on("send_score_card_info", ({gameName, message})=>{
+  console.log("Game NAME in send_score_card_info: ", gameName)
+  console.log("Message in send_score_card_info ", message)
+  // socket.to(gameName).emit("receive_fake_defs", fakeDefinitions)
+})
 
 
 
