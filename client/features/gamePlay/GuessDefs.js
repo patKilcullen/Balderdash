@@ -11,11 +11,13 @@ import { editScore, addPoint } from "../scores/scoresSlice";
 import { editGameTurn } from "../games/singleGameSlice";
 import { fetchSingleGame, fetchAllGameScores } from "../games/singleGameSlice";
 import { clearFakeWords, clearFakeDefs } from "./gamePlaySlice";
+import { fetchSingleUser, selectSingleUser } from "../users/singleUserSlice";
 
 import Button from "@mui/material/Button";
 
 const GuessDefs = ({
   game,
+  username,
   userId,
   fakeDefinitions,
   gameName,
@@ -95,22 +97,33 @@ const GuessDefs = ({
     setFakeDefs(fakeDefinitions);
   }, [fakeDefinitions]);
 
+
+  // CHOOSE WORD
   const handleChooseWord = (def) => {
     setGuessed(true);
 
     const userKey = Object.keys(def)[0];
 
     if (userKey === "fake") {
+      // clientSocket.emit("send_score_card_info", {gameId: gameId, message: `${username} guessed the WRONG answer!`})
       console.log("FAKE")
       null;
     }
     if (userKey === "real") {
       console.log("REAL")
       dispatch(addPoint({ userId: userId, gameId: gameId }));
+
+      // clientSocket.emit("send_score_card_info", {gameId: gameId, message: `${username} guessed the CORRECT answer!`})
     }
     if (userKey !== "fake" && userKey !== "real") {
-      dispatch(addPoint({ userId: userKey, gameId: gameId }))
+      dispatch(addPoint({ userId: userKey, gameId: gameId })).then((res)=>{
+console.log("ADD POINBT RESPONSE: ", res.payload.user.username)
+
+      })
       console.log(`REAL: userId: ${userKey}, gameId: ${gameId}`);
+
+
+      // clientSocket.emit("send_score_card_info", {gameId: gameId, message: `${username} guessed `})
     }
   };
 

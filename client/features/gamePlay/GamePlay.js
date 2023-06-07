@@ -381,6 +381,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
             {timer ? (
               <Timer
                 game={game}
+                username={username}
                 userId={userId}
                 userScore={userScore}
                 gameName={gameName}
