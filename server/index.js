@@ -69,16 +69,16 @@ socket.on("send_fake_defs", ({fakeDefinitions, gameName})=>{
 socket.on("send_score_card_info", ({gameName,playerTurnName, message})=>{
 console.log("PLAYERTURN NAME: ", playerTurnName)
 console.log("MESSAGE", message)
-  socket.to(gameName).emit("receive_score_card_info", {playerTurnName, message})
+  socket.to(gameName).emit("receive_score_card_info", {room: gameName, playerTurnName, message})
 })
 
 
 
-// socket.on("send_score_card", ({scoreCardMessages, gameName})=>{
-//   // console.log("Game NAME in send_score_card: ", gameName)
-//   // console.log("Message in send_score_card ", scoreCardMessages)
-//   // socket.to(gameName).emit("receive_score_card_info", {playerTurnName, message})
-// })
+socket.on("send_score_card", ({scoreCardMessages, gameName})=>{
+  // console.log("Game NAME in send_score_card: ", gameName)
+  // console.log("Message in send_score_card ", scoreCardMessages)
+  // socket.to(gameName).emit("receive_score_card_info", {playerTurnName, message})
+})
 
 // IN DBGamePlay
       socket.on("send_player_def", ({room, playerDef}) => {

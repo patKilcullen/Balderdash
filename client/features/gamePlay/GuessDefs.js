@@ -146,14 +146,15 @@ clientSocket.emit("send_score_card_info", {gameName: gameName, playerTurnName: p
 
 
 
-
+useEffect(()=>{
   clientSocket.on(
     "receive_score_card_info",
-    ({playerTurnName, message}) => {
+    ({room,playerTurnName, message}) => {
      console.log("playerTurnName: ", playerTurnName)
      console.log("USERNAME: ", username)
      console.log("MESSAGE: ", message)
 
+     room === gameName &&
       playerTurnName === username
       
         ? 
@@ -166,7 +167,7 @@ clientSocket.emit("send_score_card_info", {gameName: gameName, playerTurnName: p
       // dispatch(addScoreCardMessage(message))
     }
   );
-
+  }, [clientSocket])
 
   // clientSocket.on(
   //   "receive_player_fake_def",
@@ -180,13 +181,13 @@ clientSocket.emit("send_score_card_info", {gameName: gameName, playerTurnName: p
 
 
 
-  // const scoreCardMessages = useSelector(selectScoreCardMessages)
+  const scoreCardMessages = useSelector(selectScoreCardMessages)
 
 
 
-// useEffect(() => {
-//   clientSocket.emit("send_score_card", { scoreCardMessages, gameName });
-// }, [scoreCardMessages]);
+useEffect(() => {
+  clientSocket.emit("send_score_card", { scoreCardMessages, gameName });
+}, [scoreCardMessages]);
 
 
   return (
