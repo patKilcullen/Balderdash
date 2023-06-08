@@ -14,9 +14,14 @@ console.log("socre acare in SCOREA CARD COMPONENT: ",scoreCard)
 
   return (
     <div>ScoreCard
-fsdfsdfsdfsdfsdfsdfsdf 
 
-        <div></div>
+        <div>{scoreCard && scoreCard.length ? 
+scoreCard.map((message)=>{
+    return(
+        <div>{message}</div>
+    )
+})
+       :null} </div>
     </div>
   )
 }

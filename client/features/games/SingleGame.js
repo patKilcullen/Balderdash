@@ -23,6 +23,8 @@ import socket from "socket.io-client";
 import { SocketContext } from "../../app/SocketProvider";
 import { use } from "chai";
 
+import ScoreCard from "../scores/ScoreCard";
+
 // Material UI
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
@@ -111,7 +113,7 @@ const SingleGame = () => {
     });
   };
 
-  
+
   const [scoreCard, setScoreCard] = useState("")
 const scoreCardTurn = useSelector(selectScoreCardMessages)
   console.log("SCORE CARD in SINGLE GAME: ", scoreCardTurn)
@@ -132,6 +134,7 @@ setScoreCard(scoreCardMessages)
   console.log("SCORE CARD SINGLE GAME: ", scoreCard)
   return (
     <Card >
+      <ScoreCard scoreCard={scoreCard}/>
       <Card id="scores-card">
       <div>
         {userScore && userScore.user ? (
