@@ -41,7 +41,7 @@ const GuessDefs = ({
   const [defList, setDefList] = useState(null);
   const [guessed, setGuessed] = useState(false);
   // const [scoreCardView, setScoreCardView] = useState(false)
-  // const [scoreCard, setScoreCard] = useState("")
+   const [scoreCard, setScoreCard] = useState("")
   // const [incorrect, setIncorrect] = useState(false)
   // const fakeDefinitions = useSelector(selectFakeDefinitions)
 
@@ -178,14 +178,17 @@ useEffect(()=>{
   );
 
 
-  clientSocket.on('receive_score_card', ({gameName, scoreCardMessages})=>{
-    setScoreCard(scoreCardMessages)
-    // console.log("THESE SCORE CARD MESSAGESSS: ", scoreCardMessages)
-  })
+  // clientSocket.on('receive_score_card', ({gameName, scoreCardMessages})=>{
+  //   //  setScoreCard(scoreCardMessages)
+  //   console.log("THESE SCORE CARD MESSAGESSS: ", scoreCardMessages)
+
+     
+  // })
 
 
 
   }, [clientSocket])
+
 
   // clientSocket.on(
   //   "receive_player_fake_def",

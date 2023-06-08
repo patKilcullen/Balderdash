@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -33,7 +33,8 @@ const SingleGame = () => {
   const userId = useSelector((state) => state.auth.me.id);
   const { id } = useParams();
   const gameId = id;
-
+  const username = useSelector((state) => state.auth.me.username)
+  
   const dispatch = useDispatch();
   const game = useSelector(selectSingleGame);
   const scores = useSelector(selectAllScores);
@@ -110,8 +111,25 @@ const SingleGame = () => {
     });
   };
 
-const scoreCard = useSelector(selectScoreCardMessages)
-  console.log("SCORE CARD in SINGLE GAME: ", scoreCard)
+  
+  const [scoreCard, setScoreCard] = useState("")
+const scoreCardTurn = useSelector(selectScoreCardMessages)
+  console.log("SCORE CARD in SINGLE GAME: ", scoreCardTurn)
+
+useEffect(()=>{
+  setScoreCard(scoreCardTurn)
+}, [scoreCardTurn])
+
+  
+useEffect(()=>{
+  clientSocket.on('receive_score_card', ({gameName, scoreCardMessages})=>{
+    //  setScoreCard(scoreCardMessages)
+    console.log("THESE SCORE CARD MESSAGESSS: ", scoreCardMessages)
+setScoreCard(scoreCardMessages)
+     
+  })
+}, [clientSocket])
+  console.log("SCORE CARD SINGLE GAME: ", scoreCard)
   return (
     <Card >
       <Card id="scores-card">
