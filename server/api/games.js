@@ -46,7 +46,7 @@ router.put('/:gameId', async(req,res,next)=>{
 
 
 router.patch('/:gameId/changeTurn', async(req,res,next)=>{
-  console.log("REQ BOFYY: ", req.body)
+  
   try {
     const game = await Game.findByPk(req.params.gameId)
     

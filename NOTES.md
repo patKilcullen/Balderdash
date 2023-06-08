@@ -12,7 +12,7 @@ ACCEPT PLAYER TO game doesnt automatically clear it from page every time...maybe
  
 
 
-TIMER: when game is player,  neeed to set timer back to false
+
 
 
 
@@ -24,7 +24,13 @@ POSSIBLY SOLVED IT by addind playerTurn to dependency array of useEffect for joi
 NOWWWWWW add to scores function not working.  one gets multiple points... possibly beacuse of socket???? or logic doubled somewhere possible thunk or route
 
 LAST UPDATE: 
+Sent score card info to server and back, but cant do anthing with it... should mimic receive_player_fake death and add it to state ingamePlaySlice or Scores slice, like how addDefinition workd in gamePlaySlice
+
+
 use location.reload() to change turns for now.  probably not the best practive because has to reload everything and it loses state, but it workd for now.
+SOLVED THiS BY...add in to state in slice, cant recall exactly how but look at GuessDef timer
+
+
 
 if not working, check CreateRound... changed lovalhost link to process.env variable
 

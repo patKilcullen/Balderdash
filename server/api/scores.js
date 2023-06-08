@@ -51,9 +51,9 @@ router.put('/:id/addPoint', async(req,res,next)=>{
   console.log("HIT ADD POINT: ", req.body )
   try {
     const score = await Score.findOne({where: {userId: req.body.userId, gameId: req.body.gameId}, include: [User] })
-    console.log("SOCRE SCORE BEFORE: ", score.score)
+    
     score.score += 1;
-    console.log("SOCRE SCORE AFTER: ", score.score)
+    
     res.send(await score.save());
     // or
 // res.send(await score.update(score));

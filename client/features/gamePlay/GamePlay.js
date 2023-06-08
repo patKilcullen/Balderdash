@@ -8,6 +8,7 @@ import {
   clearFakeDefs,
   clearFakeWords,
   addDefinition,
+  clearScoreCardMessages,
 } from "./gamePlaySlice";
 import { selectMe } from "../auth/authSlice";
 import Timer from "./Timer";
@@ -57,6 +58,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
   const handleGetWord = () => {
     setFlip(true);
     dispatch(clearFakeDefs());
+    dispatch(clearScoreCardMessages())
     dispatch(getWord()).then((res) => {
       setWord(res.payload[0]);
       dispatch(getDefinition(res.payload[0])).then((res) => {
@@ -132,7 +134,12 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
           : console.log("ERROR: Failed to add player definition");
       }
     );
+
+
+
   }, [clientSocket, gameName]);
+ 
+
 
   // return (
   //   <Card

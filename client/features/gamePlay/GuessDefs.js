@@ -4,6 +4,8 @@ import {
   selectFakeWords,
   getFakeDefinitions,
   selectFakeDefinitions,
+  addScoreCardMessage,
+  selectScoreCardMessages
 } from "./gamePlaySlice";
 import { SocketContext } from "../../app/SocketProvider";
 
@@ -22,6 +24,7 @@ const GuessDefs = ({
   fakeDefinitions,
   gameName,
   gameId,
+  playerTurnName,
   reloadScores,
   setDefinition,
   setWord,
@@ -105,22 +108,28 @@ const GuessDefs = ({
     const userKey = Object.keys(def)[0];
 
     if (userKey === "fake") {
-       clientSocket.emit("send_score_card_info", {gameId: gameId, message: `${username} guessed the WRONG answer!`})
-      console.log("FAKE")
+      let message = `${username} guessed the WRONG answer!`
+      // have to check for player turn name because is is null when its the users turn
+      !playerTurnName ? dispatch(addScoreCardMessage(message)) : null;
+       clientSocket.emit("send_score_card_info", {gameName: gameName,playerTurnName: playerTurnName ? playerTurnName : username, message: message})
+
       null;
     }
     if (userKey === "real") {
-      console.log("REAL")
+   let message = `${username} guessed the CORRECT answer and gets 1 point!`
       dispatch(addPoint({ userId: userId, gameId: gameId }));
-
-       clientSocket.emit("send_score_card_info", {gameId: gameId, message: `${username} guessed the CORRECT answer and gets 1 point!`})
+      !playerTurnName ? dispatch(addScoreCardMessage(message)) : null;
+       clientSocket.emit("send_score_card_info", {gameName: gameName, playerTurnName: playerTurnName ? playerTurnName : username, message: message})
     }
+
     if (userKey !== "fake" && userKey !== "real") {
       dispatch(addPoint({ userId: userKey, gameId: gameId })).then((res)=>{
-console.log("ADD POINBT RESPONSE: ", res.payload.user.username)
-clientSocket.emit("send_score_card_info", {gameId: gameId, message: `${username} guessed ${res.payload.user.username}'s fake definition... ${res.payload.user.username} gets 1 point!!`})
+let message =  `${username} guessed ${res.payload.user.username}'s fake definition... ${res.payload.user.username} gets 1 point!!`
+!playerTurnName ? dispatch(addScoreCardMessage(message)) : null;
+clientSocket.emit("send_score_card_info", {gameName: gameName, playerTurnName: playerTurnName ? playerTurnName : username, message:message})
+
       })
-      console.log(`REAL: userId: ${userKey}, gameId: ${gameId}`);
+     
 
 
       
@@ -134,6 +143,51 @@ clientSocket.emit("send_score_card_info", {gameId: gameId, message: `${username}
   clientSocket.on("receive_fake_defs", (fakeDefinitions) => {
     setFakeDefs(fakeDefinitions);
   });
+
+
+
+
+  clientSocket.on(
+    "receive_score_card_info",
+    ({playerTurnName, message}) => {
+     console.log("playerTurnName: ", playerTurnName)
+     console.log("USERNAME: ", username)
+     console.log("MESSAGE: ", message)
+
+      playerTurnName === username
+      
+        ? 
+        // console.log("FAGGOOTTT YOU THE USER")
+       dispatch(addScoreCardMessage(message))
+        : console.log("ERROR: if AINT YOUR TURNNNN");
+
+
+
+      // dispatch(addScoreCardMessage(message))
+    }
+  );
+
+
+  // clientSocket.on(
+  //   "receive_player_fake_def",
+  //   ({ playerDef, room, userId, playerTurnName }) => {
+  //     let playerId = userId;
+  //     room === gameName && playerTurnName === username
+  //       ? dispatch(addDefinition({ [playerId]: playerDef }))
+  //       : console.log("ERROR: Failed to add player definition");
+  //   }
+  // );
+
+
+
+  // const scoreCardMessages = useSelector(selectScoreCardMessages)
+
+
+
+// useEffect(() => {
+//   clientSocket.emit("send_score_card", { scoreCardMessages, gameName });
+// }, [scoreCardMessages]);
+
 
   return (
     <div >

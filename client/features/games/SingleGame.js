@@ -108,7 +108,6 @@ const SingleGame = () => {
     });
   };
 
-  console.log("USER SCOROROROROROR: ", userScore);
   return (
     <Card >
       <Card id="scores-card">

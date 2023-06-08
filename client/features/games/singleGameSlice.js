@@ -35,7 +35,7 @@ export const editGame = createAsyncThunk("editGame", async (game) => {
 
   try {
     const { data } = await axios.put(`/api/games/${game.id}`, game);
-    console.log("DATAAAA: ", data);
+    
     return data;
   } catch (err) {
     console.log(err);
@@ -47,7 +47,7 @@ export const editGameTurn = createAsyncThunk("editGame", async ({gameId, turn}) 
 
   try {
     const { data } = await axios.patch(`/api/games/${gameId}/changeTurn`, {turn});
-    console.log("DATAAAA: ", data);
+    
     return data;
   } catch (err) {
     console.log(err);
