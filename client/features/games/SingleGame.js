@@ -41,6 +41,7 @@ const SingleGame = () => {
   const game = useSelector(selectSingleGame);
   const scores = useSelector(selectAllScores);
 
+
   const userScore = scores.find((score) => score.userId === userId);
 
   useEffect(() => {
@@ -55,12 +56,14 @@ const SingleGame = () => {
     dispatch(fetchAllGameScores(gameId));
   }, [gameId]);
 
+const [showScoreCard, setShowScoreCard] = useState(false)
   // Updates scores when
   const reloadScores = () => {
     // dispatch(fetchSingleGame(gameId)).then(()=>{
     //   dispatch(fetchAllGameScores(gameId))
     // })
     dispatch(fetchAllGameScores(gameId));
+setShowScoreCard(true)
   };
 
   // SOCKET
@@ -134,7 +137,7 @@ setScoreCard(scoreCardMessages)
   console.log("SCORE CARD SINGLE GAME: ", scoreCard)
   return (
     <Card >
-      <ScoreCard scoreCard={scoreCard}/>
+      {showScoreCard ? <ScoreCard scoreCard={scoreCard}/>:null}
       <Card id="scores-card">
       <div>
         {userScore && userScore.user ? (

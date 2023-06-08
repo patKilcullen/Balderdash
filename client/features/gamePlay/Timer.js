@@ -55,7 +55,7 @@ setPlayGame(true)
      return () => clearTimeout(timer);
   }, [countdown]);
 
-
+// When then page mounts on playerTurn, it send socket to all others in game to mount on their end
   useEffect(()=>{
     clientSocket.emit("start_countdown", {gameName})
       },[])
