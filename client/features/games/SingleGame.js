@@ -12,6 +12,8 @@ import {
   createScore,
 } from "../scores/scoresSlice";
 
+import { selectScoreCardMessages } from "../gamePlay/gamePlaySlice";
+
 import Main from "../main/Main";
 // import GamePlay from "../gamePlay/GamePlayOLD";
 import GamePlay from "../gamePlay/GamePlay";
@@ -108,6 +110,8 @@ const SingleGame = () => {
     });
   };
 
+const scoreCard = useSelector(selectScoreCardMessages)
+  console.log("SCORE CARD in SINGLE GAME: ", scoreCard)
   return (
     <Card >
       <Card id="scores-card">

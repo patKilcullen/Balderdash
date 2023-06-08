@@ -17,6 +17,8 @@ import { fetchSingleUser, selectSingleUser } from "../users/singleUserSlice";
 
 import Button from "@mui/material/Button";
 
+import ScoreCard from "../scores/ScoreCard";
+
 const GuessDefs = ({
   game,
   username,
@@ -38,6 +40,8 @@ const GuessDefs = ({
   const [correct, setCorrect] = useState(null);
   const [defList, setDefList] = useState(null);
   const [guessed, setGuessed] = useState(false);
+  // const [scoreCardView, setScoreCardView] = useState(false)
+  // const [scoreCard, setScoreCard] = useState("")
   // const [incorrect, setIncorrect] = useState(false)
   // const fakeDefinitions = useSelector(selectFakeDefinitions)
 
@@ -75,7 +79,8 @@ const GuessDefs = ({
         setChoseWord(false)
         dispatch(clearFakeWords());
 
-        
+
+    
         // dispatch(fetchSingleGame(gameId));
         // // dispatch(fetchAllScores())
         // dispatch(fetchAllGameScores(gameId))
@@ -89,6 +94,10 @@ const GuessDefs = ({
     // NEEDED?
     return () => clearTimeout(timer);
   }, [countdown]);
+
+
+
+
 
   const handleChangeGameTurn = () => {
     game.turn === 1
@@ -167,6 +176,15 @@ useEffect(()=>{
       // dispatch(addScoreCardMessage(message))
     }
   );
+
+
+  clientSocket.on('receive_score_card', ({gameName, scoreCardMessages})=>{
+    setScoreCard(scoreCardMessages)
+    // console.log("THESE SCORE CARD MESSAGESSS: ", scoreCardMessages)
+  })
+
+
+
   }, [clientSocket])
 
   // clientSocket.on(
@@ -186,6 +204,7 @@ useEffect(()=>{
 
 
 useEffect(() => {
+// setScoreCard(scoreCardMessages)
   clientSocket.emit("send_score_card", { scoreCardMessages, gameName });
 }, [scoreCardMessages]);
 
@@ -217,6 +236,13 @@ useEffect(() => {
               );
             })
         : ""}
+
+       
+        {/* <div>
+        <ScoreCard scoreCard={scoreCard}/> 
+        <div style={{heigh: "500px", width: "500px", border: "10px solid red", position: "absolute"}}>GATY ASSS</div>
+        </div>
+        */}
         </div>
   
   );

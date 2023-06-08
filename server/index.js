@@ -75,9 +75,9 @@ console.log("MESSAGE", message)
 
 
 socket.on("send_score_card", ({scoreCardMessages, gameName})=>{
-  // console.log("Game NAME in send_score_card: ", gameName)
-  // console.log("Message in send_score_card ", scoreCardMessages)
-  // socket.to(gameName).emit("receive_score_card_info", {playerTurnName, message})
+  console.log("Game NAME in send_score_card: ", gameName)
+  console.log("Message in send_score_card ", scoreCardMessages)
+   socket.to(gameName).emit("receive_score_card", {gameName, scoreCardMessages})
 })
 
 // IN DBGamePlay
