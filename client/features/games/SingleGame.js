@@ -12,7 +12,10 @@ import {
   createScore,
 } from "../scores/scoresSlice";
 
-import { selectScoreCardMessages, clearScoreCardMessages } from "../gamePlay/gamePlaySlice";
+import {
+  selectScoreCardMessages,
+  clearScoreCardMessages,
+} from "../gamePlay/gamePlaySlice";
 
 import Main from "../main/Main";
 // import GamePlay from "../gamePlay/GamePlayOLD";
@@ -35,12 +38,11 @@ const SingleGame = () => {
   const userId = useSelector((state) => state.auth.me.id);
   const { id } = useParams();
   const gameId = id;
-  const username = useSelector((state) => state.auth.me.username)
-  
+  const username = useSelector((state) => state.auth.me.username);
+
   const dispatch = useDispatch();
   const game = useSelector(selectSingleGame);
   const scores = useSelector(selectAllScores);
-
 
   const userScore = scores.find((score) => score.userId === userId);
 
@@ -56,18 +58,16 @@ const SingleGame = () => {
     dispatch(fetchAllGameScores(gameId));
   }, [gameId]);
 
-const [showScoreCard, setShowScoreCard] = useState(false)
+  const [showScoreCard, setShowScoreCard] = useState(false);
   // Updates scores when
   const reloadScores = () => {
-    // dispatch(fetchSingleGame(gameId)).then(()=>{
-    //   dispatch(fetchAllGameScores(gameId))
-    // })
-     dispatch(fetchAllGameScores(gameId));
-    setTimeout(()=>{
-      setShowScoreCard(false)
-      dispatch(clearScoreCardMessages())
-    },5000)
-    setShowScoreCard(true)
+  
+    dispatch(fetchAllGameScores(gameId));
+    setTimeout(() => {
+      setShowScoreCard(false);
+      dispatch(clearScoreCardMessages());
+    }, 5000);
+    setShowScoreCard(true);
   };
 
   // SOCKET
@@ -120,118 +120,117 @@ const [showScoreCard, setShowScoreCard] = useState(false)
     });
   };
 
+  const [scoreCard, setScoreCard] = useState("");
+  const scoreCardTurn = useSelector(selectScoreCardMessages);
 
-  const [scoreCard, setScoreCard] = useState("")
-const scoreCardTurn = useSelector(selectScoreCardMessages)
+  useEffect(() => {
+    setScoreCard(scoreCardTurn);
+  }, [scoreCardTurn]);
 
+  // SHOULD THIS CHECK IF ITS THE RIGHT GAME?????????
+  useEffect(() => {
+    clientSocket.on("receive_score_card", ({ gameName, scoreCardMessages }) => {
+      //  setScoreCard(scoreCardMessages)
 
-useEffect(()=>{
-  setScoreCard(scoreCardTurn)
-}, [scoreCardTurn])
+      setScoreCard(scoreCardMessages);
+    });
+  }, [clientSocket]);
 
-  
-useEffect(()=>{
-  clientSocket.on('receive_score_card', ({gameName, scoreCardMessages})=>{
-    //  setScoreCard(scoreCardMessages)
-
-setScoreCard(scoreCardMessages)
-     
-  })
-}, [clientSocket])
- 
   return (
-    <Card >
-      {showScoreCard ? <ScoreCard scoreCard={scoreCard}/>:null}
+    <Card>
+      {showScoreCard ? <ScoreCard scoreCard={scoreCard} /> : null}
       <Card id="scores-card">
-      <div>
-        {userScore && userScore.user ? (
-          <div>USER NAME: {userScore.user.username}</div>
-        ) : null}
-      </div>
-      <div>{game.name}</div>
-      {game.owner ? <div>Owner: {game.owner.username}</div> : null}
-
-      {/* User Score */}
-      {/* probably don't need userScore.score below... see nothing when score is 0??? */}
-      {/* {userScore && userScore.score ? ( */}
-      {userScore ? (
-        // <div> Your Score {userScore.user.username} </div>
-        <div> Your Score {userScore.score} </div>
-      ) : null}
-
-      {/* Players and Score */}
-      {scores ? (
         <div>
-          Playffers:{" "}
-          {scores
-            .filter((score) => score.accepted && score.userId !== userId)
-            .map((user) => (
-              <div>
-                {" "}
-                {user.user ? (
-                  <div>
-                    {user.user.username} Score: {user.score}
-                    {/* Dont let non owner */}
-                    {user.user.id !== userId &&
-                    userId === game.ownerId &&
-                    game.started === false ? (
-                      <button
-                        onClick={() => handleDeclineRequest(user.user.id)}
-                      >
-                        Remove Player
-                      </button>
-                    ) : null}
-                  </div>
-                ) : null}
-              </div>
-            ))}
-        </div>
-      ) : null}
-
-      {/*IF GAME OWNER and Game NOT STARTED: Player Requests */}
-      {game.ownerId === userId && !game.started ? (
-        <div>Player Requests</div>
-      ) : null}
-
-      {game.ownerId === userId && !game.started ? (
-        <div>
-          {scores && scores.length ? (
-            <div>
-              {scores
-                .filter((score) => !score.accepted)
-
-                .map((score) => (
-                  <div>
-                    {score.user.username}
-                    <button onClick={() => handleAcceptRequest(score.user.id)}>
-                      Accept
-                    </button>
-                    <button onClick={() => handleDeclineRequest(score.user.id)}>
-                      Decline
-                    </button>
-                  </div>
-                ))}
-            </div>
+          {userScore && userScore.user ? (
+            <div>USER NAME: {userScore.user.username}</div>
           ) : null}
         </div>
-      ) : null}
+        <div>{game.name}</div>
+        {game.owner ? <div>Owner: {game.owner.username}</div> : null}
 
-      {/* IF NOT GAME OWNER  and Game NOT STARTED: REQUEST TO JOIN*/}
-      {game.ownerId !== userId && !game.started && !userScore ? (
-        // ADD additional conditional to determine if request already sent
-        // Should make singleScore for user!!!! check for that to determing if can send
+        {/* User Score */}
 
-        <button onClick={handleAskJoin}>Ask to join this game</button>
-      ) : null}
+        {userScore ? (
+          // <div> Your Score {userScore.user.username} </div>
+          <div> Your Score {userScore.score} </div>
+        ) : null}
 
-      {/* START GAME - If game owner and more than one player*/}
-      {game.ownerId === userId &&
-      game.numPlayers > 1 &&
-      game.started === false ? (
-        <button onClick={handleStartGame}>Start Game</button>
-      ) : null}
+        {/* Players and Score */}
+        {scores ? (
+          <div>
+            Playffers:{" "}
+            {scores
+              .filter((score) => score.accepted && score.userId !== userId)
+              .map((user) => (
+                <div>
+                  {" "}
+                  {user.user ? (
+                    <div>
+                      {user.user.username} Score: {user.score}
+                      {/* Dont let non owner */}
+                      {user.user.id !== userId &&
+                      userId === game.ownerId &&
+                      game.started === false ? (
+                        <button
+                          onClick={() => handleDeclineRequest(user.user.id)}
+                        >
+                          Remove Player
+                        </button>
+                      ) : null}
+                    </div>
+                  ) : null}
+                </div>
+              ))}
+          </div>
+        ) : null}
 
-</Card>
+        {/*IF GAME OWNER and Game NOT STARTED: Player Requests */}
+        {game.ownerId === userId && !game.started ? (
+          <div>Player Requests</div>
+        ) : null}
+
+        {game.ownerId === userId && !game.started ? (
+          <div>
+            {scores && scores.length ? (
+              <div>
+                {scores
+                  .filter((score) => !score.accepted)
+
+                  .map((score) => (
+                    <div>
+                      {score.user.username}
+                      <button
+                        onClick={() => handleAcceptRequest(score.user.id)}
+                      >
+                        Accept
+                      </button>
+                      <button
+                        onClick={() => handleDeclineRequest(score.user.id)}
+                      >
+                        Decline
+                      </button>
+                    </div>
+                  ))}
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+
+        {/* IF NOT GAME OWNER  and Game NOT STARTED: REQUEST TO JOIN*/}
+        {game.ownerId !== userId && !game.started && !userScore ? (
+          // ADD additional conditional to determine if request already sent
+          // Should make singleScore for user!!!! check for that to determing if can send
+
+          <button onClick={handleAskJoin}>Ask to join this game</button>
+        ) : null}
+
+        {/* START GAME - If game owner and more than one player*/}
+        {game.ownerId === userId &&
+        game.numPlayers > 1 &&
+        game.started === false ? (
+          <button onClick={handleStartGame}>Start Game</button>
+        ) : null}
+      </Card>
 
       {/* GAME PLAY */}
       {(game.started === true && game.ownerId === userId) ||

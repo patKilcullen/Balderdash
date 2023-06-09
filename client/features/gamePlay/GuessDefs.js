@@ -11,7 +11,11 @@ import { SocketContext } from "../../app/SocketProvider";
 
 import { editScore, addPoint } from "../scores/scoresSlice";
 import { editGameTurn } from "../games/singleGameSlice";
-import { fetchSingleGame, fetchAllGameScores, selectSingleGame } from "../games/singleGameSlice";
+import {
+  fetchSingleGame,
+  fetchAllGameScores,
+  selectSingleGame,
+} from "../games/singleGameSlice";
 import { clearFakeWords, clearFakeDefs } from "./gamePlaySlice";
 import { fetchSingleUser, selectSingleUser } from "../users/singleUserSlice";
 
@@ -42,74 +46,24 @@ const GuessDefs = ({
   const [correct, setCorrect] = useState(null);
   const [defList, setDefList] = useState(null);
   const [guessed, setGuessed] = useState(false);
-  // const [scoreCardView, setScoreCardView] = useState(false)
-  const [scoreCard, setScoreCard] = useState("");
-  // const [incorrect, setIncorrect] = useState(false)
-  // const fakeDefinitions = useSelector(selectFakeDefinitions)
 
   const dispatch = useDispatch();
 
-
-
-
-
-  // TEST SECTIO NC CAN MAYBE DELTER
-const singleGame =useSelector(selectSingleGame)
-  console.log("SINGLE GAME IN GUESS: ", singleGame.turn)
-  console.log("UserSCORE IN GUESS: ", userScore.turnNum)
-  
-useEffect(()=>{
-  singleGame.turn === userScore.turnNum ? 
-  console.log("ITS YOUR TURN ")
-: console.log("NOT YOUR TURN")
-},[game])
-
-  const [final, setFinal] = useState("")
-  // console.log("FINAL!!!!!!: ", final)
-// checks if has playerTurnName(only player whos turn it is NOT will have it), if has it, sends it to playerTurn
-
-
-useEffect(()=>{
-  userScore &&  userScore.turnNum === game.turn ? 
-// console.log("GOT THE PLAYER TURN NAME, ", playerTurnName)
-
-clientSocket.emit("send_playerTurnName_GuessDefs", {
-  gameName: gameName,
-  playerTurnName: playerTurnName 
- 
-})
-
-: null
-// console.log("DON:T GOT PLAYER NAME: ", playerTurnName)
-
-
-userScore && userScore.turnNum === game.turn ? setFinal(playerTurnName): null
-},[])
-
-
-
-
-
-
+  const singleGame = useSelector(selectSingleGame);
+  const scoreCardMessages = useSelector(selectScoreCardMessages);
 
   const [countdown, setCountdown] = useState(7);
   useEffect(() => {
     const timer = setTimeout(async () => {
       if (countdown > 0) {
         setDefList(true);
-        setCountdown(countdown - 1); // Decrease countdown value
+        setCountdown(countdown - 1);
       } else if (countdown === 0) {
-        // handleGetFakeDefinitions()
-
         setDefList(false);
 
         handleChangeGameTurn();
 
         reloadScores();
-
-        // location.reload()
-
-        // window.reload()
 
         setDefinition("");
         setWord("");
@@ -121,9 +75,7 @@ userScore && userScore.turnNum === game.turn ? setFinal(playerTurnName): null
         setPlayGame(false);
         setChoseWord(false);
         dispatch(clearFakeWords());
-
-   
-      } 
+      }
     }, 1000);
 
     // Cleanup the timer when the component unmounts
@@ -150,38 +102,40 @@ userScore && userScore.turnNum === game.turn ? setFinal(playerTurnName): null
     if (userKey === "fake") {
       let message = `${username} guessed the WRONG answer!`;
 
-      // have to check for player turn name because is is null when its the users turn
-      singleGame.turn === userScore.turnNum  ? dispatch(addScoreCardMessage(message)) :
-      clientSocket.emit("send_score_card_info", {
-        gameName: gameName,
-        playerTurnName: playerTurnName,
-        message: message,
-      });
-
+      //If its users turn, add message to state, otherwise send it through socket to
+      //  player whos turn it is so they can put it in state (SAME FOR FAKE AND !FALE && !REAL)
+      singleGame.turn === userScore.turnNum
+        ? dispatch(addScoreCardMessage(message))
+        : clientSocket.emit("send_score_card_info", {
+            gameName: gameName,
+            playerTurnName: playerTurnName,
+            message: message,
+          });
       null;
     }
     if (userKey === "real") {
       let message = `${username} guessed the CORRECT answer and gets 1 point!`;
-
       dispatch(addPoint({ userId: userId, gameId: gameId }));
-      singleGame.turn === userScore.turnNum ?  dispatch(addScoreCardMessage(message)) : 
-      clientSocket.emit("send_score_card_info", {
-        gameName: gameName,
-        playerTurnName: playerTurnName ,
-        message: message,
-      });
+      singleGame.turn === userScore.turnNum
+        ? dispatch(addScoreCardMessage(message))
+        : clientSocket.emit("send_score_card_info", {
+            gameName: gameName,
+            playerTurnName: playerTurnName,
+            message: message,
+          });
     }
 
     if (userKey !== "fake" && userKey !== "real") {
       dispatch(addPoint({ userId: userKey, gameId: gameId })).then((res) => {
         let message = `${username} guessed ${res.payload.user.username}'s fake definition... ${res.payload.user.username} gets 1 point!!`;
 
-        singleGame.turn === userScore.turnNum ? dispatch(addScoreCardMessage(message)) : 
-        clientSocket.emit("send_score_card_info", {
-          gameName: gameName,
-          playerTurnName: playerTurnName ,
-          message: message,
-        });
+        singleGame.turn === userScore.turnNum
+          ? dispatch(addScoreCardMessage(message))
+          : clientSocket.emit("send_score_card_info", {
+              gameName: gameName,
+              playerTurnName: playerTurnName,
+              message: message,
+            });
       });
     }
   };
@@ -194,40 +148,13 @@ userScore && userScore.turnNum === game.turn ? setFinal(playerTurnName): null
     setFakeDefs(fakeDefinitions);
   });
 
- 
-
-
-
   useEffect(() => {
-    clientSocket.on(
-      "receive_score_card_info",
-      ({ room, playerTurnName, message }) => {
-console.log("gayassssssssssss")
-        room === gameName && singleGame.turn === userScore.turnNum 
-          ? dispatch(addScoreCardMessage(message))
-          : null
-
-        // dispatch(addScoreCardMessage(message))
-      }
-    );
-
-    // clientSocket.on('receive_score_card', ({gameName, scoreCardMessages})=>{
-    //   //  setScoreCard(scoreCardMessages)
-    //   console.log("THESE SCORE CARD MESSAGESSS: ", scoreCardMessages)
-
-    // })
-    
-    clientSocket.on(
-      "receive_playerTurnName_GuessDefs",
-      ({ room, playerTurnName }) => {
-        setFinal(playerTurnName)
-    //  console.log("NIDGGGER BOY: ", playerTurnName)
-      }
-    );
-    
+    clientSocket.on("receive_score_card_info", ({ room, message }) => {
+      room === gameName && singleGame.turn === userScore.turnNum
+        ? dispatch(addScoreCardMessage(message))
+        : null;
+    });
   }, [clientSocket]);
-
-  const scoreCardMessages = useSelector(selectScoreCardMessages);
 
   useEffect(() => {
     clientSocket.emit("send_score_card", { scoreCardMessages, gameName });

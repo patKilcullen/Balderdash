@@ -21,82 +21,80 @@ const init = async () => {
     const serverSocket = socket(server);
 
     serverSocket.on("connection", (socket) => {
-
-
       socket.on("send_new_game", (data) => {
         socket.broadcast.emit("receive_new_game", data);
       });
-    
-socket.on("join_room", ({room, userName})=>{
 
-  socket.join(room)
-})
-  socket.on("send_new_game", (data) => {
+      socket.on("join_room", ({ room, userName }) => {
+        socket.join(room);
+      });
+      socket.on("send_new_game", (data) => {
         socket.broadcast.emit("receive_new_game", data);
       });
-    
-      socket.on("send_word", ({word, room, playerTurnName}) => {
 
-        socket.to(room).emit("receive_word", {word, room,playerTurnName });
-       
+      socket.on("send_word", ({ word, room, playerTurnName }) => {
+        socket.to(room).emit("receive_word", { word, room, playerTurnName });
       });
 
-// Countdown Socket
+      // Countdown Socket
 
-socket.on("start_countdown", ({gameName})=>{
-  
-  socket.to(gameName).emit("receive_start_countdown", gameName)
-})
+      socket.on("start_countdown", ({ gameName }) => {
+        socket.to(gameName).emit("receive_start_countdown", gameName);
+      });
 
+      // PLAYER DEFINITIONS
+      socket.on(
+        "send_player_fake_def",
+        ({ playerDef, room, userId, playerTurnName }) => {
+          socket
+            .to(room)
+            .emit("receive_player_fake_def", {
+              playerDef,
+              room,
+              userId,
+              playerTurnName,
+            });
+          // socket.to(gameName).emit("receive_player_fake_def",{playerDef, gameName, userId, playerTurnName})
+        }
+      );
 
-// PLAYER DEFINITIONS
-socket.on("send_player_fake_def", ({playerDef, room, userId,playerTurnName})=>{
+      socket.on("start_countdown", ({ gameName }) => {
+        socket.to(gameName).emit("receive_start_countdown", gameName);
+      });
 
-  socket.to(room).emit("receive_player_fake_def", {playerDef, room, userId,playerTurnName})
-  // socket.to(gameName).emit("receive_player_fake_def",{playerDef, gameName, userId, playerTurnName})
-})
+      socket.on("send_fake_defs", ({ fakeDefinitions, gameName }) => {
+        socket.to(gameName).emit("receive_fake_defs", fakeDefinitions);
+      });
 
-socket.on("start_countdown", ({gameName})=>{
+      socket.on(
+        "send_score_card_info",
+        ({ gameName, playerTurnName, message }) => {
+          console.log("PLAYERTURNNAME score card info: ", playerTurnName);
+          console.log("MESSAGE", message);
+          socket
+            .to(gameName)
+            .emit("receive_score_card_info", {
+              room: gameName,
+              playerTurnName,
+              message,
+            });
+        }
+      );
 
-  socket.to(gameName).emit("receive_start_countdown", gameName)
-})
+      socket.on("send_score_card", ({ scoreCardMessages, gameName }) => {
+        socket
+          .to(gameName)
+          .emit("receive_score_card", { gameName, scoreCardMessages });
+      });
 
-socket.on("send_fake_defs", ({fakeDefinitions, gameName})=>{
-
-  socket.to(gameName).emit("receive_fake_defs", fakeDefinitions)
-})
-
-
-socket.on("send_playerTurnName_GuessDefs", ({gameName,playerTurnName})=>{
-  socket.to(gameName).emit("receive_playerTurnName_GuessDefs", {room: gameName, playerTurnName: playerTurnName} )
-})
-
-
-socket.on("send_score_card_info", ({gameName,playerTurnName, message})=>{
-console.log("PLAYERTURNNAME score card info: ", playerTurnName)
-console.log("MESSAGE", message)
-  socket.to(gameName).emit("receive_score_card_info", {room: gameName, playerTurnName, message})
-})
-
-
-
-socket.on("send_score_card", ({scoreCardMessages, gameName})=>{
-
-   socket.to(gameName).emit("receive_score_card", {gameName, scoreCardMessages})
-})
-
-// IN DBGamePlay
-      socket.on("send_player_def", ({room, playerDef}) => {
-
+      // IN DBGamePlay
+      socket.on("send_player_def", ({ room, playerDef }) => {
         socket.to(room).emit("receive_player_def", playerDef);
-      
       });
 
+      socket.on("requestInfo", ({ playerTurn, userName, room }) => {
+        socket.to(room).emit("request_word", { playerTurn, userName, room });
 
-      socket.on('requestInfo', ({playerTurn, userName, room}) => {
-     
-        socket.to(room).emit("request_word", {playerTurn,userName, room});
-        
         // socket.to(targetSocketId).emit('infoRequestReceived', 'Request received!')
 
         // console.log("BONNNNERRRRRRR", targetSocketId)
@@ -107,16 +105,11 @@ socket.on("send_score_card", ({scoreCardMessages, gameName})=>{
         //   // Emit request event to the target socket
         //   targetSocket.emit('infoRequestReceived', 'Request received!');
         // }
-      })
-     socket.on('send_existing_word', ({word,room,userName})=>{
-console.log("SEND EXISTING WORD", word)
-      socket.to(room).emit("retrieve_eixsting_word", {word,userName})
-     })
-
-
-    
-
-   
+      });
+      socket.on("send_existing_word", ({ word, room, userName }) => {
+        console.log("SEND EXISTING WORD", word);
+        socket.to(room).emit("retrieve_eixsting_word", { word, userName });
+      });
 
       // socket.on("send_score", (data) => {
       //   socket.broadcast.emit("receive_score", data);
@@ -133,18 +126,7 @@ console.log("SEND EXISTING WORD", word)
       // socket.on("send_defArray", (data) => {
       //   socket.broadcast.emit("receive_defArray", data);
       // });
-
-
-
-
-    
-
-      
-
     });
-
-
-
   } catch (ex) {
     console.log(ex);
   }
