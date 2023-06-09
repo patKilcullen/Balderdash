@@ -23,7 +23,14 @@ when playerNAme if score.turn... the def doesnt send if the user who turn it is 
 POSSIBLY SOLVED IT by addind playerTurn to dependency array of useEffect for join_room socket in XGamePlay
 NOWWWWWW add to scores function not working.  one gets multiple points... possibly beacuse of socket???? or logic doubled somewhere possible thunk or route
 
-LAST UPDATE: 
+LAST UPDATE:
+PLAYER TURN NAME in timer only ever right for the player whos turn it is NOT
+PLAYER TURN NAME in send_score_card_info is not updating properly between rounds!!!!
+
+score card is sent to singles game for both playerTurn and other players, when turn ends, through reload showScoreCArd is set to true in SingleGAme
+SCORECARD STILL NEEDS TO UNMOUNT AFTER TIMER UP
+
+
 Sent score card info to server and back, but cant do anthing with it... should mimic receive_player_fake death and add it to state ingamePlaySlice or Scores slice, like how addDefinition workd in gamePlaySlice
 
 

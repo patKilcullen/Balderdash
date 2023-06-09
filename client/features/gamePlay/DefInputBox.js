@@ -17,7 +17,7 @@ const inputRef = useRef()
 useEffect(()=>{
 inputRef.current.focus()
 }, [])
-   
+  //  console.log("PAYER TURN NAME DEF INPUT: ", playerTurnName )
 
 const handleEnterFakeDef = (e)=>{
 e.preventDefault()

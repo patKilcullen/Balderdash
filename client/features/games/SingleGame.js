@@ -12,7 +12,7 @@ import {
   createScore,
 } from "../scores/scoresSlice";
 
-import { selectScoreCardMessages } from "../gamePlay/gamePlaySlice";
+import { selectScoreCardMessages, clearScoreCardMessages } from "../gamePlay/gamePlaySlice";
 
 import Main from "../main/Main";
 // import GamePlay from "../gamePlay/GamePlayOLD";
@@ -62,8 +62,12 @@ const [showScoreCard, setShowScoreCard] = useState(false)
     // dispatch(fetchSingleGame(gameId)).then(()=>{
     //   dispatch(fetchAllGameScores(gameId))
     // })
-    dispatch(fetchAllGameScores(gameId));
-setShowScoreCard(true)
+     dispatch(fetchAllGameScores(gameId));
+    setTimeout(()=>{
+      setShowScoreCard(false)
+      dispatch(clearScoreCardMessages())
+    },5000)
+    setShowScoreCard(true)
   };
 
   // SOCKET
@@ -119,7 +123,7 @@ setShowScoreCard(true)
 
   const [scoreCard, setScoreCard] = useState("")
 const scoreCardTurn = useSelector(selectScoreCardMessages)
-  console.log("SCORE CARD in SINGLE GAME: ", scoreCardTurn)
+
 
 useEffect(()=>{
   setScoreCard(scoreCardTurn)
@@ -129,12 +133,12 @@ useEffect(()=>{
 useEffect(()=>{
   clientSocket.on('receive_score_card', ({gameName, scoreCardMessages})=>{
     //  setScoreCard(scoreCardMessages)
-    console.log("THESE SCORE CARD MESSAGESSS: ", scoreCardMessages)
+
 setScoreCard(scoreCardMessages)
      
   })
 }, [clientSocket])
-  console.log("SCORE CARD SINGLE GAME: ", scoreCard)
+ 
   return (
     <Card >
       {showScoreCard ? <ScoreCard scoreCard={scoreCard}/>:null}

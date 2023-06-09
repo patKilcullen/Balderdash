@@ -21,14 +21,14 @@ const init = async () => {
     const serverSocket = socket(server);
 
     serverSocket.on("connection", (socket) => {
-      // console.log(`Connection from client ${socket.id}`);
+
 
       socket.on("send_new_game", (data) => {
         socket.broadcast.emit("receive_new_game", data);
       });
     
 socket.on("join_room", ({room, userName})=>{
-console.log(`${userName} joined room ${room}`)
+
   socket.join(room)
 })
   socket.on("send_new_game", (data) => {
@@ -36,7 +36,7 @@ console.log(`${userName} joined room ${room}`)
       });
     
       socket.on("send_word", ({word, room, playerTurnName}) => {
-console.log("PLAYER TURN NAME IN SEND WORD: ", playerTurnName)
+
         socket.to(room).emit("receive_word", {word, room,playerTurnName });
        
       });
@@ -66,8 +66,14 @@ socket.on("send_fake_defs", ({fakeDefinitions, gameName})=>{
   socket.to(gameName).emit("receive_fake_defs", fakeDefinitions)
 })
 
+
+socket.on("send_playerTurnName_GuessDefs", ({gameName,playerTurnName})=>{
+  socket.to(gameName).emit("receive_playerTurnName_GuessDefs", {room: gameName, playerTurnName: playerTurnName} )
+})
+
+
 socket.on("send_score_card_info", ({gameName,playerTurnName, message})=>{
-console.log("PLAYERTURN NAME: ", playerTurnName)
+console.log("PLAYERTURNNAME score card info: ", playerTurnName)
 console.log("MESSAGE", message)
   socket.to(gameName).emit("receive_score_card_info", {room: gameName, playerTurnName, message})
 })
@@ -75,21 +81,20 @@ console.log("MESSAGE", message)
 
 
 socket.on("send_score_card", ({scoreCardMessages, gameName})=>{
-  console.log("Game NAME in send_score_card: ", gameName)
-  console.log("Message in send_score_card ", scoreCardMessages)
+
    socket.to(gameName).emit("receive_score_card", {gameName, scoreCardMessages})
 })
 
 // IN DBGamePlay
       socket.on("send_player_def", ({room, playerDef}) => {
-console.log("PLAYER EF AND ROOM: ", playerDef, room)
+
         socket.to(room).emit("receive_player_def", playerDef);
       
       });
 
 
       socket.on('requestInfo', ({playerTurn, userName, room}) => {
-        console.log("REQUEST INFOOOOO")
+     
         socket.to(room).emit("request_word", {playerTurn,userName, room});
         
         // socket.to(targetSocketId).emit('infoRequestReceived', 'Request received!')
