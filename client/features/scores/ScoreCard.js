@@ -29,7 +29,7 @@ const ScoreCard = ({scoreCard}) => {
          return () => clearTimeout(timer);
       }, [countdown]);
 
-// console.log("socre acare in SCOREA CARD COMPONENT: ",scoreCard)
+console.log("socre acare in SCOREA CARD COMPONENT: ",scoreCard)
 
 
 
