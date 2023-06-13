@@ -46,12 +46,19 @@ const SingleGame = () => {
 
   const userScore = scores.find((score) => score.userId === userId);
 
+// Could use res of fetchSingleGame to get scores through eager loading and set them
+// to state instead of fetchAllGameScores and score = useSelector(selectAllScores)
+// not such which would be more efficent or if it makes a diference
+const [scoresX, setScoresX] = useState('')
   useEffect(() => {
-    dispatch(fetchSingleGame(gameId));
+    dispatch(fetchSingleGame(gameId)).then((res)=>{
+console.log("RES HETER: ", res)
+setScoresX(res.payload.scores)
+    })
     // dispatch(fetchAllScores())
     dispatch(fetchAllGameScores(gameId));
   }, []);
-
+console.log("SCORESX: ", scoresX)
   useEffect(() => {
     dispatch(fetchSingleGame(gameId));
     // dispatch(fetchAllScores())
@@ -64,10 +71,12 @@ const SingleGame = () => {
   
     dispatch(fetchAllGameScores(gameId));
     setTimeout(() => {
-      setShowScoreCard(false);
-      dispatch(clearScoreCardMessages());
+    // dispatch(clearScoreCardMessages());
+
+
+      // setShowScoreCard(false);
     }, 5000);
-    setShowScoreCard(true);
+    // setShowScoreCard(true);
   };
 
   // SOCKET
@@ -138,7 +147,9 @@ const SingleGame = () => {
 
   return (
     <Card>
-      {showScoreCard ? <ScoreCard scoreCard={scoreCard} /> : null}
+      {/* SHOWSCORE CARD MAY BE UNECESSARY */}
+      {/* {showScoreCard ? <ScoreCard scoreCard={scoreCard} /> : null} */}
+      <ScoreCard scoreCard={scoreCard} /> 
       <Card id="scores-card">
         <div>
           {userScore && userScore.user ? (
