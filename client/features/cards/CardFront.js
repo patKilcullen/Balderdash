@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-const CardFront = ({ top, bottom, side}) => {
+const CardFront = ({ top, bottom, side, flip }) => {
   console.log("BOTTOM IN CARDFRENT: ", bottom);
 //   const [flipX, setFlipX] = useState(false);
 //   useEffect(()=>{
@@ -34,7 +34,7 @@ const CardFront = ({ top, bottom, side}) => {
 
           // FLIP
         //  transform: "rotateY(360deg)", 
-        //   transform: flip ? "rotateY(360deg) " : null,
+          transform: flip ? "rotateY(360deg) " : null,
 
           // transform: flip ? "rotateY(180deg) translateX(-50%)" : null,
           // transform: flip ? "translateX(-50%)" : null

@@ -333,7 +333,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
         ) : null} */}
 
 
-<CardFront top={word} bottom={definition} side={word || word.length && definition ? "front": "back" } />
+<CardFront top={word} bottom={definition} side={word || word.length && definition ? "front": "back" } flip={flip} />
 
 
 
