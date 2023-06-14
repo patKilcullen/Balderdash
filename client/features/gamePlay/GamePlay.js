@@ -300,7 +300,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
               </Typography>
             ) : null}
 
-            {timer ? (
+            {/* {timer ? (
               <Timer
                 game={game}
                 username={username}
@@ -316,7 +316,8 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
                 setTimer={setTimer}
                 setChoseWord={setChoseWord}
               />
-            ) : null}
+            ) : null} */}
+
           </Card>
         </Card>
         {/* {definition && !choseWord ? (
@@ -333,7 +334,22 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
         ) : null} */}
 
 
-<CardFront top={word} bottom={definition} side={word || word.length && definition ? "front": "back" } flip={flip} />
+<CardFront top={word} bottom={definition} side={word || word.length && definition ? "front": "back" } flip={flip} timer={timer} 
+ game={game}
+ username={username}
+ userId={userId}
+ userScore={userScore}
+ gameName={gameName}
+ gameId={game.id}
+ playerTurnName={playerTurnName}
+ definition={definition}
+ reloadScores={reloadScores}
+ setDefinition={setDefinition}
+ setWord={setWord}
+ setTimer={setTimer}
+ setChoseWord={setChoseWord}
+
+> </CardFront>
 
 
 

@@ -3,13 +3,15 @@ import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-const CardFront = ({ top, bottom, side, flip }) => {
+import Timer from "../gamePlay/Timer";
+
+const CardFront = ({ top, bottom, side, flip, timer,game, username, userId, userScore, gameName, gameId, playerTurnName,  reloadScores, setDefinition, setWord, setTimer, setChoseWord }) => {
   console.log("BOTTOM IN CARDFRENT: ", bottom);
 //   const [flipX, setFlipX] = useState(false);
 //   useEffect(()=>{
 // setFlipX(true)
 //   }, [flip])
-
+console.log("TIER IN CARDFRONT: ", timer)
   return (
     // <div id="temp-scorecard">
     <div>
@@ -28,13 +30,15 @@ const CardFront = ({ top, bottom, side, flip }) => {
           fontWeight: "bold",
 
         
-          transformStyle: "preserve-3d",
-          transition: "0.6s",
-          transformOrigin: "center center",
+          
 
           // FLIP
         //  transform: "rotateY(360deg)", 
           transform: flip ? "rotateY(360deg) " : null,
+          perspective: "1000px",
+          transformStyle: "preserve-3d",
+          transition: "0.9s",
+          transformOrigin: "center center",
 
           // transform: flip ? "rotateY(180deg) translateX(-50%)" : null,
           // transform: flip ? "translateX(-50%)" : null
@@ -154,6 +158,28 @@ const CardFront = ({ top, bottom, side, flip }) => {
                 </Typography>
               </div>
               :null}
+
+
+
+
+{timer ? (
+              <Timer
+                game={game}
+                username={username}
+                userId={userId}
+                userScore={userScore}
+                gameName={gameName}
+                gameId={game.id}
+                playerTurnName={playerTurnName}
+                // definition={definition}
+                definition={bottom}
+                reloadScores={reloadScores}
+                setDefinition={setDefinition}
+                setWord={setWord}
+                setTimer={setTimer}
+                setChoseWord={setChoseWord}
+              />
+            ) : null}
 
         </Card>
       </Card>
