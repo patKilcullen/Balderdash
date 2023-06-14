@@ -153,7 +153,17 @@ left: 0;
 .temp-scorecard-messages{
 display: flex;
 flex-direction:  column;
-align-items: center;
+font-family: 'Chalkduster', 'Bradley Hand';
+justify-content: center;
+color: #571122;
+/* color: red; */
+gap: 10px;
+font-size: 25px;
+font-weight: 500;
+}
+.line-break{
+  border: 1px dashed black;
+  width: 100%;
 }
 
 #definitions {
@@ -267,7 +277,8 @@ border: none;
   transform-origin: center;
   white-space: nowrap;
   overflow: hidden;
-  text-shadow: 5px 5px #558ABB;
+   text-shadow: 5px 5px #558ABB; 
+  /* text-shadow: 5px 5px #7d9db7; */
 
 
   /* text-shadow: 1px 1px 2px black, 0 0 1em #88ebe6, 0 0 0.2em #571122; */

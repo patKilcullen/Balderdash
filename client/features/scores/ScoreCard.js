@@ -47,15 +47,15 @@ const ScoreCard = ({ scoreCard }) => {
           border: "5px solid black",
           boxShadow: "20",
           fontWeight: "bold",
-     
-// FULL SCREEN DIMENSIONS
-position: "fixed",
-top: "0",
-right: "0",
-bottom: "0",
-left: "0",
 
-//NORMAL CAR DIMENTSIONS
+          // FULL SCREEN DIMENSIONS
+          position: "fixed",
+          top: "0",
+          right: "0",
+          bottom: "0",
+          left: "0",
+
+          //NORMAL CAR DIMENTSIONS
           // height: "100%",
           // width: "100%",
           // minHeight: "300px",
@@ -69,7 +69,6 @@ left: "0",
         }}
       >
         <Card
-
           sx={{
             padding: "10px",
             // backgroundColor: !word || !word.length ? "#88ebe6" : "#e6e8dc",
@@ -85,24 +84,65 @@ left: "0",
             border: "2px solid black",
           }}
         >
-          <Box>
-            <Typography style={{ fontSize: "40px", fontWeight: "bold",textShadow: `5px 5px #558ABB` }}
-                  color={"secondary"}>Round Results</Typography>
+          <Box
+            style={{
+              fontSize: "40px",
+              fontWeight: "bold",
+              // textShadow: `5px 5px #558ABB`,
+              borderTop: "40px",
+              marginTop: "-10px",
+              paddingTop: "10px",
+              backgroundColor: "#88ebe6",
+              width: "110%",
+              // borderBottom: "40px",
+              marginBottom: "10px",
+              paddingBottom: "10px",
+              height: "20%",
+              display: "flex",
+              justifyContent: "center",
+              borderBottom: "5px solid #571122"
+            }}
+          >
+            <Typography
+              style={{
+                fontSize: "40px",
+                fontWeight: "bolder",
+                 textShadow: `3px 3px #558ABB`,
+                alignSelf: " center",
+                textDecoration: "underline"
+              }}
+              color={"secondary"}
+            >
+              Round Results
+            </Typography>
           </Box>
+<Box>
+<div className="temp-scorecard-messages">
+        {testMessages && testMessages.length
+          ? testMessages.map((message) => {
+              return (
+                <div >
+                  <div>{message}</div>
+                  <div className="line-break"></div>
+                </div>
+              );
+            })
+          : null}{" "}
+      </div> 
+
+</Box>
+
+
         </Card>
       </Card>
-
-      
     </div>
-
-
   );
 };
 
 export default ScoreCard;
 
-
-{/* <h1>Round Results</h1>
+{
+  /* <h1>Round Results</h1>
       <div>
         {testMessages && testMessages.length
           ? testMessages.map((message) => {
@@ -113,15 +153,16 @@ export default ScoreCard;
               );
             })
           : null}{" "}
-      </div> */}
+      </div> */
+}
 
-          //         <div id="scoreCard-message">{scoreCard && scoreCard.length ?
-    // scoreCard.map((message)=>{
-    //     return(
-    //       <div>
-    //         <h1>Round REsults</h1>
-    //         <div>{message}</div>
-    //         </div>
-    //     )
-    // })
-    //        :null} </div>
+//         <div id="scoreCard-message">{scoreCard && scoreCard.length ?
+// scoreCard.map((message)=>{
+//     return(
+//       <div>
+//         <h1>Round REsults</h1>
+//         <div>{message}</div>
+//         </div>
+//     )
+// })
+//        :null} </div>
