@@ -118,8 +118,8 @@ const ScoreCard = ({ scoreCard }) => {
           </Box>
 <Box>
 <div className="temp-scorecard-messages">
-        {testMessages && testMessages.length
-          ? testMessages.map((message) => {
+        {scoreCard && scoreCard.length
+          ? scoreCard.map((message) => {
               return (
                 <div >
                   <div>{message}</div>

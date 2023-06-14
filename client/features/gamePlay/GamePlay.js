@@ -16,6 +16,8 @@ import Timer from "./Timer";
 // SOCKET
 import { SocketContext } from "../../app/SocketProvider";
 
+import CardFront from "../cards/CardFront";
+
 // Material UI
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -58,7 +60,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
   const handleGetWord = () => {
     setFlip(true);
     dispatch(clearFakeDefs());
-    dispatch(clearScoreCardMessages())
+    dispatch(clearScoreCardMessages());
     dispatch(getWord()).then((res) => {
       setWord(res.payload[0]);
       dispatch(getDefinition(res.payload[0])).then((res) => {
@@ -134,96 +136,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
           : console.log("ERROR: Failed to add player definition");
       }
     );
-
-
-
   }, [clientSocket, gameName]);
- 
-
-
-  // return (
-  //   <Card
-  //     className="main "
-  //     sx={{ boxShadow: "none", overflow: "visible", height: "100vh" }}
-  //   >
-  //     <Card className="buttons " sx={{ boxShadow: "none" }}>
-  //       {/* GET WORD BUTTON -  only visible if it is players turn*/}
-  //       {game && userScore && game.turn === userScore.turnNum ? (
-  //         <Button
-  //           onClick={handleGetWord}
-  //           sx={{ fontSize: 30 }}
-  //           variant="contained"
-  //         >
-  //           <Typography
-  //             className={!word || !word.length ? "pulse" : null}
-  //             color={"secondary"}
-  //             sx={{ fontSize: 30 }}
-  //           >
-  //             Get Word
-  //           </Typography>
-  //         </Button>
-  //       ) : null}
-
-  //       {/* WORD */}
-  //       <Typography
-  //         className={
-  //           (!word || !word.length) &&
-  //           game &&
-  //           userScore &&
-  //           game.turn !== userScore.turnNum
-  //             ? "pulse"
-  //             : null
-  //         }
-  //         color={"secondary"}
-  //         sx={{ fontSize: 30 }}
-  //       >
-  //         Word:
-  //         <span style={{ fontSize: "35px", fontWeight: "bold" }}>
-  //           {` ${word}`}
-  //         </span>
-  //       </Typography>
-
-  //       {/* DEFINITION */}
-  //       {game && userScore && game.turn === userScore.turnNum ? (
-  //         <Typography color={"secondary"} sx={{ fontSize: 30 }}>
-  //           Definition:
-  //           <span style={{ fontSize: "35px", fontWeight: "bold" }}>
-  //             {` ${definition}`}
-  //           </span>
-  //         </Typography>
-  //       ) : null}
-
-  //       {definition && !choseWord ? (
-  //         <Button
-  //           className={"pulse"}
-  //           onClick={() => handleChooseWord()}
-  //           sx={{ fontSize: 30 }}
-  //           variant="contained"
-  //         >
-  //           <Typography color={"secondary"} sx={{ fontSize: 30 }}>
-  //             Choose Word
-  //           </Typography>
-  //         </Button>
-  //       ) : null}
-  //       {timer ? (
-  //         <Timer
-  //           game={game}
-  //           userId={userId}
-  //           userScore={userScore}
-  //           gameName={gameName}
-  //           gameId={game.id}
-  //           playerTurnName={playerTurnName}
-  //           definition={definition}
-  //           reloadScores={reloadScores}
-  //           setDefinition={setDefinition}
-  //           setWord={setWord}
-  //           setTimer={setTimer}
-  //           setChoseWord={setChoseWord}
-  //         />
-  //       ) : null}
-  //     </Card>
-  //   </Card>
-  // );
 
   const [flip, setFlip] = useState(false);
 
@@ -244,18 +157,21 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
         {game && userScore && game.turn === userScore.turnNum ? (
           <Button
             onClick={handleGetWord}
-            sx={{ fontSize: 30, marginBottom: "15px"  }}
+            sx={{ fontSize: 30, marginBottom: "15px" }}
             variant="contained"
           >
             <Typography
               className={!word || !word.length ? "pulse" : null}
               color={"secondary"}
-              sx={{ fontSize: 30, }}
+              sx={{ fontSize: 30 }}
             >
               Get Word
             </Typography>
           </Button>
         ) : null}
+
+       
+
         <Card
           sx={{
             // marginTop: 3,
@@ -273,11 +189,10 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
             // height: "80vh",
             // width: "25vw",
             height: "100%",
-           minHeight: "300px",
-            
-             maxHeight: "350px",
+            minHeight: "300px",
+
+            maxHeight: "350px",
             maxWidth: "200px",
-       
 
             transformStyle: "preserve-3d",
             transition: "0.6s",
@@ -316,7 +231,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
               >
                 <Typography
                   className="card-logo-text"
-                  style={{ fontSize: "65px", fontWeight: "bold",  }}
+                  style={{ fontSize: "65px", fontWeight: "bold" }}
                   color={"secondary"}
                 >
                   Balder...
@@ -416,20 +331,31 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
             </Typography>
           </Button>
         ) : null} */}
+
+
+<CardFront top={word} bottom={definition} side={word || word.length && definition ? "front": "back" } />
+
+
+
+        
       </Card>
       {definition && !choseWord ? (
-          <Button
-            className={"pulse"}
-            onClick={() => handleChooseWord()}
-            sx={{ fontSize: 30 }}
-            variant="contained"
-          >
-            <Typography color={"secondary"} sx={{ fontSize: 30 }}>
-              Choose Word
-            </Typography>
-          </Button>
-        ) : null}
-      
+        <Button
+          className={"pulse"}
+          onClick={() => handleChooseWord()}
+          sx={{ fontSize: 30 }}
+          variant="contained"
+        >
+          <Typography color={"secondary"} sx={{ fontSize: 30 }}>
+            Choose Word
+          </Typography>
+        </Button>
+      ) : null}
+
+
+{/* {word || word.length && definition ? ( */}
+          {/* <CardFront top={word} bottom={definition} side={word || word.length && definition ? "front": "back"}/> */}
+        {/* ) : null} */}
     </Card>
   );
 };

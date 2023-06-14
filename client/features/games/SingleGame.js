@@ -71,12 +71,12 @@ console.log("SCORESX: ", scoresX)
   
     dispatch(fetchAllGameScores(gameId));
     setTimeout(() => {
-    // dispatch(clearScoreCardMessages());
+    dispatch(clearScoreCardMessages());
 
 
-      // setShowScoreCard(false);
+      setShowScoreCard(false);
     }, 5000);
-    // setShowScoreCard(true);
+   setShowScoreCard(true);
   };
 
   // SOCKET
@@ -148,8 +148,8 @@ console.log("SCORESX: ", scoresX)
   return (
     <Card>
       {/* SHOWSCORE CARD MAY BE UNECESSARY */}
-      {/* {showScoreCard ? <ScoreCard scoreCard={scoreCard} /> : null} */}
-      <ScoreCard scoreCard={scoreCard} /> 
+      {showScoreCard ? <ScoreCard scoreCard={scoreCard} /> : null}
+      {/* <ScoreCard scoreCard={scoreCard} />  */}
       <Card id="scores-card">
         <div>
           {userScore && userScore.user ? (
