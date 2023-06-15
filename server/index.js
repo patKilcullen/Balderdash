@@ -32,6 +32,7 @@ const init = async () => {
 
       socket.on('leave_room', ({ room }) => {
         socket.leave(room);
+       
         console.log(`Client left room: ${room}`);
       });
 
@@ -40,6 +41,7 @@ const init = async () => {
       });
 
       socket.on("send_word", ({ word, room, playerTurnName }) => {
+        console.log("SEND WORD: ", word, room, playerTurnName)
         socket.to(room).emit("receive_word", { word, room, playerTurnName });
       });
 

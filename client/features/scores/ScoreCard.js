@@ -24,12 +24,7 @@ const ScoreCard = ({ scoreCard }) => {
 
  
 
-  const testMessages = [
-    "faggort guessed the WRONG answer",
-    "faggot2 guess faggot1's faks definition, faggot1 gets a point",
-    "faggot2 guseed the CORRECT DEFINITION ",
-  ];
-
+ 
   return (
     <div id="temp-scorecard">
       <Card

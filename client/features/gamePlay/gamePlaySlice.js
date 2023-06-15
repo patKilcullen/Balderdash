@@ -63,7 +63,7 @@ export const getFakeWords = createAsyncThunk(
         const { data } = await axios.get(`https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=3ca1a8b0-158e-4e88-b635-579bf43719f4`);
          if(data[0].shortdef){
          const numOfDefs = Math.floor((Math.random() * data[0].shortdef.length))
-         console.log("DATA[0}: ", data[0].shortdef[numOfDefs])
+        //  console.log("DATA[0}: ", data[0].shortdef[numOfDefs])
          return data[0].shortdef[numOfDefs]
          }
          else{

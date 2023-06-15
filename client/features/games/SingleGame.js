@@ -144,6 +144,23 @@ setScoresX(res.payload.scores)
     });
   }, [clientSocket]);
 
+
+// console.log("GAME NAME IN SINGL GMAE: ", game.name)
+// USER LEAVES SOCKET ROOM WHEN SINGLe GAME UNMOUNTS
+useEffect(()=>{
+
+
+
+    clientSocket.emit("join_room", { room: game.name, userName: username })
+  
+  return () => {
+    // Leave the room
+    clientSocket.emit('leave_room', { room: game.name });
+    // Disconnect the socket
+    // clientSocket.disconnect();
+  };
+},[game])
+
   return (
     <Card>
       {/* SHOWSCORE CARD MAY BE UNECESSARY */}
