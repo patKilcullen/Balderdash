@@ -164,6 +164,7 @@ console.log("TIER IN CARDFRONT: ", timer)
 
 {timer ? (
               <Timer
+              top={top}
                 game={game}
                 username={username}
                 userId={userId}

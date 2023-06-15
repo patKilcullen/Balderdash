@@ -22,8 +22,10 @@ import { fetchSingleUser, selectSingleUser } from "../users/singleUserSlice";
 import Button from "@mui/material/Button";
 
 import ScoreCard from "../scores/ScoreCard";
+import CardFront from "../cards/CardFront";
 
 const GuessDefs = ({
+  top,
   game,
   username,
   userId,
@@ -161,39 +163,64 @@ const GuessDefs = ({
   }, [scoreCardMessages]);
 
   return (
+    // <div>
+    //   <div>Definitions</div>
+
+    //   {correct === true ? (
+    //     <div>Correctamundo!!!</div>
+    //   ) : correct === false ? (
+    //     <div>Wrong, idiot!</div>
+    //   ) : null}
+
+    //   {guessed === false && defList === true && fakeDefs && fakeDefs.length
+    //     ? fakeDefs
+    //         .filter((def) => !def.hasOwnProperty(`${userId}`))
+    //         .map((def) => {
+    //           const value = Object.values(def)[0];
+    //           return (
+    //             <Button
+    //               variant="contained"
+    //               size="large"
+    //               sx={{ border: "2px solid black" }}
+    //               onClick={() => handleChooseWord(def)}
+    //             >
+    //               {value}
+    //             </Button>
+    //           );
+    //         })
+    //     : ""}
+    // </div>
+
     <div>
-      <div>Definitions</div>
+    <div>Definitions</div>
 
-      {correct === true ? (
-        <div>Correctamundo!!!</div>
-      ) : correct === false ? (
-        <div>Wrong, idiot!</div>
-      ) : null}
+    {/* {correct === true ? (
+      <div>Correctamundo!!!</div>
+    ) : correct === false ? (
+      <div>Wrong, idiot!</div>
+    ) : null} */}
 
-      {guessed === false && defList === true && fakeDefs && fakeDefs.length
-        ? fakeDefs
-            .filter((def) => !def.hasOwnProperty(`${userId}`))
-            .map((def) => {
-              const value = Object.values(def)[0];
-              return (
-                <Button
-                  variant="contained"
-                  size="large"
-                  sx={{ border: "2px solid black" }}
-                  onClick={() => handleChooseWord(def)}
-                >
-                  {value}
-                </Button>
-              );
-            })
-        : ""}
+    {guessed === false && defList === true && fakeDefs && fakeDefs.length
+      ? fakeDefs
+          .filter((def) => !def.hasOwnProperty(`${userId}`))
+          .map((def) => {
+            const value = Object.values(def)[0];
+            return (
+              <Button
+                variant="contained"
+                size="large"
+                sx={{ border: "2px solid black" }}
+                onClick={() => handleChooseWord(def)}
+              >
+                {/* <CardFront top={top} bottom={value} /> */}
+                {value}
+              </Button>
+            );
+          })
+      : ""}
+  </div>
 
-      {/* <div>
-        <ScoreCard scoreCard={scoreCard}/> 
-        <div style={{heigh: "500px", width: "500px", border: "10px solid red", position: "absolute"}}>GATY ASSS</div>
-        </div>
-        */}
-    </div>
+
   );
 };
 

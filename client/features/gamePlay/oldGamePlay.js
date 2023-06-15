@@ -108,18 +108,15 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
     // RECEIVE WORD from socket first, if it isn't players turn, update playerTurnNAme,
     // then, if they're in the right room, add the word to state
     clientSocket.on("receive_word", ({ word, room, playerTurnName }) => {
-      room === gameName && playerTurnName !== username ? setPlayerTurnName(playerTurnName) : null;
+      playerTurnName !== username ? setPlayerTurnName(playerTurnName) : null;
       room === gameName
-      && playerTurnName !== username
         ? setWord(word)
         : // could this be null? I belive it served a purpose as is but cant recreate it
           setWord("");
       room === gameName
-      && playerTurnName !== username 
         ? setFlip(true)
         : // could this be null? I belive it served a purpose as is but cant recreate it
-        room === gameName ?  setFlip(false)
-        : null
+          setFlip(false);
     });
 
     // RECEIVE START COUNTDOWN players receive this from player turn when thet start Timer countdown
@@ -175,7 +172,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
 
        
 
-<Card
+        <Card
           sx={{
             // marginTop: 3,
             // marginBottom: 3,
@@ -272,7 +269,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
             )}
 
             {/* WORD */}
-            {/* <Typography
+            <Typography
               className={
                 (!word || !word.length) &&
                 game &&
@@ -288,7 +285,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
               <span style={{ fontSize: "35px", fontWeight: "bold" }}>
                 {` ${word}`}
               </span>
-            </Typography> */}
+            </Typography>
 
             {/* DEFINITION */}
             {word.length &&
@@ -337,23 +334,22 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
         ) : null} */}
 
 
-
-{/* <CardFront top={word} bottom={definition} side={word || word.length && definition ? "front": "back" } flip={flip} timer={timer} 
+<CardFront top={word} bottom={definition} side={word || word.length && definition ? "front": "back" } flip={flip} timer={timer} 
  game={game}
-                username={username}
-                userId={userId}
-                userScore={userScore}
-                gameName={gameName}
-                gameId={game.id}
-                playerTurnName={playerTurnName}
-                definition={definition}
-                reloadScores={reloadScores}
-                setDefinition={setDefinition}
-                setWord={setWord}
-                setTimer={setTimer}
-                setChoseWord={setChoseWord}
+ username={username}
+ userId={userId}
+ userScore={userScore}
+ gameName={gameName}
+ gameId={game.id}
+ playerTurnName={playerTurnName}
+ definition={definition}
+ reloadScores={reloadScores}
+ setDefinition={setDefinition}
+ setWord={setWord}
+ setTimer={setTimer}
+ setChoseWord={setChoseWord}
 
-> </CardFront> */}
+> </CardFront>
 
 
 

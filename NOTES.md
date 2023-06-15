@@ -24,6 +24,9 @@ POSSIBLY SOLVED IT by addind playerTurn to dependency array of useEffect for joi
 NOWWWWWW add to scores function not working.  one gets multiple points... possibly beacuse of socket???? or logic doubled somewhere possible thunk or route
 
 LAST UPDATE:
+doubled the card, the once on the bottom is all in the CardFront Component
+NEXT maye b get the definition to be big like the temp score card
+
 PLAYER TURN NAME in timer only ever right for the player whos turn it is NOT
 PLAYER TURN NAME in send_score_card_info is not updating properly between rounds!!!!
 
