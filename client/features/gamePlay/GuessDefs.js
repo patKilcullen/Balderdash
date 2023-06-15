@@ -54,7 +54,7 @@ const GuessDefs = ({
   const singleGame = useSelector(selectSingleGame);
   const scoreCardMessages = useSelector(selectScoreCardMessages);
 
-  const [countdown, setCountdown] = useState(7);
+  const [countdown, setCountdown] = useState(1);
   useEffect(() => {
     const timer = setTimeout(async () => {
       if (countdown > 0) {

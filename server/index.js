@@ -26,8 +26,15 @@ const init = async () => {
       });
 
       socket.on("join_room", ({ room, userName }) => {
+        console.log(`${userName} joined ${room}`)
         socket.join(room);
       });
+
+      socket.on('leave_room', ({ room }) => {
+        socket.leave(room);
+        console.log(`Client left room: ${room}`);
+      });
+
       socket.on("send_new_game", (data) => {
         socket.broadcast.emit("receive_new_game", data);
       });

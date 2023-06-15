@@ -58,7 +58,6 @@ setScoresX(res.payload.scores)
     // dispatch(fetchAllScores())
     dispatch(fetchAllGameScores(gameId));
   }, []);
-console.log("SCORESX: ", scoresX)
   useEffect(() => {
     dispatch(fetchSingleGame(gameId));
     // dispatch(fetchAllScores())

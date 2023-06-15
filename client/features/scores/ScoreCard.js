@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 const ScoreCard = ({ scoreCard }) => {
-  const [countdown, setCountdown] = useState(10);
+  const [countdown, setCountdown] = useState();
   const [showScoreCard, setShowScoreCard] = useState(false);
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -22,7 +22,7 @@ const ScoreCard = ({ scoreCard }) => {
     return () => clearTimeout(timer);
   }, [countdown]);
 
-  console.log("socre acare in SCOREA CARD COMPONENT: ", scoreCard);
+ 
 
   const testMessages = [
     "faggort guessed the WRONG answer",

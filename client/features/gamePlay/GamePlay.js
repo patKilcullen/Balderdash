@@ -13,6 +13,8 @@ import {
 import { selectMe } from "../auth/authSlice";
 import Timer from "./Timer";
 
+
+import { selectSingleGame } from "../games/singleGameSlice";
 // SOCKET
 import { SocketContext } from "../../app/SocketProvider";
 
@@ -42,6 +44,17 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
 
   // SOCKET
   const clientSocket = useContext(SocketContext);
+
+
+ const singleGame = useSelector(selectSingleGame)
+
+ const [gameNerm, setGameNerm] = useState("")
+ console.log("GAME NERM OUT: ", gameNerm)
+ useEffect(()=>{
+setGameNerm(singleGame.name)
+ }, singleGame)
+  
+ console.log("SINGLE GAME OUT: ", singleGame.name)
 
   // Finds the player who turnNum === game.turn, sets it to playerTurnName
   // when the game reloads to check for new turn
@@ -94,12 +107,22 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
     }
   };
 
+// USER LEAVES SOCKET ROOM WHEN SINGLe GAME UNMOUNTS
+  useEffect(()=>{
+    return () => {
+      // Leave the room
+      clientSocket.emit('leave_room', { room: singleGame.name });
+      // Disconnect the socket
+      clientSocket.disconnect();
+    };
+  },[])
   // Player(w/userScore) and plaery who's turn it is joins socket room every time the gameName or playerTurn changes
   useEffect(() => {
     userScore || playerTurnName === username
       ? clientSocket.emit("join_room", { room: gameName, userName: username })
       : null;
     // ADDING playTURN BEFORE MAY HAVE SOLVERS PLAYER_TURN_PROBLEM... needs testinging
+    
   }, [gameName, playerTurn]);
 
   // This useEffect dependency array ensures sockets dont render on the wrong game for client who
@@ -107,18 +130,25 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
   useEffect(() => {
     // RECEIVE WORD from socket first, if it isn't players turn, update playerTurnNAme,
     // then, if they're in the right room, add the word to state
+    
     clientSocket.on("receive_word", ({ word, room, playerTurnName }) => {
-      room === gameName && playerTurnName !== username ? setPlayerTurnName(playerTurnName) : null;
-      room === gameName
-      && playerTurnName !== username
+      // const singleGameX = useSelector(selectSingleGame)
+      console.log("ROOM: ", room)
+      console.log("GAMENAME: ", gameName)
+      console.log("SINGLE GAME iNSIDFE: ", singleGame.name)
+      console.log("GAME NERM IN: ", gameNerm)
+      room === singleGame.name && playerTurnName !== username ? setPlayerTurnName(playerTurnName) : null;
+      room === singleGame.name
+     
         ? setWord(word)
         : // could this be null? I belive it served a purpose as is but cant recreate it
-          setWord("");
-      room === gameName
-      && playerTurnName !== username 
+        room === singleGame.name  ? setWord(""):
+        null
+      room === singleGame.name
+      // && playerTurnName !== username 
         ? setFlip(true)
         : // could this be null? I belive it served a purpose as is but cant recreate it
-        room === gameName ?  setFlip(false)
+        room === singleGame.name ? setFlip(false)
         : null
     });
 
@@ -139,7 +169,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
           : console.log("ERROR: Failed to add player definition");
       }
     );
-  }, [clientSocket, gameName]);
+  }, [clientSocket, gameName,]);
 
   const [flip, setFlip] = useState(false);
 
