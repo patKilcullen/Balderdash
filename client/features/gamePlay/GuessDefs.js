@@ -168,6 +168,10 @@ const word = useSelector(selectWord)
     clientSocket.emit("send_score_card", { scoreCardMessages, gameName });
   }, [scoreCardMessages]);
 
+  const testDefinitions =["Lorem ipsum dolor sit amet, consectetur adipiscing elit,", "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut", "enim ad minim veniam", "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "Duis aute", "irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."]
+const testWord = "Pattycakes"
+
+
   return (
     // <div>
     //   <div>Definitions</div>
@@ -197,7 +201,7 @@ const word = useSelector(selectWord)
     //     : ""}
     // </div>
 
-    <div>
+    <div style={{display: "flex", flexDirection: "column", alignContent: "center", alignItems: "center"}}>
     <div>Definitions</div>
 
     {/* {correct === true ? (
@@ -206,19 +210,25 @@ const word = useSelector(selectWord)
       <div>Wrong, idiot!</div>
     ) : null} */}
 
+
+{/* {guessed === false && defList === true && testDefinitions && testDefinitions.length
+      ? testDefinitions */}
     {guessed === false && defList === true && fakeDefs && fakeDefs.length
       ? fakeDefs
-          .filter((def) => !def.hasOwnProperty(`${userId}`))
+           .filter((def) => !def.hasOwnProperty(`${userId}`))
           .map((def) => {
             const value = Object.values(def)[0];
             return (
               <Button
-                variant="contained"
+                 variant="contained"
                 size="large"
-                sx={{ border: "2px solid black" }}
+               
                 onClick={() => handleChooseWord(def)}
               >
-                <CardFront top={word} bottom={value} side={"front"} />
+              
+                <CardFront def={def} handleChooseWord={handleChooseWord} defCards={true} fullScreen={true} top={word} bottom={value} side={"front"} />
+            
+                {/* <CardFront top={word} bottom={value} side={"front"} /> */}
                 {/* {value} */}
               </Button>
             );

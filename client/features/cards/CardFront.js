@@ -4,22 +4,23 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 import Timer from "../gamePlay/Timer";
+import { Button } from "@mui/material";
 
-const CardFront = ({ top, bottom, side, fullScreen, flip, timer,game, username, userId, userScore, gameName, gameId, playerTurnName,  reloadScores, setDefinition, setWord, setTimer, setChoseWord }) => {
+const CardFront = ({ def, handleChooseWord, defCards, top, bottom, side, fullScreen, flip, timer,game, username, userId, userScore, gameName, gameId, playerTurnName,  reloadScores, setDefinition, setWord, setTimer, setChoseWord }) => {
 
-
+console.log("DEFCARDS IN CARDFRONT: ", defCards)
 
   // console.log("CARD FRONT BOTTON, TOP", bottom, top)
   return (
     // <div id="temp-scorecard">
-    <div>
+    <div >
       <Card
         sx={{
           display: "flex",
 
           flexDirection: "column",
           alignItems: "center",
-           backgroundColor: side === "front" ?  "#88ebe6": "#e6e8dc",
+           backgroundColor: side === "front" && !defCards ?  "#88ebe6": side === "front" && defCards ? "#88ebe6" : "#e6e8dc",
         //   backgroundColor: "#88ebe6",
           padding: "1em 1em",
           borderRadius: "50px",
@@ -48,7 +49,7 @@ const CardFront = ({ top, bottom, side, fullScreen, flip, timer,game, username, 
 
           // FULL SCREEN DIMENSIONS
         
-            position: timer || fullScreen ? "fixed": null,
+            position: timer || fullScreen && !defCards? "fixed": null,
             top: timer || fullScreen? "0": null,
             right: timer || fullScreen? "0": null,
             bottom: timer || fullScreen? "0": null,
@@ -87,7 +88,7 @@ const CardFront = ({ top, bottom, side, fullScreen, flip, timer,game, username, 
             {/* FRONT  */}
 
 {side === "front" ? 
-<div style={{minHeight: "100%", minWidth: "110%", border: "2px solid green"}}>
+<div style={{minHeight: "600px", minWidth: "110%"}}>
           <Box
             style={{
               fontSize: "40px",
@@ -123,7 +124,10 @@ const CardFront = ({ top, bottom, side, fullScreen, flip, timer,game, username, 
             </Typography>
           </Box>
           <Box>
-            <div className="temp-scorecard-messages">
+            {/* <div className="temp-scorecard-messages"> */}
+             <div className="temp-scorecard-messages"
+             sx={{minHeight: defCards ? "600px" : null }}
+             >
               {bottom ? <div>{bottom}</div> : null}
               {/* {bottom && bottom.length > 1
           ? bottom.map((message) => {
@@ -135,6 +139,14 @@ const CardFront = ({ top, bottom, side, fullScreen, flip, timer,game, username, 
               );
             })
           : null}{" "} */}
+
+          {defCards ?
+          <Button 
+          onClick={ ()=> handleChooseWord(def) }
+          > Choose Definition
+         
+           </Button>
+           : null}
             </div>
           </Box>
 
