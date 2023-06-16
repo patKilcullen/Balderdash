@@ -52,13 +52,12 @@ const CardFront = ({ top, bottom, side, flip, timer,game, username, userId, user
 
           //NORMAL CAR DIMENTSIONS
           height: "88%",
-          
-          // minWidth: "85%",
-          minWidth: "200px",
           minHeight: "350px",
           maxHeight: "350px",
-
+          minWidth: "200px",
           maxWidth: "200px",
+          
+          
         }}
       >
         <Card
