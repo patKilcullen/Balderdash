@@ -133,6 +133,27 @@ const CardFront = ({ top, bottom, side, flip, timer,game, username, userId, user
           : null}{" "} */}
             </div>
           </Box>
+
+
+          {timer ? (
+              <Timer
+              top={top}
+                game={game}
+                username={username}
+                userId={userId}
+                userScore={userScore}
+                gameName={gameName}
+                gameId={game.id}
+                playerTurnName={playerTurnName}
+                // definition={definition}
+                definition={bottom}
+                reloadScores={reloadScores}
+                setDefinition={setDefinition}
+                setWord={setWord}
+                setTimer={setTimer}
+                setChoseWord={setChoseWord}
+              />
+            ) : null}
           </div>
           :null}
 
@@ -166,25 +187,7 @@ const CardFront = ({ top, bottom, side, flip, timer,game, username, userId, user
 
 
 
-{timer ? (
-              <Timer
-              top={top}
-                game={game}
-                username={username}
-                userId={userId}
-                userScore={userScore}
-                gameName={gameName}
-                gameId={game.id}
-                playerTurnName={playerTurnName}
-                // definition={definition}
-                definition={bottom}
-                reloadScores={reloadScores}
-                setDefinition={setDefinition}
-                setWord={setWord}
-                setTimer={setTimer}
-                setChoseWord={setChoseWord}
-              />
-            ) : null}
+
 
         </Card>
       </Card>
