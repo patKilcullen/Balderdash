@@ -219,18 +219,10 @@ const testWord = "Pattycakes"
           .map((def) => {
             const value = Object.values(def)[0];
             return (
-              <Button
-                 variant="contained"
-                size="large"
-               
-                onClick={() => handleChooseWord(def)}
-              >
-              
+            
                 <CardFront def={def} handleChooseWord={handleChooseWord} defCards={true} fullScreen={true} top={word} bottom={value} side={"front"} />
             
-                {/* <CardFront top={word} bottom={value} side={"front"} /> */}
-                {/* {value} */}
-              </Button>
+               
             );
           })
       : ""}
