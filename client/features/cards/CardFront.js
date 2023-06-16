@@ -6,12 +6,7 @@ import Typography from "@mui/material/Typography";
 import Timer from "../gamePlay/Timer";
 
 const CardFront = ({ top, bottom, side, flip, timer,game, username, userId, userScore, gameName, gameId, playerTurnName,  reloadScores, setDefinition, setWord, setTimer, setChoseWord }) => {
-  console.log("BOTTOM IN CARDFRENT: ", bottom);
-//   const [flipX, setFlipX] = useState(false);
-//   useEffect(()=>{
-// setFlipX(true)
-//   }, [flip])
-console.log("TIER IN CARDFRONT: ", timer)
+
   return (
     // <div id="temp-scorecard">
     <div>
@@ -30,7 +25,11 @@ console.log("TIER IN CARDFRONT: ", timer)
           fontWeight: "bold",
 
         
-          
+          // height: "100%",
+          //   minHeight: "300px",
+
+          //   maxHeight: "350px",
+          //   maxWidth: "200px",
 
           // FLIP
         //  transform: "rotateY(360deg)", 
@@ -52,10 +51,13 @@ console.log("TIER IN CARDFRONT: ", timer)
           //   left: "0",
 
           //NORMAL CAR DIMENTSIONS
-          height: "100%",
-          width: "100%",
-          minHeight: "300px",
+          height: "88%",
+          
+          // minWidth: "85%",
+          minWidth: "200px",
+          minHeight: "350px",
           maxHeight: "350px",
+
           maxWidth: "200px",
         }}
       >
@@ -75,13 +77,14 @@ console.log("TIER IN CARDFRONT: ", timer)
             alignContent: "center",
             alignItems: "center",
             border: "2px solid black",
+      
           }}
         >
 
             {/* FRONT  */}
 
 {side === "front" ? 
-<div>
+<div style={{minHeight: "100%", minWidth: "110%", border: "2px solid green"}}>
           <Box
             style={{
               fontSize: "40px",
@@ -99,6 +102,7 @@ console.log("TIER IN CARDFRONT: ", timer)
               display: "flex",
               justifyContent: "center",
               borderBottom: "5px solid #571122",
+             
             }}
           >
             <Typography
@@ -108,6 +112,7 @@ console.log("TIER IN CARDFRONT: ", timer)
                 textShadow: `3px 3px #558ABB`,
                 alignSelf: " center",
                 textDecoration: "underline",
+               
               }}
               color={"secondary"}
             >
