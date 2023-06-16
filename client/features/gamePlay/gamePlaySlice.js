@@ -93,6 +93,10 @@ const gamePlaySlice = createSlice({
     name:"gamePlay",
     initialState,
     reducers: {
+      setWordState(state, action){
+        console.log("SET WORD FKJFDJFDJOFJDOFJDOFJDFJDOJFDOJFDOJF")
+        state.word = action.payload
+      },
       clearFakeDefs(state, action){
         state.fakeDefinitions = []
       },
@@ -164,6 +168,6 @@ export const selectScoreCardMessages = (state)=>{
 }
 
 
-export const { clearFakeDefs, clearFakeWords, addWordPlayerNotTurn, addDefinition,addScoreCardMessage,clearScoreCardMessages } = gamePlaySlice.actions;
+export const { setWordState, clearFakeDefs, clearFakeWords, addWordPlayerNotTurn, addDefinition,addScoreCardMessage,clearScoreCardMessages } = gamePlaySlice.actions;
 
 export default gamePlaySlice.reducer

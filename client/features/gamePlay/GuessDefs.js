@@ -16,7 +16,7 @@ import {
   fetchAllGameScores,
   selectSingleGame,
 } from "../games/singleGameSlice";
-import { clearFakeWords, clearFakeDefs } from "./gamePlaySlice";
+import { clearFakeWords, clearFakeDefs, selectWord } from "./gamePlaySlice";
 import { fetchSingleUser, selectSingleUser } from "../users/singleUserSlice";
 
 import Button from "@mui/material/Button";
@@ -50,11 +50,15 @@ const GuessDefs = ({
   const [guessed, setGuessed] = useState(false);
 
   const dispatch = useDispatch();
+const word = useSelector(selectWord)
+
+
+// console.log("top IN GUESS DEFS: ", top)
 
   const singleGame = useSelector(selectSingleGame);
   const scoreCardMessages = useSelector(selectScoreCardMessages);
 
-  const [countdown, setCountdown] = useState(4);
+  const [countdown, setCountdown] = useState(10);
   useEffect(() => {
     const timer = setTimeout(async () => {
       if (countdown > 0) {
@@ -212,8 +216,8 @@ const GuessDefs = ({
                 sx={{ border: "2px solid black" }}
                 onClick={() => handleChooseWord(def)}
               >
-                {/* <CardFront top={top} bottom={value} /> */}
-                {value}
+                <CardFront top={word} bottom={value} side={"front"} />
+                {/* {value} */}
               </Button>
             );
           })

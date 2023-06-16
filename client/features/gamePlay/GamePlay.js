@@ -412,6 +412,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import {
   getWord,
+  setWordState,
   getDefinition,
   getFakeWords,
   clearFakeDefs,
@@ -520,10 +521,10 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
 
   const rooms = [];
   const [shit, setShit] = useState("");
-  console.log("SHIT: ", shit);
-  console.log("CURRENT GAME OUTSIDE: ", currentGame.name);
+  // console.log("SHIT: ", shit);
+  // console.log("CURRENT GAME OUTSIDE: ", currentGame.name);
   const [thisWord, setThisWord] = useState("");
-  console.log("THIS WORD: ", thisWord);
+  // console.log("THIS WORD: ", thisWord);
   // shit === currentGame.name ? setWord(thisWord) : null
   // shit === currentGame.name ? setFlip(true) : null
 
@@ -532,9 +533,10 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
     // RECEIVE WORD from socket first, if it isn't players turn, update playerTurnNAme,
     // then, if they're in the right room, add the word to state
     clientSocket.on("receive_word", ({ word, room, playerTurnName }) => {
-      console.log(
-        `RECEIVE WORD: , playerTurnName ${playerTurnName}, username ${username}, gameName ${gameName}, currentGame: ${currentGame.name} room ${room}, word ${word} `
-      );
+      playerTurnName !== username && room === gameName ? dispatch(setWordState(word)) : null
+      // console.log(
+      //   `RECEIVE WORD: , playerTurnName ${playerTurnName}, username ${username}, gameName ${gameName}, currentGame: ${currentGame.name} room ${room}, word ${word} `
+      // );
 
       // rooms.push(gameName)
       // console.log("ROOMS: ", rooms)

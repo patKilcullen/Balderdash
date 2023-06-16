@@ -43,9 +43,11 @@ const Timer = ({game, username, userId, userScore, gameName, gameId, playerTurnN
       else if(countdown === 0){
         handleGetFakeDefinitions()
 setPlayGame(true)
+
       }
       else{
         setDefInput(false)
+        
       }
 
     }, 1000)

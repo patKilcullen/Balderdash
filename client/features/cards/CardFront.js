@@ -7,6 +7,9 @@ import Timer from "../gamePlay/Timer";
 
 const CardFront = ({ top, bottom, side, flip, timer,game, username, userId, userScore, gameName, gameId, playerTurnName,  reloadScores, setDefinition, setWord, setTimer, setChoseWord }) => {
 
+
+
+  // console.log("CARD FRONT BOTTON, TOP", bottom, top)
   return (
     // <div id="temp-scorecard">
     <div>
@@ -112,7 +115,7 @@ const CardFront = ({ top, bottom, side, flip, timer,game, username, userId, user
                 textShadow: `3px 3px #558ABB`,
                 alignSelf: " center",
                 textDecoration: "underline",
-               
+               minHeight: "20%",
               }}
               color={"secondary"}
             >
