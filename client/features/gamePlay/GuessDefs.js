@@ -99,6 +99,8 @@ const word = useSelector(selectWord)
     setFakeDefs(fakeDefinitions);
   }, [fakeDefinitions]);
 
+
+
   // CHOOSE WORD
   const handleChooseWord = (def) => {
     setGuessed(true);
@@ -222,6 +224,9 @@ const word = useSelector(selectWord)
             );
           })
       : ""}
+      {guessed ?
+      <CardFront side={"back"} fullScreen={true} />
+      : null}
   </div>
 
 

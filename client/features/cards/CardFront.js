@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 
 import Timer from "../gamePlay/Timer";
 
-const CardFront = ({ top, bottom, side, flip, timer,game, username, userId, userScore, gameName, gameId, playerTurnName,  reloadScores, setDefinition, setWord, setTimer, setChoseWord }) => {
+const CardFront = ({ top, bottom, side, fullScreen, flip, timer,game, username, userId, userScore, gameName, gameId, playerTurnName,  reloadScores, setDefinition, setWord, setTimer, setChoseWord }) => {
 
 
 
@@ -48,18 +48,18 @@ const CardFront = ({ top, bottom, side, flip, timer,game, username, userId, user
 
           // FULL SCREEN DIMENSIONS
         
-            position: timer ? "fixed": null,
-            top: timer ? "0": null,
-            right: timer ? "0": null,
-            bottom: timer ? "0": null,
-            left: timer ? "0": null,
+            position: timer || fullScreen ? "fixed": null,
+            top: timer || fullScreen? "0": null,
+            right: timer || fullScreen? "0": null,
+            bottom: timer || fullScreen? "0": null,
+            left: timer || fullScreen ? "0": null,
           
           //NORMAL CAR DIMENTSIONS
-          height: timer ? "95%" : "88%",
-          minHeight: timer ? "100vh" :  "350px",
-          maxHeight: timer? "100vh" :  "350px",
-          minWidth: timer? "90%" : "200px",
-          maxWidth: timer? "90%" :  "200px",
+          height: timer || fullScreen ? "95%" : "88%",
+          minHeight: timer || fullScreen ? "100vh" :  "350px",
+          maxHeight: timer|| fullScreen ? "100vh" :  "350px",
+          minWidth: timer|| fullScreen ? "90%" : "200px",
+          maxWidth: timer|| fullScreen ? "90%" :  "200px",
           
           
         }}
