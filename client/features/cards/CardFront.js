@@ -44,18 +44,19 @@ const CardFront = ({ top, bottom, side, flip, timer,game, username, userId, user
           // transform: translateX(-50%);
 
           // FULL SCREEN DIMENSIONS
-          //   position: "fixed",
-          //   top: "0",
-          //   right: "0",
-          //   bottom: "0",
-          //   left: "0",
-
+        
+            position: timer ? "fixed": null,
+            top: timer ? "0": null,
+            right: timer ? "0": null,
+            bottom: timer ? "0": null,
+            left: timer ? "0": null,
+          
           //NORMAL CAR DIMENTSIONS
-          height: "88%",
-          minHeight: "350px",
-          maxHeight: "350px",
-          minWidth: "200px",
-          maxWidth: "200px",
+          height: timer ? "95%" : "88%",
+          minHeight: timer ? "100vh" :  "350px",
+          maxHeight: timer? "100vh" :  "350px",
+          minWidth: timer? "90%" : "200px",
+          maxWidth: timer? "90%" :  "200px",
           
           
         }}
