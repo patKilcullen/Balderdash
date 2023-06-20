@@ -58,7 +58,7 @@ const word = useSelector(selectWord)
   const singleGame = useSelector(selectSingleGame);
   const tempScoreCardMessages = useSelector(selectTempScoreCardMessages);
 
-  const [countdown, setCountdown] = useState(10);
+  const [countdown, setCountdown] = useState(18);
   useEffect(() => {
     const timer = setTimeout(async () => {
       if (countdown > 0) {

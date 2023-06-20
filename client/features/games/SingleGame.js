@@ -27,7 +27,7 @@ import { SocketContext } from "../../app/SocketProvider";
 import { use } from "chai";
 
 import TempScoreCard from "../scores/TempScoreCard";
-
+import ScoreCard from "../scores/ScoreCard";
 // Material UI
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
@@ -134,11 +134,14 @@ const SingleGame = () => {
 
   // SHOULD THIS CHECK IF ITS THE RIGHT GAME?????????
   useEffect(() => {
-    clientSocket.on("receive_score_card", ({ gameName, tempScoreCardMessages }) => {
-      //  setScoreCard(scoreCardMessages)
+    clientSocket.on(
+      "receive_score_card",
+      ({ gameName, tempScoreCardMessages }) => {
+        //  setScoreCard(scoreCardMessages)
 
-      setTempScoreCard(tempScoreCardMessages);
-    });
+        setTempScoreCard(tempScoreCardMessages);
+      }
+    );
   }, [clientSocket]);
 
   // console.log("GAME NAME IN SINGL GMAE: ", game.name)
@@ -158,9 +161,17 @@ const SingleGame = () => {
   return (
     <Card>
       {/* SHOWSCORE CARD MAY BE UNECESSARY */}
-      {showTempScoreCard ? <TempScoreCard tempScoreCard={tempScoreCard} /> : null}
+      {showTempScoreCard ? (
+        <TempScoreCard tempScoreCard={tempScoreCard} />
+      ) : null}
       {/* <ScoreCard scoreCard={scoreCard} />  */}
-      <Card id="scores-card">
+
+
+      <ScoreCard userId={userId} userScore={userScore} game={game} handleAskJoin={handleAskJoin} handleStartGame={handleStartGame}
+      handleDeclineRequest={handleDeclineRequest} handleAcceptRequest={handleAcceptRequest}  /> 
+
+
+<Card id="scores-card">
         <div>
           {userScore && userScore.user ? (
             <div>USER NAME: {userScore.user.username}</div>

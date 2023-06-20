@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-const ScoreCard = ({ tempScoreCard }) => {
+const TempScoreCard = ({ tempScoreCard }) => {
   const [countdown, setCountdown] = useState();
   const [showTempScoreCard, setShowTempScoreCard] = useState(false);
   useEffect(() => {
@@ -134,7 +134,7 @@ const ScoreCard = ({ tempScoreCard }) => {
   );
 };
 
-export default ScoreCard;
+export default TempScoreCard;
 
 {
   /* <h1>Round Results</h1>
