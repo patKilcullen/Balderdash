@@ -9,9 +9,7 @@ const TOKEN = 'token';
 
 
 
-/*
-  THUNKS
-*/
+
 // REFRESH => add username argument to thunk and use that to getItem(username)
 export const me = createAsyncThunk('auth/me', async () => {
   const token = window.localStorage.getItem(TOKEN);

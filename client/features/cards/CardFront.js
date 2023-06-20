@@ -29,9 +29,6 @@ const CardFront = ({
   setTimer,
   setChoseWord,
 }) => {
-  // console.log("DEFCARDS IN CARDFRONT: ", defCards);
-
-  // console.log("CARD FRONT BOTTON, TOP", bottom, top)
   return (
     // <div id="temp-scorecard">
     <div>
@@ -47,18 +44,12 @@ const CardFront = ({
               : side === "front" && defCards
               ? "#88ebe6"
               : "#e6e8dc",
-          //   backgroundColor: "#88ebe6",
+
           padding: "1em 1em",
           borderRadius: "50px",
           border: "5px solid black",
           boxShadow: "20",
           fontWeight: "bold",
-
-          // height: "100%",
-          //   minHeight: "300px",
-
-          //   maxHeight: "350px",
-          //   maxWidth: "200px",
 
           // FLIP
           //  transform: "rotateY(360deg)",
@@ -90,10 +81,8 @@ const CardFront = ({
       >
         <Card
           sx={{
-            // backgroundColor: !word || !word.length ? "#88ebe6" : "#e6e8dc",
-            // backgroundColor: "#e6e8dc",
             padding: "10px",
-            // backgroundColor: !word || !word.length ? "#88ebe6" : "#e6e8dc",
+
             backgroundColor: side === "front" ? "#e6e8dc" : "#88ebe6",
             height: "95%",
             width: "90%",
@@ -106,21 +95,25 @@ const CardFront = ({
             border: "2px solid black",
           }}
         >
-          {/* FRONT  */}
-
+          {/* FRONT OF CARD */}
           {side === "front" ? (
-            <div style={{ minHeight: "600px", minWidth: "110%", display: "flex",flexDirection: "column" }}>
+            <div
+              style={{
+                minHeight: "600px",
+                minWidth: "110%",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
               <Box
                 style={{
                   fontSize: "40px",
                   fontWeight: "bold",
-                  // textShadow: `5px 5px #558ABB`,
                   borderTop: "40px",
                   marginTop: "-10px",
                   paddingTop: "10px",
                   backgroundColor: "#88ebe6",
                   width: "110%",
-                  // borderBottom: "40px",
                   marginBottom: "10px",
                   paddingBottom: "10px",
                   height: "20%",
@@ -150,18 +143,6 @@ const CardFront = ({
                   sx={{ minHeight: defCards ? "600px" : null }}
                 >
                   {bottom ? <div>{bottom}</div> : null}
-                  {/* {bottom && bottom.length > 1
-          ? bottom.map((message) => {
-              return (
-                <div >
-                  <div>{message}</div>
-                  <div className="line-break"></div>
-                </div>
-              );
-            })
-          : null}{" "} */}
-
-                  
                 </div>
               </Box>
 
@@ -184,11 +165,10 @@ const CardFront = ({
                   setChoseWord={setChoseWord}
                 />
               ) : null}
-              
             </div>
           ) : null}
 
-          {/* BACK */}
+          {/* BACK OF CARD*/}
           {side === "back" ? (
             <div
               className="card-logo"
@@ -200,9 +180,6 @@ const CardFront = ({
                 color={"secondary"}
               >
                 Balder...
-                {/* <span style={{ fontSize: "35px", fontWeight: "bold" }}>
-                {` ${word}`}
-              </span> */}
               </Typography>
 
               <Typography
@@ -214,21 +191,19 @@ const CardFront = ({
               </Typography>
             </div>
           ) : null}
-           {defCards ? (
-                    <Button
-                      sx={{ alignSelf: "center" }}
-                      variant="contained"
-                      size="large"
-                      onClick={() => handleChooseWord(def)}
-                    >
-                      {" "}
-                      Choose Definition
-                    </Button>
-                  ) : null}
+          {defCards ? (
+            <Button
+              sx={{ alignSelf: "center" }}
+              variant="contained"
+              size="large"
+              onClick={() => handleChooseWord(def)}
+            >
+              {" "}
+              Choose Definition
+            </Button>
+          ) : null}
         </Card>
-       
       </Card>
-      
     </div>
   );
 };

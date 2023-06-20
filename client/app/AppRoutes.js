@@ -10,9 +10,6 @@ import SingleGame from '../features/games/SingleGame';
 
 import { me } from './store';
 
-/**
- * COMPONENT
- */
 
 const AppRoutes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
@@ -20,7 +17,7 @@ const AppRoutes = () => {
 
   const dispatch = useDispatch();
 
-  // REFRESH => dispatch(me(username));
+
   useEffect(() => {
     dispatch(me());
   }, []);

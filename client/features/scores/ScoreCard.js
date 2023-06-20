@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {  useSelector } from "react-redux";
 import { selectAllScores } from './scoresSlice';
 import { selectSingleGame } from '../games/singleGameSlice';
@@ -14,7 +14,9 @@ const ScoreCard = ({userId, userScore, game, handleAskJoin, handleStartGame, han
     // const userScore = scores.find((score) => score.userId === userId);
     const scores = useSelector(selectAllScores);
     // const game = useSelector(selectSingleGame);
-console.log("userId, userScore, game, SCORECARD: ", userId, userScore, game,)
+
+    
+// console.log("userId, userScore, game, SCORECARD: ", userId, userScore, game,)
   return (
 
     <Card sx={{ boxShadow: "20", border: "2px solid black", }}>
@@ -31,13 +33,17 @@ console.log("userId, userScore, game, SCORECARD: ", userId, userScore, game,)
             <div style={{  display: "flex", alignItems: "flex-end", width: "100%", gap: "30px"}} >
             <Typography sx={{}}>game:          </Typography>
             <div style={{}}>
-    <Typography id = "score-card-game-name" color="secondary"style={{fontWeight: "bold", textDecoration: "underline", }}>{game.name}</Typography>
-    <Divider sx={{ border: " 1px solid black", width: "200%", marginLeft: "-35px"} } ></Divider>
+    <Typography id = "score-card-game-name" color="secondary"style={{fontWeight: "bold", textDecoration: "underline", marginLeft: "20px" }}>{game.name}</Typography>
+    <Divider sx={{ border: " 1px solid black", width: "150%", marginLeft: "-35px"} } ></Divider>
     </div>
     </div>
 
 
-
+   {playerTurnName ? <Typography>
+      {userScore && userScore.user ? (
+        <Typography>It's  {playerTurnName}'s turn</Typography>
+      ) : null}
+    </Typography>:null}
 
 
     <Typography>

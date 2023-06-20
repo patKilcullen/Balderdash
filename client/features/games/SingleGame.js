@@ -46,6 +46,9 @@ const SingleGame = () => {
 
   const userScore = scores.find((score) => score.userId === userId);
 
+
+
+
   // Could use res of fetchSingleGame to get scores through eager loading and set them
   // to state instead of fetchAllGameScores and score = useSelector(selectAllScores)
   // not such which would be more efficent or if it makes a diference
@@ -158,7 +161,7 @@ const SingleGame = () => {
     };
   }, [game]);
 
-  console.log("userId, userScore, game, SINGLE GAME: ", userId, userScore, game,)
+ 
 
   return (
     <Card>
