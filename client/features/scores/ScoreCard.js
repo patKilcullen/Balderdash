@@ -3,24 +3,49 @@ import {  useSelector } from "react-redux";
 import { selectAllScores } from './scoresSlice';
 import { selectSingleGame } from '../games/singleGameSlice';
 
-import Card from "@mui/material/Card";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+// import Card from "@mui/material/Card";
+// import Button from "@mui/material/Button";
+// import Typography from "@mui/material/Typography";
+
+import { Card, Button, Typography, Divider } from '@mui/material';
 
 const ScoreCard = ({userId, userScore, game, handleAskJoin, handleStartGame, handleDeclineRequest, handleAcceptRequest}) => {
     // const userId = useSelector((state) => state.auth.me.id);
     // const userScore = scores.find((score) => score.userId === userId);
     const scores = useSelector(selectAllScores);
     // const game = useSelector(selectSingleGame);
-
+console.log("userId, userScore, game, SCORECARD: ", userId, userScore, game,)
   return (
-    <div><Card id="scores-card">
-    <div>
-      {userScore && userScore.user ? (
-        <div>USER NAME: {userScore.user.username}</div>
-      ) : null}
+
+    <Card sx={{ boxShadow: "20", border: "2px solid black", }}>
+    <Card   sx={{ 
+  padding: "10px",
+      // color: "black",
+       backgroundColor: "#88ebe6",
+       
+   }} > 
+    {/* <Card id="scores-card"> */}
+    <Card id = "score-card-header" color="seconday" sx={{ boxShadow: "20", padding: "10px", }}>
+        <div style={{width: "100%"}}>
+
+            <div style={{  display: "flex", alignItems: "flex-end", width: "100%", gap: "30px"}} >
+            <Typography sx={{}}>game:          </Typography>
+            <div style={{}}>
+    <Typography id = "score-card-game-name" color="secondary"style={{fontWeight: "bold", textDecoration: "underline", }}>{game.name}</Typography>
+    <Divider sx={{ border: " 1px solid black", width: "200%", marginLeft: "-35px"} } ></Divider>
     </div>
-    <div>{game.name}</div>
+    </div>
+
+
+
+
+
+    <Typography>
+      {userScore && userScore.user ? (
+        <Typography>USER NAME: {userScore.user.username}</Typography>
+      ) : null}
+    </Typography>
+
     {game.owner ? <div>Owner: {game.owner.username}</div> : null}
 
     {/* User Score */}
@@ -105,8 +130,13 @@ const ScoreCard = ({userId, userScore, game, handleAskJoin, handleStartGame, han
     game.started === false ? (
       <button onClick={handleStartGame}>Start Game</button>
     ) : null}
-  </Card>S</div>
+    </div>
+  </Card>
+  </Card>
+  </Card>
   )
 }
 
 export default ScoreCard
+
+
