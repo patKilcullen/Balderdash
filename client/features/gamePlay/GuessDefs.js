@@ -4,8 +4,8 @@ import {
   selectFakeWords,
   getFakeDefinitions,
   selectFakeDefinitions,
-  addScoreCardMessage,
-  selectScoreCardMessages,
+  addTempScoreCardMessage,
+  selectTempScoreCardMessages,
 } from "./gamePlaySlice";
 import { SocketContext } from "../../app/SocketProvider";
 
@@ -21,7 +21,7 @@ import { fetchSingleUser, selectSingleUser } from "../users/singleUserSlice";
 
 import Button from "@mui/material/Button";
 
-import ScoreCard from "../scores/ScoreCard";
+import TempScoreCard from "../scores/TempScoreCard";
 import CardFront from "../cards/CardFront";
 
 const GuessDefs = ({
@@ -56,7 +56,7 @@ const word = useSelector(selectWord)
 // console.log("top IN GUESS DEFS: ", top)
 
   const singleGame = useSelector(selectSingleGame);
-  const scoreCardMessages = useSelector(selectScoreCardMessages);
+  const tempScoreCardMessages = useSelector(selectTempScoreCardMessages);
 
   const [countdown, setCountdown] = useState(10);
   useEffect(() => {
@@ -113,7 +113,7 @@ const word = useSelector(selectWord)
       //If its users turn, add message to state, otherwise send it through socket to
       //  player whos turn it is so they can put it in state (SAME FOR FAKE AND !FALE && !REAL)
       singleGame.turn === userScore.turnNum
-        ? dispatch(addScoreCardMessage(message))
+        ? dispatch(addTempScoreCardMessage(message))
         : clientSocket.emit("send_score_card_info", {
             gameName: gameName,
             playerTurnName: playerTurnName,
@@ -125,7 +125,7 @@ const word = useSelector(selectWord)
       let message = `${username} guessed the CORRECT answer and gets 1 point!`;
       dispatch(addPoint({ userId: userId, gameId: gameId }));
       singleGame.turn === userScore.turnNum
-        ? dispatch(addScoreCardMessage(message))
+        ? dispatch(addTempScoreCardMessage(message))
         : clientSocket.emit("send_score_card_info", {
             gameName: gameName,
             playerTurnName: playerTurnName,
@@ -138,7 +138,7 @@ const word = useSelector(selectWord)
         let message = `${username} guessed ${res.payload.user.username}'s fake definition... ${res.payload.user.username} gets 1 point!!`;
 
         singleGame.turn === userScore.turnNum
-          ? dispatch(addScoreCardMessage(message))
+          ? dispatch(addTempScoreCardMessage(message))
           : clientSocket.emit("send_score_card_info", {
               gameName: gameName,
               playerTurnName: playerTurnName,
@@ -159,14 +159,14 @@ const word = useSelector(selectWord)
   useEffect(() => {
     clientSocket.on("receive_score_card_info", ({ room, message }) => {
       room === gameName && singleGame.turn === userScore.turnNum
-        ? dispatch(addScoreCardMessage(message))
+        ? dispatch(addTempScoreCardMessage(message))
         : null;
     });
   }, [clientSocket]);
 
   useEffect(() => {
-    clientSocket.emit("send_score_card", { scoreCardMessages, gameName });
-  }, [scoreCardMessages]);
+    clientSocket.emit("send_score_card", { tempScoreCardMessages, gameName });
+  }, [tempScoreCardMessages]);
 
   const testDefinitions =["Lorem ipsum dolor sit amet, consectetur adipiscing elit,", "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut", "enim ad minim veniam", "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "Duis aute", "irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."]
 const testWord = "Pattycakes"

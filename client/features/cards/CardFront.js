@@ -29,7 +29,7 @@ const CardFront = ({
   setTimer,
   setChoseWord,
 }) => {
-  console.log("DEFCARDS IN CARDFRONT: ", defCards);
+  // console.log("DEFCARDS IN CARDFRONT: ", defCards);
 
   // console.log("CARD FRONT BOTTON, TOP", bottom, top)
   return (

@@ -90,10 +90,10 @@ const init = async () => {
         }
       );
 
-      socket.on("send_score_card", ({ scoreCardMessages, gameName }) => {
+      socket.on("send_score_card", ({ tempScoreCardMessages, gameName }) => {
         socket
           .to(gameName)
-          .emit("receive_score_card", { gameName, scoreCardMessages });
+          .emit("receive_score_card", { gameName, tempScoreCardMessages });
       });
 
       // IN DBGamePlay

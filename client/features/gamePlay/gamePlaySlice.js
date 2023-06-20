@@ -87,14 +87,14 @@ const initialState = {
     definition: {},
     fakeWords: [],
     fakeDefinitions: [],
-    scoreCard: []
+    tempScoreCard: []
 }
 const gamePlaySlice = createSlice({
     name:"gamePlay",
     initialState,
     reducers: {
       setWordState(state, action){
-        console.log("SET WORD FKJFDJFDJOFJDOFJDOFJDFJDOJFDOJFDOJF")
+
         state.word = action.payload
       },
       clearFakeDefs(state, action){
@@ -113,11 +113,11 @@ const gamePlaySlice = createSlice({
       addWordPlayerNotTurn(state,action){
           state.word = action.payload
       },
-      addScoreCardMessage(state, action){
-        state.scoreCard.push(action.payload)
+      addTempScoreCardMessage(state, action){
+        state.tempScoreCard.push(action.payload)
       },
-      clearScoreCardMessages(state, action){
-        state.scoreCard = []
+      clearTempScoreCardMessages(state, action){
+        state.tempScoreCard = []
       },
     },
   
@@ -163,11 +163,11 @@ export const selectFakeDefinitions = (state)=>{
 export const selectFakeWords = (state)=>{
   return state.gamePlay.fakeWords
 }
-export const selectScoreCardMessages = (state)=>{
-  return state.gamePlay.scoreCard
+export const selectTempScoreCardMessages = (state)=>{
+  return state.gamePlay.tempScoreCard
 }
 
 
-export const { setWordState, clearFakeDefs, clearFakeWords, addWordPlayerNotTurn, addDefinition,addScoreCardMessage,clearScoreCardMessages } = gamePlaySlice.actions;
+export const { setWordState, clearFakeDefs, clearFakeWords, addWordPlayerNotTurn, addDefinition,addTempScoreCardMessage,clearTempScoreCardMessages } = gamePlaySlice.actions;
 
 export default gamePlaySlice.reducer

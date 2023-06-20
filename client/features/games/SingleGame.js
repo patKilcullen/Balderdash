@@ -13,8 +13,8 @@ import {
 } from "../scores/scoresSlice";
 
 import {
-  selectScoreCardMessages,
-  clearScoreCardMessages,
+  selectTempScoreCardMessages,
+  clearTempScoreCardMessages,
 } from "../gamePlay/gamePlaySlice";
 
 import Main from "../main/Main";
@@ -26,7 +26,7 @@ import socket from "socket.io-client";
 import { SocketContext } from "../../app/SocketProvider";
 import { use } from "chai";
 
-import ScoreCard from "../scores/ScoreCard";
+import TempScoreCard from "../scores/TempScoreCard";
 
 // Material UI
 import Card from "@mui/material/Card";
@@ -46,15 +46,14 @@ const SingleGame = () => {
 
   const userScore = scores.find((score) => score.userId === userId);
 
-// Could use res of fetchSingleGame to get scores through eager loading and set them
-// to state instead of fetchAllGameScores and score = useSelector(selectAllScores)
-// not such which would be more efficent or if it makes a diference
-const [scoresX, setScoresX] = useState('')
+  // Could use res of fetchSingleGame to get scores through eager loading and set them
+  // to state instead of fetchAllGameScores and score = useSelector(selectAllScores)
+  // not such which would be more efficent or if it makes a diference
+  const [scoresX, setScoresX] = useState("");
   useEffect(() => {
-    dispatch(fetchSingleGame(gameId)).then((res)=>{
-console.log("RES HETER: ", res)
-setScoresX(res.payload.scores)
-    })
+    dispatch(fetchSingleGame(gameId)).then((res) => {
+      setScoresX(res.payload.scores);
+    });
     // dispatch(fetchAllScores())
     dispatch(fetchAllGameScores(gameId));
   }, []);
@@ -64,18 +63,16 @@ setScoresX(res.payload.scores)
     dispatch(fetchAllGameScores(gameId));
   }, [gameId]);
 
-  const [showScoreCard, setShowScoreCard] = useState(false);
+  const [showTempScoreCard, setShowTempScoreCard] = useState(false);
   // Updates scores when
   const reloadScores = () => {
-  
     dispatch(fetchAllGameScores(gameId));
     setTimeout(() => {
-    dispatch(clearScoreCardMessages());
+      dispatch(clearTempScoreCardMessages());
 
-
-      setShowScoreCard(false);
+      setShowTempScoreCard(false);
     }, 5000);
-   setShowScoreCard(true);
+    setShowTempScoreCard(true);
   };
 
   // SOCKET
@@ -128,43 +125,40 @@ setScoresX(res.payload.scores)
     });
   };
 
-  const [scoreCard, setScoreCard] = useState("");
-  const scoreCardTurn = useSelector(selectScoreCardMessages);
+  const [tempScoreCard, setTempScoreCard] = useState("");
+  const tempScoreCardTurn = useSelector(selectTempScoreCardMessages);
 
   useEffect(() => {
-    setScoreCard(scoreCardTurn);
-  }, [scoreCardTurn]);
+    setTempScoreCard(tempScoreCardTurn);
+  }, [tempScoreCardTurn]);
 
   // SHOULD THIS CHECK IF ITS THE RIGHT GAME?????????
   useEffect(() => {
-    clientSocket.on("receive_score_card", ({ gameName, scoreCardMessages }) => {
+    clientSocket.on("receive_score_card", ({ gameName, tempScoreCardMessages }) => {
       //  setScoreCard(scoreCardMessages)
 
-      setScoreCard(scoreCardMessages);
+      setTempScoreCard(tempScoreCardMessages);
     });
   }, [clientSocket]);
 
-
-// console.log("GAME NAME IN SINGL GMAE: ", game.name)
-// USER LEAVES SOCKET ROOM WHEN SINGLe GAME UNMOUNTS
-useEffect(()=>{
-
-
-
-    clientSocket.emit("join_room", { room: game.name, userName: username })
-  
-  return () => {
-    // Leave the room
-    clientSocket.emit('leave_room', { room: game.name });
-    // Disconnect the socket
-    // clientSocket.disconnect();
-  };
-},[game])
+  // console.log("GAME NAME IN SINGL GMAE: ", game.name)
+  // USER LEAVES SOCKET ROOM WHEN SINGLe GAME UNMOUNTS
+  useEffect(() => {
+    userScore
+      ? clientSocket.emit("join_room", { room: game.name, userName: username })
+      : null;
+    return () => {
+      // Leave the room
+      clientSocket.emit("leave_room", { room: game.name });
+      // Disconnect the socket
+      // clientSocket.disconnect();
+    };
+  }, [game]);
 
   return (
     <Card>
       {/* SHOWSCORE CARD MAY BE UNECESSARY */}
-      {showScoreCard ? <ScoreCard scoreCard={scoreCard} /> : null}
+      {showTempScoreCard ? <TempScoreCard tempScoreCard={tempScoreCard} /> : null}
       {/* <ScoreCard scoreCard={scoreCard} />  */}
       <Card id="scores-card">
         <div>

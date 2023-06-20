@@ -418,7 +418,7 @@ import {
   clearFakeDefs,
   clearFakeWords,
   addDefinition,
-  clearScoreCardMessages,
+  clearTempScoreCardMessages,
 } from "./gamePlaySlice";
 import { selectMe } from "../auth/authSlice";
 import Timer from "./Timer";
@@ -474,7 +474,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
   const handleGetWord = () => {
     setFlip(true);
     dispatch(clearFakeDefs());
-    dispatch(clearScoreCardMessages());
+    dispatch(clearTempScoreCardMessages());
     dispatch(getWord()).then((res) => {
       setWord(res.payload[0]);
       dispatch(getDefinition(res.payload[0])).then((res) => {
@@ -549,7 +549,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
 
       receivedWord === true ? setShit(word) : null;
 
-      console.log("SHIT: ", shit);
+  
       playerTurnName !== username && room === gameName
         ? setWord(word)
         : // could this be null? I belive it served a purpose as is but cant recreate it
