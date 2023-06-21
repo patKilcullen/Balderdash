@@ -19,7 +19,11 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: "Ubuntu",
+    h4: {
+      fontFamily: ['Chalkduster', 'Bradley Hand']
+    }
   },
+  
 });
 
 const App = () => {
@@ -29,7 +33,7 @@ const App = () => {
         <SocketProvider>
           <ThemeProvider theme={theme}>
             <div>
-              <Navbar />
+              {/* <Navbar /> */}
               <AppRoutes />
             </div>
           </ThemeProvider>

@@ -163,6 +163,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
         overflow: "visible",
         height: "100vh",
         gap: "10px",
+        
       }}
     >
       {/* <Card sx={{ boxShadow: "20", border: "2px solid black"}}>
@@ -172,7 +173,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
      }} > 
      <Card id = "header" color="seconday" sx={{ boxShadow: "20", padding: "10px"}}> */}
 
-      <Card className="buttons " sx={{ boxShadow: "none" }}>
+      <Card className="buttons " sx={{ boxShadow: "none"}}>
         {/* GET WORD BUTTON -  only visible if it is players turn*/}
         {game && userScore && game.turn === userScore.turnNum ? (
           <Button

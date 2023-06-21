@@ -26,7 +26,10 @@ const ScoreCard = ({
         sx={{
           padding: "10px",
           // color: "black",
-          backgroundColor: "#88ebe6",
+           backgroundColor: "#88ebe6",
+        // backgroundColor: "#e6e8dc",
+        // backgroundColor: "#558ABB" 
+    
         }}
       >
         {/* <Card id="scores-card"> */}
@@ -35,7 +38,7 @@ const ScoreCard = ({
           color="seconday"
           sx={{ boxShadow: "20", padding: "10px" }}
         >
-          <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItem: "center" }}>
+          <div style={{ width: "100%", display: "flex", flexDirection: "column", }}>
             {/* <div
               style={{
                 display: "flex",
@@ -63,21 +66,28 @@ const ScoreCard = ({
               </div>
             </div> */}
 
-<Typography id = "title" color="secondary"sx={{fontWeight: "bold", border: "2px solid red"}}>{game.name}</Typography>
+<Typography id = "title" color="secondary"sx={{fontWeight: "bold"}}>{game.name}</Typography>
       <Divider  sx={{ border: "2px solid #571122", width: "95%", marginTop: "-15px", boxShadow: "1px 1px #558ABB"} } ></Divider>
 
-<Box sx={{display: "flex", width: "100%", border: "2px solid red"}}>
-    <Card sx={{display: "flex", flexDirection: "column", alignItems: "center", width: "100%", border: "2px solid red"}}>
-    <Typography> {userScore ? (
+<Box sx={{display: "flex", width: "100%", marginTop: "20px",}}>
+    
+    <Card sx={{display: "flex", flexDirection: "column", width: "100%", border: "2px solid #571122", }}>
+    <Card sx={{ backgroundColor: "#e6e8dc",height: "100%", width: "100%"}}>
+    <Typography color="secondary"
+         sx={{ fontWeight: "bold"}}
+          variant="h4">  {userScore ? (
              
-             <div>Score: {userScore.score} </div>
+             <div style={{textDecoration: "underline"}}>Score: {userScore.score} </div>
            ) : null}</Typography>
     
     </Card>
-    
+    </Card>
 
-    <Card sx={{display: "flex", flexDirection: "column", alignItems: "center", width: "100%", border: "2px solid red"}}>
-        <Typography>Players</Typography>
+    <Card sx={{ width: "100%", border: "2px solid #571122", display: "flex", flexDirection: "column", alignItems: "center"}}>
+    <Card sx={{ backgroundColor: "#e6e8dc", height: "100%", width: "100%", display: "flex", flexDirection: "column", alignItems: "center"}}>
+        <Typography color="secondary"
+         sx={{ fontWeight: "bold", textDecoration: "underline" ,width: "100%"}}
+          variant="h4">Players</Typography>
         {scores ? (
               <div>
            
@@ -105,6 +115,7 @@ const ScoreCard = ({
                   ))}
               </div>
             ) : null}
+        </Card>
         </Card>
 
 </Box>

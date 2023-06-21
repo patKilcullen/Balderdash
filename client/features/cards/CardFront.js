@@ -29,6 +29,7 @@ const CardFront = ({
   setTimer,
   setChoseWord,
 }) => {
+
   return (
     // <div id="temp-scorecard">
     <div>
@@ -44,13 +45,14 @@ const CardFront = ({
               : side === "front" && defCards
               ? "#88ebe6"
               : "#e6e8dc",
-
+       
           padding: "1em 1em",
           borderRadius: "50px",
           border: "5px solid black",
           boxShadow: "20",
           fontWeight: "bold",
 
+      
           // FLIP
           //  transform: "rotateY(360deg)",
           transform: flip ? "rotateY(360deg) " : null,
@@ -81,8 +83,9 @@ const CardFront = ({
       >
         <Card
           sx={{
+    
             padding: "10px",
-
+       
             backgroundColor: side === "front" ? "#e6e8dc" : "#88ebe6",
             height: "95%",
             width: "90%",
@@ -97,14 +100,7 @@ const CardFront = ({
         >
           {/* FRONT OF CARD */}
           {side === "front" ? (
-            <div
-              style={{
-                minHeight: "600px",
-                minWidth: "110%",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
+            <div style={{ minHeight: "600px", minWidth: "110%", display: "flex",flexDirection: "column" }}>
               <Box
                 style={{
                   fontSize: "40px",
@@ -143,6 +139,8 @@ const CardFront = ({
                   sx={{ minHeight: defCards ? "600px" : null }}
                 >
                   {bottom ? <div>{bottom}</div> : null}
+                
+                  
                 </div>
               </Box>
 
@@ -165,6 +163,7 @@ const CardFront = ({
                   setChoseWord={setChoseWord}
                 />
               ) : null}
+              
             </div>
           ) : null}
 
@@ -180,6 +179,7 @@ const CardFront = ({
                 color={"secondary"}
               >
                 Balder...
+             
               </Typography>
 
               <Typography
@@ -191,19 +191,21 @@ const CardFront = ({
               </Typography>
             </div>
           ) : null}
-          {defCards ? (
-            <Button
-              sx={{ alignSelf: "center" }}
-              variant="contained"
-              size="large"
-              onClick={() => handleChooseWord(def)}
-            >
-              {" "}
-              Choose Definition
-            </Button>
-          ) : null}
+           {defCards ? (
+                    <Button
+                      sx={{ alignSelf: "center" }}
+                      variant="contained"
+                      size="large"
+                      onClick={() => handleChooseWord(def)}
+                    >
+                      {" "}
+                      Choose Definition
+                    </Button>
+                  ) : null}
         </Card>
+       
       </Card>
+      
     </div>
   );
 };

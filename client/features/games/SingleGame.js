@@ -164,7 +164,7 @@ const SingleGame = () => {
  
 
   return (
-    <Card>
+    <Card >
       {/* SHOWSCORE CARD MAY BE UNECESSARY */}
       {showTempScoreCard ? (
         <TempScoreCard tempScoreCard={tempScoreCard} />
