@@ -205,6 +205,7 @@ const CreateGame = () => {
         {/* </Card> */}
         {error ? <div style={{ color: "red" }}>{error}</div> : null}
       </Box>
+      <Button type="button" color='secondary' sx={{textDecoration: "underline", fontWeight: "bold"}} onClick={()=> navigate('/home')}>Home</Button>
     </Container>
   );
 };
