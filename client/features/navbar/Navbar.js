@@ -5,7 +5,7 @@ import { logout } from '../../app/store';
 
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
-import { Typography } from '@mui/material';
+import { Typography, Divider } from '@mui/material';
 
 
 const Navbar = () => {
@@ -25,7 +25,8 @@ const Navbar = () => {
          backgroundColor: "#88ebe6"
      }} > 
      <Card id = "header" color="seconday" sx={{ boxShadow: "20", padding: "10px"}}>
-      <Typography id = "title" color="secondary"sx={{fontWeight: "bold", textDecoration: "underline", }}>BALDERDASH</Typography>
+      <Typography id = "title" color="secondary"sx={{fontWeight: "bold", }}>BALDERDASH</Typography>
+      <Divider  sx={{ border: "2px solid #571122", width: "95%", marginTop: "-15px", boxShadow: "4px 4px #558ABB"} } ></Divider>
       <nav id="nav">
         {isLoggedIn ? (
           <div >

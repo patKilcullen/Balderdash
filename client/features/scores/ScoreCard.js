@@ -3,9 +3,6 @@ import {  useSelector } from "react-redux";
 import { selectAllScores } from './scoresSlice';
 import { selectSingleGame } from '../games/singleGameSlice';
 
-// import Card from "@mui/material/Card";
-// import Button from "@mui/material/Button";
-// import Typography from "@mui/material/Typography";
 
 import { Card, Button, Typography, Divider } from '@mui/material';
 
@@ -33,17 +30,13 @@ const ScoreCard = ({userId, userScore, game, handleAskJoin, handleStartGame, han
             <div style={{  display: "flex", alignItems: "flex-end", width: "100%", gap: "30px"}} >
             <Typography sx={{}}>game:          </Typography>
             <div style={{}}>
-    <Typography id = "score-card-game-name" color="secondary"style={{fontWeight: "bold", textDecoration: "underline", marginLeft: "20px" }}>{game.name}</Typography>
+    <Typography id = "score-card-game-name" color="secondary"style={{fontWeight: "bold", marginLeft: "20px" }}>{game.name}</Typography>
     <Divider sx={{ border: " 1px solid black", width: "150%", marginLeft: "-35px"} } ></Divider>
     </div>
     </div>
 
 
-   {playerTurnName ? <Typography>
-      {userScore && userScore.user ? (
-        <Typography>It's  {playerTurnName}'s turn</Typography>
-      ) : null}
-    </Typography>:null}
+
 
 
     <Typography>

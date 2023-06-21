@@ -19,7 +19,7 @@ background-color: #88ebe6
   align-self: center;
   margin-top: 10vh;
   /* color: blueviolet; */
-  text-shadow: 5px 5px #558ABB;
+  text-shadow: 4px 4px #558ABB;
   font-size: 100px;
 }
 #score-card-game-name {
@@ -27,7 +27,7 @@ background-color: #88ebe6
   
 
   /* color: blueviolet; */
-  text-shadow: 5px 5px #558ABB;
+  text-shadow: 3px 3px #558ABB;
   font-size: 100px;
 }
 
