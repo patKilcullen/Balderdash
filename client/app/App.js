@@ -33,7 +33,7 @@ const App = () => {
         <SocketProvider>
           <ThemeProvider theme={theme}>
             <div>
-              {/* <Navbar /> */}
+              <Navbar />
               <AppRoutes />
             </div>
           </ThemeProvider>

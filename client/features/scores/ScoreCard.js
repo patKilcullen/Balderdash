@@ -20,6 +20,7 @@ const ScoreCard = ({
   // const game = useSelector(selectSingleGame);
 
   // console.log("userId, userScore, game, SCORECARD: ", userId, userScore, game,)
+  
   return (
     <Card sx={{ boxShadow: "20", border: "2px solid black" }}>
       <Card
@@ -71,25 +72,38 @@ const ScoreCard = ({
 
 <Box sx={{display: "flex", width: "100%", marginTop: "20px",}}>
     
-    <Card sx={{display: "flex", flexDirection: "column", width: "100%", border: "2px solid #571122", }}>
+    <Card sx={{display: "flex", flexDirection: "column", width: "100%", border: "2px solid #571122", boxShadow: "2px 2px black" }}>
     <Card sx={{ backgroundColor: "#e6e8dc",height: "100%", width: "100%"}}>
     <Typography color="secondary"
-         sx={{ fontWeight: "bold"}}
+         sx={{ fontWeight: "bold", }}
           variant="h4">  {userScore ? (
-             
-             <div style={{textDecoration: "underline"}}>Score: {userScore.score} </div>
+            <div style={{width: "100%" ,display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-around"}}>
+            <div style={{fontSize:"30px", textDecoration: "underline"}}>Score:</div>
+           <div style={{color: "red", textDecoration: "none", }}>{userScore.score}
+            </div> 
+            
+            </div>
+            //  <div style={{textDecoration: "underline", width: "100%" ,display: "flex", flexDirection: "column", alignItems: "center"}}>Score: {userScore.score} </div>
            ) : null}</Typography>
-    
+    <Typography color="secondary"
+         sx={{ fontWeight: "bold", }}
+          variant="h4">  {game && game.rounds && game.roundsLeft? (
+             <div style={{width: "100%" ,display: "flex", flexDirection: "column", alignItems: "center"}}>
+             <div style={{fontSize:"30px", textDecoration: "underline"}}>Round:</div>
+            <div style={{color: "red", textDecoration: "none", }}>{game.roundsLeft}/{game.rounds} </div> 
+             
+             </div>
+           ) : null}</Typography>
     </Card>
     </Card>
 
-    <Card sx={{ width: "100%", border: "2px solid #571122", display: "flex", flexDirection: "column", alignItems: "center"}}>
+    <Card sx={{ width: "100%", border: "2px solid #571122",  boxShadow: "2px 2px black"}}>
     <Card sx={{ backgroundColor: "#e6e8dc", height: "100%", width: "100%", display: "flex", flexDirection: "column", alignItems: "center"}}>
         <Typography color="secondary"
-         sx={{ fontWeight: "bold", textDecoration: "underline" ,width: "100%"}}
+         sx={{ fontWeight: "bold", textDecoration: "underline" ,width: "100%" ,display: "flex", flexDirection: "column", alignItems: "center"}}
           variant="h4">Players</Typography>
         {scores ? (
-              <div>
+              <div >
            
                 {scores
                   .filter((score) => score.accepted && score.userId !== userId)

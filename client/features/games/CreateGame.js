@@ -48,6 +48,7 @@ const CreateGame = () => {
             userId: userId,
             name: gameName,
             rounds: rounds,
+            roundsLeft: rounds,
             winner: "null",
             started: false,
             complete: false,
