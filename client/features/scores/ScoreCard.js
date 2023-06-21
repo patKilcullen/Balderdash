@@ -77,9 +77,12 @@ const ScoreCard = ({
     <Typography color="secondary"
          sx={{ fontWeight: "bold", }}
           variant="h4">  {userScore ? (
-            <div style={{width: "100%" ,display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-around"}}>
+            <div style={{width: "100%" ,display: "flex", flexDirection: "column", alignItems: "center", }}>
             <div style={{fontSize:"30px", textDecoration: "underline"}}>Score:</div>
-           <div style={{color: "red", textDecoration: "none", }}>{userScore.score}
+            <div  style={{width: "100%", display: "flex", flexDirection: "row", gap: "1px", justifyContent: "center", alignItems: "flex-end", marginLeft: "20px"}}>
+           <div style={{color: "red", textDecoration: "none", }}>{userScore.score}</div>
+           <div style={{color: "black", fontSize: "20px"}}>pts</div>
+           
             </div> 
             
             </div>
@@ -90,7 +93,7 @@ const ScoreCard = ({
           variant="h4">  {game && game.rounds && game.roundsLeft? (
              <div style={{width: "100%" ,display: "flex", flexDirection: "column", alignItems: "center"}}>
              <div style={{fontSize:"30px", textDecoration: "underline"}}>Round:</div>
-            <div style={{color: "red", textDecoration: "none", }}>{game.roundsLeft}/{game.rounds} </div> 
+            <div style={{color: "red", textDecoration: "none", }}>{game.rounds + 1 - game.roundsLeft }/{game.rounds} </div> 
              
              </div>
            ) : null}</Typography>
@@ -100,7 +103,7 @@ const ScoreCard = ({
     <Card sx={{ width: "100%", border: "2px solid #571122",  boxShadow: "2px 2px black"}}>
     <Card sx={{ backgroundColor: "#e6e8dc", height: "100%", width: "100%", display: "flex", flexDirection: "column", alignItems: "center"}}>
         <Typography color="secondary"
-         sx={{ fontWeight: "bold", textDecoration: "underline" ,width: "100%" ,display: "flex", flexDirection: "column", alignItems: "center"}}
+         sx={{ fontWeight: "bold", textDecoration: "underline" ,width: "100%" ,display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "10px"}}
           variant="h4">Players</Typography>
         {scores ? (
               <div >
@@ -111,8 +114,23 @@ const ScoreCard = ({
                     <div>
                       {" "}
                       {user.user ? (
-                        <div>
-                          {user.user.username}:  {user.score}pts
+                        <div >
+                            <div style={{display: "flex", flexDirection: "row", gap: "10px"}}>
+                            <Typography color="secondary"
+         sx={{ fontWeight: "bold", fontSize: "30px", width: "100%" ,display: "flex", flexDirection: "column", alignItems: "center"}}
+          variant="h4">{user.user.username}: </Typography>
+
+          <Typography color="secondary"
+         sx={{ fontWeight: "bold", color: "red" ,width: "100%" }}
+          variant="h4">
+            <div style={{width: "100%", display: "flex", flexDirection: "row", gap: "1px", alignItems: "flex-end"}}>
+           <div> {user.score}</div>
+            <div style={{color: "black", fontSize: "20px"}}>pts</div>
+            </div>
+            </Typography>
+                          {/* {user.user.username}:  
+                          {user.score}pts */}
+                          </div>
                           {/* Dont let non owner */}
                           {user.user.id !== userId &&
                           userId === game.ownerId &&
