@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
 
 import { selectSingleGame, fetchSingleGame, editGame } from "./singleGameSlice";
 import {
@@ -35,12 +36,14 @@ import Typography from "@mui/material/Typography";
 
 const SingleGame = () => {
   // put user ID in props????
+
   const userId = useSelector((state) => state.auth.me.id);
   const { id } = useParams();
   const gameId = id;
   const username = useSelector((state) => state.auth.me.username);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const game = useSelector(selectSingleGame);
   const scores = useSelector(selectAllScores);
 
@@ -191,6 +194,7 @@ const SingleGame = () => {
           />
         </>
       ) : null}
+      <Button type="button" color='secondary' sx={{textDecoration: "underline", fontWeight: "bold"}} onClick={()=> navigate('/home')}>Home</Button>
     </Card>
   );
 };
