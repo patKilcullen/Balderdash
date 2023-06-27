@@ -4,8 +4,8 @@ import {
   selectFakeWords,
   getFakeDefinitions,
   selectFakeDefinitions,
-  addScoreCardMessage,
-  selectScoreCardMessages,
+  addTempScoreCardMessage,
+  selectTempScoreCardMessages,
 } from "./gamePlaySlice";
 import { SocketContext } from "../../app/SocketProvider";
 
@@ -16,14 +16,16 @@ import {
   fetchAllGameScores,
   selectSingleGame,
 } from "../games/singleGameSlice";
-import { clearFakeWords, clearFakeDefs } from "./gamePlaySlice";
+import { clearFakeWords, clearFakeDefs, selectWord } from "./gamePlaySlice";
 import { fetchSingleUser, selectSingleUser } from "../users/singleUserSlice";
 
 import Button from "@mui/material/Button";
 
-import ScoreCard from "../scores/ScoreCard";
+import TempScoreCard from "../scores/TempScoreCard";
+import CardFront from "../cards/CardFront";
 
 const GuessDefs = ({
+  top,
   game,
   username,
   userId,
@@ -48,11 +50,15 @@ const GuessDefs = ({
   const [guessed, setGuessed] = useState(false);
 
   const dispatch = useDispatch();
+const word = useSelector(selectWord)
+
+
+// console.log("top IN GUESS DEFS: ", top)
 
   const singleGame = useSelector(selectSingleGame);
-  const scoreCardMessages = useSelector(selectScoreCardMessages);
+  const tempScoreCardMessages = useSelector(selectTempScoreCardMessages);
 
-  const [countdown, setCountdown] = useState(7);
+  const [countdown, setCountdown] = useState(18);
   useEffect(() => {
     const timer = setTimeout(async () => {
       if (countdown > 0) {
@@ -93,6 +99,8 @@ const GuessDefs = ({
     setFakeDefs(fakeDefinitions);
   }, [fakeDefinitions]);
 
+
+
   // CHOOSE WORD
   const handleChooseWord = (def) => {
     setGuessed(true);
@@ -105,7 +113,7 @@ const GuessDefs = ({
       //If its users turn, add message to state, otherwise send it through socket to
       //  player whos turn it is so they can put it in state (SAME FOR FAKE AND !FALE && !REAL)
       singleGame.turn === userScore.turnNum
-        ? dispatch(addScoreCardMessage(message))
+        ? dispatch(addTempScoreCardMessage(message))
         : clientSocket.emit("send_score_card_info", {
             gameName: gameName,
             playerTurnName: playerTurnName,
@@ -117,7 +125,7 @@ const GuessDefs = ({
       let message = `${username} guessed the CORRECT answer and gets 1 point!`;
       dispatch(addPoint({ userId: userId, gameId: gameId }));
       singleGame.turn === userScore.turnNum
-        ? dispatch(addScoreCardMessage(message))
+        ? dispatch(addTempScoreCardMessage(message))
         : clientSocket.emit("send_score_card_info", {
             gameName: gameName,
             playerTurnName: playerTurnName,
@@ -130,7 +138,7 @@ const GuessDefs = ({
         let message = `${username} guessed ${res.payload.user.username}'s fake definition... ${res.payload.user.username} gets 1 point!!`;
 
         singleGame.turn === userScore.turnNum
-          ? dispatch(addScoreCardMessage(message))
+          ? dispatch(addTempScoreCardMessage(message))
           : clientSocket.emit("send_score_card_info", {
               gameName: gameName,
               playerTurnName: playerTurnName,
@@ -151,49 +159,79 @@ const GuessDefs = ({
   useEffect(() => {
     clientSocket.on("receive_score_card_info", ({ room, message }) => {
       room === gameName && singleGame.turn === userScore.turnNum
-        ? dispatch(addScoreCardMessage(message))
+        ? dispatch(addTempScoreCardMessage(message))
         : null;
     });
   }, [clientSocket]);
 
   useEffect(() => {
-    clientSocket.emit("send_score_card", { scoreCardMessages, gameName });
-  }, [scoreCardMessages]);
+    clientSocket.emit("send_score_card", { tempScoreCardMessages, gameName });
+  }, [tempScoreCardMessages]);
+
+  const testDefinitions =["Lorem ipsum dolor sit amet, consectetur adipiscing elit,", "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut", "enim ad minim veniam", "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "Duis aute", "irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."]
+const testWord = "Pattycakes"
+
 
   return (
-    <div>
-      <div>Definitions</div>
+    // <div>
+    //   <div>Definitions</div>
 
-      {correct === true ? (
-        <div>Correctamundo!!!</div>
-      ) : correct === false ? (
-        <div>Wrong, idiot!</div>
-      ) : null}
+    //   {correct === true ? (
+    //     <div>Correctamundo!!!</div>
+    //   ) : correct === false ? (
+    //     <div>Wrong, idiot!</div>
+    //   ) : null}
 
-      {guessed === false && defList === true && fakeDefs && fakeDefs.length
-        ? fakeDefs
-            .filter((def) => !def.hasOwnProperty(`${userId}`))
-            .map((def) => {
-              const value = Object.values(def)[0];
-              return (
-                <Button
-                  variant="contained"
-                  size="large"
-                  sx={{ border: "2px solid black" }}
-                  onClick={() => handleChooseWord(def)}
-                >
-                  {value}
-                </Button>
-              );
-            })
-        : ""}
+    //   {guessed === false && defList === true && fakeDefs && fakeDefs.length
+    //     ? fakeDefs
+    //         .filter((def) => !def.hasOwnProperty(`${userId}`))
+    //         .map((def) => {
+    //           const value = Object.values(def)[0];
+    //           return (
+    //             <Button
+    //               variant="contained"
+    //               size="large"
+    //               sx={{ border: "2px solid black" }}
+    //               onClick={() => handleChooseWord(def)}
+    //             >
+    //               {value}
+    //             </Button>
+    //           );
+    //         })
+    //     : ""}
+    // </div>
 
-      {/* <div>
-        <ScoreCard scoreCard={scoreCard}/> 
-        <div style={{heigh: "500px", width: "500px", border: "10px solid red", position: "absolute"}}>GATY ASSS</div>
-        </div>
-        */}
-    </div>
+    <div style={{display: "flex", flexDirection: "column", alignContent: "center", alignItems: "center"}}>
+    <div>Definitions</div>
+
+    {/* {correct === true ? (
+      <div>Correctamundo!!!</div>
+    ) : correct === false ? (
+      <div>Wrong, idiot!</div>
+    ) : null} */}
+
+
+{/* {guessed === false && defList === true && testDefinitions && testDefinitions.length
+      ? testDefinitions */}
+    {guessed === false && defList === true && fakeDefs && fakeDefs.length
+      ? fakeDefs
+           .filter((def) => !def.hasOwnProperty(`${userId}`))
+          .map((def) => {
+            const value = Object.values(def)[0];
+            return (
+            
+                <CardFront def={def} handleChooseWord={handleChooseWord} defCards={true} fullScreen={true} top={word} bottom={value} side={"front"} />
+            
+               
+            );
+          })
+      : ""}
+      {guessed ?
+      <CardFront side={"back"} fullScreen={true} />
+      : null}
+  </div>
+
+
   );
 };
 

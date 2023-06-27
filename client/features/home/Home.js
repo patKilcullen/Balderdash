@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import AllGames from "../games/AllGames";
 
 import CreateRound from "./CreateRound";
+import Navbar from "../navbar/Navbar";
 
 /**
  * COMPONENT
@@ -15,6 +16,7 @@ const Home = () => {
 
   return (
     <div >
+      <Navbar></Navbar>
       <h3>Welcome, {username}</h3>
 
       {/* <Link to={"/main"}>Start a new game</Link> */}

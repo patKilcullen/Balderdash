@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
 
 import { selectSingleGame, fetchSingleGame, editGame } from "./singleGameSlice";
 import {
@@ -13,8 +14,8 @@ import {
 } from "../scores/scoresSlice";
 
 import {
-  selectScoreCardMessages,
-  clearScoreCardMessages,
+  selectTempScoreCardMessages,
+  clearTempScoreCardMessages,
 } from "../gamePlay/gamePlaySlice";
 
 import Main from "../main/Main";
@@ -26,8 +27,8 @@ import socket from "socket.io-client";
 import { SocketContext } from "../../app/SocketProvider";
 import { use } from "chai";
 
+import TempScoreCard from "../scores/TempScoreCard";
 import ScoreCard from "../scores/ScoreCard";
-
 // Material UI
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
@@ -35,39 +36,49 @@ import Typography from "@mui/material/Typography";
 
 const SingleGame = () => {
   // put user ID in props????
+
   const userId = useSelector((state) => state.auth.me.id);
   const { id } = useParams();
   const gameId = id;
   const username = useSelector((state) => state.auth.me.username);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const game = useSelector(selectSingleGame);
   const scores = useSelector(selectAllScores);
 
   const userScore = scores.find((score) => score.userId === userId);
 
+
+
+
+  // Could use res of fetchSingleGame to get scores through eager loading and set them
+  // to state instead of fetchAllGameScores and score = useSelector(selectAllScores)
+  // not such which would be more efficent or if it makes a diference
+  const [scoresX, setScoresX] = useState("");
   useEffect(() => {
-    dispatch(fetchSingleGame(gameId));
+    dispatch(fetchSingleGame(gameId)).then((res) => {
+      setScoresX(res.payload.scores);
+    });
     // dispatch(fetchAllScores())
     dispatch(fetchAllGameScores(gameId));
   }, []);
-
   useEffect(() => {
     dispatch(fetchSingleGame(gameId));
     // dispatch(fetchAllScores())
     dispatch(fetchAllGameScores(gameId));
   }, [gameId]);
 
-  const [showScoreCard, setShowScoreCard] = useState(false);
+  const [showTempScoreCard, setShowTempScoreCard] = useState(false);
   // Updates scores when
   const reloadScores = () => {
-  
     dispatch(fetchAllGameScores(gameId));
     setTimeout(() => {
-      setShowScoreCard(false);
-      dispatch(clearScoreCardMessages());
+      dispatch(clearTempScoreCardMessages());
+
+      setShowTempScoreCard(false);
     }, 5000);
-    setShowScoreCard(true);
+    setShowTempScoreCard(true);
   };
 
   // SOCKET
@@ -120,117 +131,55 @@ const SingleGame = () => {
     });
   };
 
-  const [scoreCard, setScoreCard] = useState("");
-  const scoreCardTurn = useSelector(selectScoreCardMessages);
+  const [tempScoreCard, setTempScoreCard] = useState("");
+  const tempScoreCardTurn = useSelector(selectTempScoreCardMessages);
 
   useEffect(() => {
-    setScoreCard(scoreCardTurn);
-  }, [scoreCardTurn]);
+    setTempScoreCard(tempScoreCardTurn);
+  }, [tempScoreCardTurn]);
 
   // SHOULD THIS CHECK IF ITS THE RIGHT GAME?????????
   useEffect(() => {
-    clientSocket.on("receive_score_card", ({ gameName, scoreCardMessages }) => {
-      //  setScoreCard(scoreCardMessages)
+    clientSocket.on(
+      "receive_score_card",
+      ({ gameName, tempScoreCardMessages }) => {
+        //  setScoreCard(scoreCardMessages)
 
-      setScoreCard(scoreCardMessages);
-    });
+        setTempScoreCard(tempScoreCardMessages);
+      }
+    );
   }, [clientSocket]);
 
+  // console.log("GAME NAME IN SINGL GMAE: ", game.name)
+  // USER LEAVES SOCKET ROOM WHEN SINGLe GAME UNMOUNTS
+  useEffect(() => {
+    userScore
+      ? clientSocket.emit("join_room", { room: game.name, userName: username })
+      : null;
+    return () => {
+      // Leave the room
+      clientSocket.emit("leave_room", { room: game.name });
+      // Disconnect the socket
+      // clientSocket.disconnect();
+    };
+  }, [game]);
+
+ 
+
   return (
-    <Card>
-      {showScoreCard ? <ScoreCard scoreCard={scoreCard} /> : null}
-      <Card id="scores-card">
-        <div>
-          {userScore && userScore.user ? (
-            <div>USER NAME: {userScore.user.username}</div>
-          ) : null}
-        </div>
-        <div>{game.name}</div>
-        {game.owner ? <div>Owner: {game.owner.username}</div> : null}
+    <Card >
+      {/* SHOWSCORE CARD MAY BE UNECESSARY */}
+      {showTempScoreCard ? (
+        <TempScoreCard tempScoreCard={tempScoreCard} />
+      ) : null}
+      {/* <ScoreCard scoreCard={scoreCard} />  */}
 
-        {/* User Score */}
 
-        {userScore ? (
-          // <div> Your Score {userScore.user.username} </div>
-          <div> Your Score {userScore.score} </div>
-        ) : null}
+      <ScoreCard userId={userId} userScore={userScore} game={game} handleAskJoin={handleAskJoin} handleStartGame={handleStartGame}
+      handleDeclineRequest={handleDeclineRequest} handleAcceptRequest={handleAcceptRequest}  /> 
 
-        {/* Players and Score */}
-        {scores ? (
-          <div>
-            Playffers:{" "}
-            {scores
-              .filter((score) => score.accepted && score.userId !== userId)
-              .map((user) => (
-                <div>
-                  {" "}
-                  {user.user ? (
-                    <div>
-                      {user.user.username} Score: {user.score}
-                      {/* Dont let non owner */}
-                      {user.user.id !== userId &&
-                      userId === game.ownerId &&
-                      game.started === false ? (
-                        <button
-                          onClick={() => handleDeclineRequest(user.user.id)}
-                        >
-                          Remove Player
-                        </button>
-                      ) : null}
-                    </div>
-                  ) : null}
-                </div>
-              ))}
-          </div>
-        ) : null}
 
-        {/*IF GAME OWNER and Game NOT STARTED: Player Requests */}
-        {game.ownerId === userId && !game.started ? (
-          <div>Player Requests</div>
-        ) : null}
 
-        {game.ownerId === userId && !game.started ? (
-          <div>
-            {scores && scores.length ? (
-              <div>
-                {scores
-                  .filter((score) => !score.accepted)
-
-                  .map((score) => (
-                    <div>
-                      {score.user.username}
-                      <button
-                        onClick={() => handleAcceptRequest(score.user.id)}
-                      >
-                        Accept
-                      </button>
-                      <button
-                        onClick={() => handleDeclineRequest(score.user.id)}
-                      >
-                        Decline
-                      </button>
-                    </div>
-                  ))}
-              </div>
-            ) : null}
-          </div>
-        ) : null}
-
-        {/* IF NOT GAME OWNER  and Game NOT STARTED: REQUEST TO JOIN*/}
-        {game.ownerId !== userId && !game.started && !userScore ? (
-          // ADD additional conditional to determine if request already sent
-          // Should make singleScore for user!!!! check for that to determing if can send
-
-          <button onClick={handleAskJoin}>Ask to join this game</button>
-        ) : null}
-
-        {/* START GAME - If game owner and more than one player*/}
-        {game.ownerId === userId &&
-        game.numPlayers > 1 &&
-        game.started === false ? (
-          <button onClick={handleStartGame}>Start Game</button>
-        ) : null}
-      </Card>
 
       {/* GAME PLAY */}
       {(game.started === true && game.ownerId === userId) ||
@@ -245,6 +194,7 @@ const SingleGame = () => {
           />
         </>
       ) : null}
+      <Button type="button" color='secondary' sx={{textDecoration: "underline", fontWeight: "bold"}} onClick={()=> navigate('/home')}>Home</Button>
     </Card>
   );
 };

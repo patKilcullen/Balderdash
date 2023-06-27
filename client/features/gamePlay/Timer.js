@@ -9,7 +9,7 @@ import { selectFakeWords, getFakeDefinitions, selectFakeDefinitions } from './ga
 
 
 const Timer = ({game, username, userId, userScore, gameName, gameId, playerTurnName,  reloadScores, setDefinition, setWord, setTimer, setChoseWord}) => {
-  const [countdown, setCountdown] = useState(5)  
+  const [countdown, setCountdown] = useState(4)  
   const [defInput, setDefInput] = useState(false)
   const [playGame, setPlayGame] = useState(false)
 
@@ -43,9 +43,11 @@ const Timer = ({game, username, userId, userScore, gameName, gameId, playerTurnN
       else if(countdown === 0){
         handleGetFakeDefinitions()
 setPlayGame(true)
+
       }
       else{
         setDefInput(false)
+        
       }
 
     }, 1000)
@@ -68,10 +70,10 @@ setPlayGame(true)
 
   return (
     <div style={{position: "realtive"}}>
-  <div style={{position: "fixed", left: "50px", top: "50px", color: "red"}}>Time: {countdown}</div> 
+  <div style={{position: "fixed", bottom: "20%", color: "red"}}>Time: {countdown}</div> 
  {/* { defInput && !userScore.turn ?<DefInputBox gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null} */}
  { defInput && userScore.turnNum !== game.turn ?<DefInputBox game={game} gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null}
- {playGame ? <GuessDefs game={game} username={username} userScore={userScore}fakeDefinitions={fakeDefinitions} gameName={gameName} gameId={gameId} playerTurnName={playerTurnName} userId={userId} Name={playerTurnName} reloadScores={reloadScores} setDefinition={setDefinition} setWord={setWord} setTimer={setTimer} setPlayGame={setPlayGame} setChoseWord={setChoseWord}/>: null}
+ {playGame ? <GuessDefs top={top}game={game} username={username} userScore={userScore}fakeDefinitions={fakeDefinitions} gameName={gameName} gameId={gameId} playerTurnName={playerTurnName} userId={userId} Name={playerTurnName} reloadScores={reloadScores} setDefinition={setDefinition} setWord={setWord} setTimer={setTimer} setPlayGame={setPlayGame} setChoseWord={setChoseWord}/>: null}
   </div>
 )};
 

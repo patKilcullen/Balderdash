@@ -1,59 +1,59 @@
-import React, {useState, useContext, useEffect, useRef} from 'react'
+import React, { useState, useContext, useEffect, useRef } from "react";
 
 import { SocketContext } from "../../app/SocketProvider";
 
-import TextField from "@mui/material/TextField";
-import TextareaAutosize from '@mui/base/TextareaAutosize'
 
-const DefInputBox = ({gameName, userId, playerTurnName}) => {
-    const [playerDef, setPlayerDef] = useState("")
-    const [seeInput, setSeeInput] = useState(true)
+import TextareaAutosize from "@mui/base/TextareaAutosize";
 
-    const clientSocket = useContext(SocketContext);
-    
-const inputRef = useRef()
+const DefInputBox = ({ gameName, userId, playerTurnName }) => {
+  const [playerDef, setPlayerDef] = useState("");
+  const [seeInput, setSeeInput] = useState(true);
 
-// puts focus on the input box when page loads
-useEffect(()=>{
-inputRef.current.focus()
-}, [])
-  //  console.log("PAYER TURN NAME DEF INPUT: ", playerTurnName )
+  const clientSocket = useContext(SocketContext);
 
-const handleEnterFakeDef = (e)=>{
-e.preventDefault()
+  const inputRef = useRef();
 
-clientSocket.emit("send_player_fake_def", {playerDef,room: gameName, userId, playerTurnName})
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
-setSeeInput(false)
-setPlayerDef("")
-}
+  const handleEnterFakeDef = (e) => {
+    e.preventDefault();
 
+    clientSocket.emit("send_player_fake_def", {
+      playerDef,
+      room: gameName,
+      userId,
+      playerTurnName,
+    });
 
-
+    setSeeInput(false);
+    setPlayerDef("");
+  };
 
   return (
     <div>
-        {seeInput ? <form onSubmit={handleEnterFakeDef}>
-            <label>
-              Enter you fake Def here:
-            
-              <TextareaAutosize
-              placeholder='Write your definition here...'
+      {seeInput ? (
+        <form onSubmit={handleEnterFakeDef}>
+          <label>
+            Enter you fake Def here:
+            <TextareaAutosize
+              placeholder="Write your definition here..."
               minRows={10}
               ref={inputRef}
-              style={{backgroundColor: "white", width: "100%"}}
-                type="textarea"
-                name="name"
-                value={playerDef}
-                onChange={(e) => setPlayerDef(e.target.value)}
-              />
-           
-            </label>
+              style={{ backgroundColor: "white", width: "100%" }}
+              type="textarea"
+              name="name"
+              value={playerDef}
+              onChange={(e) => setPlayerDef(e.target.value)}
+            />
+          </label>
 
-            <input type="submit" value="Submit" />
-          </form> :null}
+          <input type="submit" value="Submit" />
+        </form>
+      ) : null}
     </div>
-  )
-}
+  );
+};
 
-export default DefInputBox
+export default DefInputBox;

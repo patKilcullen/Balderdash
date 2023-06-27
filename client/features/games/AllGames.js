@@ -12,6 +12,7 @@ import { fetchSingleUser, selectSingleUser } from "../users/singleUserSlice";
 
 import CreateGame from "./CreateGame";
 import SingleGame from "./SingleGame";
+import Navbar from "../navbar/Navbar";
 
 import socket from "socket.io-client";
 
@@ -56,6 +57,7 @@ const AllGames = () => {
   });
   return (
     <div>
+      
       <Link to="/create-game">
         {" "}
         <button>Create a NEW GAME</button>

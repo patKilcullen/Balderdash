@@ -11,6 +11,10 @@ const Game = db.define("game", {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
+    roundsLeft: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+    },
     winner: {
         type: Sequelize.STRING, 
     },

@@ -26,13 +26,22 @@ const init = async () => {
       });
 
       socket.on("join_room", ({ room, userName }) => {
+        console.log(`${userName} joined ${room}`)
         socket.join(room);
       });
+
+      socket.on('leave_room', ({ room }) => {
+        socket.leave(room);
+       
+        console.log(`Client left room: ${room}`);
+      });
+
       socket.on("send_new_game", (data) => {
         socket.broadcast.emit("receive_new_game", data);
       });
 
       socket.on("send_word", ({ word, room, playerTurnName }) => {
+        console.log("SEND WORD: ", word, room, playerTurnName)
         socket.to(room).emit("receive_word", { word, room, playerTurnName });
       });
 
@@ -81,10 +90,10 @@ const init = async () => {
         }
       );
 
-      socket.on("send_score_card", ({ scoreCardMessages, gameName }) => {
+      socket.on("send_score_card", ({ tempScoreCardMessages, gameName }) => {
         socket
           .to(gameName)
-          .emit("receive_score_card", { gameName, scoreCardMessages });
+          .emit("receive_score_card", { gameName, tempScoreCardMessages });
       });
 
       // IN DBGamePlay
