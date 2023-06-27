@@ -2,8 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import defaultDefs from './defaultFakeDefs';
 
-// import dotenv from "dotenv"
-// dotenv.config()
+
 
 // GET WORD
 export const getWord = createAsyncThunk(
@@ -41,7 +40,8 @@ export const getFakeWords = createAsyncThunk(
       console.log("WORD IN GET MERI: ", word)
       try {
         //  const { data } = await axios.get(`https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${process.env.dictionaryKey}`);
-         const { data } = await axios.get(`https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=3ca1a8b0-158e-4e88-b635-579bf43719f4`);
+        //  const { data } = await axios.get(`https://www.dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=3ca1a8b0-158e-4e88-b635-579bf43719f4`);
+        const { data } = await axios.get(`/api/wordsAndDefinitions/${word}`,);
          if(data[0].shortdef){
          const numOfDefs = Math.floor((Math.random() * data[0].shortdef.length))
          return data[0].shortdef[numOfDefs]
