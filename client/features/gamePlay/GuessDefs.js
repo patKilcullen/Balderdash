@@ -25,6 +25,7 @@ import TempScoreCard from "../scores/TempScoreCard";
 import CardFront from "../cards/CardFront";
 
 const GuessDefs = ({
+  makeHidden,
   top,
   game,
   username,
@@ -81,6 +82,7 @@ const word = useSelector(selectWord)
         setPlayGame(false);
         setChoseWord(false);
         dispatch(clearFakeWords());
+        makeHidden()
       }
     }, 1000);
 
@@ -201,14 +203,10 @@ const testWord = "Pattycakes"
     //     : ""}
     // </div>
 
-    <div style={{display: "flex", flexDirection: "column", alignContent: "center", alignItems: "center"}}>
-    <div>Definitions</div>
+    // <div style={{display: "flex", flexDirection: "column", alignContent: "center", alignItems: "center", zIndex: "9999999", width: "100vh",}}>
+    // <div>Definitions</div>
 
-    {/* {correct === true ? (
-      <div>Correctamundo!!!</div>
-    ) : correct === false ? (
-      <div>Wrong, idiot!</div>
-    ) : null} */}
+<div>
 
 
 {/* {guessed === false && defList === true && testDefinitions && testDefinitions.length
@@ -219,9 +217,9 @@ const testWord = "Pattycakes"
           .map((def) => {
             const value = Object.values(def)[0];
             return (
-            
+        
                 <CardFront def={def} handleChooseWord={handleChooseWord} defCards={true} fullScreen={true} top={word} bottom={value} side={"front"} />
-            
+          
                
             );
           })

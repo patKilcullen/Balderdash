@@ -7,6 +7,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import { SocketProvider } from "./SocketProvider";
 
+// import dotenv from 'dotenv';
+// dotenv.config();
+
 // Material UI Theme
 const theme = createTheme({
   palette: {
@@ -33,6 +36,7 @@ const App = () => {
         <SocketProvider>
           <ThemeProvider theme={theme}>
             <div>
+              {/* removed navbar from every page to make more mobile friendly */}
               {/* <Navbar /> */}
               <AppRoutes />
             </div>

@@ -21,7 +21,6 @@ const CardFront = ({
   userId,
   userScore,
   gameName,
-  gameId,
   playerTurnName,
   reloadScores,
   setDefinition,
@@ -29,6 +28,12 @@ const CardFront = ({
   setTimer,
   setChoseWord,
 }) => {
+  // HIDDEN changes parent element dimentions so that each child card take up
+  // full screen when player look through which definition to choose
+  const [hidden, setHidden] = useState(false);
+  const makeHidden = () => {
+    setHidden(!hidden);
+  };
 
   return (
     // <div id="temp-scorecard">
@@ -36,7 +41,6 @@ const CardFront = ({
       <Card
         sx={{
           display: "flex",
-
           flexDirection: "column",
           alignItems: "center",
           backgroundColor:
@@ -45,35 +49,30 @@ const CardFront = ({
               : side === "front" && defCards
               ? "#88ebe6"
               : "#e6e8dc",
-       
           padding: "1em 1em",
           borderRadius: "50px",
           border: "5px solid black",
           boxShadow: "20",
           fontWeight: "bold",
 
-      
-          // FLIP
-          //  transform: "rotateY(360deg)",
+          // CARD FLIP
           transform: flip ? "rotateY(360deg) " : null,
           perspective: "1000px",
           transformStyle: "preserve-3d",
           transition: "0.9s",
           transformOrigin: "center center",
 
-          // transform: flip ? "rotateY(180deg) translateX(-50%)" : null,
-          // transform: flip ? "translateX(-50%)" : null
-          // transform: translateX(-50%);
-
-          // FULL SCREEN DIMENSIONS
-
+          // FULL SCREEN CARD DIMENSIONS
           position: timer || (fullScreen && !defCards) ? "fixed" : null,
           top: timer || fullScreen ? "0" : null,
           right: timer || fullScreen ? "0" : null,
           bottom: timer || fullScreen ? "0" : null,
           left: timer || fullScreen ? "0" : null,
+          width: defCards === true ? "100vw" : null,
 
-          //NORMAL CAR DIMENTSIONS
+          zIndex: defCards === true ? "99999" : null,
+
+          //NORMAL CARD DIMENTSIONS
           height: timer || fullScreen ? "95%" : "88%",
           minHeight: timer || fullScreen ? "100vh" : "350px",
           maxHeight: timer || fullScreen ? "100vh" : "350px",
@@ -81,14 +80,13 @@ const CardFront = ({
           maxWidth: timer || fullScreen ? "90%" : "200px",
         }}
       >
+        {/* CARD BORDER */}
         <Card
           sx={{
-    
             padding: "10px",
-       
             backgroundColor: side === "front" ? "#e6e8dc" : "#88ebe6",
-            height: "95%",
-            width: "90%",
+            height: hidden ? "100vh" : "95%",
+            width: hidden ? "100vw" : "90%",
             borderRadius: "50px",
             overflow: "scroll",
             display: "flex",
@@ -100,9 +98,17 @@ const CardFront = ({
         >
           {/* FRONT OF CARD */}
           {side === "front" ? (
-            <div style={{ minHeight: "600px", minWidth: "110%", display: "flex",flexDirection: "column" }}>
+            <div
+              style={{
+                minHeight: "600px",
+                minWidth: "110%",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
               <Box
                 style={{
+                  visibility: hidden ? "hidden" : "null",
                   fontSize: "40px",
                   fontWeight: "bold",
                   borderTop: "40px",
@@ -112,12 +118,13 @@ const CardFront = ({
                   width: "110%",
                   marginBottom: "10px",
                   paddingBottom: "10px",
-                  height: "20%",
+                  height: hidden ? "0%" : "20%",
                   display: "flex",
                   justifyContent: "center",
                   borderBottom: "5px solid #571122",
                 }}
               >
+                {/* TOP portion of front of card */}
                 <Typography
                   style={{
                     fontSize: "40px",
@@ -129,23 +136,27 @@ const CardFront = ({
                   }}
                   color={"secondary"}
                 >
-                  {top}
+                  {top && !hidden ? top : null}
                 </Typography>
               </Box>
+              {/* BOTTOM portion of front of card */}
               <Box>
-                {/* <div className="temp-scorecard-messages"> */}
                 <div
                   className="temp-scorecard-messages"
-                  sx={{ minHeight: defCards ? "600px" : null }}
+                  sx={{
+                    minHeight: defCards ? "600px" : null,
+                    visibility: hidden ? "hidden" : "null",
+                    height: hidden ? "0" : "null",
+                  }}
                 >
-                  {bottom ? <div>{bottom}</div> : null}
-                
-                  
+                  {bottom && !hidden ? <div>{bottom}</div> : null}
                 </div>
               </Box>
-
+              {/* TIMER starts Timer component with set time to for player to input
+            their own defintion, then sets the timer in the Guess Defs Component */}
               {timer ? (
                 <Timer
+                  makeHidden={makeHidden}
                   top={top}
                   game={game}
                   username={username}
@@ -154,7 +165,6 @@ const CardFront = ({
                   gameName={gameName}
                   gameId={game.id}
                   playerTurnName={playerTurnName}
-                  // definition={definition}
                   definition={bottom}
                   reloadScores={reloadScores}
                   setDefinition={setDefinition}
@@ -163,7 +173,6 @@ const CardFront = ({
                   setChoseWord={setChoseWord}
                 />
               ) : null}
-              
             </div>
           ) : null}
 
@@ -179,7 +188,6 @@ const CardFront = ({
                 color={"secondary"}
               >
                 Balder...
-             
               </Typography>
 
               <Typography
@@ -191,21 +199,21 @@ const CardFront = ({
               </Typography>
             </div>
           ) : null}
-           {defCards ? (
-                    <Button
-                      sx={{ alignSelf: "center" }}
-                      variant="contained"
-                      size="large"
-                      onClick={() => handleChooseWord(def)}
-                    >
-                      {" "}
-                      Choose Definition
-                    </Button>
-                  ) : null}
+
+          {/* CHOOSE DEFINITION BUTTON  only available is card in one of the card players get to choose*/}
+          {defCards ? (
+            <Button
+              sx={{ alignSelf: "center" }}
+              variant="contained"
+              size="large"
+              onClick={() => handleChooseWord(def)}
+            >
+              {" "}
+              Choose Definition
+            </Button>
+          ) : null}
         </Card>
-       
       </Card>
-      
     </div>
   );
 };

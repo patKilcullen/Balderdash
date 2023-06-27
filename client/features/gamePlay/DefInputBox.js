@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 
 import { SocketContext } from "../../app/SocketProvider";
 
-
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 
 const DefInputBox = ({ gameName, userId, playerTurnName }) => {
@@ -13,20 +12,21 @@ const DefInputBox = ({ gameName, userId, playerTurnName }) => {
 
   const inputRef = useRef();
 
+  // Set focus on input box
   useEffect(() => {
     inputRef.current.focus();
   }, []);
 
+  // Sends players fake definition to player whos turn it is through a socket, 
+  // Where it will be added  to array of defs. Thenk clears the definition input box
   const handleEnterFakeDef = (e) => {
     e.preventDefault();
-
     clientSocket.emit("send_player_fake_def", {
       playerDef,
       room: gameName,
       userId,
       playerTurnName,
     });
-
     setSeeInput(false);
     setPlayerDef("");
   };
@@ -48,7 +48,6 @@ const DefInputBox = ({ gameName, userId, playerTurnName }) => {
               onChange={(e) => setPlayerDef(e.target.value)}
             />
           </label>
-
           <input type="submit" value="Submit" />
         </form>
       ) : null}

@@ -1,14 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-/*
-  CONSTANT VARIABLES
-*/
+
 const TOKEN = 'token';
-
-
-
-
 
 // REFRESH => add username argument to thunk and use that to getItem(username)
 export const me = createAsyncThunk('auth/me', async () => {

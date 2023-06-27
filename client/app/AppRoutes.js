@@ -24,18 +24,19 @@ const AppRoutes = () => {
 
   return (
     <div>
+      {/* LOGGED IN ROUTES */}
       {isLoggedIn ? (
         <Routes>
           <Route path="/*" element={<Home />} />
           {/* right not home is basically all games componenet, might want to mkae it home screen */}
           <Route to="/home" element={<Home />} />
           <Route path="/main" element={<Main />} />
-
           <Route path="/games" element={<AllGames />} />
           <Route path="/games/:id" element={<SingleGame />} />
           <Route path="/create-game" element={<CreateGame />} />
         </Routes>
       ) : (
+        // NOt LOGGED IN ROUTES
         <Routes>
           <Route
             path="/*"

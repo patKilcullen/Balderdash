@@ -57,11 +57,11 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
         )
       : null;
     playerTurn ? setPlayerTurnName(playerTurn[0].user.username) : null;
-    // Thought game needed to be in dep array, but seems to be working without
   }, []);
 
-  // GET WORD  first clears defs from last round then gets word from API, sets it in state, then gets the definition throug API
-  // then set that in state for player whose turn it is, and then add it the the definition array with the key "real" to distinguish it from othere
+  // GET WORD:  first clears defs from last round then gets word from API, sets it in state,
+  // then gets the definition throug API then sets that in state for player whose turn it is,
+  // and then add it the the definition array with the key "real" to distinguish it from others
   const handleGetWord = () => {
     setFlip(true);
     dispatch(clearFakeDefs());
@@ -76,8 +76,10 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
     });
   };
 
-  // CHOOSE WORD first gets fake words for fake definition, then emits the word, socket room name (as gamename), and playerTurn(as their username)
-  // to other users/ then starts Timer component by setting state to true and then choseWord to true to hide button/keep user from choosing again
+  // CHOOSE WORD: first gets fake words for fake definition, then emits the word,
+  // socket room name (as gamename), and playerTurn(as their username)
+  // to other users/ then starts Timer component by setting state to true
+  //  and then choseWord to true to hide button/keep user from choosing again
   const handleChooseWord = () => {
     handleGetFakeWords();
     clientSocket.emit("send_word", {
@@ -89,7 +91,8 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
     setChoseWord(true);
   };
 
-  // GET FAKE WORDS   called in handleChooseWord function, clears fake words from last roung, then gets 5 fake words
+  // GET FAKE WORDS   called in handleChooseWord function,
+  // clears fake words from last roung, then gets 5 fake words
   const handleGetFakeWords = () => {
     dispatch(clearFakeWords());
     let count = 0;
@@ -99,17 +102,8 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
     }
   };
 
-  // Player(w/userScore) and plaery who's turn it is joins socket room every time the gameName or playerTurn changes
-  // useEffect(() => {
-  //   userScore || playerTurnName === username
-  //     ? clientSocket.emit("join_room", { room: gameName, userName: username })
-  //     : null;
-  //   // ADDING playTURN BEFORE MAY HAVE SOLVERS PLAYER_TURN_PROBLEM... needs testinging
-  // }, [gameName, playerTurn]);
-
   // This useEffect dependency array ensures sockets dont render on the wrong game for client who
   // belong to(or have visited) other games
-
   useEffect(() => {
     // RECEIVE WORD from socket first, if it isn't players turn, update playerTurnNAme,
     // then, if they're in the right room, add the word to state
@@ -117,29 +111,23 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
       playerTurnName !== username && room === gameName
         ? dispatch(setWordState(word))
         : null;
-      // console.log(
-      //   `RECEIVE WORD: , playerTurnName ${playerTurnName}, username ${username}, gameName ${gameName}, currentGame: ${currentGame.name} room ${room}, word ${word} `
-      // );
-
       playerTurnName !== username ? setPlayerTurnName(playerTurnName) : null;
 
       playerTurnName !== username && room === gameName
         ? setWord(word)
-        : // could this be null? I belive it served a purpose as is but cant recreate it
-
-          setWord("");
+        : setWord("");
 
       playerTurnName !== username && room === gameName ? setFlip(true) : null;
     });
 
-    // RECEIVE START COUNTDOWN players receive this from player turn when thet start Timer countdown
-    // and automatically start Timer contdown on their end
+    // RECEIVE START COUNTDOWN players receive this from player whose turn it is when
+    // that player start Timer countdown then automatically start Timer contdown on their end
     clientSocket.on("receive_start_countdown", (room) => {
       room === gameName ? setTimer(true) : setTimer(false);
     });
 
-    // RECEIVER PLAYERS FAKE DEFINITIONS if players turn, recieve other players fake definitions and add the to fake def array
-    // with key associated with player id so they can later be awarded point
+    // RECEIVER PLAYERS FAKE DEFINITIONS if players turn, recieve other players fake definitions
+    // and add the to fake def array with key associated with player id so they can later be awarded point
     clientSocket.on(
       "receive_player_fake_def",
       ({ playerDef, room, userId, playerTurnName }) => {
@@ -163,17 +151,9 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
         overflow: "visible",
         height: "100vh",
         gap: "10px",
-        
       }}
     >
-      {/* <Card sx={{ boxShadow: "20", border: "2px solid black"}}>
-      <Card   sx={{ 
-    padding: "10px",
-         backgroundColor: "#88ebe6"
-     }} > 
-     <Card id = "header" color="seconday" sx={{ boxShadow: "20", padding: "10px"}}> */}
-
-      <Card className="buttons " sx={{ boxShadow: "none"}}>
+      <Card className="buttons " sx={{ boxShadow: "none" }}>
         {/* GET WORD BUTTON -  only visible if it is players turn*/}
         {game && userScore && game.turn === userScore.turnNum ? (
           <Button
@@ -214,6 +194,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
           style={{ border: "2px solid green" }}
         />
       </Card>
+      {/* CHOOSE WORD BUTON  only avaible if they got word/definition and havent chosen word yet*/}
       {definition && !choseWord ? (
         <Button
           className={"pulse"}

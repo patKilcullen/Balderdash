@@ -3,6 +3,7 @@ import io from 'socket.io-client';
 
 const SocketContext = createContext();
 
+// MAKES SAME SOCKET AVAILABLE THROUGHT APP
 const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
@@ -10,7 +11,7 @@ const SocketProvider = ({ children }) => {
     const newSocket = io("http://localhost:8080");
     setSocket(newSocket);
 
-    // Cleanup socket connection on unmount (optional)
+    // Cleanup socket connection on unmount 
     return () => newSocket.close();
   }, []);
 
