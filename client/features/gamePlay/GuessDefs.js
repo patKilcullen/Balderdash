@@ -208,7 +208,7 @@ const testWord = "Pattycakes"
 
 <div>
 
-
+<div style={{position: "fixed", top: "0", color: "red"}}>Time: {countdown}</div> 
 {/* {guessed === false && defList === true && testDefinitions && testDefinitions.length
       ? testDefinitions */}
     {guessed === false && defList === true && fakeDefs && fakeDefs.length

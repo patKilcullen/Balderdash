@@ -79,7 +79,7 @@ const CardFront = ({
           maxHeight: timer || fullScreen && !hidden? "100vh" : "350px",
           minWidth: timer && !defCards || fullScreen && !defCards && !hidden ? "90%" : defCards ? "85%" : "200px",
           maxWidth: timer && !defCards || fullScreen && !defCards  && !hidden? "90%" : defCards ? "85%": "200px",
-          marginLeft: defCards ? "2%" : null
+          marginLeft: defCards ? "2vw" : null
           
         }}
       >
@@ -91,12 +91,13 @@ const CardFront = ({
             height: hidden ? "100vh" : "95%",
             width: hidden ? "100%" :  "90%",
             borderRadius: !hidden ? "50px" : "null",
+       
             overflow: "scroll",
             display: "flex",
             flexDirection: "column",
             alignContent: "center",
             alignItems: "center",
-            border:  "2px solid black",
+            border: hidden ? "null" :"2px solid black",
             top: hidden ? "0px" : null
           }}
         >
@@ -108,8 +109,9 @@ const CardFront = ({
                 minWidth: "110%",
                 display: "flex",
                 flexDirection: "column",
-                border: hidden ? "3px solid red" : null,
-                top: hidden ? "0px" : null
+             
+                borderTop: hidden ? "0px" : null,
+                position: "relative"
                 
               }}
             >
@@ -171,7 +173,9 @@ const CardFront = ({
               
               {/* TIMER starts Timer component with set time to for player to input
             their own defintion, then sets the timer in the Guess Defs Component */}
+            
               {timer ? (
+                
                 <Timer
                   makeHidden={makeHidden}
                   top={top}
@@ -189,6 +193,7 @@ const CardFront = ({
                   setTimer={setTimer}
                   setChoseWord={setChoseWord}
                 />
+             
               ) : null}
             </div>
           ) : null}
