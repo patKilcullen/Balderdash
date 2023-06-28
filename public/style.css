@@ -308,7 +308,7 @@ border: none;
   transform: rotate(50deg);
   transform-origin: center;
   white-space: nowrap;
-  overflow: hidden;
+  /* overflow: hidden; */
    text-shadow: 5px 5px #558ABB; 
   /* text-shadow: 5px 5px #7d9db7; */
 

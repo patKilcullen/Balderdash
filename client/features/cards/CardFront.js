@@ -35,6 +35,7 @@ const CardFront = ({
     setHidden(!hidden);
   };
 
+  console.log("HIDDEN: ", hidden)
   return (
     // <div id="temp-scorecard">
     <div>
@@ -44,13 +45,13 @@ const CardFront = ({
           flexDirection: "column",
           alignItems: "center",
           backgroundColor:
-            side === "front" && !defCards
+            side === "front" && !defCards && !hidden
               ? "#88ebe6"
-              : side === "front" && defCards
+              : side === "front" && defCards && !hidden
               ? "#88ebe6"
               : "#e6e8dc",
           padding: "1em 1em",
-          borderRadius: "50px",
+          borderRadius: !hidden ? "50px" : "null",
           border: "5px solid black",
           boxShadow: "20",
           fontWeight: "bold",
@@ -64,36 +65,39 @@ const CardFront = ({
 
           // FULL SCREEN CARD DIMENSIONS
           position: timer || (fullScreen && !defCards) ? "fixed" : null,
-          top: timer || fullScreen ? "0" : null,
+          top: timer || fullScreen  ? "0" : null,
           right: timer || fullScreen ? "0" : null,
           bottom: timer || fullScreen ? "0" : null,
           left: timer || fullScreen ? "0" : null,
-          width: defCards === true ? "100vw" : null,
+          
 
           zIndex: defCards === true ? "99999" : null,
 
           //NORMAL CARD DIMENTSIONS
-          height: timer || fullScreen ? "95%" : "88%",
-          minHeight: timer || fullScreen ? "100vh" : "350px",
-          maxHeight: timer || fullScreen ? "100vh" : "350px",
-          minWidth: timer || fullScreen ? "90%" : "200px",
-          maxWidth: timer || fullScreen ? "90%" : "200px",
+          height: timer || fullScreen && !hidden? "95%" : "88%",
+          minHeight: timer || fullScreen && !hidden ? "100vh" : "350px",
+          maxHeight: timer || fullScreen && !hidden? "100vh" : "350px",
+          minWidth: timer && !defCards || fullScreen && !defCards && !hidden ? "90%" : defCards ? "85%" : "200px",
+          maxWidth: timer && !defCards || fullScreen && !defCards  && !hidden? "90%" : defCards ? "85%": "200px",
+          marginLeft: defCards ? "2%" : null
+          
         }}
       >
         {/* CARD BORDER */}
         <Card
           sx={{
             padding: "10px",
-            backgroundColor: side === "front" ? "#e6e8dc" : "#88ebe6",
+            backgroundColor: side === "front"  ? "#e6e8dc" : "#88ebe6",
             height: hidden ? "100vh" : "95%",
-            width: hidden ? "100vw" : "90%",
-            borderRadius: "50px",
+            width: hidden ? "100%" :  "90%",
+            borderRadius: !hidden ? "50px" : "null",
             overflow: "scroll",
             display: "flex",
             flexDirection: "column",
             alignContent: "center",
             alignItems: "center",
-            border: "2px solid black",
+            border:  "2px solid black",
+            top: hidden ? "0px" : null
           }}
         >
           {/* FRONT OF CARD */}
@@ -104,27 +108,32 @@ const CardFront = ({
                 minWidth: "110%",
                 display: "flex",
                 flexDirection: "column",
+                border: hidden ? "3px solid red" : null,
+                top: hidden ? "0px" : null
+                
               }}
             >
+              { !hidden ?
               <Box
                 style={{
-                  visibility: hidden ? "hidden" : "null",
+                   visibility: hidden ? "hidden" : "null",
                   fontSize: "40px",
                   fontWeight: "bold",
                   borderTop: "40px",
-                  marginTop: "-10px",
+                  marginTop:  "-10px",
                   paddingTop: "10px",
                   backgroundColor: "#88ebe6",
                   width: "110%",
                   marginBottom: "10px",
                   paddingBottom: "10px",
-                  height: hidden ? "0%" : "20%",
+                  height: hidden ? "0px" : "20%",
                   display: "flex",
                   justifyContent: "center",
                   borderBottom: "5px solid #571122",
                 }}
               >
                 {/* TOP portion of front of card */}
+                
                 <Typography
                   style={{
                     fontSize: "40px",
@@ -132,14 +141,20 @@ const CardFront = ({
                     textShadow: `3px 3px #558ABB`,
                     alignSelf: " center",
                     textDecoration: "underline",
-                    minHeight: "20%",
+                    minHeight: hidden ? "0px" : "20%",
+                    maxHeight: hidden ? "0px" : null
                   }}
                   color={"secondary"}
                 >
                   {top && !hidden ? top : null}
                 </Typography>
+
+
               </Box>
+              :null}
               {/* BOTTOM portion of front of card */}
+
+              {!hidden ? 
               <Box>
                 <div
                   className="temp-scorecard-messages"
@@ -152,6 +167,8 @@ const CardFront = ({
                   {bottom && !hidden ? <div>{bottom}</div> : null}
                 </div>
               </Box>
+:null}
+              
               {/* TIMER starts Timer component with set time to for player to input
             their own defintion, then sets the timer in the Guess Defs Component */}
               {timer ? (
