@@ -129,6 +129,9 @@ const SingleGame = () => {
     dispatch(editGame({ id: game.id, started: true })).then(() => {
       dispatch(fetchSingleGame(gameId));
     });
+// game.name && username ? 
+   clientSocket.emit("send_start_game", { room: game.name, userName: username })
+// : null
   };
 
   const [tempScoreCard, setTempScoreCard] = useState("");
@@ -138,6 +141,8 @@ const SingleGame = () => {
     setTempScoreCard(tempScoreCardTurn);
   }, [tempScoreCardTurn]);
 
+
+  console.log("GAMMEMEMEMEM: ", game)
   // SHOULD THIS CHECK IF ITS THE RIGHT GAME?????????
   useEffect(() => {
     clientSocket.on(
@@ -148,6 +153,17 @@ const SingleGame = () => {
         setTempScoreCard(tempScoreCardMessages);
       }
     );
+
+    clientSocket.on(
+      "receive_start_game",
+      ({ room, userName }) => {
+     
+        dispatch(fetchSingleGame(gameId))
+  
+      }
+    );
+
+
   }, [clientSocket]);
 
   // console.log("GAME NAME IN SINGL GMAE: ", game.name)

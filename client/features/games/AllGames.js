@@ -37,17 +37,10 @@ const AllGames = () => {
     dispatch(fetchSingleUser(userId));
   }, []);
 
-  // dont know when it's beter to filter???
-  // useEffect(()=>{
-  //   dispatch(fetchAllUserGames(userId))
-  // },[])
-
-  // SOCKET
-  //  as in Main.js,  useEffect (with games in dep array???) to emit games or game, add it to server, then send
-  // and also include useEffect with clientSock in dep arry, receive games, then??? useDispatch(fetchAllGames)??? or just selectGames???
 
   const clientSocket = socket.connect("http://localhost:8080");
 
+  // when games changes, when add new games, send games to socket so other players see new game
   useEffect(() => {
     clientSocket.emit("send_new_game", games);
   }, [games]);
@@ -63,17 +56,7 @@ const AllGames = () => {
         <button>Create a NEW GAME</button>
       </Link>
       <div id="games">
-        {/* <div className="game-sort">
-          <div className="game-sort">All Public Games</div>
-          {user.games && user.games.length
-            ? user.games.map((game) => (
-                <Link to={`/games/${game.id}`}>
-                  {" "}
-                  <div>{game.name}</div>
-                </Link>
-              ))
-            : null}
-        </div> */}
+     
         
         <div className="game-sort">
           <div className="game-sort">All Public Games</div>

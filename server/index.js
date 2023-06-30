@@ -42,6 +42,14 @@ const init = async () => {
         socket.broadcast.emit("receive_new_game", data);
       });
 
+      socket.on("send_start_game", ({room, userName}) => {
+        
+        socket.to(room).emit("receive_start_game", {room, userName});
+      });
+
+
+
+
       socket.on("send_word", ({ word, room, playerTurnName }) => {
         console.log("SEND WORD: ", word, room, playerTurnName)
         socket.to(room).emit("receive_word", { word, room, playerTurnName });

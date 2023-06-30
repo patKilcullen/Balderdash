@@ -14,22 +14,17 @@ const ScoreCard = ({
   handleDeclineRequest,
   handleAcceptRequest,
 }) => {
-  // const userId = useSelector((state) => state.auth.me.id);
-  // const userScore = scores.find((score) => score.userId === userId);
-  const scores = useSelector(selectAllScores);
-  // const game = useSelector(selectSingleGame);
 
-  // console.log("userId, userScore, game, SCORECARD: ", userId, userScore, game,)
+  const scores = useSelector(selectAllScores);
 
   return (
     <Card sx={{ boxShadow: "20", border: "2px solid black" }}>
       <Card
         sx={{
           padding: "10px",
-          // color: "black",
+  
           backgroundColor: "#88ebe6",
-          // backgroundColor: "#e6e8dc",
-          // backgroundColor: "#558ABB"
+
         }}
       >
         {/* <Card id="scores-card"> */}
@@ -71,7 +66,7 @@ const ScoreCard = ({
             <Typography
               id="title"
               color="secondary"
-              sx={{ fontWeight: "bold" }}
+              sx={{ fontWeight: "bold", overflow: "scroll" }}
             >
               {game.name}
             </Typography>
