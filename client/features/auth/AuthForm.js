@@ -35,7 +35,7 @@ const AuthForm = ({ name, displayName }) => {
 const [selectedForm, setSelectedForm] = useState("login")
 const [userName, setUserName] = useState("")
 const [password, setPassword] = useState("")
-const [selectedValue, setSelectedValue] = useState('')
+
 console.log("password: ", password)
 
 const handleSelectForm = (evt) =>{
@@ -53,6 +53,7 @@ console.log("HANDEL SUB<IT, ", selectedForm, userName, password)
     //  const password = evt.target.password.value;
  
     // dispatch(authenticate({ username, password, method: formName }));
+    dispatch(authenticate({ username: userName, password: password, method: selectedForm }));
   };
 
   return (
@@ -79,6 +80,11 @@ console.log("HANDEL SUB<IT, ", selectedForm, userName, password)
           fontWeight: "bold",
         }}
       >
+
+        <Box style={{display: "flex", justifyContent: "space-between", gap: "30px", fontSize: "20px"}}>
+<Typography onClick={()=>setSelectedForm("login")}color={selectedForm === "login" ? "secondary" : "grey"} style={{ fontSize: "20px", fontWeight: selectedForm === "login" ? "bold" : "null", textDecoration: selectedForm === "login" ? "underline" : "null"}}>Login In</Typography>
+<Typography  onClick={()=>setSelectedForm("signup")} color={selectedForm === "signup" ? "secondary" : "grey"}style={{ fontSize: "20px", fontWeight: selectedForm === "signup" ? "bold" : "null", textDecoration: selectedForm === "signup" ? "underline" : "null"}}>Sign Up</Typography>
+        </Box>
         
         <Typography
           color="secondary"
@@ -160,11 +166,8 @@ console.log("HANDEL SUB<IT, ", selectedForm, userName, password)
             // value={rounds}
             // onChange={(e) => setRounds(parseInt(e.target.value))}
           />
-          <select value={selectedForm} onChange={handleSelectForm} style={{}}>
-         <option  value={"login"} >Log In</option>
-          <option  value={"signup"}>Sign Up</option>
-          </select>
-
+        
+          
           <Button
             type="submit"
             fullWidth
@@ -190,7 +193,7 @@ console.log("HANDEL SUB<IT, ", selectedForm, userName, password)
              {selectedForm === "login" ? "Log In" : "Sign Up"}
             </Typography>
           </Button>
-          
+        
         </Box>
         {/* </Card> */}
         {error ? <div style={{ color: "red" }}>{error}</div> : null}
