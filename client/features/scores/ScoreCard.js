@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useSelector } from "react-redux";
 import { selectAllScores } from "./scoresSlice";
 import { selectSingleGame } from "../games/singleGameSlice";
 
 import { Card, Button, Typography, Divider, Box } from "@mui/material";
+
+
+import { SocketContext } from "../../app/SocketProvider";
 
 const ScoreCard = ({
   userId,
@@ -14,9 +17,11 @@ const ScoreCard = ({
   handleDeclineRequest,
   handleAcceptRequest,
 }) => {
+  const clientSocket = useContext(SocketContext);
 
   const scores = useSelector(selectAllScores);
 
+ 
   return (
     <Card sx={{ boxShadow: "20", border: "2px solid black" }}>
       <Card

@@ -89,6 +89,7 @@ const SingleGame = () => {
   const handleAcceptRequest = (id) => {
     dispatch(editGame({ id: game.id, numPlayers: game.numPlayers + 1 }))
       .then((res) => {
+        
         dispatch(
           editScore({
             userId: id,
@@ -101,7 +102,9 @@ const SingleGame = () => {
       .then(() => {
         dispatch(fetchSingleGame(gameId));
         dispatch(fetchAllGameScores(gameId));
-      });
+      })
+     
+
   };
   // DECLINE REQUEST TO PLAY
   const handleDeclineRequest = (id) => {
@@ -122,7 +125,10 @@ const SingleGame = () => {
         userId: userId,
       })
     );
+    clientSocket.emit("send_ask_to_join", { room: game.name, userName: username })
   };
+
+
 
   // START GAME
   const handleStartGame = () => {
@@ -142,7 +148,7 @@ const SingleGame = () => {
   }, [tempScoreCardTurn]);
 
 
-  console.log("GAMMEMEMEMEM: ", game)
+
   // SHOULD THIS CHECK IF ITS THE RIGHT GAME?????????
   useEffect(() => {
     clientSocket.on(
@@ -154,19 +160,19 @@ const SingleGame = () => {
       }
     );
 
-    clientSocket.on(
-      "receive_start_game",
-      ({ room, userName }) => {
-     
-        dispatch(fetchSingleGame(gameId))
+    // clientSocket.on(
+    //   "receive_start_game",
+    //   ({ room, userName }) => {
+ 
+    //     dispatch(fetchSingleGame(gameId))
   
-      }
-    );
+    //   }
+    // );
 
 
   }, [clientSocket]);
 
-  // console.log("GAME NAME IN SINGL GMAE: ", game.name)
+ 
   // USER LEAVES SOCKET ROOM WHEN SINGLe GAME UNMOUNTS
   useEffect(() => {
     userScore
@@ -180,7 +186,18 @@ const SingleGame = () => {
     };
   }, [game]);
 
- 
+
+
+
+  
+  clientSocket.on("recieve_ask_to_join", ({room, userName}) => {
+
+    console.log("HERE DUDE: ", room, game.name)
+   room === game.name ?
+    dispatch(fetchAllGameScores(gameId))
+    : null
+  });
+
 
   return (
     <Card >

@@ -48,6 +48,8 @@ const AllGames = () => {
   clientSocket.on("receive_new_game", (data) => {
     setGamesX(data);
   });
+
+ console.log("THIS IS THE ALL GAMES COMPONENNTTTTTTTt")
   return (
     <div>
       

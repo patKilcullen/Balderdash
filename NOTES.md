@@ -24,6 +24,11 @@ POSSIBLY SOLVED IT by addind playerTurn to dependency array of useEffect for joi
 NOWWWWWW add to scores function not working.  one gets multiple points... possibly beacuse of socket???? or logic doubled somewhere possible thunk or route
 
 LAST UPDATE:
+
+Send start and and receive strt game in SingleGame,  starts game on other player socket when creator of game starts game, but other players have to refresh first, so start working on doing something when game creator accepts player,,, deleted most of it, but maybe just a page reload would suffice
+
+
+
 doubled the card, the once on the bottom is all in the CardFront Component
 NEXT maye b get the definition to be big like the temp score card
 

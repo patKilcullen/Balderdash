@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { authenticate } from '../../app/store';
 
@@ -11,18 +11,32 @@ import { authenticate } from '../../app/store';
 const AuthForm = ({ name, displayName }) => {
   const { error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+const [selectedForm, setSelectedForm] = useState("login")
+console.log("SELECTED FROM: ", selectedForm)
+
+const handleSelectForm = (evt) =>{
+  evt.preventDefault();
+  setSelectedForm(evt.target.value)
+}
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    const formName = evt.target.name;
+
+
+    const formName = selectedForm;
+    console.log("FORM NAME:: ", formName)
     const username = evt.target.username.value;
     const password = evt.target.password.value;
-    dispatch(authenticate({ username, password, method: formName }));
+    // dispatch(authenticate({ username, password, method: formName }));
   };
 
   return (
     <div style={{  overflow: "visible", height: "100vh"}}>
       <form onSubmit={handleSubmit} name={name}>
+      <select value={selectedForm} onChange={handleSelectForm}>
+          <option  value={"login"} >Log In</option>
+          <option  value={"signup"}>Sign Up</option>
+          </select>
         <div>
           <label htmlFor="username">
             <small>Username</small>
@@ -35,8 +49,10 @@ const AuthForm = ({ name, displayName }) => {
           </label>
           <input name="password" type="password" />
         </div>
+        
         <div>
-          <button type="submit">{displayName}</button>
+        
+          <button type="submit">{selectedForm === "login" ? "Log In" : "Sign Up"}</button>
         </div>
         {error && <div> {error} </div>}
       </form>
