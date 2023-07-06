@@ -21,7 +21,7 @@ import Navbar from '../navbar/Navbar';
 
 
 
-import {Button, Box,Typography ,Container, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import {Button, Box,Typography ,Container, Card, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 /**
   The AuthForm component can be used for Login or Sign Up.
   Props for Login: name="login", displayName="Login"
@@ -65,10 +65,57 @@ console.log("HANDEL SUB<IT, ", selectedForm, userName, password)
       maxWidth="sm"
       sx={{ height: "100vh" }}
     ><Navbar/>
+
+{/* <Card
+          sx={{
+            padding: "10px",
+            backgroundColor: "#e6e8dc", 
+            height: "95%",
+            width: "90%",
+            // borderRadius: !hidden ? "50px" : "null",
+       
+            overflow: "scroll",
+            display: "flex",
+            flexDirection: "column",
+            alignContent: "center",
+            alignItems: "center",
+            border: "2px solid black",
+     
+          }}
+        >
+          
+         
+            <div
+              style={{
+                minHeight: "600px",
+                minWidth: "110%",
+                display: "flex",
+                flexDirection: "column",
+             
+                position: "relative"
+                
+              }}
+            > */}
+
+
       <Box
         sx={{
           marginTop: 3,
           marginBottom: 3,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          backgroundColor: "#88ebe6",
+          padding: "1em 1em",
+          borderRadius: "50px",
+          border: "5px solid black",
+          boxShadow: "20",
+          fontWeight: "bold",
+        }}
+      >
+        <Box
+        sx={{
+        
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -78,8 +125,10 @@ console.log("HANDEL SUB<IT, ", selectedForm, userName, password)
           border: "5px solid black",
           boxShadow: "20",
           fontWeight: "bold",
+          height: "100%"
         }}
       >
+   
 
         <Box style={{display: "flex", justifyContent: "space-between", gap: "30px", fontSize: "20px"}}>
 <Typography onClick={()=>setSelectedForm("login")}color={selectedForm === "login" ? "secondary" : "grey"} style={{ fontSize: "20px", fontWeight: selectedForm === "login" ? "bold" : "null", textDecoration: selectedForm === "login" ? "underline" : "null"}}>Login In</Typography>
@@ -196,8 +245,12 @@ console.log("HANDEL SUB<IT, ", selectedForm, userName, password)
         
         </Box>
         {/* </Card> */}
+     
         {error ? <div style={{ color: "red" }}>{error}</div> : null}
       </Box>
+      </Box>
+      {/* </div>
+      </Card> */}
       <Button type="button" color='secondary' sx={{textDecoration: "underline", fontWeight: "bold"}} onClick={()=> navigate('/home')}>Home</Button>
       <Typography>{error && <div> {error} </div>}</Typography>
     </Container>
