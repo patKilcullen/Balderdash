@@ -96,7 +96,7 @@ const CreateGame = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          backgroundColor: "#e6e8dc",
+          backgroundColor: "#88ebe6",
           padding: "1em 1em",
           borderRadius: "50px",
           border: "5px solid black",
@@ -104,6 +104,20 @@ const CreateGame = () => {
           fontWeight: "bold",
         }}
       >
+         <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              backgroundColor: "#e6e8dc",
+              padding: "1em 1em",
+              borderRadius: "50px",
+              border: "5px solid black",
+              boxShadow: "20",
+              fontWeight: "bold",
+              height: "100%",
+            }}
+          >
         
         <Typography
           color="secondary"
@@ -204,6 +218,7 @@ const CreateGame = () => {
         </Box>
         {/* </Card> */}
         {error ? <div style={{ color: "red" }}>{error}</div> : null}
+      </Box>
       </Box>
       <Button type="button" color='secondary' sx={{textDecoration: "underline", fontWeight: "bold"}} onClick={()=> navigate('/home')}>Home</Button>
     </Container>
