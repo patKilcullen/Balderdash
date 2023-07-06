@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { authenticate } from '../../app/store';
+import Navbar from '../navbar/Navbar';
 
 /**
   The AuthForm component can be used for Login or Sign Up.
@@ -24,14 +25,15 @@ const handleSelectForm = (evt) =>{
 
 
     const formName = selectedForm;
-    console.log("FORM NAME:: ", formName)
+
     const username = evt.target.username.value;
     const password = evt.target.password.value;
-    // dispatch(authenticate({ username, password, method: formName }));
+    dispatch(authenticate({ username, password, method: formName }));
   };
 
   return (
     <div style={{  overflow: "visible", height: "100vh"}}>
+      <Navbar/>
       <form onSubmit={handleSubmit} name={name}>
       <select value={selectedForm} onChange={handleSelectForm}>
           <option  value={"login"} >Log In</option>
