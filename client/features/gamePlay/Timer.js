@@ -43,7 +43,7 @@ const Timer = ({ makeHidden, game, username, userId, userScore, gameName, gameId
       else if(countdown === 0){
         handleGetFakeDefinitions()
 setPlayGame(true)
-
+setDefInput(false)
       }
       else{
         setDefInput(false)

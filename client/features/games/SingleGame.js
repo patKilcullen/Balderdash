@@ -185,6 +185,9 @@ console.log("GAME: ", game.name)
     userScore
       ? clientSocket.emit("join_room", { room: game.name, userName: username })
       : null;
+// DO NOT DELETE YET>>> may neeed to disconnect at somepoint, but it curreny causes issues, 
+// maybe because it changes everytime game changes?
+
     // return () => {
     //   // Leave the room
     //   clientSocket.emit("leave_room", { room: game.name });
@@ -192,6 +195,8 @@ console.log("GAME: ", game.name)
     //   // clientSocket.disconnect();
     // };
   }, [game]);
+
+  
 
 
 

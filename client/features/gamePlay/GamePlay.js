@@ -103,7 +103,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
     }
   };
 
-  // This useEffect dependency array ensures sockets dont render on the wrong game for client who
+  // This useEffect dependency(including "game") array ensures sockets dont render on the wrong game for client who
   // belong to(or have visited) other games
   useEffect(() => {
     // RECEIVE WORD from socket first, if it isn't players turn, update playerTurnNAme,
