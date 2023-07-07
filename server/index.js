@@ -42,9 +42,9 @@ const init = async () => {
         socket.broadcast.emit("receive_new_game", data);
       });
 
-      socket.on("send_ask_to_join", (data) => {
-console.log("SEND ASK TO JOIN:   ", data)
-        // socket.to(room).emit("recieve_ask_to_join", room);
+      socket.on("send_ask_to_join", ({room, userName}) => {
+console.log("SEND ASK TO JOIN:   ", room)
+       socket.to(room).emit("recieve_ask_to_join", room);
       });
 
 

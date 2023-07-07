@@ -50,7 +50,7 @@ const SingleGame = () => {
   const userScore = scores.find((score) => score.userId === userId);
 
 
-
+console.log("GAME: ", game.name)
 
   // Could use res of fetchSingleGame to get scores through eager loading and set them
   // to state instead of fetchAllGameScores and score = useSelector(selectAllScores)
@@ -168,9 +168,16 @@ const SingleGame = () => {
   
     //   }
     // );
+    clientSocket.on("recieve_ask_to_join", (room) => {
+
+      console.log("HERE DUDE: ", room, game.name)
+     room === game.name ?
+      dispatch(fetchAllGameScores(gameId))
+      : null
+    });
 
 
-  }, [clientSocket]);
+  }, [clientSocket, game]);
 
  
   // USER LEAVES SOCKET ROOM WHEN SINGLe GAME UNMOUNTS
@@ -190,13 +197,7 @@ const SingleGame = () => {
 
 
   
-  clientSocket.on("recieve_ask_to_join", ({room, userName}) => {
-
-    console.log("HERE DUDE: ", room, game.name)
-   room === game.name ?
-    dispatch(fetchAllGameScores(gameId))
-    : null
-  });
+  
 
 
   return (

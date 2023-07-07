@@ -29,7 +29,7 @@ const AuthForm = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
-  console.log("password: ", password);
+  console.log("selected form : ", selectedForm);
 
   const handleSelectForm = (evt) => {
     evt.preventDefault();
@@ -99,9 +99,9 @@ const AuthForm = () => {
                 color={selectedForm === "login" ? "secondary" : "grey"}
                 style={{
                   fontSize: "20px",
-                  fontWeight: selectedForm === "login" ? "bold" : "null",
+                  fontWeight: selectedForm === "login" ? "bold" : "none",
                   textDecoration:
-                    selectedForm === "login" ? "underline" : "null",
+                    selectedForm === "login" ? "underline" : "none",
                 }}
               >
                 Login In
@@ -111,9 +111,9 @@ const AuthForm = () => {
                 color={selectedForm === "signup" ? "secondary" : "grey"}
                 style={{
                   fontSize: "20px",
-                  fontWeight: selectedForm === "signup" ? "bold" : "null",
+                  fontWeight: selectedForm === "signup" ? "bold" : "none",
                   textDecoration:
-                    selectedForm === "signup" ? "underline" : "null",
+                    selectedForm === "signup" ? "underline" : "none",
                 }}
               >
                 Sign Up
