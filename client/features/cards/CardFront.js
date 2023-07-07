@@ -60,9 +60,9 @@ setTempBack(true)
           flexDirection: "column",
           alignItems: "center",
           backgroundColor:
-            sideState === "front" && !defCards && !hidden
+            sideState === "front" && !defCards && !hidden && !tempBack
               ? "#88ebe6"
-              : sideState === "front" && defCards && !hidden
+              : sideState === "front" && defCards && !hidden && !tempBack
               ? "#88ebe6"
               : "#e6e8dc",
           padding: "1em 1em",
@@ -110,7 +110,7 @@ setTempBack(true)
         <Card
           sx={{
             padding: "10px",
-            backgroundColor: sideState === "front" ? "#e6e8dc" : "#88ebe6",
+            backgroundColor: sideState === "front" && !tempBack? "#e6e8dc" : "#88ebe6",
             height: hidden ? "100vh" : "95%",
             width: hidden ? "100%" : "90%",
             borderRadius: !hidden ? "50px" : "null",
@@ -142,7 +142,7 @@ setTempBack(true)
               {!hidden ? (
                 <Box
                   style={{
-                    visibility: hidden ? "hidden" : "null",
+                    visibility: hidden || tempBack ? "hidden" : "null",
                     fontSize: "40px",
                     fontWeight: "bold",
                     borderTop: "40px",
@@ -169,10 +169,14 @@ setTempBack(true)
                       textDecoration: "underline",
                       minHeight: hidden ? "0px" : "20%",
                       maxHeight: hidden ? "0px" : null,
+                      // display: tempBack ? "none" : null,
+                     
+                      // backgroundColor: tempBack ? "red" : null,
+                     
                     }}
                     color={"secondary"}
                   >
-                    {top && !hidden ? top : null}
+                    {top && !hidden && ! tempBack? top : null}
                   </Typography>
                 </Box>
               ) : null}
@@ -249,14 +253,14 @@ setTempBack(true)
 :null} */}
 
           {/* BACK OF CARD*/}
-          {sideState === "back" ? (
+          {sideState === "back" || tempBack ? (
             <div
               className="card-logo"
-              style={{ display: "flew", flexDirection: "column" }}
+              style={{ display: "flew", flexDirection: "column", position: sideState !== "back" ? "fixed" : "null", marginTop: sideState !== "back" ? "-5%" : "null"  }}
             >
               <Typography
                 className="card-logo-text"
-                style={{ fontSize: "65px", fontWeight: "bold" }}
+                style={{ fontSize: "65px", fontWeight: "bold", }}
                 color={"secondary"}
               >
                 Balder...
@@ -272,7 +276,13 @@ setTempBack(true)
             </div>
           ) : null}
 
-           {tempBack === true ? (
+
+
+
+
+
+
+           {tempBack === "red" ? (
             // <div
             //   className="card-logo"
             //   style={{ display: "flew", flexDirection: "column", zIndex: "99999999999", position: "fixed", top: "0", left: "0" }}
