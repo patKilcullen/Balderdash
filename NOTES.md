@@ -14,6 +14,15 @@ ACCEPT PLAYER TO game doesnt automatically clear it from page every time...maybe
 
 
 
+VERY IMPORTTANT
+removed  
+ return () => {
+      // Leave the room
+      clientSocket.emit("leave_room", { room: game.name });
+      // Disconnect the socket
+      // clientSocket.disconnect();
+    };
+from SingleGame join_room  because it was interefering with socket update of start game(other play was leaving). But then issue with card flipping when on wrong game page..  So... added "game" to dependency array of useEffect(w/receive_word, etc..) in GamePlay.  Now all seems to work.
 
 
 IMPORTANT: 

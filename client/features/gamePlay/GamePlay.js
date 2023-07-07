@@ -118,7 +118,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
         ? setWord(word)
         : setWord("");
 
-      playerTurnName !== username && room === gameName ? setFlip(true) : null;
+      playerTurnName !== username && room === gameName ? setFlip(true) : setFlip(false);
     });
 
     // RECEIVE START COUNTDOWN players receive this from player whose turn it is when
@@ -138,7 +138,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
           : console.log("ERROR: Failed to add player definition");
       }
     );
-  }, [clientSocket]);
+  }, [clientSocket, game]);
 
   const [flip, setFlip] = useState(false);
 

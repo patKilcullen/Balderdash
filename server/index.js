@@ -43,13 +43,13 @@ const init = async () => {
       });
 
       socket.on("send_ask_to_join", ({room, userName}) => {
-console.log("SEND ASK TO JOIN:   ", room)
+
        socket.to(room).emit("recieve_ask_to_join", room);
       });
 
 
       socket.on("send_start_game", ({room, userName}) => {
-        
+        console.log("SEND START GAME: ", room, userName)
         socket.to(room).emit("receive_start_game", {room, userName});
       });
     

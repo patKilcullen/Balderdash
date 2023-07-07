@@ -177,7 +177,7 @@ console.log("GAME: ", game.name)
     });
 
 
-  }, [clientSocket, game]);
+  }, [clientSocket, game, gameId]);
 
  
   // USER LEAVES SOCKET ROOM WHEN SINGLe GAME UNMOUNTS
@@ -185,12 +185,12 @@ console.log("GAME: ", game.name)
     userScore
       ? clientSocket.emit("join_room", { room: game.name, userName: username })
       : null;
-    return () => {
-      // Leave the room
-      clientSocket.emit("leave_room", { room: game.name });
-      // Disconnect the socket
-      // clientSocket.disconnect();
-    };
+    // return () => {
+    //   // Leave the room
+    //   clientSocket.emit("leave_room", { room: game.name });
+    //   // Disconnect the socket
+    //   // clientSocket.disconnect();
+    // };
   }, [game]);
 
 
