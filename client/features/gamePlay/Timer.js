@@ -8,7 +8,7 @@ import { selectFakeWords, getFakeDefinitions, selectFakeDefinitions } from './ga
 
 
 
-const Timer = ({ makeHidden, game, username, userId, userScore, gameName, gameId, playerTurnName,  reloadScores, setDefinition, setWord, setTimer, setChoseWord}) => {
+const Timer = ({setTempBack, showBackOfCard, makeHidden, game, username, userId, userScore, gameName, gameId, playerTurnName,  reloadScores, setDefinition, setWord, setTimer, setChoseWord}) => {
   const [countdown, setCountdown] = useState(5)  
   const [defInput, setDefInput] = useState(false)
   const [playGame, setPlayGame] = useState(false)
@@ -44,6 +44,8 @@ const Timer = ({ makeHidden, game, username, userId, userScore, gameName, gameId
         handleGetFakeDefinitions()
 setPlayGame(true)
 setDefInput(false)
+showBackOfCard("front", "test")
+setTempBack(false)
       }
       else{
         setDefInput(false)
@@ -60,6 +62,7 @@ setDefInput(false)
 // When then page mounts on playerTurn, it send socket to all others in game to mount on their end
   useEffect(()=>{
     clientSocket.emit("start_countdown", {gameName})
+    console.log("COUNTDOW STARRED")
       },[])
 
 
@@ -77,8 +80,8 @@ makeHidden()
     <div style={{overflow: "auto"}}>
   <div style={{position: "fixed", bottom: "8vh", left: "40vw", color: "red"}}>Time: {countdown}</div> 
  {/* { defInput && !userScore.turn ?<DefInputBox gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null} */}
- { defInput && userScore.turnNum !== game.turn ?<DefInputBox game={game} gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null}
- {playGame ? <GuessDefs makeHidden={makeHidden} guessDefs={true} top={top}game={game} username={username} userScore={userScore}fakeDefinitions={fakeDefinitions} gameName={gameName} gameId={gameId} playerTurnName={playerTurnName} userId={userId} Name={playerTurnName} reloadScores={reloadScores} setDefinition={setDefinition} setWord={setWord} setTimer={setTimer} setPlayGame={setPlayGame} setChoseWord={setChoseWord}/>: null}
+ { defInput && userScore.turnNum !== game.turn ?<DefInputBox  showBackOfCard={showBackOfCard} game={game} gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null}
+ {playGame ? <GuessDefs showBackOfCard={showBackOfCard} makeHidden={makeHidden} guessDefs={true} top={top}game={game} username={username} userScore={userScore}fakeDefinitions={fakeDefinitions} gameName={gameName} gameId={gameId} playerTurnName={playerTurnName} userId={userId} Name={playerTurnName} reloadScores={reloadScores} setDefinition={setDefinition} setWord={setWord} setTimer={setTimer} setPlayGame={setPlayGame} setChoseWord={setChoseWord}/>: null}
   </div>
 )};
 

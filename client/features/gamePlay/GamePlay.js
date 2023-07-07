@@ -44,6 +44,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
   const [choseWord, setChoseWord] = useState(false);
   const [playerTurn, setPlayerTurn] = useState("");
   const [playerTurnName, setPlayerTurnName] = useState("");
+  const [flip, setFlip] = useState(false);
 
   // SOCKET
   const clientSocket = useContext(SocketContext);
@@ -140,7 +141,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
     );
   }, [clientSocket, game]);
 
-  const [flip, setFlip] = useState(false);
+  
 
   return (
     <Card

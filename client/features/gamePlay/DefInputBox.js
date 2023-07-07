@@ -4,7 +4,7 @@ import { SocketContext } from "../../app/SocketProvider";
 
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 
-const DefInputBox = ({ gameName, userId, playerTurnName }) => {
+const DefInputBox = ({showBackOfCard, makeHidden, gameName, userId, playerTurnName }) => {
   const [playerDef, setPlayerDef] = useState("");
   const [seeInput, setSeeInput] = useState(true);
 
@@ -21,6 +21,7 @@ const DefInputBox = ({ gameName, userId, playerTurnName }) => {
   // Where it will be added  to array of defs. Thenk clears the definition input box
   const handleEnterFakeDef = (e) => {
     e.preventDefault();
+  
     clientSocket.emit("send_player_fake_def", {
       playerDef,
       room: gameName,
@@ -29,6 +30,7 @@ const DefInputBox = ({ gameName, userId, playerTurnName }) => {
     });
     setSeeInput(false);
     setPlayerDef("");
+    showBackOfCard("back")
   };
 
   return (

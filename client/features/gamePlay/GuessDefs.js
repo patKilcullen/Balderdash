@@ -25,6 +25,7 @@ import TempScoreCard from "../scores/TempScoreCard";
 import CardFront from "../cards/CardFront";
 
 const GuessDefs = ({
+  showBackOfCard,
   makeHidden,
   top,
   game,
@@ -60,6 +61,10 @@ const word = useSelector(selectWord)
   const tempScoreCardMessages = useSelector(selectTempScoreCardMessages);
 
   const [countdown, setCountdown] = useState(18);
+  useEffect(()=>{
+    showBackOfCard("front")
+    console.log("MOTHER FUCK")
+  },[])
   useEffect(() => {
     const timer = setTimeout(async () => {
       if (countdown > 0) {
