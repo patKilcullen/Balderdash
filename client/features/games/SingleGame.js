@@ -160,14 +160,14 @@ console.log("GAME: ", game.name)
       }
     );
 
-    // clientSocket.on(
-    //   "receive_start_game",
-    //   ({ room, userName }) => {
+    clientSocket.on(
+      "receive_start_game",
+      ({ room, userName }) => {
  
-    //     dispatch(fetchSingleGame(gameId))
+        dispatch(fetchSingleGame(gameId))
   
-    //   }
-    // );
+      }
+    );
     clientSocket.on("recieve_ask_to_join", (room) => {
 
       console.log("HERE DUDE: ", room, game.name)
