@@ -218,10 +218,10 @@ setTempBack(true)
                       minHeight: defCards ? "600px" : null,
                       visibility: hidden ? "hidden" : "null",
                       height: hidden ? "0" : "null",
-                      
+                
                     }}
                   >
-                    {bottom && !hidden ? <div>{bottom}</div> : null}
+                    {bottom && !hidden ? <div style={{paddingLeft: "10%", width: "90%"}}>{bottom}</div> : null}
                   </div>
                 </Box>
               ) : null}
