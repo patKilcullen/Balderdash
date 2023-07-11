@@ -6,6 +6,10 @@ The main page would get all the games that are either open(not started) or the h
 
 PROBLEMS: 
 
+When new user is first created, then they join a game, when the game starts they dont get it thruogh the socke5IS??? by putting useScore in join_room useEffect dependency array
+
+when choose def and card flips over, right side of card is cut off
+
 CHECK: when first couple of games are created, the gmaes are listed more thatn once.... sometimes...
 DECLINE DOESNT ALWAYS REFRESH CORRECTLY
 ACCEPT PLAYER TO game doesnt automatically clear it from page every time...maybe first time..

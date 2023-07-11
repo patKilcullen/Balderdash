@@ -194,7 +194,7 @@ console.log("GAME: ", game.name)
     //   // Disconnect the socket
     //   // clientSocket.disconnect();
     // };
-  }, [game]);
+  }, [game, userScore]);
 
   
 
