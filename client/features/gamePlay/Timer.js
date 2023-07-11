@@ -77,12 +77,21 @@ makeHidden()
 
   return (
     // <div style={{position: "realtive", display: playGame ? "hidden" : null, border: "4px solid green"}}>
-    <div style={{overflow: "auto"}}>
+    <div style={{overflow: "auto", border: "6px solid yellow"}}>
   <div style={{position: "fixed", bottom: "8vh", left: "40vw", color: "red"}}>Time: {countdown}</div> 
  {/* { defInput && !userScore.turn ?<DefInputBox gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null} */}
  { defInput && userScore.turnNum !== game.turn ?<DefInputBox  showBackOfCard={showBackOfCard} game={game} gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null}
  {playGame ? <GuessDefs showBackOfCard={showBackOfCard} makeHidden={makeHidden} guessDefs={true} top={top}game={game} username={username} userScore={userScore}fakeDefinitions={fakeDefinitions} gameName={gameName} gameId={gameId} playerTurnName={playerTurnName} userId={userId} Name={playerTurnName} reloadScores={reloadScores} setDefinition={setDefinition} setWord={setWord} setTimer={setTimer} setPlayGame={setPlayGame} setChoseWord={setChoseWord}/>: null}
   </div>
+
+
+// <div style={{backgroundColot: "red"}}>
+// <div>{ defInput && userScore.turnNum !== game.turn ?<DefInputBox  showBackOfCard={showBackOfCard} game={game} gameName={gameName} userId={userId} playerTurnName={playerTurnName}/>: null}
+// </div>
+// <div>
+// {playGame ? <GuessDefs showBackOfCard={showBackOfCard} makeHidden={makeHidden} guessDefs={true} top={top}game={game} username={username} userScore={userScore}fakeDefinitions={fakeDefinitions} gameName={gameName} gameId={gameId} playerTurnName={playerTurnName} userId={userId} Name={playerTurnName} reloadScores={reloadScores} setDefinition={setDefinition} setWord={setWord} setTimer={setTimer} setPlayGame={setPlayGame} setChoseWord={setChoseWord}/>: null}
+// </div>
+// </div>
 )};
 
 export default Timer;

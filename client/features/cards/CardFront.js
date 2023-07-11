@@ -59,6 +59,7 @@ setTempBack(true)
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+      
           backgroundColor:
             sideState === "front" && !defCards && !hidden && !tempBack
               ? "#88ebe6"
@@ -85,25 +86,50 @@ setTempBack(true)
           bottom: timer || fullScreen ? "0" : null,
           left: timer || fullScreen ? "0" : null,
 
-          zIndex: defCards === true ? "99999" : null,
+          // zIndex: defCards === true ? "99999" : null,
 
           //NORMAL CARD DIMENTSIONS
-          height: timer || (fullScreen && !hidden) ? "95%" : "88%",
-          minHeight: timer || (fullScreen && !hidden) ? "100vh" : "350px",
-          maxHeight: timer || (fullScreen && !hidden) ? "100vh" : "350px",
-          minWidth:
-            (timer && !defCards) || (fullScreen && !defCards && !hidden)
-              ? "90%"
-              : defCards
-              ? "85%"
-              : "200px",
-          maxWidth:
-            (timer && !defCards) || (fullScreen && !defCards && !hidden)
-              ? "90%"
-              : defCards
-              ? "85%"
-              : "200px",
-          marginLeft: defCards ? "2vw" : null,
+          // height: timer || (fullScreen && !hidden) ? "95%" : "88%",
+          // minHeight: timer || (fullScreen && !hidden) ? "100vh" : "350px",
+          // maxHeight: timer || (fullScreen && !hidden) ? "100vh" : "350px",
+
+          height: timer || (fullScreen && !hidden) ? "100vh" : "350px",
+
+          
+          // width:
+          // (timer && !defCards) || (fullScreen && !defCards && !hidden)
+          //   ? "90%"
+          //   : defCards
+          //   ? "85%"
+          //   : "200px",
+          width:
+          (timer && !defCards) || (fullScreen && !defCards)
+            ? "90%"
+            : defCards
+            ? "85%"
+            : "200px",
+   
+         
+          // minWidth:
+          //   (timer && !defCards) || (fullScreen && !defCards && !hidden)
+          //     ? "90%"
+          //     : defCards
+          //     ? "85%"
+          //     : "200px",
+          // maxWidth:
+          //   (timer && !defCards) || (fullScreen && !defCards && !hidden)
+          //     ? "90%"
+          //     : defCards
+          //     ? "85%" 
+          //     : "200px",
+      
+          marginLeft:(timer && !defCards) || (fullScreen && !defCards)
+          ? "-1vw"
+          // all ampped definition cards
+          : defCards
+          ? "2vw"
+          // main unflpeed card, keep at 0
+          : "0",
         }}
       >
         {/* CARD BORDER */}
@@ -192,6 +218,7 @@ setTempBack(true)
                       minHeight: defCards ? "600px" : null,
                       visibility: hidden ? "hidden" : "null",
                       height: hidden ? "0" : "null",
+                      
                     }}
                   >
                     {bottom && !hidden ? <div>{bottom}</div> : null}

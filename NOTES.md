@@ -6,7 +6,8 @@ The main page would get all the games that are either open(not started) or the h
 
 PROBLEMS: 
 
-When new user is first created, then they join a game, when the game starts they dont get it thruogh the socke5IS??? by putting useScore in join_room useEffect dependency array
+When new user is first created, then they join a game, when the game starts they dont get it thruogh the socke
+SOLVED THIS(hopefully) by putting useScore in join_room useEffect dependency array
 
 when choose def and card flips over, right side of card is cut off
 
