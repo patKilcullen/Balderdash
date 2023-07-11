@@ -10,7 +10,7 @@ import {
 import { SocketContext } from "../../app/SocketProvider";
 
 import { editScore, addPoint } from "../scores/scoresSlice";
-import { editGameTurn } from "../games/singleGameSlice";
+import { editGame, editGameTurn } from "../games/singleGameSlice";
 import {
   fetchSingleGame,
   fetchAllGameScores,
@@ -63,8 +63,9 @@ const word = useSelector(selectWord)
   const [countdown, setCountdown] = useState(18);
   useEffect(()=>{
     showBackOfCard("front")
-    console.log("MOTHER FUCK")
+
   },[])
+
   useEffect(() => {
     const timer = setTimeout(async () => {
       if (countdown > 0) {
@@ -88,6 +89,7 @@ const word = useSelector(selectWord)
         setChoseWord(false);
         dispatch(clearFakeWords());
         makeHidden()
+     dispatch(editGame({ id: game.id, roundsLeft: game.roundsLeft -1}))
       }
     }, 1000);
 
