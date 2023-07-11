@@ -43,7 +43,7 @@ export const editGame = createAsyncThunk("editGame", async (game) => {
 });
 
 
-export const editGameTurn = createAsyncThunk("editGame", async ({gameId, turn}) => {
+export const editGameTurn = createAsyncThunk("editGameTurn", async ({gameId, turn}) => {
 
   try {
     const { data } = await axios.patch(`/api/games/${gameId}/changeTurn`, {turn});
@@ -79,6 +79,9 @@ const singleGameSlice = createSlice({
       return action.payload;
     });
     builder.addCase(editGameTurn.fulfilled, (state, action) => {
+      return action.payload;
+    })
+    builder.addCase(editGame.fulfilled, (state, action) => {
       return action.payload;
     })
   },

@@ -60,7 +60,7 @@ const word = useSelector(selectWord)
   const singleGame = useSelector(selectSingleGame);
   const tempScoreCardMessages = useSelector(selectTempScoreCardMessages);
 
-  const [countdown, setCountdown] = useState(18);
+  const [countdown, setCountdown] = useState(4);
   useEffect(()=>{
     showBackOfCard("front")
 
@@ -89,7 +89,10 @@ const word = useSelector(selectWord)
         setChoseWord(false);
         dispatch(clearFakeWords());
         makeHidden()
-     dispatch(editGame({ id: game.id, roundsLeft: game.roundsLeft -1}))
+     dispatch(editGame({ id: game.id, roundsLeft: game.roundsLeft -1})).then((res)=>{
+console.log("SE END OF ROUND: ", res)
+
+     })
       }
     }, 1000);
 

@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const { models: { User, Game,Score }} = require('../db')
+
+const Sequelize = require("sequelize")
 module.exports = router
 
 
@@ -15,12 +17,31 @@ router.get('/', async (req, res, next) => {
 // All Score by GAme 
   router.get('/game/:gameId', async (req, res, next) => {
     try {
-      const scores = await Score.findAll( {where: {gameId: req.params.gameId},include: [User, Game]})
+      const scores = await Score.findAll( {where: {gameId: req.params.gameId},include: [Game]})
       res.json(scores)
     } catch (err) {
       next(err)
     }
   })
+
+ 
+  // Highest Scores by GAme 
+  router.get('/game/:gameId/highestScores', async (req, res, next) => {
+
+
+    try {
+      const max = await Score.max('score', { where: {gameId: req.params.gameId}})
+      const maxScores = await Score.findAll({ where: {score: max}, include: [User]})
+      console.log("SCORE WHORE: ", maxScores)
+      res.json(maxScores)
+    
+    } catch (err) {
+      next(err)
+    }
+  })
+
+
+
 
   router.post('/', async (req, res, next) => {
     

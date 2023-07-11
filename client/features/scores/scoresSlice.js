@@ -28,6 +28,20 @@ export const fetchAllScores = createAsyncThunk(
     }
   );
 
+  export const fetchHighestGameScores = createAsyncThunk(
+    "highestScores",
+    async (gameId) => {
+      try {
+        const { data } = await axios.get(`/api/scores/game/${gameId}/highestScores`);
+console.log("HIGHEST SCORE IN THUNK: ", data)
+        return data;
+      } catch (error) {
+        console.log("ERROR IN FETCH ALL SCORES THUNK: ", error);
+      }
+    }
+  );
+
+
 
 // CREATE A Score
   export const createScore = createAsyncThunk(
@@ -116,10 +130,10 @@ extraReducers: (builder)=>{
 
     //   return score !== action.payload
     // });
-    console.log("STATE: ", state.allScores)
+
   }),
   builder.addCase(addPoint.fulfilled, (state, action)=>{
-    console.log("ASS PAYLOAD IN APP{OPINT TJHINKK: ", action.payload)
+
     state.push(action.payload)
 })
 }

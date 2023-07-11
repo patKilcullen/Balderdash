@@ -9,7 +9,7 @@ import { selectFakeWords, getFakeDefinitions, selectFakeDefinitions } from './ga
 
 
 const Timer = ({setTempBack, showBackOfCard, makeHidden, game, username, userId, userScore, gameName, gameId, playerTurnName,  reloadScores, setDefinition, setWord, setTimer, setChoseWord}) => {
-  const [countdown, setCountdown] = useState(5)  
+  const [countdown, setCountdown] = useState(2)  
   const [defInput, setDefInput] = useState(false)
   const [playGame, setPlayGame] = useState(false)
 

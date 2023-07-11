@@ -11,6 +11,7 @@ import {
   editScore,
   deleteScore,
   createScore,
+  fetchHighestGameScores
 } from "../scores/scoresSlice";
 
 import {
@@ -50,7 +51,13 @@ const SingleGame = () => {
   const userScore = scores.find((score) => score.userId === userId);
 
 
-console.log("GAME: ", game.name)
+
+
+  useEffect(()=>{
+dispatch(fetchHighestGameScores(gameId)).then((res)=>{
+  console.log("RES HIGH SCORE: ", res.payload)
+})
+  },[gameId])
 
   // Could use res of fetchSingleGame to get scores through eager loading and set them
   // to state instead of fetchAllGameScores and score = useSelector(selectAllScores)
@@ -59,10 +66,15 @@ console.log("GAME: ", game.name)
   useEffect(() => {
     dispatch(fetchSingleGame(gameId)).then((res) => {
       setScoresX(res.payload.scores);
+
+      console.log("RES PAYLOAD SCORESSS: ", res.payload)
     });
     // dispatch(fetchAllScores())
     dispatch(fetchAllGameScores(gameId));
   }, []);
+
+
+
   useEffect(() => {
     dispatch(fetchSingleGame(gameId));
     // dispatch(fetchAllScores())
