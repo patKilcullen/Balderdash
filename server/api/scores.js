@@ -17,7 +17,7 @@ router.get('/', async (req, res, next) => {
 // All Score by GAme 
   router.get('/game/:gameId', async (req, res, next) => {
     try {
-      const scores = await Score.findAll( {where: {gameId: req.params.gameId},include: [Game]})
+      const scores = await Score.findAll( {where: {gameId: req.params.gameId},include: [Game, User]})
       res.json(scores)
     } catch (err) {
       next(err)

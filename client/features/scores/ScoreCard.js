@@ -20,7 +20,7 @@ const ScoreCard = ({
   const clientSocket = useContext(SocketContext);
 
   const scores = useSelector(selectAllScores);
-
+console.log("SCORES IN SCORECARD: ", scores)
  
   return (
     <Card sx={{ boxShadow: "20", border: "2px solid black" }}>

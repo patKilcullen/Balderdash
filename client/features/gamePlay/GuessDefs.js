@@ -9,7 +9,11 @@ import {
 } from "./gamePlaySlice";
 import { SocketContext } from "../../app/SocketProvider";
 
-import { editScore, addPoint } from "../scores/scoresSlice";
+import {
+  editScore,
+  addPoint,
+  fetchHighestGameScores,
+} from "../scores/scoresSlice";
 import { editGame, editGameTurn } from "../games/singleGameSlice";
 import {
   fetchSingleGame,
@@ -52,54 +56,118 @@ const GuessDefs = ({
   const [guessed, setGuessed] = useState(false);
 
   const dispatch = useDispatch();
-const word = useSelector(selectWord)
+  const word = useSelector(selectWord);
 
-
-// console.log("top IN GUESS DEFS: ", top)
+  // console.log("top IN GUESS DEFS: ", top)
 
   const singleGame = useSelector(selectSingleGame);
   const tempScoreCardMessages = useSelector(selectTempScoreCardMessages);
 
   const [countdown, setCountdown] = useState(4);
-  useEffect(()=>{
-    showBackOfCard("front")
-
-  },[])
-
   useEffect(() => {
-    const timer = setTimeout(async () => {
-      if (countdown > 0) {
-        setDefList(true);
-        setCountdown(countdown - 1);
-      } else if (countdown === 0) {
-        setDefList(false);
+    showBackOfCard("front");
+  }, []);
 
-        handleChangeGameTurn();
 
-        reloadScores();
 
-        setDefinition("");
-        setWord("");
 
-        setGuessed(false);
-        setDefList(null);
-        setFakeDefs([]);
-        setTimer(false);
-        setPlayGame(false);
-        setChoseWord(false);
-        dispatch(clearFakeWords());
-        makeHidden()
-     dispatch(editGame({ id: game.id, roundsLeft: game.roundsLeft -1})).then((res)=>{
-console.log("SE END OF ROUND: ", res)
 
-     })
-      }
-    }, 1000);
+//   useEffect(() => {
+//     const timer = setTimeout(async () => {
+//       if (countdown > 0) {
+//         setDefList(true);
+//         setCountdown(countdown - 1);
+//       } else if (countdown === 0) {
+//         setDefList(false);
 
-    // Cleanup the timer when the component unmounts
-    // NEEDED?
-    return () => clearTimeout(timer);
-  }, [countdown]);
+//         handleChangeGameTurn();
+
+//         reloadScores();
+
+//         setDefinition("");
+//         setWord("");
+
+//         setGuessed(false);
+//         setDefList(null);
+//         setFakeDefs([]);
+//         setTimer(false);
+//         setPlayGame(false);
+//         setChoseWord(false);
+//         dispatch(clearFakeWords());
+//         makeHidden();
+
+// // IF on the last round, check to see if there is only one high score, if 
+// // more thn one high score, its tied and round doesn't change
+//         game.roundsLeft === 1 ?
+//         dispatch(fetchHighestGameScores(gameId)).then((res) => {
+//           console.log("HIGH SOCRE LENGTH: ", res.payload.length);
+//           res.payload.length > 1 
+//         })
+
+//         :
+//         dispatch(
+//             editGame({ id: game.id, roundsLeft: game.roundsLeft - 1 })
+//           )
+
+//         // dispatch(
+//         //   editGame({ id: game.id, roundsLeft: game.roundsLeft - 1 })
+//         // ).then((res) => {
+//         //   console.log("SE END OF ROUND: ", res);
+//         //   dispatch(fetchHighestGameScores(gameId)).then((res) => {
+//         //     console.log("highScores: ", res.payload);
+//         //   });
+//         // });
+//       }
+//     }, 1000);
+
+
+
+//     // Cleanup the timer when the component unmounts
+//     // NEEDED?
+//     return () => clearTimeout(timer);
+//   }, [countdown]);
+
+
+
+useEffect(() => {
+  const timer = setTimeout(async () => {
+    if (countdown > 0) {
+      setDefList(true);
+      setCountdown(countdown - 1);
+    } else if (countdown === 0) {
+      setDefList(false);
+
+      handleChangeGameTurn();
+
+      reloadScores();
+
+      setDefinition("");
+      setWord("");
+
+      setGuessed(false);
+      setDefList(null);
+      setFakeDefs([]);
+      setTimer(false);
+      setPlayGame(false);
+      setChoseWord(false);
+      dispatch(clearFakeWords());
+      makeHidden()
+    }
+  }, 1000);
+
+  // Cleanup the timer when the component unmounts
+  // NEEDED?
+  return () => clearTimeout(timer);
+}, [countdown]);
+
+
+
+
+
+
+
+
+
 
   const handleChangeGameTurn = () => {
     game.turn === 1
@@ -110,8 +178,6 @@ console.log("SE END OF ROUND: ", res)
   useEffect(() => {
     setFakeDefs(fakeDefinitions);
   }, [fakeDefinitions]);
-
-
 
   // CHOOSE WORD
   const handleChooseWord = (def) => {
@@ -180,9 +246,15 @@ console.log("SE END OF ROUND: ", res)
     clientSocket.emit("send_score_card", { tempScoreCardMessages, gameName });
   }, [tempScoreCardMessages]);
 
-  const testDefinitions =["Lorem ipsum dolor sit amet, consectetur adipiscing elit,", "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut", "enim ad minim veniam", "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "Duis aute", "irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."]
-const testWord = "Pattycakes"
-
+  const testDefinitions = [
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit,",
+    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut",
+    "enim ad minim veniam",
+    "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    "Duis aute",
+    "irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  ];
+  const testWord = "Pattycakes";
 
   return (
     // <div>
@@ -216,30 +288,32 @@ const testWord = "Pattycakes"
     // <div style={{display: "flex", flexDirection: "column", alignContent: "center", alignItems: "center", zIndex: "9999999", width: "100vh",}}>
     // <div>Definitions</div>
 
-<div>
-
-<div style={{position: "fixed", top: "0", color: "red"}}>Time: {countdown}</div> 
-{/* {guessed === false && defList === true && testDefinitions && testDefinitions.length
+    <div>
+      <div style={{ position: "fixed", top: "0", color: "red" }}>
+        Time: {countdown}
+      </div>
+      {/* {guessed === false && defList === true && testDefinitions && testDefinitions.length
       ? testDefinitions */}
-    {guessed === false && defList === true && fakeDefs && fakeDefs.length
-      ? fakeDefs
-           .filter((def) => !def.hasOwnProperty(`${userId}`))
-          .map((def) => {
-            const value = Object.values(def)[0];
-            return (
-        
-                <CardFront def={def} handleChooseWord={handleChooseWord} defCards={true} fullScreen={true} top={word} bottom={value} side={"front"} />
-          
-               
-            );
-          })
-      : ""}
-      {guessed ?
-      <CardFront side={"back"} fullScreen={true} />
-      : null}
-  </div>
-
-
+      {guessed === false && defList === true && fakeDefs && fakeDefs.length
+        ? fakeDefs
+            .filter((def) => !def.hasOwnProperty(`${userId}`))
+            .map((def) => {
+              const value = Object.values(def)[0];
+              return (
+                <CardFront
+                  def={def}
+                  handleChooseWord={handleChooseWord}
+                  defCards={true}
+                  fullScreen={true}
+                  top={word}
+                  bottom={value}
+                  side={"front"}
+                />
+              );
+            })
+        : ""}
+      {guessed ? <CardFront side={"back"} fullScreen={true} /> : null}
+    </div>
   );
 };
 
