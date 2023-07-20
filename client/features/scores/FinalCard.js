@@ -19,7 +19,7 @@ const FinalCard = ({ game, userScore }) => {
   useEffect(() => {
     dispatch(fetchHighestGameScores(game.id)).then((res) => {
       setWinner(res.payload[0].user);
-      setWinnerScore(res.payload[0].turnNum);
+      setWinnerScore(res.payload[0].score);
     });
   }, []);
 
@@ -138,7 +138,7 @@ const FinalCard = ({ game, userScore }) => {
                       textDecoration: "underline",
                     }}
                   >
-                    {winnerScore} points!
+                    {winnerScore} point{winnerScore > 1 ? "s" : null}
                   </span>
                 </h1>
               }
