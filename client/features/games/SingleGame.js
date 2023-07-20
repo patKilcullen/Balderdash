@@ -244,9 +244,9 @@ dispatch(fetchHighestGameScores(gameId)).then((res)=>{
       {/* <ScoreCard scoreCard={scoreCard} />  */}
 
 
-      {/* {showFinalCard ? (
+      {showFinalCard ? (
         <FinalCard game={game} />
-      ) : null} */}
+      ) : null}
 
       <ScoreCard userId={userId} userScore={userScore} game={game} handleAskJoin={handleAskJoin} handleStartGame={handleStartGame}
       handleDeclineRequest={handleDeclineRequest} handleAcceptRequest={handleAcceptRequest}  /> 
