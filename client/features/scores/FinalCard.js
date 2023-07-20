@@ -45,7 +45,7 @@ setWinnerScore(res.payload[0].turnNum)
 console.log("WINNNERL ", winner)
 console.log("WINENR.TURNNUM: ", winner.turnNum)
 const handlePlayAgain = ()=>{
-  dispatch(editGameTurn({ gameId: game.id, turn: game.turn - 1, roundsLeft: game.rounds}))
+  dispatch(editGameTurn({ gameId: game.id, turn: game.numPlayers, roundsLeft: game.rounds, started: false}))
 }
  
 
