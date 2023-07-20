@@ -13,7 +13,7 @@ import axios from "axios";
       try {
 
         const { data } = await axios.post("/api/scores",{score, accepted, turn, turnNum, gameId, userId});
-      console.log("data: ",data)
+
         return data;
       } catch (error) {
         console.log("ERROR IN CREAT Score THUNK: ", error);
@@ -25,7 +25,7 @@ import axios from "axios";
   export const editScore = createAsyncThunk(
     "editScore",
     async (score) => {
-console.log("")
+
       try {
         const { data } = await axios.put(`/api/scores/${score.userId}`, score);
        

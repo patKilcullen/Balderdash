@@ -64,7 +64,6 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
   // then gets the definition throug API then sets that in state for player whose turn it is,
   // and then add it the the definition array with the key "real" to distinguish it from others
   const handleGetWord = () => {
-    console.log("WAHT THE FUCK IS HAPPENINGINGNGINGINGIG")
     setFlip(true);
     dispatch(clearFakeDefs());
     dispatch(clearTempScoreCardMessages());
@@ -141,8 +140,6 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
     );
   }, [clientSocket, game]);
 
-  // console.log("GAME.turn: ",game ?  game.turn : "ferf")
-  // console.log("userScore.turnNum: ", userScore ? userScore.turnNum : "faf")
   return (
     <Card
       className="main "

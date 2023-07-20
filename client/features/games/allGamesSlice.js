@@ -8,7 +8,6 @@ export const fetchAllGames = createAsyncThunk(
    
       try {
         const { data } = await axios.get("/api/games");
-        console.log("ALL GAMES IN THUNK: ", data)
         return data;
       } catch (error) {
         console.log("ERROR IN FETCH ALL GAMES THUNK: ", error);
@@ -22,7 +21,6 @@ export const fetchAllGames = createAsyncThunk(
     async () => {
       try {
         const { data } = await axios.get("/api/games");
-        console.log("ALL GAMES IN THUNK: ", data)
         return data;
       } catch (error) {
         console.log("ERROR IN FETCH ALL GAMES THUNK: ", error);

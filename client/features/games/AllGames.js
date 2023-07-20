@@ -25,8 +25,6 @@ const AllGames = () => {
 
   const user = useSelector(selectSingleUser);
 
-
-
   const [gamesX, setGamesX] = useState([]);
 
   useEffect(() => {
@@ -36,7 +34,6 @@ const AllGames = () => {
   useEffect(() => {
     dispatch(fetchSingleUser(userId));
   }, []);
-
 
   const clientSocket = socket.connect("http://localhost:8080");
 
@@ -51,27 +48,24 @@ const AllGames = () => {
 
   return (
     <div>
-      
       <Link to="/create-game">
         {" "}
         <button>Create a NEW GAME</button>
       </Link>
       <div id="games">
-     
-        
         <div className="game-sort">
           <div className="game-sort">All Public Games</div>
-          {gamesX && gamesX.length 
-          
-            ? gamesX.filter((game) => game.publicX).map((game) => (
-                <Link to={`/games/${game.id}`}>
-                  {" "}
-                  <div>{game.name}</div>
-                </Link>
-              ))
+          {gamesX && gamesX.length
+            ? gamesX
+                .filter((game) => game.publicX)
+                .map((game) => (
+                  <Link to={`/games/${game.id}`}>
+                    {" "}
+                    <div>{game.name}</div>
+                  </Link>
+                ))
             : null}
         </div>
-
 
         <div className="game-sort">
           <div>All Users Games</div>
@@ -84,8 +78,6 @@ const AllGames = () => {
               ))
             : null}
         </div>
-
-        {/* HEREEEEEEEEEEEE */}
 
         <div className="game-sort">
           <div>Unstarted Games</div>
@@ -135,8 +127,6 @@ const AllGames = () => {
             : null}
         </div>
       </div>
-
-      
     </div>
   );
 };

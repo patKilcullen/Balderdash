@@ -29,7 +29,6 @@ const AuthForm = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
-  console.log("selected form : ", selectedForm);
 
   const handleSelectForm = (evt) => {
     evt.preventDefault();
