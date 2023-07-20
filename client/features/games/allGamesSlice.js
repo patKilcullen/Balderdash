@@ -5,7 +5,7 @@ import axios from "axios";
 export const fetchAllGames = createAsyncThunk(
     "allGames",
     async () => {
-      console.log("HELLOE FETST GAMESSSSSS")
+   
       try {
         const { data } = await axios.get("/api/games");
         console.log("ALL GAMES IN THUNK: ", data)
@@ -34,13 +34,13 @@ export const fetchAllGames = createAsyncThunk(
 
 
   //  All Users Games includind not owned
+  // NEED?
   export const fetchAllUserGames = createAsyncThunk(
     "allUserGames",
     async (id) => {
       try {
         const { data } = await axios.get("/api/games");
 
-        console.log("fetchAllUserGames: ", data)
         return data;
       } catch (error) {
         console.log("ERROR IN FETCH ALL GAMES THUNK: ", error);
@@ -57,7 +57,6 @@ export const fetchAllGames = createAsyncThunk(
   export const createGame = createAsyncThunk(
     "createGame",
     async ({userId, name, rounds, roundsLeft, winner, started, complete, ownerId, publicX, numPlayers, turn}) => {
-        console.log("HIT CREAT EGAME THUNKKKKK", name, rounds)
       try {
         const { data } = await axios.post("/api/games",{userId, name, rounds, roundsLeft, winner, started, complete, ownerId, publicX, numPlayers, turn});
       
@@ -83,7 +82,6 @@ extraReducers: (builder)=>{
       // return action.payload
   }),
     builder.addCase(createGame.fulfilled, (state, action)=>{
-        console.log("AXION: ", action.payload)
         state.push(action.payload)
     })
 }

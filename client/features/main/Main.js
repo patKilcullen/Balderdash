@@ -149,7 +149,7 @@ const Main = () => {
   const handleChooseWord = (def) => {
     const scoreX = localStorage.getItem(`${username}`);
     const roundX = localStorage.getItem(`round`);
-    console.log("HIIIII: ", wordX)
+
     setTempWord(wordX)
     allDefs = [];
     setWordX([]);
@@ -217,7 +217,7 @@ const userArray = []
 let newUserArray = []
 
 useEffect(()=>{
-console.log("usrARRAY: ", userArray)
+
 
 }, [userArray])
 

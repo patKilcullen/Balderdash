@@ -9,7 +9,7 @@ import { selectFakeWords, getFakeDefinitions, selectFakeDefinitions } from './ga
 
 
 const Timer = ({setTempBack, showBackOfCard, makeHidden, game, username, userId, userScore, gameName, gameId, playerTurnName,  reloadScores, setDefinition, setWord, setTimer, setChoseWord}) => {
-  const [countdown, setCountdown] = useState(2)  
+  const [countdown, setCountdown] = useState(1)  
   const [defInput, setDefInput] = useState(false)
   const [playGame, setPlayGame] = useState(false)
 
@@ -62,7 +62,6 @@ setTempBack(false)
 // When then page mounts on playerTurn, it send socket to all others in game to mount on their end
   useEffect(()=>{
     clientSocket.emit("start_countdown", {gameName})
-    console.log("COUNTDOW STARRED")
       },[])
 
 

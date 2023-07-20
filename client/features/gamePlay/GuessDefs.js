@@ -58,12 +58,12 @@ const GuessDefs = ({
   const dispatch = useDispatch();
   const word = useSelector(selectWord);
 
-  // console.log("top IN GUESS DEFS: ", top)
+
 
   const singleGame = useSelector(selectSingleGame);
   const tempScoreCardMessages = useSelector(selectTempScoreCardMessages);
 
-  const [countdown, setCountdown] = useState(4);
+  const [countdown, setCountdown] = useState(1);
   useEffect(() => {
     showBackOfCard("front");
   }, []);
@@ -72,108 +72,163 @@ const GuessDefs = ({
 
 
 
-//   useEffect(() => {
-//     const timer = setTimeout(async () => {
-//       if (countdown > 0) {
-//         setDefList(true);
-//         setCountdown(countdown - 1);
-//       } else if (countdown === 0) {
-//         setDefList(false);
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      if (countdown > 0) {
+        setDefList(true);
+        setCountdown(countdown - 1);
+      } else if (countdown === 0) {
+        setDefList(false);
 
-//         handleChangeGameTurn();
+         handleChangeGameTurn();
 
-//         reloadScores();
+        reloadScores();
 
-//         setDefinition("");
-//         setWord("");
+        setDefinition("");
+        setWord("");
 
-//         setGuessed(false);
-//         setDefList(null);
-//         setFakeDefs([]);
-//         setTimer(false);
-//         setPlayGame(false);
-//         setChoseWord(false);
-//         dispatch(clearFakeWords());
-//         makeHidden();
+        setGuessed(false);
+        setDefList(null);
+        setFakeDefs([]);
+        setTimer(false);
+        setPlayGame(false);
+        setChoseWord(false);
+        dispatch(clearFakeWords());
+        makeHidden();
 
-// // IF on the last round, check to see if there is only one high score, if 
-// // more thn one high score, its tied and round doesn't change
-//         game.roundsLeft === 1 ?
-//         dispatch(fetchHighestGameScores(gameId)).then((res) => {
-//           console.log("HIGH SOCRE LENGTH: ", res.payload.length);
-//           res.payload.length > 1 
-//         })
-
-//         :
-//         dispatch(
-//             editGame({ id: game.id, roundsLeft: game.roundsLeft - 1 })
-//           )
-
-//         // dispatch(
-//         //   editGame({ id: game.id, roundsLeft: game.roundsLeft - 1 })
-//         // ).then((res) => {
-//         //   console.log("SE END OF ROUND: ", res);
-//         //   dispatch(fetchHighestGameScores(gameId)).then((res) => {
-//         //     console.log("highScores: ", res.payload);
-//         //   });
-//         // });
-//       }
-//     }, 1000);
+// IF on the last round, check to see if there is only one high score, if 
+// more thn one high score, its tied and round doesn't change
+        // game.roundsLeft === 1 ?
+        // dispatch(fetchHighestGameScores(gameId)).then((res) => {
+        //   console.log("HIGH SOCRE LENGTH: ", res.payload.length);
+        //   res.payload.length > 1 
 
 
+          
+        // })
 
-//     // Cleanup the timer when the component unmounts
-//     // NEEDED?
-//     return () => clearTimeout(timer);
-//   }, [countdown]);
+        // :
+        // dispatch(
+        //     editGame({ id: game.id, roundsLeft: game.roundsLeft - 1 })
+        //   )
+
+        // dispatch(
+        //   editGame({ id: game.id, roundsLeft: game.roundsLeft - 1 })
+        // ).then((res) => {
+        //   console.log("SE END OF ROUND: ", res);
+        //   dispatch(fetchHighestGameScores(gameId)).then((res) => {
+        //     console.log("highScores: ", res.payload);
+        //   });
+        // });
+
+// THIS SEEMS TO BE EFFECTING THE SWITHCING OG TURNS
+        // game.roundsLeft === 1 ?
+        // dispatch(fetchHighestGameScores(gameId)).then((res) => {
+      
+        //   res.payload.length > 1 ?
+
+        //    console.log("TIE GAME")
 
 
+        //   :
+        //   console.log("GAME OVER res.payload: ", res.payload)
+        //   dispatch(
+        //     editGame({ id: game.id, roundsLeft: game.roundsLeft - 1 })
+        //   )
+        // })
 
-useEffect(() => {
-  const timer = setTimeout(async () => {
-    if (countdown > 0) {
-      setDefList(true);
-      setCountdown(countdown - 1);
-    } else if (countdown === 0) {
-      setDefList(false);
+        // :
+        // dispatch(
+        //     editGame({ id: game.id, roundsLeft: game.roundsLeft - 1 })
+        //   )
 
-      handleChangeGameTurn();
-
-      reloadScores();
-
-      setDefinition("");
-      setWord("");
-
-      setGuessed(false);
-      setDefList(null);
-      setFakeDefs([]);
-      setTimer(false);
-      setPlayGame(false);
-      setChoseWord(false);
-      dispatch(clearFakeWords());
-      makeHidden()
-    }
-  }, 1000);
-
-  // Cleanup the timer when the component unmounts
-  // NEEDED?
-  return () => clearTimeout(timer);
-}, [countdown]);
+      
+          // dispatch(
+          //   editGame({ id: game.id, roundsLeft: game.roundsLeft - 1 })
+          // )
+    
+      
+      
+      }
+    }, 1000);
 
 
 
+    // Cleanup the timer when the component unmounts
+    // NEEDED?
+    return () => clearTimeout(timer);
+  }, [countdown]);
 
 
+// turn = 1 => turn: game.numPlayers 
+// turn != 1 => turn: game.turn - 1
+
+// game.roundsLeft !== 1 =>    game.roundsLeft - 1
+
+// game.roundsLeft === 1 =>   
+// dispatch(fetchHighestGameScores(gameId).then((res)=> {
+//  res.payload.length > 1 ?
+//  console.log("TIE GAME")
+//  :
+// console.log("GAME OVER res.payload: ", res.payload)
+ //   dispatch(editGame({ id: game.id, roundsLeft: game.roundsLeft - 1 }) )
+//  })
 
 
+  
 
+  
 
-
+// if more than one round left, check game turn, if 1, set turn to num of players and subtract round, if not 1, -1 from turn and rounds
+// if Last round, check to see if the is one high score, if not, its a tie game, if there is one score, subtract round to 0, thus ending the game
+// if tie game, change turn but dont subtract rounds, it will continue until one high score.
   const handleChangeGameTurn = () => {
-    game.turn === 1
-      ? dispatch(editGameTurn({ gameId: gameId, turn: game.numPlayers }))
-      : dispatch(editGameTurn({ gameId: gameId, turn: game.turn - 1 }));
+
+
+  game.roundsLeft !== 1
+? game.turn === 1
+    ? dispatch(editGameTurn({ gameId: gameId, turn: game.numPlayers, roundsLeft: game.roundsLeft - 1 }))
+    : dispatch(editGameTurn({ gameId: gameId, turn: game.turn - 1, roundsLeft: game.roundsLeft - 1 }))
+
+: 
+// game.roundsLeft === 1
+// ?
+dispatch(fetchHighestGameScores(gameId)).then((res)=> {
+ res.payload.length > 1 ?
+
+ game.turn === 1
+    ? dispatch(editGameTurn({ gameId: gameId, turn: game.numPlayers }))
+    : dispatch(editGameTurn({ gameId: gameId, turn: game.turn - 1}))
+
+ :
+// console.log("GAME OVER res.payload: ", res.payload)
+  //  dispatch(editGame({ id: game.id, roundsLeft: game.roundsLeft - 1 }) )
+  // dispatch(editGameTurn({ gameId: gameId, turn: game.turn - 1, roundsLeft: game.roundsLeft - 1 }))
+
+  dispatch(editGameTurn({ gameId: gameId, turn: game.turn - 1, roundsLeft: game.roundsLeft - 1 }))
+ })
+
+      
+      // dispatch(editGameTurn({ gameId: gameId, turn: game.numPlayers, roundsLeft: game.roundsLeft - 1 }))
+      // : dispatch(editGameTurn({ gameId: gameId, turn: game.turn - 1, roundsLeft: game.roundsLeft - 1 }));
   };
+
+
+
+  
+// BEFREO CHEKING FIOR LAST ROUND AND HIGHEST TURN
+  // const handleChangeGameTurn = () => {
+  //   // ADDED game.roundsLeft - 1
+  //   game.turn === 1
+  //     ? dispatch(editGameTurn({ gameId: gameId, turn: game.numPlayers, roundsLeft: game.roundsLeft - 1 }))
+  //     : dispatch(editGameTurn({ gameId: gameId, turn: game.turn - 1, roundsLeft: game.roundsLeft - 1 }));
+  // };
+
+
+
+
+
+
 
   useEffect(() => {
     setFakeDefs(fakeDefinitions);

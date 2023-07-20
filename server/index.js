@@ -49,7 +49,7 @@ const init = async () => {
 
 
       socket.on("send_start_game", ({room, userName}) => {
-        console.log("SEND START GAME: ", room, userName)
+    
         socket.to(room).emit("receive_start_game", {room, userName});
       });
     
@@ -58,7 +58,7 @@ const init = async () => {
 
 
       socket.on("send_word", ({ word, room, playerTurnName }) => {
-        console.log("SEND WORD: ", word, room, playerTurnName)
+       
         socket.to(room).emit("receive_word", { word, room, playerTurnName });
       });
 
@@ -95,8 +95,7 @@ const init = async () => {
       socket.on(
         "send_score_card_info",
         ({ gameName, playerTurnName, message }) => {
-          console.log("PLAYERTURNNAME score card info: ", playerTurnName);
-          console.log("MESSAGE", message);
+       
           socket
             .to(gameName)
             .emit("receive_score_card_info", {
@@ -121,37 +120,14 @@ const init = async () => {
       socket.on("requestInfo", ({ playerTurn, userName, room }) => {
         socket.to(room).emit("request_word", { playerTurn, userName, room });
 
-        // socket.to(targetSocketId).emit('infoRequestReceived', 'Request received!')
-
-        // console.log("BONNNNERRRRRRR", targetSocketId)
-        // const targetSocket = serverSocket.get(targetSocketId);
-        // console.log("TARGET SOCKET: ", targetSocket)
-        // if (targetSocket) {
-        //   console.log("FUCK YOU")
-        //   // Emit request event to the target socket
-        //   targetSocket.emit('infoRequestReceived', 'Request received!');
-        // }
+     
       });
       socket.on("send_existing_word", ({ word, room, userName }) => {
-        console.log("SEND EXISTING WORD", word);
+      
         socket.to(room).emit("retrieve_eixsting_word", { word, userName });
       });
 
-      // socket.on("send_score", (data) => {
-      //   socket.broadcast.emit("receive_score", data);
-      // });
-      // socket.on("send_word", (data) => {
-      //   socket.broadcast.emit("receive_word", data);
-      // });
-
-      // socket.on("send_definition", (data) => {
-      //   console.log(data);
-      //   socket.broadcast.emit("receive_definition", data);
-      // });
-
-      // socket.on("send_defArray", (data) => {
-      //   socket.broadcast.emit("receive_defArray", data);
-      // });
+  
     });
   } catch (ex) {
     console.log(ex);

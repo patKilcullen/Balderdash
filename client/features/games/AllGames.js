@@ -49,7 +49,6 @@ const AllGames = () => {
     setGamesX(data);
   });
 
- console.log("THIS IS THE ALL GAMES COMPONENNTTTTTTTt")
   return (
     <div>
       

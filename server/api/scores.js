@@ -31,8 +31,9 @@ router.get('/', async (req, res, next) => {
 
     try {
       const max = await Score.max('score', { where: {gameId: req.params.gameId}})
-      const maxScores = await Score.findAll({ where: {score: max}, include: [User]})
-      console.log("SCORE WHORE: ", maxScores)
+
+      const maxScores = await Score.findAll({ where: {score: max, gameId: req.params.gameId}, include: [User]})
+      console.log("MAX SCORES: ", maxScores)
       res.json(maxScores)
     
     } catch (err) {
@@ -69,7 +70,7 @@ router.put('/:id', async(req,res,next)=>{
 
 // Add Point 
 router.put('/:id/addPoint', async(req,res,next)=>{
-  console.log("HIT ADD POINT: ", req.body )
+
   try {
     const score = await Score.findOne({where: {userId: req.body.userId, gameId: req.body.gameId}, include: [User] })
     

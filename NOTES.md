@@ -1,5 +1,46 @@
 
-The main page would get all the games that are either open(not started) or the has a foreigh key of the player(userss) ID. OR each game can have arandom code generated and the creator of the game give it to friends to play. Creator can alos decide if game should be publi or not if they're looking for people to play with.
+T
+<!-- NEW -->
+
+LAST UPDATE: 
+added roundsLeft: game.roundsLeft - 1 to handleChangeGameTurn in GuessDefs becasue changing the roundsLeft seperately was occasionally causing probelms where it was or wasn't both players trn or one player went twice in a row.  This was possibly because the game was being updated twice.  IT seems to workd but need to test to make sure error doesnt happen
+
+
+ WHAT TO DO:
+ Incorporate...
+
+ // game.roundsLeft === 1 ?
+        // dispatch(fetchHighestGameScores(gameId)).then((res) => {
+      
+        //   res.payload.length > 1 ?
+
+        //    console.log("TIE GAME")
+
+
+        //   :
+        //   console.log("GAME OVER res.payload: ", res.payload)
+        //   dispatch(
+        //     editGame({ id: game.id, roundsLeft: game.roundsLeft - 1 })
+        //   )
+        // })
+
+the above login into handleChangeGameTurn.
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- OLD -->
+
+he main page would get all the games that are either open(not started) or the has a foreigh key of the player(userss) ID. OR each game can have arandom code generated and the creator of the game give it to friends to play. Creator can alos decide if game should be publi or not if they're looking for people to play with.
 
 
 
@@ -39,7 +80,6 @@ NOWWWWWW add to scores function not working.  one gets multiple points... possib
 
 LAST UPDATE:
 
-Send start and and receive strt game in SingleGame,  starts game on other player socket when creator of game starts game, but other players have to refresh first, so start working on doing something when game creator accepts player,,, deleted most of it, but maybe just a page reload would suffice
 
 
 

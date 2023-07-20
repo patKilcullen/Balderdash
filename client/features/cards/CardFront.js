@@ -39,10 +39,9 @@ const CardFront = ({
   useEffect(() => {
     setSideState(side);
   }, [side]);
-  // console.log("sideSTAE: ", sideState)
+ 
   const [tempBack, setTempBack] = useState(false)
   const showBackOfCard = (sideX, X) => {
-    console.log("SHOW BACK", sideX, X);
     sideX === "front" ? setSideState(sideX) 
     : sideX === "back" ?
 setTempBack(true) 

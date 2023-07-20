@@ -3,7 +3,7 @@ const { models: { User, Score, Game }} = require('../db')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
-  console.log("HIT DIS YEAHH?????")
+
   try {
     const users = await User.findAll({
       // explicitly select only the id and username fields - even though

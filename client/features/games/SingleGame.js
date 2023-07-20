@@ -30,6 +30,9 @@ import { use } from "chai";
 
 import TempScoreCard from "../scores/TempScoreCard";
 import ScoreCard from "../scores/ScoreCard";
+import FinalCard from "../scores/FinalCard";
+
+
 // Material UI
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
@@ -51,26 +54,43 @@ const SingleGame = () => {
   const userScore = scores.find((score) => score.userId === userId);
 
 
+const [showFinalCard, setShowFinalCard] =useState(false) 
+useEffect(()=>{
+console.log("RELOAD RELOAD game.roundsLeft : ", game.roundsLeft)
+game.roundsLeft === 0 ?
 
 
+
+setShowFinalCard(true) :
+setShowFinalCard(false)
+},[game.roundsLeft])
+
+
+
+
+
+// NEED?
   useEffect(()=>{
 dispatch(fetchHighestGameScores(gameId)).then((res)=>{
-  console.log("RES HIGH SCORE: ", res.payload)
+  // console.log("RES HIGH SCORE: ", res.payload)
 })
   },[gameId])
 
+
+// NEED?
   // Could use res of fetchSingleGame to get scores through eager loading and set them
   // to state instead of fetchAllGameScores and score = useSelector(selectAllScores)
   // not such which would be more efficent or if it makes a diference
   const [scoresX, setScoresX] = useState("");
+// NEED?
   useEffect(() => {
     dispatch(fetchSingleGame(gameId)).then((res) => {
+      
       setScoresX(res.payload.scores);
-
-      console.log("RES PAYLOAD SCORESSS: ", res.payload)
     });
     // dispatch(fetchAllScores())
     dispatch(fetchAllGameScores(gameId));
+
   }, []);
 
 
@@ -89,7 +109,7 @@ dispatch(fetchHighestGameScores(gameId)).then((res)=>{
       dispatch(clearTempScoreCardMessages());
 
       setShowTempScoreCard(false);
-    }, 5000);
+    }, 1000);
     setShowTempScoreCard(true);
   };
 
@@ -181,8 +201,6 @@ dispatch(fetchHighestGameScores(gameId)).then((res)=>{
       }
     );
     clientSocket.on("recieve_ask_to_join", (room) => {
-
-      console.log("HERE DUDE: ", room, game.name)
      room === game.name ?
       dispatch(fetchAllGameScores(gameId))
       : null
@@ -225,6 +243,10 @@ dispatch(fetchHighestGameScores(gameId)).then((res)=>{
       ) : null}
       {/* <ScoreCard scoreCard={scoreCard} />  */}
 
+
+      {/* {showFinalCard ? (
+        <FinalCard game={game} />
+      ) : null} */}
 
       <ScoreCard userId={userId} userScore={userScore} game={game} handleAskJoin={handleAskJoin} handleStartGame={handleStartGame}
       handleDeclineRequest={handleDeclineRequest} handleAcceptRequest={handleAcceptRequest}  /> 

@@ -80,7 +80,7 @@ const CreateGame = () => {
           })
       : setError("Rounds must be a postive integer");
   };
-  console.log("ERROR: ", error);
+
 
   return (
     <Container

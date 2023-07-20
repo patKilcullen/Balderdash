@@ -37,7 +37,6 @@ export const getFakeWords = createAsyncThunk(
   export const getDefinition = createAsyncThunk(
     '/getDefinition',
     async (word) => {
-      console.log("WORD IN GET MERI: ", word)
       try {
         const { data } = await axios.get(`/api/wordsAndDefinitions/${word}`,);
          if(data[0].shortdef){
@@ -69,7 +68,7 @@ export const getFakeWords = createAsyncThunk(
           return defaultDefs[defaultNum]
          }
       } catch (error) {
-        console.log("EROR IN Get Fake DEFINITIOM")
+        console.log("ERROR un getFakeDefinition")
         return error.message;
       }
     }

@@ -9,7 +9,7 @@ export const fetchSingleUser = createAsyncThunk(
     async (id) => {
       try {
         const { data } = await axios.get(`/api/users/${id}`);
-       console.log("DATAT IN THIUNKDDDDDDDDDDD:", data)
+   
         return data;
       } catch (error) {
         console.log("ERROR IN SINBGLE User THUNK: ", error);
@@ -42,7 +42,7 @@ initialState: {},
 reducers: {},
 extraReducers: (builder)=>{
     builder.addCase(fetchSingleUser.fulfilled, (state, action)=>{
-        console.log("SINGLE USER ACTION PAYLOAD: ")
+
         return action.payload
     })
    

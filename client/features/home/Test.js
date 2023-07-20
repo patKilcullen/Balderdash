@@ -18,7 +18,7 @@ const [list, setList] = useState([])
 const handleAddName =(e) =>{
 e.preventDefault()
     let person = {name: namey, email: email, complete: false }
-    console.log("PERSON: ", person)
+  
      setList([...list, person])
      setNamey("")
      setEmail("")
@@ -34,11 +34,11 @@ setList( [... list.filter((personn) => personn !== person), per])
 // setList([...list, per])
 }
 const handleDelete =(person)=>{
-    console.log("PERSON HERE: ", person)
+
   setList(  list.filter((personn) => personn !== person))
     }
 
-console.log("LIST: ", list)
+
 
 return (
     <div>Test

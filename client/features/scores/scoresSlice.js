@@ -51,7 +51,6 @@ console.log("HIGHEST SCORE IN THUNK: ", data)
       try {
 
         const { data } = await axios.post("/api/scores",{score, accepted, turn, turnNum, gameId, userId});
-      console.log("data: ",data)
         return data;
       } catch (error) {
         console.log("ERROR IN CREAT Score THUNK: ", error);
@@ -63,7 +62,7 @@ console.log("HIGHEST SCORE IN THUNK: ", data)
   export const editScore = createAsyncThunk(
     "editScore",
     async (score) => {
-console.log("")
+
       try {
         const { data } = await axios.put(`/api/scores/${score.userId}`, score);
        
@@ -78,7 +77,7 @@ console.log("")
   export const addPoint = createAsyncThunk(
     "addPoint",
     async ({userId, gameId}) => {
-console.log("ADD POINT THUNK: ", userId, gameId)
+
       try {
         const { data } = await axios.put(`/api/scores/${userId}/addPoint`, {userId, gameId});
      
@@ -92,7 +91,7 @@ console.log("ADD POINT THUNK: ", userId, gameId)
   export const deleteScore = createAsyncThunk(
     "deleteScore",
     async (score) => {
-      console.log("SCORE in deltel thunk: ", score)
+    
       try {
          await axios.delete(`/api/scores/${score.gameId}/${score.userId}`);
         
@@ -125,7 +124,7 @@ extraReducers: (builder)=>{
       state.push(action.payload)
   }),
   builder.addCase(deleteScore.fulfilled, (state, action) => {
-    console.log("AX PAY: ", action.payload)
+
     // state.allScores = state.allScores.filter(score =>{
 
     //   return score !== action.payload

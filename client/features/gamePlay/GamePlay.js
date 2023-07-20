@@ -141,8 +141,8 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
     );
   }, [clientSocket, game]);
 
-  
-
+  // console.log("GAME.turn: ",game ?  game.turn : "ferf")
+  // console.log("userScore.turnNum: ", userScore ? userScore.turnNum : "faf")
   return (
     <Card
       className="main "
