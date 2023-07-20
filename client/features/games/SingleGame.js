@@ -206,6 +206,12 @@ dispatch(fetchHighestGameScores(gameId)).then((res)=>{
       : null
     });
 
+    clientSocket.on("receive_play_again", ({room, gameId}) => {
+      room === game.name ?
+      dispatch(fetchSingleGame(gameId))
+       : null
+     });
+
 
   }, [clientSocket, game, gameId]);
 

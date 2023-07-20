@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useDispatch,  } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { fetchHighestGameScores } from "./scoresSlice";
 import { editGameTurn } from "../games/singleGameSlice";
 
+
+import { SocketContext } from "../../app/SocketProvider";
 // import Card from "@mui/material/Card";
 // import Box from "@mui/material/Box";
 // import Typography from "@mui/material/Typography";
@@ -27,7 +29,7 @@ const FinalCard = ({ game, userScore}) => {
   //   // NEEDED?
   //   return () => clearTimeout(timer);
   // }, [countdown]);
-
+  const clientSocket = useContext(SocketContext);
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -45,7 +47,10 @@ setWinnerScore(res.payload[0].turnNum)
 console.log("WINNNERL ", winner)
 console.log("WINENR.TURNNUM: ", winner.turnNum)
 const handlePlayAgain = ()=>{
-  dispatch(editGameTurn({ gameId: game.id, turn: game.numPlayers, roundsLeft: game.rounds, started: false}))
+  dispatch(editGameTurn({ gameId: game.id, turn: game.numPlayers, roundsLeft: game.rounds, started: false})).then(()=>{
+    clientSocket.emit("send_play_again", {room: game.name, gameId: game.id  });
+  })
+  
 }
  
 

@@ -127,6 +127,11 @@ const init = async () => {
         socket.to(room).emit("retrieve_eixsting_word", { word, userName });
       });
 
+      socket.on("send_play_again", ({room, gameId }) => {
+      
+        socket.to(room).emit("receive_play_again", {gameId });
+      });
+
   
     });
   } catch (ex) {
