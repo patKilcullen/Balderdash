@@ -10,7 +10,7 @@ import { editGameTurn } from "../games/singleGameSlice";
 // import Typography from "@mui/material/Typography";
 import {Card, Box, Typography, Button} from "@mui/material"
 
-const FinalCard = ({ game}) => {
+const FinalCard = ({ game, userScore}) => {
   // const [countdown, setCountdown] = useState();
   // const [showTempScoreCard, setShowTempScoreCard] = useState(false);
   // useEffect(() => {
@@ -48,6 +48,8 @@ const handlePlayAgain = ()=>{
   dispatch(editGameTurn({ gameId: game.id, turn: game.turn - 1, roundsLeft: game.rounds}))
 }
  
+
+console.log("THIS: ",userScore ? userScore.userId : "boer")
   return (
     <div id="temp-scorecard">
       <Card
@@ -146,36 +148,51 @@ const handlePlayAgain = ()=>{
               );
             })
           : null}{" "} */}
-          {<h1 >{winner.username} <span style={{
-                fontSize: "40px",
+          {<h1 style={{textDecoration: "none"}} ><span style={{
+                fontSize: "60px",
                 fontWeight: "bolder",
-                 textShadow: `3px 3px #558ABB`,
-                alignSelf: " center",
-                textDecoration: "underline"
+                textDecoration: "underline",
+              
               }}
-              color={"primart"}>is the WINNER witn </span>{winnerScore} <span>points!</span></h1>}
+              > {winner.username}</span> <span style={{
+                 fontSize: "40px",
+               fontFamily: "none"
+              }}
+              >is the WINNER with </span ><span style={{
+                fontSize: "60px",
+                fontWeight: "bolder",
+                textDecoration: "underline"
+              }}>{winnerScore} points!</span></h1>}
       </div> 
 
 </Box>
 <Box style={{display: "flex", gap: "5%"}}>
-<Button
-              sx={{ alignSelf: "center" }}
-              variant="contained"
-              size="large"
-               onClick={() => handlePlayAgain(def)}
-            >
-              {" "}
-              Play Again
-            </Button>
+
+
+           
+{userScore && game.ownerId === userScore.userId ? 
             <Button
-              sx={{ alignSelf: "center" }}
-              variant="contained"
-              size="large"
-              onClick={()=> navigate('/home')}
-            >
-              {" "}
-              Return Home
-            </Button>
+          className={"pulse"}
+          onClick={() => handlePlayAgain()}
+          sx={{ fontSize: 20, marginTop: "15px" }}
+          variant="contained"
+        >
+          <Typography color={"secondary"} sx={{ fontSize: 30 }}>
+            Play Again
+          </Typography>
+        </Button>
+:null }
+        <Button
+          className={"pulse"}
+          onClick={()=> navigate('/home')}
+          sx={{ fontSize: 20, marginTop: "15px" }}
+          variant="contained"
+        >
+          <Typography color={"secondary"} sx={{ fontSize: 30 }}>
+            Return home
+          </Typography>
+        </Button>
+
             </Box>
         </Card>
       
