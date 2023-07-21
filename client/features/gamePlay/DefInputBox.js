@@ -2,7 +2,10 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 
 import { SocketContext } from "../../app/SocketProvider";
 
-import TextareaAutosize from "@mui/base/TextareaAutosize";
+// import TextareaAutosize from "@mui/base/TextareaAutosize";
+
+import { TextareaAutosize, Button, TextField, FormControl, FormLabel, Container } from "@mui/material";
+
 
 const DefInputBox = ({showBackOfCard, makeHidden, gameName, userId, playerTurnName }) => {
   const [playerDef, setPlayerDef] = useState("");
@@ -35,7 +38,7 @@ const DefInputBox = ({showBackOfCard, makeHidden, gameName, userId, playerTurnNa
 
   return (
     <div>
-      {seeInput ? (
+      {/* {seeInput ? (
         <form onSubmit={handleEnterFakeDef}>
           <label>
             Enter you fake Def here:
@@ -52,8 +55,34 @@ const DefInputBox = ({showBackOfCard, makeHidden, gameName, userId, playerTurnNa
           </label>
           <input type="submit" value="Submit" />
         </form>
-      ) : null}
+      ) : null} */}
+
+ {seeInput ? (
+<Container>
+      <form style={{display: "flex", flexDirection: "column", alignContent: "center", gap: "5vh"}} onSubmit={handleEnterFakeDef}>
+        <FormControl style={{display: "flex", flexDirection: "column", alignContent: "center"}} fullWidth>
+          {/* <FormLabel   id="def-input-title"
+              color="secondary"
+              sx={{ fontWeight: "bold", overflow: "scroll" }}>Enter your definition here:</FormLabel> */}
+          <TextareaAutosize
+            placeholder=" Write your definition here..."
+            minRows={20}
+            ref={inputRef}
+            style={{ backgroundColor: "white", width: "100%", border: "4px solid #571122", borderRadius: "25px" }}
+            type="textarea"
+            name="name"
+            value={playerDef}
+            onChange={(e) => setPlayerDef(e.target.value)}
+          />
+        </FormControl>
+        <Button variant="contained" type="submit">
+          Submit Definition
+        </Button>
+      </form>
+    </Container>
+    ) : null} 
     </div>
+    
   );
 };
 

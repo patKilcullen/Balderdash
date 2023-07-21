@@ -7,24 +7,7 @@ added roundsLeft: game.roundsLeft - 1 to handleChangeGameTurn in GuessDefs becas
 
 
  WHAT TO DO:
- Incorporate...
-
- // game.roundsLeft === 1 ?
-        // dispatch(fetchHighestGameScores(gameId)).then((res) => {
-      
-        //   res.payload.length > 1 ?
-
-        //    console.log("TIE GAME")
-
-
-        //   :
-        //   console.log("GAME OVER res.payload: ", res.payload)
-        //   dispatch(
-        //     editGame({ id: game.id, roundsLeft: game.roundsLeft - 1 })
-        //   )
-        // })
-
-the above login into handleChangeGameTurn.
+PLay whose turn it is can't guess defs.
 
 
 
@@ -33,6 +16,9 @@ the above login into handleChangeGameTurn.
 
 
 
+THING TO DO less important:
+
+in showBackOf Card... don't need the second "X" of "test" arguemnt.. also should just be sideOfCard
 
 
 

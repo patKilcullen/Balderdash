@@ -21,9 +21,18 @@ background-color: #88ebe6
   align-self: center;
   margin-top: 10vh;
   /* color: blueviolet; */
-  text-shadow: 4px 4px #558ABB;
+  /* text-shadow: 4px 4px #558ABB; */
   font-size: 100px;
 }
+#def-input-title {
+  align-self: center;
+  margin-top: 10vh;
+   color: #571122;
+  /* text-shadow: 4px 4px #558ABB; */
+  font-size: 30px;
+}
+
+
 #score-card-game-name {
 
   

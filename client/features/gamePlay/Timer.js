@@ -27,7 +27,7 @@ const Timer = ({
   setTimer,
   setChoseWord,
 }) => {
-  const [countdown, setCountdown] = useState(1);
+  const [countdown, setCountdown] = useState(10);
   const [defInput, setDefInput] = useState(false);
   const [playGame, setPlayGame] = useState(false);
 
@@ -43,6 +43,14 @@ const Timer = ({
     });
   };
 
+
+// HERE!
+// useEffect(()=>{
+// setDefInput(true);
+//         // setCountdown(countdown - 1)
+// },[])
+
+// HERE
   useEffect(() => {
     const timer = setTimeout(() => {
       if (countdown > 0) {
@@ -89,6 +97,17 @@ const Timer = ({
           playerTurnName={playerTurnName}
         />
       ) : null}
+
+
+{/* HERE! */}
+{/* <DefInputBox
+          showBackOfCard={showBackOfCard}
+          game={game}
+          gameName={gameName}
+          userId={userId}
+          playerTurnName={playerTurnName}
+        /> */}
+
       {playGame ? (
         <GuessDefs
           showBackOfCard={showBackOfCard}

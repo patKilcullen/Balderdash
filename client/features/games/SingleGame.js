@@ -27,6 +27,8 @@ import TempScoreCard from "../scores/TempScoreCard";
 import ScoreCard from "../scores/ScoreCard";
 import FinalCard from "../scores/FinalCard";
 
+
+
 // Material UI
 import { Card, Button, Typography } from "@mui/material";
 
@@ -191,6 +193,7 @@ const SingleGame = () => {
   return (
     <Card>
       {/* SHOWSCORE CARD MAY BE UNECESSARY */}
+      
       {showTempScoreCard ? (
         <TempScoreCard tempScoreCard={tempScoreCard} />
       ) : null}
@@ -230,7 +233,9 @@ const SingleGame = () => {
       >
         Home
       </Button>
+     
     </Card>
+
   );
 };
 

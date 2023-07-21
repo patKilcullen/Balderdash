@@ -6,6 +6,8 @@ import Typography from "@mui/material/Typography";
 import Timer from "../gamePlay/Timer";
 import { Button } from "@mui/material";
 
+import DefInputBox from "../gamePlay/DefInputBox";
+
 const CardFront = ({
   def,
   handleChooseWord,
@@ -251,6 +253,26 @@ setTempBack(true)
               ) : null}
             </div>
           ) : null}
+{/* HERE! */}
+{/* <Timer
+                 setTempBack={"false"}
+                  showBackOfCard={"front"}
+                  makeHidden={makeHidden}
+                  top={top}
+                  game={game}
+                  username={username}
+                  userId={userId}
+                  userScore={userScore}
+                  gameName={gameName}
+                  gameId={game.id}
+                  playerTurnName={playerTurnName}
+                  definition={bottom}
+                  reloadScores={reloadScores}
+                  setDefinition={setDefinition}
+                  setWord={setWord}
+                  setTimer={setTimer}
+                  setChoseWord={setChoseWord}
+                /> */}
 
           
 {/* {sideState === "front"  || sideState === "back" && timer ?
@@ -323,6 +345,7 @@ setTempBack(true)
             </Button>
           ) : null}
         </Card>
+    
       </Card>
     </div>
   );
