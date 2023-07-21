@@ -4,6 +4,8 @@ const {
 } = require("../db");
 module.exports = router;
 
+const { Op } = require('sequelize')
+
 // Get All Games
 router.get("/", async (req, res, next) => {
   try {
@@ -24,7 +26,12 @@ console.log("GAME NAME IN ROUTE: ", req.params.gameName)
 
   try {
     const game = await Game.findOne({
-      where: {name: req.params.gameName},
+      // where: {name: req.params.gameName},
+      where: {
+        name: {
+          [Op.like]: `%${req.params.gameName}%`
+        }
+      },
       include: [{ model: User, as: "owner" }],
     });
 console.log("FOUND ASS GAME: ", game)

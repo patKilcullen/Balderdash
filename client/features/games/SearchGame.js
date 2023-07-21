@@ -179,8 +179,7 @@ console.log("GAMEY GAME: ", game.payload)
       </Box>
       </Box>
       {foundGame && foundGame.name ?
-      <CardFront side={"back"} half={{first: foundGame.name, second:  null }}></CardFront> 
-      
+       <CardFront side={"back"} half={{first: `"      "${foundGame.name.length < 20 ? foundGame.name : foundGame.name.slice(0, Math.ceil(foundGame.name.length / 2))}`, second:  foundGame.name.length < 20 ? null : foundGame.name.slice(Math.ceil(foundGame.name.length / 2)) }}></CardFront>
       :null}
       <Button type="button" color='secondary' sx={{textDecoration: "underline", fontWeight: "bold"}} onClick={()=> navigate('/home')}>Home</Button>
     </Container>
