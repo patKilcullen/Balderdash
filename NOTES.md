@@ -8,8 +8,7 @@ added roundsLeft: game.roundsLeft - 1 to handleChangeGameTurn in GuessDefs becas
 
  WHAT TO DO:
 PLay whose turn it is can't guess defs.
-
-
+ADD Tie GAME CARD
 
 
 

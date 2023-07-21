@@ -59,8 +59,8 @@ const DefInputBox = ({showBackOfCard, makeHidden, gameName, userId, playerTurnNa
 
  {seeInput ? (
 <Container>
-      <form style={{display: "flex", flexDirection: "column", alignContent: "center", gap: "5vh"}} onSubmit={handleEnterFakeDef}>
-        <FormControl style={{display: "flex", flexDirection: "column", alignContent: "center"}} fullWidth>
+      <form style={{display: "flex", flexDirection: "column", alignItems: "center", gap: "5vh"}} onSubmit={handleEnterFakeDef}>
+        <FormControl fullWidth>
           {/* <FormLabel   id="def-input-title"
               color="secondary"
               sx={{ fontWeight: "bold", overflow: "scroll" }}>Enter your definition here:</FormLabel> */}
@@ -68,7 +68,7 @@ const DefInputBox = ({showBackOfCard, makeHidden, gameName, userId, playerTurnNa
             placeholder=" Write your definition here..."
             minRows={20}
             ref={inputRef}
-            style={{ backgroundColor: "white", width: "100%", border: "4px solid #571122", borderRadius: "25px" }}
+            style={{ marginLeft: "-5px", backgroundColor: "white", width: "100%", border: "4px solid #571122", borderRadius: "20px" }}
             type="textarea"
             name="name"
             value={playerDef}
