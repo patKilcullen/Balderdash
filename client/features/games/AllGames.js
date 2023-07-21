@@ -61,65 +61,7 @@ const AllGames = () => {
 <CardFront top={"Seatch Game"} side={"back"}half={{first: "Unstarted", second:  "Games"}}></CardFront>
 </div>
 
-<div style={{display: "flex", flexDirection: "column", alignItems: "center", gap: "3vh", marginTop: "5vh"}} >
-{/* <Button
-            
-           sx={{border: "5px solid black"}}
-            // sx={{ fontSize: 30 }}
-            variant="contained"
-            color={"secondary"}
-          > */}
-            <Typography
-             
-             color={"secondary"}
-              sx={{ fontSize: 30, fontWeight: "bolder",  }}
-            >
-              Create Game
-            </Typography>
-          {/* </Button> */}
-          {/* <Button
-            
-            // sx={{ fontSize: 30, marginBottom: "15px" }}
-            sx={{ fontSize: 30 }}
-            variant="contained"
-          > */}
-            <Typography
-             
-              color={"secondary"}
-              sx={{ fontSize: 30, fontWeight: "bolder"}}
-            >
-              Search Game
-            </Typography>
-          {/* </Button> */}
-          {/* <Button
-            
-            // sx={{ fontSize: 30, marginBottom: "15px" }}
-            sx={{ fontSize: 30 }}
-            variant="contained"
-          > */}
-            <Typography
-             
-              color={"secondary"}
-              sx={{ fontSize: 30, fontWeight: "bolder" }}
-            >
-              All Started Games
-            </Typography>
-          {/* </Button> */}
-          {/* <Button
-            
-            // sx={{ fontSize: 30, marginBottom: "15px" }}
-            sx={{ fontSize: 30 }}
-            variant="contained"
-          > */}
-            <Typography
-            
-              color={"secondary"}
-              sx={{ fontSize: 30, fontWeight: "bolder" }}
-            >
-              All Unstarted Games
-            </Typography>
-          {/* </Button> */}
-          </div>
+
 
 
 {/* 
