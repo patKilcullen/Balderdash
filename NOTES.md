@@ -18,7 +18,7 @@ ADD Tie GAME CARD
 THING TO DO less important:
 
 in showBackOf Card... don't need the second "X" of "test" arguemnt.. also should just be sideOfCard
-
+CardFront "Back of Card" has display: "FLEW" instead of flex
 
 
 

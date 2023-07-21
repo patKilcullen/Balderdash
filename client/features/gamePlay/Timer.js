@@ -44,13 +44,7 @@ const Timer = ({
   };
 
 
-// HERE!
-// useEffect(()=>{
-// setDefInput(true);
-//         // setCountdown(countdown - 1)
-// },[])
 
-// HERE
   useEffect(() => {
     const timer = setTimeout(() => {
       if (countdown > 0) {
@@ -99,14 +93,6 @@ const Timer = ({
       ) : null}
 
 
-{/* HERE! */}
-{/* <DefInputBox
-          showBackOfCard={showBackOfCard}
-          game={game}
-          gameName={gameName}
-          userId={userId}
-          playerTurnName={playerTurnName}
-        /> */}
 
       {playGame ? (
         <GuessDefs

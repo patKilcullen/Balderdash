@@ -9,6 +9,7 @@ import { Button } from "@mui/material";
 import DefInputBox from "../gamePlay/DefInputBox";
 
 const CardFront = ({
+  half,
   def,
   handleChooseWord,
   defCards,
@@ -94,7 +95,7 @@ setTempBack(true)
           // minHeight: timer || (fullScreen && !hidden) ? "100vh" : "350px",
           // maxHeight: timer || (fullScreen && !hidden) ? "100vh" : "350px",
 
-          height: timer || (fullScreen && !hidden) ? "100vh" : "350px",
+          height: timer || (fullScreen && !hidden) ? "100vh": "350px",
 
           
           // width:
@@ -108,6 +109,8 @@ setTempBack(true)
             ? "90%"
             : defCards
             ? "85%"
+            // : half === true 
+            // ? "70%"
             : "200px",
    
          
@@ -253,26 +256,6 @@ setTempBack(true)
               ) : null}
             </div>
           ) : null}
-{/* HERE! */}
-{/* <Timer
-                 setTempBack={"false"}
-                  showBackOfCard={"front"}
-                  makeHidden={makeHidden}
-                  top={top}
-                  game={game}
-                  username={username}
-                  userId={userId}
-                  userScore={userScore}
-                  gameName={gameName}
-                  gameId={game.id}
-                  playerTurnName={playerTurnName}
-                  definition={bottom}
-                  reloadScores={reloadScores}
-                  setDefinition={setDefinition}
-                  setWord={setWord}
-                  setTimer={setTimer}
-                  setChoseWord={setChoseWord}
-                /> */}
 
           
 {/* {sideState === "front"  || sideState === "back" && timer ?
@@ -301,7 +284,7 @@ setTempBack(true)
 :null} */}
 
           {/* BACK OF CARD*/}
-          {sideState === "back" || tempBack ? (
+          {sideState === "back"  || tempBack ? (
             <div
               className="card-logo"
               style={{ display: "flew", flexDirection: "column", position: sideState !== "back" ? "fixed" : "null", marginTop: sideState !== "back" ? "-5%" : "null"  }}
@@ -311,7 +294,7 @@ setTempBack(true)
                 style={{ fontSize: "65px", fontWeight: "bold", }}
                 color={"secondary"}
               >
-                Balder...
+                {!half ? "Balder..." : half.first}
               </Typography>
 
               <Typography
@@ -319,7 +302,8 @@ setTempBack(true)
                 style={{ fontSize: "70px", fontWeight: "bold" }}
                 color={"secondary"}
               >
-                ...dash
+                {!half ? "...dash" : half.second}
+                {/* ...dash */}
               </Typography>
             </div>
           ) : null}

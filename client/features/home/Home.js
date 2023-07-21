@@ -8,6 +8,7 @@ import AllGames from "../games/AllGames";
 import CreateRound from "./CreateRound";
 import Navbar from "../navbar/Navbar";
 
+import { Typography, Divider } from '@mui/material';
 /**
  * COMPONENT
  */
@@ -17,8 +18,11 @@ const Home = () => {
   return (
     <div >
       <Navbar></Navbar>
-      <h3>Welcome, {username}</h3>
+      {/* <Typography id = "title" color="secondary"sx={{fontWeight: "bold", }}>Welcome to BALDERDASH, {username}</Typography> */}
+      {/* <Divider  sx={{ border: "2px solid #571122", width: "95%", marginTop: "-15px", boxShadow: "4px 4px #558ABB"} } ></Divider> */}
+      
 
+      
       {/* <Link to={"/main"}>Start a new game</Link> */}
 <AllGames></AllGames>
 

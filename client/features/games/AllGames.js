@@ -13,6 +13,9 @@ import { fetchSingleUser, selectSingleUser } from "../users/singleUserSlice";
 import CreateGame from "./CreateGame";
 import SingleGame from "./SingleGame";
 import Navbar from "../navbar/Navbar";
+import CardFront from "../cards/CardFront";
+
+import { Button, Typography } from "@mui/material";
 
 import socket from "socket.io-client";
 
@@ -47,7 +50,78 @@ const AllGames = () => {
   });
 
   return (
-    <div>
+    <div style={{height: "100%"}}>
+<div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+<Link to="/create-game"><CardFront top={"Create Game"} side={"back"} half={{first: "Create", second:  "Game"}}></CardFront></Link>
+
+<CardFront top={"Seatch Game"} side={"back"}half={{first: "Find", second:  "Game"}}></CardFront>
+<CardFront top={"Create Game"} side={"back"} half={{first: "Started", second:  "Games"}}></CardFront>
+
+<CardFront top={"Seatch Game"} side={"back"}half={{first: "Unstarted", second:  "Games"}}></CardFront>
+</div>
+
+<div style={{display: "flex", flexDirection: "column", alignItems: "center", gap: "3vh", marginTop: "5vh"}} >
+{/* <Button
+            
+           sx={{border: "5px solid black"}}
+            // sx={{ fontSize: 30 }}
+            variant="contained"
+            color={"secondary"}
+          > */}
+            <Typography
+             
+             color={"secondary"}
+              sx={{ fontSize: 30, fontWeight: "bolder",  }}
+            >
+              Create Game
+            </Typography>
+          {/* </Button> */}
+          {/* <Button
+            
+            // sx={{ fontSize: 30, marginBottom: "15px" }}
+            sx={{ fontSize: 30 }}
+            variant="contained"
+          > */}
+            <Typography
+             
+              color={"secondary"}
+              sx={{ fontSize: 30, fontWeight: "bolder"}}
+            >
+              Search Game
+            </Typography>
+          {/* </Button> */}
+          {/* <Button
+            
+            // sx={{ fontSize: 30, marginBottom: "15px" }}
+            sx={{ fontSize: 30 }}
+            variant="contained"
+          > */}
+            <Typography
+             
+              color={"secondary"}
+              sx={{ fontSize: 30, fontWeight: "bolder" }}
+            >
+              All Started Games
+            </Typography>
+          {/* </Button> */}
+          {/* <Button
+            
+            // sx={{ fontSize: 30, marginBottom: "15px" }}
+            sx={{ fontSize: 30 }}
+            variant="contained"
+          > */}
+            <Typography
+            
+              color={"secondary"}
+              sx={{ fontSize: 30, fontWeight: "bolder" }}
+            >
+              All Unstarted Games
+            </Typography>
+          {/* </Button> */}
+          </div>
+
+
+{/* 
       <Link to="/create-game">
         {" "}
         <button>Create a NEW GAME</button>
@@ -126,7 +200,7 @@ const AllGames = () => {
                 })
             : null}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
