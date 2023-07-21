@@ -1,6 +1,6 @@
 import React, { useState, useContext, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 // import { createGame } from "./allGamesSlice";
 // import { createScore } from "../scores/scoresSlice";
@@ -33,8 +33,8 @@ import Card from "@mui/material/Card";
 
 const SearchGame = () => {
   const userId = useSelector((state) => state.auth.me.id);
- const foundGame = useSelector(selectSingleGame)
- console.log("FOUND GAME: ", foundGame)
+//  const foundGame = useSelector(selectSingleGame)
+//  console.log("FOUND GAME: ", foundGame)
   const [gameName, setGameName] = useState("");
   const [error, setError] = useState(false)
 
@@ -49,11 +49,14 @@ const SearchGame = () => {
 
 
 
+const [foundGame, setFoundGame] = useState("")
+console.log("FOUND GAME: ", foundGame)
 
   const handleSearchGame = (e) => {
     e.preventDefault();
     console.log("THIS GAM NAME: ", gameName)
 dispatch(fetchSingleGame(gameName)).then((game)=>{
+  setFoundGame(game.payload)
 console.log("GAMEY GAME: ", game.payload)
 
 })
@@ -179,7 +182,7 @@ console.log("GAMEY GAME: ", game.payload)
       </Box>
       </Box>
       {foundGame && foundGame.name ?
-       <CardFront side={"back"} half={{first: `"      "${foundGame.name.length < 20 ? foundGame.name : foundGame.name.slice(0, Math.ceil(foundGame.name.length / 2))}`, second:  foundGame.name.length < 20 ? null : foundGame.name.slice(Math.ceil(foundGame.name.length / 2)) }}></CardFront>
+      <Link to={`/games/${foundGame.id}`} ><CardFront side={"back"} half={{first: `${foundGame.name.length < 20 ? foundGame.name : foundGame.name.slice(0, Math.ceil(foundGame.name.length / 2))}`, second:  foundGame.name.length < 20 ? null : foundGame.name.slice(Math.ceil(foundGame.name.length / 2)) }}></CardFront></Link> 
       :null}
       <Button type="button" color='secondary' sx={{textDecoration: "underline", fontWeight: "bold"}} onClick={()=> navigate('/home')}>Home</Button>
     </Container>

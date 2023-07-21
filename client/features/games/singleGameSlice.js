@@ -78,9 +78,9 @@ const singleGameSlice = createSlice({
   initialState: {},
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchSingleGame.fulfilled, (state, action) => {
-      return action.payload;
-    });
+    // builder.addCase(fetchSingleGame.fulfilled, (state, action) => {
+    //   return action.payload;
+    // });
     builder.addCase(editGameTurn.fulfilled, (state, action) => {
       return action.payload;
     })

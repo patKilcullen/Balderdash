@@ -46,10 +46,12 @@ const SingleGame = () => {
   const navigate = useNavigate();
   const userScore = scores.find((score) => score.userId === userId);
 
+
+  console.log("GAME IN SINGLE GAME: ", game)
   // If there are 0 rounds left, render the FinalCard
   const [showFinalCard, setShowFinalCard] = useState(false);
   useEffect(() => {
-    game.roundsLeft === 0 ? setShowFinalCard(true) : setShowFinalCard(false);
+     game.roundsLeft === 0 ? setShowFinalCard(true) : setShowFinalCard(false);
   }, [game.roundsLeft]);
 
   // NEED?
@@ -75,6 +77,7 @@ const SingleGame = () => {
   //   dispatch(fetchAllGameScores(gameId));
 
   // }, []);
+ 
 
   useEffect(() => {
     dispatch(fetchSingleGame(gameId));
