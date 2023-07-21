@@ -47,7 +47,7 @@ const SingleGame = () => {
   const userScore = scores.find((score) => score.userId === userId);
 
 
-  console.log("GAME IN SINGLE GAME: ", game)
+  
   // If there are 0 rounds left, render the FinalCard
   const [showFinalCard, setShowFinalCard] = useState(false);
   useEffect(() => {

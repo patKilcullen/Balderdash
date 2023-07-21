@@ -5,7 +5,6 @@ import { useNavigate, Link } from "react-router-dom";
 // import { createGame } from "./allGamesSlice";
 // import { createScore } from "../scores/scoresSlice";
 
-
 import { fetchSingleGame, selectSingleGame } from "./singleGameSlice";
 
 import CardFront from "../cards/CardFront";
@@ -33,11 +32,10 @@ import Card from "@mui/material/Card";
 
 const SearchGame = () => {
   const userId = useSelector((state) => state.auth.me.id);
-//  const foundGame = useSelector(selectSingleGame)
-//  console.log("FOUND GAME: ", foundGame)
+  //  const foundGame = useSelector(selectSingleGame)
+  //  console.log("FOUND GAME: ", foundGame)
   const [gameName, setGameName] = useState("");
-  const [error, setError] = useState(false)
-
+  const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -46,22 +44,15 @@ const SearchGame = () => {
   //  const clientSocket = socket.connect("http://localhost:8080");
   const clientSocket = useContext(SocketContext);
 
-
-
-
-const [foundGame, setFoundGame] = useState("")
-console.log("FOUND GAME: ", foundGame)
+  const [foundGame, setFoundGame] = useState("");
 
   const handleSearchGame = (e) => {
     e.preventDefault();
-    console.log("THIS GAM NAME: ", gameName)
-dispatch(fetchSingleGame(gameName)).then((game)=>{
-  setFoundGame(game.payload)
-console.log("GAMEY GAME: ", game.payload)
 
-})
- 
-  //  setGameName("")
+    dispatch(fetchSingleGame(gameName)).then((game) => {
+      game.payload === null ? setError("Can't find that game...")
+      : setFoundGame(game.payload);
+    });
   };
 
   return (
@@ -69,7 +60,12 @@ console.log("GAMEY GAME: ", game.payload)
       color="secondary"
       component="main"
       maxWidth="sm"
-      sx={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}
+      sx={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
     >
       <Box
         sx={{
@@ -86,105 +82,123 @@ console.log("GAMEY GAME: ", game.payload)
           fontWeight: "bold",
         }}
       >
-         <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              backgroundColor: "#e6e8dc",
-              padding: "1em 1em",
-              borderRadius: "50px",
-              border: "5px solid black",
-              boxShadow: "20",
-              fontWeight: "bold",
-              height: "100%",
-            }}
-          >
-        
-        <Typography
-          color="secondary"
-          component="h1"
-          variant="h4"
+        <Box
           sx={{
-            textDecoration: "underline",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            backgroundColor: "#e6e8dc",
+            padding: "1em 1em",
+            borderRadius: "50px",
+            border: "5px solid black",
+            boxShadow: "20",
             fontWeight: "bold",
-            fontSize: "40px",
+            height: "100%",
           }}
         >
-          Search for a Game
-        </Typography>
-        <Box
-          component="form"
-          onSubmit={handleSearchGame}
-          noValidate
-          sx={{ mt: 3 }}
-        >
-    
           <Typography
-            color="black"
-            component="h2"
-            variant="h5"
-            sx={{ fontWeight: "bold" }}
-          >
-            Game Name:
-          </Typography>
-          <input
-            style={{
-              backgroundColor: "white",
-              border: "2px solid black",
-              borderRadius: "50px",
-              fontWeight: "bold",
-              font: "200px",
-              width: "100%",
-              height: "50px",
-              fontSize: "20px",
-            }}
-            placeholder="pick a fun game name..."
-          
-
-            type="text"
-            name="name"
-            value={gameName}
-            onChange={(e) => setGameName(e.target.value)}
-            required
-          />
-  
-
-         
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
+            color="secondary"
+            component="h1"
+            variant="h4"
             sx={{
-              mt: 3,
-              mb: 2,
-              height: "60px",
-              fontSize: "1.25rem",
-              boxShadow: "20",
-              border: "2px solid black",
-              borderRadius: "25px",
+              textDecoration: "underline",
+              fontWeight: "bold",
+              fontSize: "40px",
             }}
-            color="primary"
+          >
+            Search for a Game
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSearchGame}
+            noValidate
+            sx={{ mt: 3 }}
           >
             <Typography
-              color="secondary"
+              color="black"
               component="h2"
               variant="h5"
               sx={{ fontWeight: "bold" }}
             >
-              Search Game
+              Game Name:
             </Typography>
-          </Button>
+            <input
+              style={{
+                backgroundColor: "white",
+                border: "2px solid black",
+                borderRadius: "50px",
+                fontWeight: "bold",
+                font: "200px",
+                width: "100%",
+                height: "50px",
+                fontSize: "20px",
+              }}
+              placeholder="pick a fun game name..."
+              type="text"
+              name="name"
+              value={gameName}
+              onChange={(e) => setGameName(e.target.value)}
+              required
+            />
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                mt: 3,
+                mb: 2,
+                height: "60px",
+                fontSize: "1.25rem",
+                boxShadow: "20",
+                border: "2px solid black",
+                borderRadius: "25px",
+              }}
+              color="primary"
+            >
+              <Typography
+                color="secondary"
+                component="h2"
+                variant="h5"
+                sx={{ fontWeight: "bold" }}
+              >
+                Search Game
+              </Typography>
+            </Button>
+          </Box>
+          {/* </Card> */}
+          {error ? <div style={{ color: "red" }}>{error}</div> : null}
         </Box>
-        {/* </Card> */}
-        {error ? <div style={{ color: "red" }}>{error}</div> : null}
       </Box>
-      </Box>
-      {foundGame && foundGame.name ?
-      <Link to={`/games/${foundGame.id}`} ><CardFront side={"back"} half={{first: `${foundGame.name.length < 20 ? foundGame.name : foundGame.name.slice(0, Math.ceil(foundGame.name.length / 2))}`, second:  foundGame.name.length < 20 ? null : foundGame.name.slice(Math.ceil(foundGame.name.length / 2)) }}></CardFront></Link> 
-      :null}
-      <Button type="button" color='secondary' sx={{textDecoration: "underline", fontWeight: "bold"}} onClick={()=> navigate('/home')}>Home</Button>
+      {foundGame && foundGame.name ? (
+        <Link to={`/games/${foundGame.id}`}>
+          <CardFront
+            side={"back"}
+            half={{
+              first: `${
+                foundGame.name.length < 20
+                  ? foundGame.name
+                  : foundGame.name.slice(
+                      0,
+                      Math.ceil(foundGame.name.length / 2)
+                    )
+              }`,
+              second:
+                foundGame.name.length < 20
+                  ? null
+                  : foundGame.name.slice(Math.ceil(foundGame.name.length / 2)),
+            }}
+          ></CardFront>
+        </Link>
+      ) : null}
+      <Button
+        type="button"
+        color="secondary"
+        sx={{ textDecoration: "underline", fontWeight: "bold" }}
+        onClick={() => navigate("/home")}
+      >
+        Home
+      </Button>
     </Container>
   );
 };

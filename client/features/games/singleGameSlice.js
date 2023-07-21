@@ -78,6 +78,7 @@ const singleGameSlice = createSlice({
   initialState: {},
   reducers: {},
   extraReducers: (builder) => {
+    // removed this because its only used for search game link and doesn;t need to be put in store(if it does the game doesnt load when cliking the link from serach game)
     // builder.addCase(fetchSingleGame.fulfilled, (state, action) => {
     //   return action.payload;
     // });
