@@ -2,8 +2,13 @@ import React, { useState, useContext, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { createGame } from "./allGamesSlice";
-import { createScore } from "../scores/scoresSlice";
+// import { createGame } from "./allGamesSlice";
+// import { createScore } from "../scores/scoresSlice";
+
+
+import { fetchSingleGame, selectSingleGame } from "./singleGameSlice";
+
+import CardFront from "../cards/CardFront";
 
 // SOCKET
 import socket from "socket.io-client";
@@ -28,9 +33,11 @@ import Card from "@mui/material/Card";
 
 const SearchGame = () => {
   const userId = useSelector((state) => state.auth.me.id);
+ const foundGame = useSelector(selectSingleGame)
+ console.log("FOUND GAME: ", foundGame)
   const [gameName, setGameName] = useState("");
-  const [rounds, setRounds] = useState(1);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false)
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,55 +46,27 @@ const SearchGame = () => {
   //  const clientSocket = socket.connect("http://localhost:8080");
   const clientSocket = useContext(SocketContext);
 
+
+
+
+
   const handleSearchGame = (e) => {
     e.preventDefault();
+    console.log("THIS GAM NAME: ", gameName)
+dispatch(fetchSingleGame(gameName)).then((game)=>{
+console.log("GAMEY GAME: ", game.payload)
 
-    !isNaN(rounds) && rounds > 0
-      ? dispatch(
-          createGame({
-            userId: userId,
-            name: gameName,
-            rounds: rounds,
-            roundsLeft: rounds,
-            winner: "null",
-            started: false,
-            complete: false,
-            ownerId: userId,
-            publicX: true,
-            numPlayers: 1,
-            turn: 1,
-          })
-        )
-          .then((res) => {
-            clientSocket.emit("join_room", {
-              roomId: res.payload.id,
-              userId: userId,
-            });
-            clientSocket.emit("join-da-room", res.payload.id);
-            dispatch(
-              createScore({
-                score: 0,
-                accepted: true,
-                turn: true,
-                turnNum: 1,
-                gameId: res.payload.id,
-                userId: userId,
-              })
-            );
-          })
-          .then(() => {
-            navigate("/home");
-          })
-      : setError("Rounds must be a postive integer");
+})
+ 
+  //  setGameName("")
   };
-
 
   return (
     <Container
       color="secondary"
       component="main"
       maxWidth="sm"
-      sx={{ height: "100vh" }}
+      sx={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       <Box
         sx={{
@@ -170,7 +149,7 @@ const SearchGame = () => {
 
          
 
-          {/* <Button
+          <Button
             type="submit"
             fullWidth
             variant="contained"
@@ -191,14 +170,18 @@ const SearchGame = () => {
               variant="h5"
               sx={{ fontWeight: "bold" }}
             >
-              Create Game
+              Search Game
             </Typography>
-          </Button> */}
+          </Button>
         </Box>
         {/* </Card> */}
         {error ? <div style={{ color: "red" }}>{error}</div> : null}
       </Box>
       </Box>
+      {foundGame && foundGame.name ?
+      <CardFront side={"back"} half={{first: foundGame.name, second:  null }}></CardFront> 
+      
+      :null}
       <Button type="button" color='secondary' sx={{textDecoration: "underline", fontWeight: "bold"}} onClick={()=> navigate('/home')}>Home</Button>
     </Container>
   );

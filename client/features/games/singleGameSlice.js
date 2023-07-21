@@ -1,16 +1,33 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// GET ALL GAMES
-export const fetchSingleGame = createAsyncThunk("singleGame", async (id) => {
-  try {
-    const { data } = await axios.get(`/api/games/${id}`);
+// // GET ALL GAMES
+// export const fetchSingleGame = createAsyncThunk("singleGame", async (id) => {
+//   try {
+//     const { data } = await axios.get(`/api/games/${id}`);
 
-    return data;
-  } catch (error) {
-    console.log("ERROR IN SINBGLE GAME THUNK: ", error);
-  }
-});
+//     return data;
+//   } catch (error) {
+//     console.log("ERROR IN SINBGLE GAME THUNK: ", error);
+//   }
+// });
+
+
+
+  // Get Single Game
+  export const fetchSingleGame = createAsyncThunk(
+    "fetchSingleGame",
+    async (gameName) => {
+   console.log("GAME NAME IN SLICE: ", gameName)
+      try {
+        const { data } = await axios.get(`/api/games/findGame/${gameName}`);
+        return data;
+      } catch (error) {
+        console.log("ERROR IN FETCH ALL GAMES THUNK: ", error);
+      }
+    }
+  );
+
 
 
 // export const addGamePlayer = createAsyncThunk(

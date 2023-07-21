@@ -17,6 +17,24 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// GET SINGLE GAME
+router.get("/findGame/:gameName", async (req, res, next) => {
+console.log("GAME NAME IN ROUTE: ", req.params.gameName)
+
+
+  try {
+    const game = await Game.findOne({
+      where: {name: req.params.gameName},
+      include: [{ model: User, as: "owner" }],
+    });
+console.log("FOUND ASS GAME: ", game)
+    res.json(game);
+  } catch (err) {
+    console.log("GAME NOT FOUND")
+    next(err);
+  }
+});
+
 
 
 

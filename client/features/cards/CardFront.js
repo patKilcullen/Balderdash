@@ -287,7 +287,7 @@ setTempBack(true)
           {sideState === "back"  || tempBack ? (
             <div
               className="card-logo"
-              style={{ display: "flew", flexDirection: "column", position: sideState !== "back" ? "fixed" : "null", marginTop: sideState !== "back" ? "-5%" : "null"  }}
+              style={{ display: "flex", flexDirection: "column", position: sideState !== "back" ? "fixed" : "null", marginTop: sideState !== "back" ? "-5%" : "null"  }}
             >
               <Typography
                 className="card-logo-text"
