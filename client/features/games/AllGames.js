@@ -11,6 +11,7 @@ import {
 import { fetchSingleUser, selectSingleUser } from "../users/singleUserSlice";
 
 import CreateGame from "./CreateGame";
+import SearchGame from "./SearchGame";
 import SingleGame from "./SingleGame";
 import Navbar from "../navbar/Navbar";
 import CardFront from "../cards/CardFront";
@@ -54,7 +55,7 @@ const AllGames = () => {
 <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
 <Link to="/create-game"><CardFront top={"Create Game"} side={"back"} half={{first: "Create", second:  "Game"}}></CardFront></Link>
 
-<CardFront top={"Seatch Game"} side={"back"}half={{first: "Find", second:  "Game"}}></CardFront>
+<Link to="/search-game"><CardFront top={"Seatch Game"} side={"back"}half={{first: "Find", second:  "Game"}}></CardFront></Link>
 <CardFront top={"Create Game"} side={"back"} half={{first: "Started", second:  "Games"}}></CardFront>
 
 <CardFront top={"Seatch Game"} side={"back"}half={{first: "Unstarted", second:  "Games"}}></CardFront>

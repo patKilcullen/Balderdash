@@ -5,6 +5,7 @@ import AuthForm from '../features/auth/AuthForm';
 import Home from '../features/home/Home';
 import Main from '../features/main/Main';
 import CreateGame from '../features/games/CreateGame';
+import SearchGame from '../features/games/SearchGame';
 import AllGames from '../features/games/AllGames';
 import SingleGame from '../features/games/SingleGame';
 
@@ -34,6 +35,7 @@ const AppRoutes = () => {
           <Route path="/games" element={<AllGames />} />
           <Route path="/games/:id" element={<SingleGame />} />
           <Route path="/create-game" element={<CreateGame />} />
+          <Route path="/search-game" element={<SearchGame />} />
         </Routes>
       ) : (
         // NOt LOGGED IN ROUTES
