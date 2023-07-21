@@ -3,6 +3,10 @@ T
 <!-- NEW -->
 
 LAST UPDATE: 
+
+added cards to all games and an search game component that searhed by string for game name and links to that game.  removed fetchSingleGame extra reducer beacause wasnt used??? and if it the searched/found game was added to stat in store it woulnt load when clicking on the link, the game was null
+
+
 added roundsLeft: game.roundsLeft - 1 to handleChangeGameTurn in GuessDefs becasue changing the roundsLeft seperately was occasionally causing probelms where it was or wasn't both players trn or one player went twice in a row.  This was possibly because the game was being updated twice.  IT seems to workd but need to test to make sure error doesnt happen
 
 
