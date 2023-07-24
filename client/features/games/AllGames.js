@@ -18,6 +18,8 @@ import CardFront from "../cards/CardFront";
 
 import { Button, Typography } from "@mui/material";
 
+import UserGames from "./UserGames";
+
 import socket from "socket.io-client";
 
 const AllGames = () => {
@@ -31,12 +33,22 @@ const AllGames = () => {
 
   const [gamesX, setGamesX] = useState([]);
 
-  useEffect(() => {
-    dispatch(fetchAllGames());
-  }, []);
+
 
   useEffect(() => {
-    dispatch(fetchSingleUser(userId));
+    dispatch(fetchAllGames())
+
+
+  }, []);
+
+const[showAllUserGames, setShowAllUserGames] = useState(false)
+const[allUserGames, setAllUserGames] = useState([]) 
+  // const [startedGames, setStartedGames] = useState([])
+  useEffect(() => {
+    dispatch(fetchSingleUser(userId)).then((res)=>{
+      // console.log("RES PAY: ", res.payload.games)
+      setAllUserGames(res.payload.games)
+          })
   }, []);
 
   const clientSocket = socket.connect("http://localhost:8080");
@@ -59,6 +71,11 @@ const AllGames = () => {
 <CardFront top={"Create Game"} side={"back"} half={{first: "Started", second:  "Games"}}></CardFront>
 
 <CardFront top={"Seatch Game"} side={"back"}half={{first: "Unstarted", second:  "Games"}}></CardFront>
+
+<Link to={`/user-games/all-games`}><CardFront  top={"Seatch Game"} side={"back"}half={{first: "All", second:  "Games"}}></CardFront></Link>
+
+
+
 </div>
 
 

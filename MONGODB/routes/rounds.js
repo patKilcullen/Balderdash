@@ -5,7 +5,7 @@ const Round = require("../models/rounds.js")
 // GET ROUNDS
 router.get('/', async (req,res)=>{
 try {
-const rounds = await  Round.find()
+const rounds = await Round.find()
 res.send(rounds)
 }
 catch(error) {

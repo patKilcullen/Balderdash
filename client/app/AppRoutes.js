@@ -8,6 +8,7 @@ import CreateGame from '../features/games/CreateGame';
 import SearchGame from '../features/games/SearchGame';
 import AllGames from '../features/games/AllGames';
 import SingleGame from '../features/games/SingleGame';
+import UserGames from '../features/games/UserGames';
 
 import { me } from './store';
 
@@ -36,6 +37,7 @@ const AppRoutes = () => {
           <Route path="/games/:id" element={<SingleGame />} />
           <Route path="/create-game" element={<CreateGame />} />
           <Route path="/search-game" element={<SearchGame />} />
+          <Route path="/user-games/:games" element={<UserGames />} />
         </Routes>
       ) : (
         // NOt LOGGED IN ROUTES
