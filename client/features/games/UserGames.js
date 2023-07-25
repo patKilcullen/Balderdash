@@ -38,7 +38,25 @@ dispatch(fetchSingleUser(userId)).then((res)=>{
   setDisplayGames(res.payload.games)
       })
       
-: console.log("FUCK a doo")
+: 
+games.games === "started-games" ? 
+
+dispatch(fetchSingleUser(userId)).then((res)=>{
+  
+  setDisplayGames(res.payload.games.filter((game)=>game.started === true))
+      })
+      
+: 
+games.games === "unstarted-games" ? 
+
+dispatch(fetchSingleUser(userId)).then((res)=>{
+  
+  setDisplayGames(res.payload.games.filter((game)=>game.started === false))
+      })
+      
+:
+
+null
 },[])
 
 
