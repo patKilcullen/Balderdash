@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 // import { createGame } from "./allGamesSlice";
 // import { createScore } from "../scores/scoresSlice";
 
-import { fetchSingleGame, selectSingleGame } from "./singleGameSlice";
+import { fetchSingleGame, selectSingleGame, findGameByName } from "./singleGameSlice";
 
 import CardFront from "../cards/CardFront";
 
@@ -49,7 +49,7 @@ const SearchGame = () => {
   const handleSearchGame = (e) => {
     e.preventDefault();
 
-    dispatch(fetchSingleGame(gameName)).then((game) => {
+    dispatch(findGameByName(gameName)).then((game) => {
       game.payload === null ? setError("Can't find that game...")
       : setFoundGame(game.payload);
     });

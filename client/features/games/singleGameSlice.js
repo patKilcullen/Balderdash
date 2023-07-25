@@ -2,25 +2,26 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // // GET ALL GAMES
-// export const fetchSingleGame = createAsyncThunk("singleGame", async (id) => {
-//   try {
-//     const { data } = await axios.get(`/api/games/${id}`);
+export const fetchSingleGame = createAsyncThunk("singleGame", async (id) => {
+  try {
+    const { data } = await axios.get(`/api/games/${id}`);
 
-//     return data;
-//   } catch (error) {
-//     console.log("ERROR IN SINBGLE GAME THUNK: ", error);
-//   }
-// });
+    return data;
+  } catch (error) {
+    console.log("ERROR IN SINBGLE GAME THUNK: ", error);
+  }
+});
 
 
 
   // Get Single Game
-  export const fetchSingleGame = createAsyncThunk(
-    "fetchSingleGame",
+  export const findGameByName = createAsyncThunk(
+    "findGameByName",
     async (gameName) => {
    console.log("GAME NAME IN SLICE: ", gameName)
       try {
         const { data } = await axios.get(`/api/games/findGame/${gameName}`);
+        console.log("DATA IN SLICE: ", data)
         return data;
       } catch (error) {
         console.log("ERROR IN FETCH ALL GAMES THUNK: ", error);
@@ -80,6 +81,11 @@ const singleGameSlice = createSlice({
   extraReducers: (builder) => {
     // removed this because its only used for search game link and doesn;t need to be put in store(if it does the game doesnt load when cliking the link from serach game)
     builder.addCase(fetchSingleGame.fulfilled, (state, action) => {
+      
+      return action.payload;
+    });
+    builder.addCase(findGameByName.fulfilled, (state, action) => {
+      console.log("ACTIO NAPPSDS SA ASD ADS AS: ", action.payload)
       return action.payload;
     });
     builder.addCase(editGameTurn.fulfilled, (state, action) => {

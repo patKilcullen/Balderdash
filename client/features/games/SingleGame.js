@@ -80,6 +80,11 @@ const SingleGame = () => {
 
   }, []);
  
+  useEffect(()=>{
+    console.log("LOADY LOAD: ", gameId)
+    dispatch(fetchSingleGame(gameId))
+    console.log("LOADY LOAD GAEM: ", game)
+  },[])
 
   useEffect(() => {
     dispatch(fetchSingleGame(gameId));
@@ -199,29 +204,12 @@ const SingleGame = () => {
 const[showTiedGame, setShowTiedGame] = useState(false)
   const checkIfTied = ()=>{
     setShowTiedGame(true)
-    // setTimeout(() => {
-    //   checkIfTied(false)
-
-    //   setShowTiedGame(false)
-      
-    // }, 1000);
-    // setShowTiedGame(true)
+    console.log("GOLD TURD MCGURD: ", showTiedGame)
   }
 
   return (
     <Card>
-      {/* SHOWSCORE CARD MAY BE UNECESSARY */}
-      
-
-      {/* {showTiedGame ?
-<CardFront   
-                  
-                 
-                  fullScreen={true}
-                  top={"TIE GAME"}
-                  bottom={"KEEP PLAYING"}
-                  side={"front"}></CardFront>
-      : null} */}
+   
       {showTempScoreCard ? (
         <TempScoreCard tempScoreCard={tempScoreCard} showTiedGame={showTiedGame} />
       ) : null}
