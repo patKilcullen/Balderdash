@@ -100,7 +100,7 @@ const SingleGame = () => {
     setTimeout(() => {
       dispatch(clearTempScoreCardMessages());
       setShowTempScoreCard(false);
-    }, 1000);
+    }, 10000);
     setShowTempScoreCard(true);
   };
 
@@ -204,9 +204,10 @@ const SingleGame = () => {
 const[showTiedGame, setShowTiedGame] = useState(false)
   const checkIfTied = ()=>{
     setShowTiedGame(true)
-    console.log("GOLD TURD MCGURD: ", showTiedGame)
+
   }
 
+console.log("GAME: ", game)
   return (
     <Card>
    

@@ -28,7 +28,7 @@ const Timer = ({
   setTimer,
   setChoseWord,
 }) => {
-  const [countdown, setCountdown] = useState(1);
+  const [countdown, setCountdown] = useState(3);
   const [defInput, setDefInput] = useState(false);
   const [playGame, setPlayGame] = useState(false);
 

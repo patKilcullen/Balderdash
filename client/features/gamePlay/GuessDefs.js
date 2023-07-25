@@ -63,7 +63,7 @@ const GuessDefs = ({
   const singleGame = useSelector(selectSingleGame);
   const tempScoreCardMessages = useSelector(selectTempScoreCardMessages);
 
-  const [countdown, setCountdown] = useState(1);
+  const [countdown, setCountdown] = useState(10);
   useEffect(() => {
     showBackOfCard("front");
   }, []);
@@ -228,6 +228,8 @@ const GuessDefs = ({
                   top={word}
                   bottom={value}
                   side={"front"}
+                  userScore={userScore}
+                  singleGame={singleGame}
                 />
               );
             })

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -31,6 +31,7 @@ const CardFront = ({
   setWord,
   setTimer,
   setChoseWord,
+  singleGame
 }) => {
   // HIDDEN changes parent element dimentions so that each child card take up
   // full screen when player look through which definition to choose
@@ -53,6 +54,10 @@ setTempBack(true)
     : null
    
   };
+
+
+
+
 
   return (
     // <div id="temp-scorecard">
@@ -316,10 +321,10 @@ setTempBack(true)
 
 
 
-          
+
 
           {/* CHOOSE DEFINITION BUTTON  only available is card in one of the card players get to choose*/}
-          {defCards ? (
+          {defCards && userScore.turnNum !== singleGame.turn ? (
             <Button
               sx={{ alignSelf: "center" }}
               variant="contained"
