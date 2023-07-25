@@ -14,6 +14,7 @@ added roundsLeft: game.roundsLeft - 1 to handleChangeGameTurn in GuessDefs becas
 PLay whose turn it is can't guess defs.
 ADD Tie GAME CARD
 RESTART GAME NEED TO SET SCORES TO 0
+WHEN 3rd player added need to update scoreCArd
 
 
 
