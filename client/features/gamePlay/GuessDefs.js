@@ -29,6 +29,7 @@ import TempScoreCard from "../scores/TempScoreCard";
 import CardFront from "../cards/CardFront";
 
 const GuessDefs = ({
+  checkIfTied,
   showBackOfCard,
   makeHidden,
   top,
@@ -54,6 +55,7 @@ const GuessDefs = ({
   const [correct, setCorrect] = useState(null);
   const [defList, setDefList] = useState(null);
   const [guessed, setGuessed] = useState(false);
+  const [isTied, setIsTied] = useState(false)
 
   const dispatch = useDispatch();
   const word = useSelector(selectWord);
@@ -73,8 +75,8 @@ const GuessDefs = ({
         setCountdown(countdown - 1);
       } else if (countdown === 0) {
         setDefList(false);
-        handleChangeGameTurn();
-        reloadScores();
+        handleChangeGameTurn()
+        reloadScores(isTied);
         setDefinition("");
         setWord("");
         setGuessed(false);
@@ -93,7 +95,7 @@ const GuessDefs = ({
     return () => clearTimeout(timer);
   }, [countdown]);
 
-  // if more than one round left, check game turn, if 1, set turn to num of players and subtract round, if not 1, -1 from turn and rounds
+  // if more than one round left, change game turn, if 1, set turn to num of players and subtract round, if not 1, -1 from turn and rounds
   // if Last round, check to see if the is one high score, if not, its a tie game, if there is one score, subtract round to 0, thus ending the game
   // if tie game, change turn but dont subtract rounds, it will continue until one high score.
   const handleChangeGameTurn = () => {
@@ -114,8 +116,13 @@ const GuessDefs = ({
             })
           )
       : dispatch(fetchHighestGameScores(gameId)).then((res) => {
+        res.payload.length > 1 ?
+        checkIfTied()
+        : null
+
           res.payload.length > 1
-            ? game.turn === 1
+            ? 
+            game.turn === 1
               ? dispatch(
                   editGameTurn({ gameId: gameId, turn: game.numPlayers })
                 )
@@ -128,6 +135,7 @@ const GuessDefs = ({
                 })
               );
         });
+   
   };
 
   useEffect(() => {

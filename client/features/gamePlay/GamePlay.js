@@ -30,7 +30,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { minWidth } from "@mui/system";
 
-const GamePlay = ({ userId, game, userScore, reloadScores }) => {
+const GamePlay = ({ userId, game, userScore, reloadScores,checkIfTied }) => {
   const dispatch = useDispatch();
   const me = useSelector(selectMe);
   const username = me.username;
@@ -134,8 +134,10 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
       ({ playerDef, room, userId, playerTurnName }) => {
         let playerId = userId;
         room === gameName && playerTurnName === username
-          ? dispatch(addDefinition({ [playerId]: playerDef }))
-          : console.log("ERROR: Failed to add player definition");
+          ? dispatch(addDefinition({ [playerId]: playerDef })).then(()=>{
+            console.log("RECEIVE PLAYER FAKE DEF: ")
+          })
+          : console.log("ERROR: Failed to add player definition: ", playerDef, room, userId, playerTurnName);
       }
     );
   }, [clientSocket, game]);
@@ -172,6 +174,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores }) => {
         ) : null}
 
         <CardFront
+        checkIfTied={checkIfTied}
           top={word}
           bottom={definition}
           side={word || (word.length && definition) ? "front" : "back"}

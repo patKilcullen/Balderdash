@@ -9,6 +9,7 @@ import { Button } from "@mui/material";
 import DefInputBox from "../gamePlay/DefInputBox";
 
 const CardFront = ({
+  checkIfTied,
   half,
   def,
   handleChooseWord,
@@ -235,6 +236,7 @@ setTempBack(true)
 
               {timer ? (
                 <Timer
+                checkIfTied={checkIfTied}
                 setTempBack={setTempBack}
                   showBackOfCard={showBackOfCard}
                   makeHidden={makeHidden}

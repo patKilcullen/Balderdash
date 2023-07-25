@@ -61,39 +61,11 @@ null
 
 
 
-// useEffect(() => {
-//   dispatch(fetchSingleUser(userId)).then((res)=>{
-//     // console.log("RES PAY: ", res.payload.games)
-//     setAllUserGames(res.payload.games)
-//         })
-// }, []);
 
-
-  // const user = useSelector(selectSingleUser);
-
-  // const [gamesX, setGamesX] = useState([]);
-
-  // useEffect(() => {
-  //   dispatch(fetchAllGames());
-  // }, []);
-
-  // useEffect(() => {
-  //   dispatch(fetchSingleUser(userId));
-  // }, []);
-
-  // const clientSocket = socket.connect("http://localhost:8080");
-
-  // when games changes, when add new games, send games to socket so other players see new game
-  // useEffect(() => {
-  //   clientSocket.emit("send_new_game", games);
-  // }, [games]);
-
-  // clientSocket.on("receive_new_game", (data) => {
-  //   setGamesX(data);
-  // });
 
   return (
     <div style={{height: "100%"}}>
+      <Navbar></Navbar>
 <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
 <div> {displayGames && displayGames.length
             ? displayGames  
@@ -124,7 +96,7 @@ null
                     
                     </Link>
                 ))
-            : null}
+            : "NO GAMES"}
 </div>
 
 

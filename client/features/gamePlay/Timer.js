@@ -11,6 +11,7 @@ import {
 } from "./gamePlaySlice";
 
 const Timer = ({
+  checkIfTied,
   setTempBack,
   showBackOfCard,
   makeHidden,
@@ -27,7 +28,7 @@ const Timer = ({
   setTimer,
   setChoseWord,
 }) => {
-  const [countdown, setCountdown] = useState(10);
+  const [countdown, setCountdown] = useState(1);
   const [defInput, setDefInput] = useState(false);
   const [playGame, setPlayGame] = useState(false);
 
@@ -96,6 +97,7 @@ const Timer = ({
 
       {playGame ? (
         <GuessDefs
+        checkIfTied={checkIfTied}
           showBackOfCard={showBackOfCard}
           makeHidden={makeHidden}
           guessDefs={true}

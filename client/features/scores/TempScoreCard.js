@@ -4,23 +4,23 @@ import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-const TempScoreCard = ({ tempScoreCard }) => {
-  const [countdown, setCountdown] = useState();
-  const [showTempScoreCard, setShowTempScoreCard] = useState(false);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (countdown > 0) {
-        setCountdown(countdown - 1);
-        // setShowTempScoreCard(true);
-      } else {
-        // setShowTempScoreCard(false);
-      }
-    }, 1000);
+const TempScoreCard = ({ tempScoreCard, showTiedGame }) => {
+  // const [countdown, setCountdown] = useState(40);
+  // const [showTempScoreCard, setShowTempScoreCard] = useState(false);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     if (countdown > 0) {
+  //       setCountdown(countdown - 1);
+  //       // setShowTempScoreCard(true);
+  //     } else {
+  //       // setShowTempScoreCard(false);
+  //     }
+  //   }, 1000);
 
-    // Cleanup the timer when the component unmounts
-    // NEEDED?
-    return () => clearTimeout(timer);
-  }, [countdown]);
+  //   // Cleanup the timer when the component unmounts
+  //   // NEEDED?
+  //   return () => clearTimeout(timer);
+  // }, [countdown]);
 
  
 
@@ -124,7 +124,7 @@ const TempScoreCard = ({ tempScoreCard }) => {
             })
           : null}{" "}
       </div> 
-
+<h1 style={{color: "red"}}>{showTiedGame ? "TIED GAME... keep playing!" : null}</h1>
 </Box>
 
 
