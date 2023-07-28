@@ -83,7 +83,7 @@ const Timer = ({
       >
         Time: {countdown}
       </div>
-      {defInput && userScore.turnNum !== game.turn ? (
+      {defInput && userScore.turnNum !== game.turn && userScore.accepted === true ? (
         <DefInputBox
           showBackOfCard={showBackOfCard}
           game={game}

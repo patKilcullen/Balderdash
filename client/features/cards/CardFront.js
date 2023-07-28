@@ -324,7 +324,7 @@ setTempBack(true)
 
 
           {/* CHOOSE DEFINITION BUTTON  only available is card in one of the card players get to choose*/}
-          {defCards && userScore.turnNum !== singleGame.turn ? (
+          {defCards && userScore.turnNum !== singleGame.turn && userScore.accepted === true? (
             <Button
               sx={{ alignSelf: "center" }}
               variant="contained"

@@ -15,6 +15,9 @@ PLay whose turn it is can't guess defs.
 ADD Tie GAME CARD
 RESTART GAME NEED TO SET SCORES TO 0
 WHEN 3rd player added need to update scoreCArd
+players who ask to jon but dont get accepted before game starts can still add def but cant get a turn... add condition that score.accptd === true to get defcard or submit def
+
+
 
 
 

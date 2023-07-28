@@ -18,7 +18,8 @@ const Home = () => {
   return (
     <div >
       <Navbar></Navbar>
-      {/* <Typography id = "title" color="secondary"sx={{fontWeight: "bold", }}>Welcome to BALDERDASH, {username}</Typography> */}
+      
+      <Typography id = "title" color="secondary"sx={{fontWeight: "bold", }}>Welcome, {username}</Typography>
       {/* <Divider  sx={{ border: "2px solid #571122", width: "95%", marginTop: "-15px", boxShadow: "4px 4px #558ABB"} } ></Divider> */}
       
 

@@ -115,9 +115,13 @@ const SingleGame = () => {
             gameId: game.id,
             accepted: true,
           })
-        );
+        )
       })
       .then(() => {
+        clientSocket.emit("send_ask_to_join", {
+          room: game.name,
+          userName: username,
+        });
         dispatch(fetchSingleGame(gameId));
         dispatch(fetchAllGameScores(gameId));
       });
