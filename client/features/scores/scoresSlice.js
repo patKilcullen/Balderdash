@@ -23,7 +23,7 @@ export const fetchAllScores = createAsyncThunk(
       console.log("RAW SQL DATA in thunk: ", data)
         return data;
       } catch (error) {
-        console.log("ERROR IN FETCH ALL SCORES THUNK: ", error);
+        console.log("ERROR IN FETCH ALL SCORES PG THUNK: ", error);
       }
     }
   );

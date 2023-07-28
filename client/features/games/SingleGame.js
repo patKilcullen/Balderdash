@@ -78,7 +78,7 @@ const SingleGame = () => {
     });
     // dispatch(fetchAllScores())
     dispatch(fetchAllGameScores(gameId));
-    dispatch(fetchAllScoresPG());
+     dispatch(fetchAllScoresPG());
   }, []);
  
   // NEED?
