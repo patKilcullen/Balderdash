@@ -15,6 +15,19 @@ export const fetchAllScores = createAsyncThunk(
     }
   );
 
+  export const fetchAllScoresPG = createAsyncThunk(
+    "allScores",
+    async () => {
+      try {
+        const { data } = await axios.get("/api/newWords/pg");
+      console.log("RAW SQL DATA in thunk: ", data)
+        return data;
+      } catch (error) {
+        console.log("ERROR IN FETCH ALL SCORES THUNK: ", error);
+      }
+    }
+  );
+
   export const fetchAllGameScores = createAsyncThunk(
     "allScores",
     async (gameId) => {

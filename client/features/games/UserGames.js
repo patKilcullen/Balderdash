@@ -21,20 +21,19 @@ import { Button, Typography } from "@mui/material";
 import socket from "socket.io-client";
 
 const UserGames = () => {
-  // userID should be props????????
+
   const userId = useSelector((state) => state.auth.me.id);
    const dispatch = useDispatch();
-  // const games = useSelector(selectAllGames);
+
 const games = useParams()
-console.log("GAMES FROM USE APARAPAMS: ", games)
+
 const [displayGames, setDisplayGames] = useState([])
-console.log("DISPLAY GAMES: ", displayGames)
 
 useEffect(()=>{
 games.games === "all-games" ? 
 
 dispatch(fetchSingleUser(userId)).then((res)=>{
-   console.log("RES PAY: ", res.payload.games)
+
   setDisplayGames(res.payload.games)
       })
       

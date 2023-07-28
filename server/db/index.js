@@ -5,6 +5,7 @@ const db = require('./db')
 const User = require('./models/User')
 const Game = require('./models/Game')
 const Score = require('./models/Score')
+const Word = require('./models/Word')
 
 
 // User.belongsToMany(Game, {through: Score})
@@ -47,6 +48,7 @@ module.exports = {
   models: {
     User,
     Game,
-    Score
+    Score, 
+    Word
   },
 }

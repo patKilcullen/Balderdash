@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize')
 const pkg = require('../../package.json')
 
+const { Pool } = require('pg');
+
 const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
 
 const config = {
@@ -22,4 +24,14 @@ if(process.env.DATABASE_URL){
 
 const db = new Sequelize(
   process.env.DATABASE_URL || `postgres://localhost:5432/${databaseName}`, config)
+
+  const pool = new Pool({
+    user: 'patKilcullen',
+    host: 'localhost',
+    database: databaseName,
+    password: 'Throbbing1349!',
+    port: 5432,
+  }); 
+  
 module.exports = db
+exports.pool = pool

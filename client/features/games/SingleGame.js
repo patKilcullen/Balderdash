@@ -10,6 +10,7 @@ import {
   editScore,
   deleteScore,
   createScore,
+  fetchAllScoresPG
   // fetchHighestGameScores
 } from "../scores/scoresSlice";
 
@@ -77,14 +78,13 @@ const SingleGame = () => {
     });
     // dispatch(fetchAllScores())
     dispatch(fetchAllGameScores(gameId));
-
+    dispatch(fetchAllScoresPG());
   }, []);
  
-  useEffect(()=>{
-    console.log("LOADY LOAD: ", gameId)
-    dispatch(fetchSingleGame(gameId))
-    console.log("LOADY LOAD GAEM: ", game)
-  },[])
+  // NEED?
+  // useEffect(()=>{
+  //   dispatch(fetchSingleGame(gameId))
+  // },[])
 
   useEffect(() => {
     dispatch(fetchSingleGame(gameId));
@@ -178,10 +178,10 @@ const SingleGame = () => {
     });
 
     clientSocket.on("receive_start_game", ({ room, userName }) => {
-      // console.log("ROOM & GAME>NAME, gameID: ", room, game.name, gameId)
+       console.log("ROOM & GAME>NAME, gameID: ", room, game.name, gameId)
       // room === game.name ? console.log("THE FUCKING SAME") : console.log("NOTOTOTOOTTTHE FUCKING SAME")
-      // room === game.name ? dispatch(fetchSingleGame(gameId)): null;
-      dispatch(fetchSingleGame(gameId))
+      //  room === game.name ? dispatch(fetchSingleGame(gameId)): null;
+       dispatch(fetchSingleGame(gameId))
     });
     clientSocket.on("recieve_ask_to_join", (room) => {
       
@@ -191,7 +191,7 @@ const SingleGame = () => {
     clientSocket.on("receive_play_again", ({ room, gameId }) => {
       room === game.name ? dispatch(fetchSingleGame(gameId)) : null;
     });
-  }, [clientSocket, game, gameId, game.name]);
+  }, [clientSocket, game, gameId]);
 
   // USER LEAVES SOCKET ROOM WHEN SINGLe GAME UNMOUNTS
   useEffect(() => {
@@ -215,7 +215,6 @@ const[showTiedGame, setShowTiedGame] = useState(false)
 
   }
 
-console.log("GAME: ", game)
   return (
     <Card>
    

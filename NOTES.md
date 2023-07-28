@@ -14,8 +14,10 @@ added roundsLeft: game.roundsLeft - 1 to handleChangeGameTurn in GuessDefs becas
 PLay whose turn it is can't guess defs.
 ADD Tie GAME CARD
 RESTART GAME NEED TO SET SCORES TO 0
-WHEN 3rd player added need to update scoreCArd
-players who ask to jon but dont get accepted before game starts can still add def but cant get a turn... add condition that score.accptd === true to get defcard or submit def
+
+when players visit one game then another and the first game is started, sometimes the game is started for the players who who left that game, and they are sudden;y on the first game page.  on refresh its baclk to first.
+It appears to work when clientSocket "receiv_start_game" doens't have a condintional before it, but needs to be tested.  The condition was working, as in the variable were correct, but the problem still happened sometimes.  without conditional might work because the gameId is from props and shoudl always be correct, but on other game, new game card flashes briefly when other (visited) game starts.
+
 
 
 

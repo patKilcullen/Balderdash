@@ -6,7 +6,7 @@ router.use('/dictionary', require('./dictionary'))
 router.use('/games', require('./games'))
 router.use('/scores', require('./scores'))
 router.use('/wordsAndDefinitions', require('./wordsAndDefinitions'))
-
+router.use('/newWords', require('./newWords'))
 
 
 router.use((req, res, next) => {
