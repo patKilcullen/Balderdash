@@ -178,16 +178,20 @@ const SingleGame = () => {
     });
 
     clientSocket.on("receive_start_game", ({ room, userName }) => {
-      dispatch(fetchSingleGame(gameId));
+      // console.log("ROOM & GAME>NAME, gameID: ", room, game.name, gameId)
+      // room === game.name ? console.log("THE FUCKING SAME") : console.log("NOTOTOTOOTTTHE FUCKING SAME")
+      // room === game.name ? dispatch(fetchSingleGame(gameId)): null;
+      dispatch(fetchSingleGame(gameId))
     });
     clientSocket.on("recieve_ask_to_join", (room) => {
+      
       room === game.name ? dispatch(fetchAllGameScores(gameId)) : null;
     });
 
     clientSocket.on("receive_play_again", ({ room, gameId }) => {
       room === game.name ? dispatch(fetchSingleGame(gameId)) : null;
     });
-  }, [clientSocket, game, gameId]);
+  }, [clientSocket, game, gameId, game.name]);
 
   // USER LEAVES SOCKET ROOM WHEN SINGLe GAME UNMOUNTS
   useEffect(() => {
