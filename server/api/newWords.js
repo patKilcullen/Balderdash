@@ -1,8 +1,8 @@
 const router = require("express").Router()
 
-const {
-    models: { Word, Score },
-  } = require("../db");
+// const {
+//     models: { Word, Score },
+//   } = require("../db");
 
 const pool = require("../db/pgdb");
 
