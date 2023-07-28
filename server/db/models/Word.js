@@ -11,6 +11,16 @@ const Word = db.define("word", {
     defintion: {
         type: Sequelize.STRING, 
     },
+    createdAt: {
+        type: Sequelize.DATE,
+       
+        allowNull: true
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+       
+        allowNull: true
+      },
 })
 
 module.exports = Word

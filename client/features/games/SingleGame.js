@@ -10,7 +10,8 @@ import {
   editScore,
   deleteScore,
   createScore,
-  fetchAllScoresPG
+  fetchAllScoresPG,
+  postWordDef
   // fetchHighestGameScores
 } from "../scores/scoresSlice";
 
@@ -78,7 +79,8 @@ const SingleGame = () => {
     });
     // dispatch(fetchAllScores())
     dispatch(fetchAllGameScores(gameId));
-    //  dispatch(fetchAllScoresPG());
+    dispatch(fetchAllScoresPG());
+    dispatch(postWordDef())
   }, []);
  
   // NEED?
