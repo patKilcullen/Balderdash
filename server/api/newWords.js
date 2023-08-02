@@ -1,43 +1,36 @@
 const router = require("express").Router()
+const {
+    models: { Word },
+  } = require("../db");
 
-
-
-const { DATE } = require("sequelize");
 const pool = require("../db/pgdb");
 
 module.exports = router
 
+// router.post("/", async (req,res,next)=>{
+//     console.log("HI PPATTTYYYYYYYYYYY")
+//     try {
+//         const query = {
+//           text: 'INSERT INTO "words" (word, defintion, "createdAt", "updatedAt") VALUES ($1, $2, $3, $4) RETURNING *',
+//           values: [req.body.word, req.body.definition, new Date(), new Date()],
+//         };
+//         const newWord = await pool.query(query);
+//         console.log("BONERERERE: ", newWord.rows[0])
+//         res.json(newWord.rows[0])     
+//       } catch (err) {
+//         console.error('Error posting the word:', err);
+//       } 
 
+// })
 
-router.post("/pg", async (req,res,next)=>{
+// Create Game
+router.post("/", async (req, res, next) => {
     try {
-        const query = {
-          text: 'INSERT INTO "words" (word, defintion, "createdAt", "updatedAt") VALUES ($1, $2, $3, $4)',
-          values: [req.body.word, req.body.definition, new Date(), new Date()],
-        };
-    
-        const client = await pool.connect();
-        await client.query(query);
-        client.release();
-        console.log(`Successfully posted the word "${req.body.word}" with its definition.`);
-      } catch (err) {
-        console.error('Error posting the word:', err);
-      } finally {
-        pool.end(); // Close the pool (optional, if your application is ending)
-      }
-})
-
-
-router.get("/pg", async (req,res,next)=>{
-    console.log("HI FROM THE BACK END")
-    try{
-        console.log("POOL : ", pool)
-        const client = await pool.connect();
-        const query = 'SELECT * FROM "scores"';
-        const result = await client.query(query);
-        console.log('Raw query result:', result.rows);
-    }catch(err){
-        console.log("ERROR IN POST WORD ROUTE: ", err)
-        next(err)
+      const game = await Word.create(req.body);
+     
+      res.json(game);
+    } catch (err) {
+      next(err);
     }
-})
+  });
+  

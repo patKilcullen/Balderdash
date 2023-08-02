@@ -4,6 +4,8 @@ T
 
 LAST UPDATE: 
 
+added pgdb and newWords routes to add hardcoded word and def to database.... uses thunks from scoreSlice for now and automatically hits them when singlePage useEffect loads
+
 added cards to all games and an search game component that searhed by string for game name and links to that game.  removed fetchSingleGame extra reducer beacause wasnt used??? and if it the searched/found game was added to stat in store it woulnt load when clicking on the link, the game was null
 
 

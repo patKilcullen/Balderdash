@@ -11,6 +11,8 @@ import {
   addDefinition,
   clearTempScoreCardMessages,
 } from "./gamePlaySlice";
+
+import { addNewWord } from "../words/wordsSlice";
 import { selectMe } from "../auth/authSlice";
 import Timer from "./Timer";
 
@@ -90,6 +92,12 @@ const GamePlay = ({ userId, game, userScore, reloadScores,checkIfTied }) => {
     });
     setTimer(true);
     setChoseWord(true);
+  };
+
+
+  const handleAddNewWord = () => {
+    dispatch(addNewWord({word: word, definition: definition}))
+  
   };
 
   // GET FAKE WORDS   called in handleChooseWord function,
@@ -206,6 +214,20 @@ const GamePlay = ({ userId, game, userScore, reloadScores,checkIfTied }) => {
         >
           <Typography color={"secondary"} sx={{ fontSize: 30 }}>
             Choose Word
+          </Typography>
+        </Button>
+      ) : null}
+
+{/* ADD NEW WORD/DEFINITION TO DATABASE */}
+{definition && !choseWord ? (
+        <Button
+          className={"pulse"}
+          onClick={() => handleAddNewWord()}
+          sx={{ fontSize: 30, marginTop: "15px" }}
+          variant="contained"
+        >
+          <Typography color={"secondary"} sx={{ fontSize: 30 }}>
+            Add word to database
           </Typography>
         </Button>
       ) : null}

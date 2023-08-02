@@ -14,32 +14,7 @@ export const fetchAllScores = createAsyncThunk(
       }
     }
   );
-// DONT NEED< JUST FOR TESTING
-  export const fetchAllScoresPG = createAsyncThunk(
-    "fetchAllScoresPG",
-    async () => {
-      try {
-        const { data } = await axios.get("/api/newWords/pg");
-      console.log("RAW SQL DATA in thunk: ", data)
-        return data;
-      } catch (error) {
-        console.log("ERROR IN FETCH ALL SCORES PG THUNK: ", error);
-      }
-    }
-  );
-//  TESTING
-  export const postWordDef = createAsyncThunk(
-    "postWordDef",
-    async () => {
-      try {
-        const { data } = await axios.post("/api/newWords/pg", {word: "patty boy", definition: "rocks assss"});
-      console.log("RAW SQL DATA in thunk: ", data)
-        return data;
-      } catch (error) {
-        console.log("ERROR IN FETCH ALL SCORES PG THUNK: ", error);
-      }
-    }
-  );
+
 
   export const fetchAllGameScores = createAsyncThunk(
     "allScores",
