@@ -139,7 +139,7 @@ const ScoreCard = ({
                             {userScore.score}
                           </div>
                           <div style={{ color: "black", fontSize: "20px" }}>
-                            pts
+                           {userScore.score === 1 ? "pt": "pts"}
                           </div>
                         </div>
                       </div>
@@ -270,7 +270,7 @@ const ScoreCard = ({
                                           fontSize: "20px",
                                         }}
                                       >
-                                        pts
+                                       {user.score === 1 ? "pt": "pts"}
                                       </div>
                                     </div>
                                   </Typography>
