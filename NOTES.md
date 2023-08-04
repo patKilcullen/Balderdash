@@ -4,6 +4,8 @@ T
 
 LAST UPDATE: 
 
+added addPoint route to include raw sql but the info doesnt appear on the scoreCard after the points are updated////  probably has to do what what is sent... HOWEVER, its currenlty more confusing than sequelize, though there may be a way to use the OUTPUT in sql to make it word, as in the commented out routed in scores.js in api
+
 added pgdb and newWords routes to add hardcoded word and def to database.... uses thunks from scoreSlice for now and automatically hits them when singlePage useEffect loads
 
 added cards to all games and an search game component that searhed by string for game name and links to that game.  removed fetchSingleGame extra reducer beacause wasnt used??? and if it the searched/found game was added to stat in store it woulnt load when clicking on the link, the game was null
@@ -13,6 +15,9 @@ added roundsLeft: game.roundsLeft - 1 to handleChangeGameTurn in GuessDefs becas
 
 
  WHAT TO DO:
+
+ GAME FOR JUST TWO PLAYUER HAS TO BE DIFFERENT OR NOT ALLOPWED.... as it is, with two players, the players fake def wouldnt make a different because no one could guess it... Could have it where player whose turn it is is also allowed to enter a fake def.. could always work that way..
+
 PLay whose turn it is can't guess defs.
 ADD Tie GAME CARD
 RESTART GAME NEED TO SET SCORES TO 0

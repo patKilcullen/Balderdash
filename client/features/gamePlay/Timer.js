@@ -28,7 +28,7 @@ const Timer = ({
   setTimer,
   setChoseWord,
 }) => {
-  const [countdown, setCountdown] = useState(15);
+  const [countdown, setCountdown] = useState(5);
   const [defInput, setDefInput] = useState(false);
   const [playGame, setPlayGame] = useState(false);
 
@@ -55,7 +55,7 @@ const Timer = ({
         handleGetFakeDefinitions();
         setPlayGame(true);
         setDefInput(false);
-        showBackOfCard("front", "test");
+        showBackOfCard("front");
         setTempBack(false);
       } else {
         setDefInput(false);

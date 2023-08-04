@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 
 const SocketContext = createContext();
 
-// MAKES SAME SOCKET AVAILABLE THROUGHT APP
+// MAKES SAME SOCKET AVAILABLE THROUGHOUT APP
 const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 

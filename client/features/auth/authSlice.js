@@ -12,7 +12,6 @@ export const me = createAsyncThunk('auth/me', async () => {
     if (token) {
       const res = await axios.get('/auth/me', {
         headers: {
-          // REFRESH => authorization: username
           authorization: token,
         },
       });
@@ -62,7 +61,6 @@ export const authSlice = createSlice({
   },
   reducers: {
     logout(state, action) {
-      // REFRESH =>   how to use username instead of tokent
       window.localStorage.removeItem(TOKEN);
       state.me = {};
       state.error = null;
