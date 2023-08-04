@@ -52,6 +52,7 @@ export const getFakeWords = createAsyncThunk(
     }
   );
 
+  // GET FAKE DEFINITIONS
   export const getFakeDefinitions = createAsyncThunk(
     '/getFakeDefinitions',
     async (word) => {
@@ -132,13 +133,13 @@ const gamePlaySlice = createSlice({
          state.fakeWords.push(action.payload)
       })
       .addCase('/getFakeDefinitions/fulfilled', (state, action) => {
-        // const randomIndex = Math.floor(Math.random() * (state.fakeDefinitions.length))
-        // state.fakeDefinitions.splice(randomIndex,0,{fake: action.payload})
         state.fakeDefinitions.push({fake: action.payload})
         state.fakeDefinitions = randomizeArray(state.fakeDefinitions)
     })
     }
 })
+
+// RANDOMIZE THE ORDER OF DEFINITIONS BEFORE ADDING TO STATE
 function randomizeArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));

@@ -133,7 +133,7 @@ extraReducers: (builder)=>{
 
   }),
   builder.addCase(addPoint.fulfilled, (state, action)=>{
-
+console.log("ADD PPIONT AxE PAY: ", action.payload)
     state.push(action.payload)
 })
 }

@@ -28,7 +28,8 @@ const Timer = ({
   setTimer,
   setChoseWord,
 }) => {
-  const [countdown, setCountdown] = useState(5);
+  // Component state
+  const [countdown, setCountdown] = useState(20);
   const [defInput, setDefInput] = useState(false);
   const [playGame, setPlayGame] = useState(false);
 
@@ -38,14 +39,15 @@ const Timer = ({
   const fakeWords = useSelector(selectFakeWords);
   const fakeDefinitions = useSelector(selectFakeDefinitions);
 
+  // Gets a "fake" definiton for each "fake" word
   const handleGetFakeDefinitions = () => {
     fakeWords.forEach((word) => {
       dispatch(getFakeDefinitions(word));
     });
   };
 
-
-
+  // TIMER displays definiton input box/front of card while countdown if above 0 or while definition has yet to be submitted
+  // When time hits 0, mounts GuessDEfs compnents and shows front of card
   useEffect(() => {
     const timer = setTimeout(() => {
       if (countdown > 0) {
@@ -72,6 +74,7 @@ const Timer = ({
     clientSocket.emit("start_countdown", { gameName });
   }, []);
 
+  // when playGame/guessDEfs mounts, runs makeHidden function in CardFront component to hade previous stles to show guessDefs
   useEffect(() => {
     playGame ? makeHidden() : null;
   }, [playGame]);
@@ -83,7 +86,10 @@ const Timer = ({
       >
         Time: {countdown}
       </div>
-      {defInput && userScore.turnNum !== game.turn && userScore.accepted === true ? (
+      {/* Definition input box renders if its is NOT players turn and player has been accepted */}
+      {defInput &&
+      userScore.turnNum !== game.turn &&
+      userScore.accepted === true ? (
         <DefInputBox
           showBackOfCard={showBackOfCard}
           game={game}
@@ -92,12 +98,10 @@ const Timer = ({
           playerTurnName={playerTurnName}
         />
       ) : null}
-
-
-
+      {/* GUESSDEFS/ guess definition component mounts when playgame is true */}
       {playGame ? (
         <GuessDefs
-        checkIfTied={checkIfTied}
+          checkIfTied={checkIfTied}
           showBackOfCard={showBackOfCard}
           makeHidden={makeHidden}
           guessDefs={true}

@@ -33,22 +33,18 @@ const AllGames = () => {
 
   const [gamesX, setGamesX] = useState([]);
 
-
-
   useEffect(() => {
-    dispatch(fetchAllGames())
-
-
+    dispatch(fetchAllGames());
   }, []);
 
-const[showAllUserGames, setShowAllUserGames] = useState(false)
-const[allUserGames, setAllUserGames] = useState([]) 
+  const [showAllUserGames, setShowAllUserGames] = useState(false);
+  const [allUserGames, setAllUserGames] = useState([]);
   // const [startedGames, setStartedGames] = useState([])
   useEffect(() => {
-    dispatch(fetchSingleUser(userId)).then((res)=>{
+    dispatch(fetchSingleUser(userId)).then((res) => {
       // console.log("RES PAY: ", res.payload.games)
-      setAllUserGames(res.payload.games)
-          })
+      setAllUserGames(res.payload.games);
+    });
   }, []);
 
   const clientSocket = socket.connect("http://localhost:8080");
@@ -63,23 +59,51 @@ const[allUserGames, setAllUserGames] = useState([])
   });
 
   return (
-    <div style={{height: "100%"}}>
-<div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-<Link to="/create-game"><CardFront top={"Create Game"} side={"back"} half={{first: "Create", second:  "Game"}}></CardFront></Link>
+    <div style={{ height: "100%" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Link to="/create-game">
+          <CardFront
+            top={"Create Game"}
+            side={"back"}
+            half={{ first: "Create", second: "Game" }}
+          ></CardFront>
+        </Link>
 
-<Link to="/search-game"><CardFront top={"Search Game"} side={"back"}half={{first: "Find", second:  "Game"}}></CardFront></Link>
+        <Link to="/search-game">
+          <CardFront
+            top={"Search Game"}
+            side={"back"}
+            half={{ first: "Find", second: "Game" }}
+          ></CardFront>
+        </Link>
 
+        <Link to={`/user-games/all-games`}>
+          <CardFront
+            side={"back"}
+            half={{ first: "All", second: "Games" }}
+          ></CardFront>
+        </Link>
+        <Link to={`/user-games/started-games`}>
+          <CardFront
+            side={"back"}
+            half={{ first: "Started", second: "Games" }}
+          ></CardFront>
+        </Link>
+        <Link to={`/user-games/unstarted-games`}>
+          <CardFront
+            side={"back"}
+            half={{ first: "Unstarted", second: "Games" }}
+          ></CardFront>
+        </Link>
+      </div>
 
-<Link to={`/user-games/all-games`}><CardFront   side={"back"}half={{first: "All", second:  "Games"}}></CardFront></Link>
-<Link to={`/user-games/started-games`}><CardFront   side={"back"}half={{first: "Started", second:  "Games"}}></CardFront></Link>
-<Link to={`/user-games/unstarted-games`}><CardFront   side={"back"}half={{first: "Unstarted", second:  "Games"}}></CardFront></Link>
-
-</div>
-
-
-
-
-{/* 
+      {/* 
       <Link to="/create-game">
         {" "}
         <button>Create a NEW GAME</button>

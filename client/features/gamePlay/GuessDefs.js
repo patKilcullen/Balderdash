@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
+// SLICES/STATE REDUCERS, ETC.
 import {
   selectFakeWords,
   getFakeDefinitions,
@@ -7,8 +9,6 @@ import {
   addTempScoreCardMessage,
   selectTempScoreCardMessages,
 } from "./gamePlaySlice";
-import { SocketContext } from "../../app/SocketProvider";
-
 import {
   editScore,
   addPoint,
@@ -23,8 +23,13 @@ import {
 import { clearFakeWords, clearFakeDefs, selectWord } from "./gamePlaySlice";
 import { fetchSingleUser, selectSingleUser } from "../users/singleUserSlice";
 
+// SOCKET
+import { SocketContext } from "../../app/SocketProvider";
+
+// MaterialUI
 import Button from "@mui/material/Button";
 
+// COMPONENTS
 import TempScoreCard from "../scores/TempScoreCard";
 import CardFront from "../cards/CardFront";
 
@@ -32,7 +37,6 @@ const GuessDefs = ({
   checkIfTied,
   showBackOfCard,
   makeHidden,
-  top,
   game,
   username,
   userId,
@@ -40,7 +44,6 @@ const GuessDefs = ({
   fakeDefinitions,
   gameName,
   gameId,
-
   playerTurnName,
   reloadScores,
   setDefinition,
@@ -49,25 +52,26 @@ const GuessDefs = ({
   setPlayGame,
   setChoseWord,
 }) => {
-  const clientSocket = useContext(SocketContext);
-
+  // COMPONENT STATE
   const [fakeDefs, setFakeDefs] = useState([]);
-  const [correct, setCorrect] = useState(null);
   const [defList, setDefList] = useState(null);
   const [guessed, setGuessed] = useState(false);
-  const [isTied, setIsTied] = useState(false)
+  const [countdown, setCountdown] = useState(20);
 
   const dispatch = useDispatch();
   const word = useSelector(selectWord);
+  const clientSocket = useContext(SocketContext);
 
   const singleGame = useSelector(selectSingleGame);
   const tempScoreCardMessages = useSelector(selectTempScoreCardMessages);
 
-  const [countdown, setCountdown] = useState(20);
+  // Sets card to front when guess def component loads
   useEffect(() => {
     showBackOfCard("front");
   }, []);
 
+  // Sets time for users to guess definitioins, when countdown hits 0, sets various stae back to orignal/false state
+  // and clears various state in store, cahnges turn and reloads stae
   useEffect(() => {
     const timer = setTimeout(async () => {
       if (countdown > 0) {
@@ -75,8 +79,8 @@ const GuessDefs = ({
         setCountdown(countdown - 1);
       } else if (countdown === 0) {
         setDefList(false);
-        handleChangeGameTurn()
-        reloadScores(isTied);
+        handleChangeGameTurn();
+        reloadScores();
         setDefinition("");
         setWord("");
         setGuessed(false);
@@ -116,13 +120,10 @@ const GuessDefs = ({
             })
           )
       : dispatch(fetchHighestGameScores(gameId)).then((res) => {
-        res.payload.length > 1 ?
-        checkIfTied()
-        : null
+          res.payload.length > 1 ? checkIfTied() : null;
 
           res.payload.length > 1
-            ? 
-            game.turn === 1
+            ? game.turn === 1
               ? dispatch(
                   editGameTurn({ gameId: gameId, turn: game.numPlayers })
                 )
@@ -135,7 +136,6 @@ const GuessDefs = ({
                 })
               );
         });
-   
   };
 
   useEffect(() => {
@@ -143,14 +143,13 @@ const GuessDefs = ({
   }, [fakeDefinitions]);
 
   // CHOOSE WORD
+  // checks if guessed word is a fake definition, the real defintion, or neither, which would be abother users definiton
+  // then adds apporproate message to tempScore card
   const handleChooseWord = (def) => {
     setGuessed(true);
-
     const userKey = Object.keys(def)[0];
-
     if (userKey === "fake") {
       let message = `${username} guessed the WRONG answer!`;
-
       //If its users turn, add message to state, otherwise send it through socket to
       //  player whos turn it is so they can put it in state (SAME FOR FAKE AND !FALE && !REAL)
       singleGame.turn === userScore.turnNum
@@ -177,7 +176,6 @@ const GuessDefs = ({
     if (userKey !== "fake" && userKey !== "real") {
       dispatch(addPoint({ userId: userKey, gameId: gameId })).then((res) => {
         let message = `${username} guessed ${res.payload.user.username}'s fake definition... ${res.payload.user.username} gets 1 point!!`;
-
         singleGame.turn === userScore.turnNum
           ? dispatch(addTempScoreCardMessage(message))
           : clientSocket.emit("send_score_card_info", {
@@ -189,14 +187,17 @@ const GuessDefs = ({
     }
   };
 
+  // SOCKETS
+
+  //Fake definintions socker
   useEffect(() => {
     clientSocket.emit("send_fake_defs", { fakeDefinitions, gameName });
   }, [fakeDefinitions]);
-
   clientSocket.on("receive_fake_defs", (fakeDefinitions) => {
     setFakeDefs(fakeDefinitions);
   });
 
+  // Score CArd inforrmation Socekt
   useEffect(() => {
     clientSocket.on("receive_score_card_info", ({ room, message }) => {
       room === gameName && singleGame.turn === userScore.turnNum
@@ -204,7 +205,6 @@ const GuessDefs = ({
         : null;
     });
   }, [clientSocket]);
-
   useEffect(() => {
     clientSocket.emit("send_score_card", { tempScoreCardMessages, gameName });
   }, [tempScoreCardMessages]);

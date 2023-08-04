@@ -34,9 +34,13 @@ It appears to work when clientSocket "receiv_start_game" doens't have a condinti
 
 THING TO DO less important:
 
+IF player requests to play but not accepted, or accepted then removed, does that change turnNum, which would mean at one point it will be no players turn? Does numPlayre in game reflect those types of changes correctly?
+
+
 in showBackOf Card... don't need the second "X" of "test" arguemnt.. also should just be sideOfCard
 CardFront "Back of Card" has display: "FLEW" instead of flex
 
+limit adding new word to database to only one time
 
 
 

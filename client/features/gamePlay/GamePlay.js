@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+// SLICES/STATE REDUCERS, ETC.
 import {
   getWord,
   setWordState,
@@ -11,17 +12,16 @@ import {
   addDefinition,
   clearTempScoreCardMessages,
 } from "./gamePlaySlice";
-
 import { addNewWord } from "../words/wordsSlice";
 import { selectMe } from "../auth/authSlice";
-import Timer from "./Timer";
-
 import { selectSingleGame } from "../games/singleGameSlice";
+
+// COMPONENTS
+import Timer from "./Timer";
+import CardFront from "../cards/CardFront";
 
 // SOCKET
 import { SocketContext } from "../../app/SocketProvider";
-
-import CardFront from "../cards/CardFront";
 
 // Material UI
 import Card from "@mui/material/Card";
@@ -32,14 +32,16 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { minWidth } from "@mui/system";
 
-const GamePlay = ({ userId, game, userScore, reloadScores,checkIfTied }) => {
+const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
   const dispatch = useDispatch();
   const me = useSelector(selectMe);
+  // SOCKET
+  const clientSocket = useContext(SocketContext);
+
   const username = me.username;
   const gameName = game.name;
 
-  const currentGame = useSelector(selectSingleGame);
-
+  // COMPONENT STATE
   const [word, setWord] = useState("");
   const [definition, setDefinition] = useState("");
   const [timer, setTimer] = useState(false);
@@ -47,9 +49,6 @@ const GamePlay = ({ userId, game, userScore, reloadScores,checkIfTied }) => {
   const [playerTurn, setPlayerTurn] = useState("");
   const [playerTurnName, setPlayerTurnName] = useState("");
   const [flip, setFlip] = useState(false);
-
-  // SOCKET
-  const clientSocket = useContext(SocketContext);
 
   // Finds the player who turnNum === game.turn, sets it to playerTurnName
   // when the game reloads to check for new turn
@@ -94,10 +93,8 @@ const GamePlay = ({ userId, game, userScore, reloadScores,checkIfTied }) => {
     setChoseWord(true);
   };
 
-
   const handleAddNewWord = () => {
-    dispatch(addNewWord({word: word, definition: definition}))
-  
+    dispatch(addNewWord({ word: word, definition: definition }));
   };
 
   // GET FAKE WORDS   called in handleChooseWord function,
@@ -126,7 +123,9 @@ const GamePlay = ({ userId, game, userScore, reloadScores,checkIfTied }) => {
         ? setWord(word)
         : setWord("");
 
-      playerTurnName !== username && room === gameName ? setFlip(true) : setFlip(false);
+      playerTurnName !== username && room === gameName
+        ? setFlip(true)
+        : setFlip(false);
     });
 
     // RECEIVE START COUNTDOWN players receive this from player whose turn it is when
@@ -142,10 +141,16 @@ const GamePlay = ({ userId, game, userScore, reloadScores,checkIfTied }) => {
       ({ playerDef, room, userId, playerTurnName }) => {
         let playerId = userId;
         room === gameName && playerTurnName === username
-          ? dispatch(addDefinition({ [playerId]: playerDef })).then(()=>{
-            console.log("RECEIVE PLAYER FAKE DEF: ")
-          })
-          : console.log("ERROR: Failed to add player definition: ", playerDef, room, userId, playerTurnName);
+          ? dispatch(addDefinition({ [playerId]: playerDef })).then(() => {
+              console.log("RECEIVE PLAYER FAKE DEF: ");
+            })
+          : console.log(
+              "ERROR: Failed to add player definition: ",
+              playerDef,
+              room,
+              userId,
+              playerTurnName
+            );
       }
     );
   }, [clientSocket, game]);
@@ -167,7 +172,6 @@ const GamePlay = ({ userId, game, userScore, reloadScores,checkIfTied }) => {
         {game && userScore && game.turn === userScore.turnNum ? (
           <Button
             onClick={handleGetWord}
-            // sx={{ fontSize: 30, marginBottom: "15px" }}
             sx={{ fontSize: 30 }}
             variant="contained"
           >
@@ -181,8 +185,9 @@ const GamePlay = ({ userId, game, userScore, reloadScores,checkIfTied }) => {
           </Button>
         ) : null}
 
+        {/* MAIN CARD COMPONENT */}
         <CardFront
-        checkIfTied={checkIfTied}
+          checkIfTied={checkIfTied}
           top={word}
           bottom={definition}
           side={word || (word.length && definition) ? "front" : "back"}
@@ -204,6 +209,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores,checkIfTied }) => {
           style={{ border: "2px solid green" }}
         />
       </Card>
+
       {/* CHOOSE WORD BUTON  only avaible if they got word/definition and havent chosen word yet*/}
       {definition && !choseWord ? (
         <Button
@@ -218,8 +224,8 @@ const GamePlay = ({ userId, game, userScore, reloadScores,checkIfTied }) => {
         </Button>
       ) : null}
 
-{/* ADD NEW WORD/DEFINITION TO DATABASE */}
-{definition && !choseWord ? (
+      {/* ADD NEW WORD/DEFINITION TO DATABASE */}
+      {definition && !choseWord ? (
         <Button
           className={"pulse"}
           onClick={() => handleAddNewWord()}
