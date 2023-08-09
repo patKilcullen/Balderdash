@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useSelector } from "react-redux";
+
+// STORE
 import { selectAllScores } from "./scoresSlice";
 import { selectSingleGame } from "../games/singleGameSlice";
 
+// MATERIAL UI
 import { Card, Button, Typography, Divider, Box } from "@mui/material";
-
-
-import { SocketContext } from "../../app/SocketProvider";
 
 const ScoreCard = ({
   userId,
@@ -17,22 +17,17 @@ const ScoreCard = ({
   handleDeclineRequest,
   handleAcceptRequest,
 }) => {
-  const clientSocket = useContext(SocketContext);
-
   const scores = useSelector(selectAllScores);
 
- 
   return (
     <Card sx={{ boxShadow: "20", border: "2px solid black" }}>
       <Card
         sx={{
           padding: "10px",
-  
-          backgroundColor: "#88ebe6",
 
+          backgroundColor: "#88ebe6",
         }}
       >
-        {/* <Card id="scores-card"> */}
         <Card
           id="score-card-header"
           color="seconday"
@@ -41,33 +36,7 @@ const ScoreCard = ({
           <div
             style={{ width: "100%", display: "flex", flexDirection: "column" }}
           >
-            {/* <div
-              style={{
-                display: "flex",
-                alignItems: "flex-end",
-                width: "100%",
-                gap: "30px",
-              }}
-            >
-              <Typography sx={{}}>game: </Typography>
-              <div style={{}}>
-                <Typography
-                  id="score-card-game-name"
-                  color="secondary"
-                  style={{ fontWeight: "bold", marginLeft: "20px" }}
-                >
-                  {game.name}
-                </Typography>
-                <Divider
-                  sx={{
-                    border: " 1px solid black",
-                    width: "150%",
-                    marginLeft: "-35px",
-                  }}
-                ></Divider>
-              </div>
-            </div> */}
-
+            {/* GAME NAME */}
             <Typography
               id="title"
               color="secondary"
@@ -107,6 +76,7 @@ const ScoreCard = ({
                     variant="h4"
                   >
                     {" "}
+                    {/* IF USERSCORE(player of game) show score */}
                     {userScore ? (
                       <div
                         style={{
@@ -139,12 +109,11 @@ const ScoreCard = ({
                             {userScore.score}
                           </div>
                           <div style={{ color: "black", fontSize: "20px" }}>
-                           {userScore.score === 1 ? "pt": "pts"}
+                            {userScore.score === 1 ? "pt" : "pts"}
                           </div>
                         </div>
                       </div>
-                    ) : //  <div style={{textDecoration: "underline", width: "100%" ,display: "flex", flexDirection: "column", alignItems: "center"}}>Score: {userScore.score} </div>
-                    null}
+                    ) : null}
                   </Typography>
                   <Typography
                     color="secondary"
@@ -152,6 +121,7 @@ const ScoreCard = ({
                     variant="h4"
                   >
                     {" "}
+                    {/* DISPLAY ROUNDS/ROUNDS left if applicable to game */}
                     {game && game.rounds && game.roundsLeft ? (
                       <div
                         style={{
@@ -170,6 +140,7 @@ const ScoreCard = ({
                           Round:
                         </div>
                         <div style={{ color: "red", textDecoration: "none" }}>
+                          {/* WHICH ROUND OUT OF TOTAL math using rounds left */}
                           {game.rounds + 1 - game.roundsLeft}/{game.rounds}{" "}
                         </div>
                       </div>
@@ -213,6 +184,7 @@ const ScoreCard = ({
                   </Typography>
                   {scores ? (
                     <div>
+                      {/* OTHER PLAYER SCORE - filer through all game scores that arent the players */}
                       {scores
                         .filter(
                           (score) => score.accepted && score.userId !== userId
@@ -270,7 +242,7 @@ const ScoreCard = ({
                                           fontSize: "20px",
                                         }}
                                       >
-                                       {user.score === 1 ? "pt": "pts"}
+                                        {user.score === 1 ? "pt" : "pts"}
                                       </div>
                                     </div>
                                   </Typography>
@@ -298,44 +270,6 @@ const ScoreCard = ({
                 </Card>
               </Card>
             </Box>
-
-            {/* <Typography>
-              {userScore && userScore.user ? (
-                <Typography>USER NAME: {userScore.user.username}</Typography>
-              ) : null}
-            </Typography>
-            {game.owner ? <div>Owner: {game.owner.username}</div> : null}
-            {userScore ? (
-              <div> Your Score {userScore.score} </div>
-            ) : null} */}
-
-            {/* {scores ? (
-              <div>
-                Playffers:{" "}
-                {scores
-                  .filter((score) => score.accepted && score.userId !== userId)
-                  .map((user) => (
-                    <div>
-                      {" "}
-                      {user.user ? (
-                        <div>
-                          {user.user.username} Score: {user.score}
-                
-                          {user.user.id !== userId &&
-                          userId === game.ownerId &&
-                          game.started === false ? (
-                            <button
-                              onClick={() => handleDeclineRequest(user.user.id)}
-                            >
-                              Remove Player
-                            </button>
-                          ) : null}
-                        </div>
-                      ) : null}
-                    </div>
-                  ))}
-              </div>
-            ) : null} */}
 
             {/*IF GAME OWNER and Game NOT STARTED: Player Requests */}
             {game.ownerId === userId && !game.started ? (

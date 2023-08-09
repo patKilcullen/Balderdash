@@ -30,20 +30,24 @@ import CardFront from "../cards/CardFront";
 import { Card, Button, Typography } from "@mui/material";
 
 const SingleGame = () => {
-// COMPONENET STATE
-const [showFinalCard, setShowFinalCard] = useState(false);
-
+  // COMPONENET STATE
+  const [showFinalCard, setShowFinalCard] = useState(false);
+  const [tempScoreCard, setTempScoreCard] = useState("");
+  const [showTempScoreCard, setShowTempScoreCard] = useState(false);
+  const [showTiedGame, setShowTiedGame] = useState(false);
   // SOCKET
   const clientSocket = useContext(SocketContext);
 
-  const userId = useSelector((state) => state.auth.me.id);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { id } = useParams();
   const gameId = id;
+  const userId = useSelector((state) => state.auth.me.id);
   const username = useSelector((state) => state.auth.me.username);
   const game = useSelector(selectSingleGame);
   const scores = useSelector(selectAllScores);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const tempScoreCardTurn = useSelector(selectTempScoreCardMessages);
   const userScore = scores.find((score) => score.userId === userId);
 
   // If there are 0 rounds left, render the FinalCard
@@ -51,15 +55,13 @@ const [showFinalCard, setShowFinalCard] = useState(false);
     game.roundsLeft === 0 ? setShowFinalCard(true) : setShowFinalCard(false);
   }, [game.roundsLeft]);
 
-
-
+  // FETCHES GAME AND ASOCIATED SCORES when gameId Changes
   useEffect(() => {
     dispatch(fetchSingleGame(gameId));
     dispatch(fetchAllGameScores(gameId));
   }, [gameId]);
 
-  const [showTempScoreCard, setShowTempScoreCard] = useState(false);
-  // Updates scores when game round is over and its new player's turn
+  // SHOWS TEMPSCORECARD AND RELOADS UPDATES SCORES when game round is over and its new player's turn
   const reloadScores = () => {
     dispatch(fetchAllGameScores(gameId));
     setTimeout(() => {
@@ -121,31 +123,24 @@ const [showFinalCard, setShowFinalCard] = useState(false);
     dispatch(editGame({ id: game.id, started: true })).then(() => {
       dispatch(fetchSingleGame(gameId));
     });
-    // game.name && username ?
     clientSocket.emit("send_start_game", {
       room: game.name,
       userName: username,
     });
-    // : null
   };
 
-  const [tempScoreCard, setTempScoreCard] = useState("");
-  const tempScoreCardTurn = useSelector(selectTempScoreCardMessages);
-
+  // SETS TEMPSCORECARD (card that shows info about the round/points earned) when scorecardturnChanges
   useEffect(() => {
     setTempScoreCard(tempScoreCardTurn);
   }, [tempScoreCardTurn]);
 
-  // SHOULD THIS CHECK IF ITS THE RIGHT GAME?????????
+  // SOCKET RECIEVE
   useEffect(() => {
     clientSocket.on("receive_score_card", ({ tempScoreCardMessages }) => {
       setTempScoreCard(tempScoreCardMessages);
     });
 
     clientSocket.on("receive_start_game", ({ room, userName }) => {
-      console.log("ROOM & GAME>NAME, gameID: ", room, game.name, gameId);
-      // room === game.name ? console.log("THE FUCKING SAME") : console.log("NOTOTOTOOTTTHE FUCKING SAME")
-      //  room === game.name ? dispatch(fetchSingleGame(gameId)): null;
       dispatch(fetchSingleGame(gameId));
     });
     clientSocket.on("recieve_ask_to_join", (room) => {
@@ -157,23 +152,15 @@ const [showFinalCard, setShowFinalCard] = useState(false);
     });
   }, [clientSocket, game, gameId]);
 
-  // USER LEAVES SOCKET ROOM WHEN SINGLE GAME UNMOUNTS
+  // SOCKET EMIT
+  // play joins rrom when game or userScore changes
   useEffect(() => {
     userScore
       ? clientSocket.emit("join_room", { room: game.name, userName: username })
       : null;
-    // DO NOT DELETE YET>>> may neeed to disconnect at somepoint, but it curreny causes issues,
-    // maybe because it changes everytime game changes?
-
-    // return () => {
-    //   // Leave the room
-    //   clientSocket.emit("leave_room", { room: game.name });
-    //   // Disconnect the socket
-    //   // clientSocket.disconnect();
-    // };
   }, [game, userScore]);
 
-  const [showTiedGame, setShowTiedGame] = useState(false);
+  // TIED GAME, if game is tied, render it on tempscorecard and do not end game
   const checkIfTied = () => {
     setShowTiedGame(true);
   };

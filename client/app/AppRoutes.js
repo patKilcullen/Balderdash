@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import AuthForm from '../features/auth/AuthForm';
 import Home from '../features/home/Home';
-import Main from '../features/main/Main';
 import CreateGame from '../features/games/CreateGame';
 import SearchGame from '../features/games/SearchGame';
 import AllGames from '../features/games/AllGames';
@@ -32,7 +31,6 @@ const AppRoutes = () => {
           <Route path="/*" element={<Home />} />
           {/* right not home is basically all games componenet, might want to mkae it home screen */}
           <Route to="/home" element={<Home />} />
-          <Route path="/main" element={<Main />} />
           <Route path="/games" element={<AllGames />} />
           <Route path="/games/:id" element={<SingleGame />} />
           <Route path="/create-game" element={<CreateGame />} />

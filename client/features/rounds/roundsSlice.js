@@ -1,3 +1,6 @@
+
+// USED FOR MONGODB/NOSQL and may be used as reference
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 

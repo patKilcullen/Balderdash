@@ -2,20 +2,27 @@ import React, { useEffect, useState, useContext } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+// SLICES/STATE REDUCERS, ETC.
 import { fetchHighestGameScores } from "./scoresSlice";
 import { editGameTurn } from "../games/singleGameSlice";
 
+// SOCKET
 import { SocketContext } from "../../app/SocketProvider";
 
+// MATERIAL UI
 import { Card, Box, Typography, Button } from "@mui/material";
 
 const FinalCard = ({ game, userScore }) => {
+// COMPONENT STATE
+const [winner, setWinner] = useState("");
+const [winnerScore, setWinnerScore] = useState(0);
+
+// SOCKET
   const clientSocket = useContext(SocketContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [winner, setWinner] = useState("");
-  const [winnerScore, setWinnerScore] = useState(0);
+  // GETS HIGHEST SCORE AND SETS THE WINNER TO INFO
   useEffect(() => {
     dispatch(fetchHighestGameScores(game.id)).then((res) => {
       setWinner(res.payload[0].user);
@@ -23,6 +30,7 @@ const FinalCard = ({ game, userScore }) => {
     });
   }, []);
 
+  // PLAY AGAIN
   const handlePlayAgain = () => {
     dispatch(
       editGameTurn({
