@@ -72,6 +72,43 @@ export const editGameTurn = createAsyncThunk("editGameTurn", async ({gameId, tur
   }
 });
 
+// CREATE GAME
+export const createGame = createAsyncThunk(
+  "createGame",
+  async ({
+    userId,
+    name,
+    rounds,
+    roundsLeft,
+    winner,
+    started,
+    complete,
+    ownerId,
+    publicX,
+    numPlayers,
+    turn,
+  }) => {
+    try {
+      const { data } = await axios.post("/api/games", {
+        userId,
+        name,
+        rounds,
+        roundsLeft,
+        winner,
+        started,
+        complete,
+        ownerId,
+        publicX,
+        numPlayers,
+        turn,
+      });
+
+      return data;
+    } catch (error) {
+      console.log("ERROR IN CREAT GAME THUNK: ", error);
+    }
+  }
+);
 
 
 const singleGameSlice = createSlice({
@@ -92,6 +129,9 @@ const singleGameSlice = createSlice({
       return action.payload;
     })
     builder.addCase(editGame.fulfilled, (state, action) => {
+      return action.payload;
+    })
+    builder.addCase(createGame.fulfilled, (state, action) => {
       return action.payload;
     })
   },

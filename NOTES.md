@@ -42,6 +42,9 @@ CardFront "Back of Card" has display: "FLEW" instead of flex
 
 limit adding new word to database to only one time
 
+REMOVE superfluous database columsn, especially in games
+
+
 
 
 <!-- OLD -->

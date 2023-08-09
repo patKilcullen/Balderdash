@@ -2,44 +2,34 @@ import React, { useState, useContext, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { createGame } from "./allGamesSlice";
+// import { createGame } from "./allGamesSlice";
+import { createGame } from "./singleGameSlice";
+
 import { createScore } from "../scores/scoresSlice";
 
-// SOCKET
-import socket from "socket.io-client";
-// import { SocketContext } from "../../app/App";
-import { SocketContext } from "../../app/SocketProvider";
-
 // MATERIAL UI
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-// import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import { fontSize, height } from "@mui/system";
-import Card from "@mui/material/Card";
-////////////////
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Box,
+  Typography,
+  Container,
+  InputLabel,
+  Select,
+  MenuItem,
+  Card,
+} from "@mui/material";
 
 const CreateGame = () => {
   const userId = useSelector((state) => state.auth.me.id);
-  console.log("USER ID: ", userId);
   const [gameName, setGameName] = useState("");
   const [rounds, setRounds] = useState(1);
   const [error, setError] = useState("");
-  const [gameId, setGameId] = useState(0);
-  console.log("GAME IDI ID: ", gameId);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // SOCKET
-  //  const clientSocket = socket.connect("http://localhost:8080");
-  const clientSocket = useContext(SocketContext);
 
   const handleCreateGame = (e) => {
     e.preventDefault();
