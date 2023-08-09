@@ -2,9 +2,8 @@ import React, { useState, useContext, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-// import { createGame } from "./allGamesSlice";
+// SLICES/STATE REDUCERS, ETC.
 import { createGame } from "./singleGameSlice";
-
 import { createScore } from "../scores/scoresSlice";
 
 // MATERIAL UI

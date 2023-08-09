@@ -2,56 +2,47 @@ import React, { useState, useContext, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 
-// import { createGame } from "./allGamesSlice";
-// import { createScore } from "../scores/scoresSlice";
+// SLICES/STATE REDUCERS, ETC.
+import {
+  fetchSingleGame,
+  selectSingleGame,
+  findGameByName,
+} from "./singleGameSlice";
 
-import { fetchSingleGame, selectSingleGame, findGameByName } from "./singleGameSlice";
-
+// COMPONENTS
 import CardFront from "../cards/CardFront";
 
-// SOCKET
-import socket from "socket.io-client";
-// import { SocketContext } from "../../app/App";
-import { SocketContext } from "../../app/SocketProvider";
-
 // MATERIAL UI
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-// import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import { fontSize, height } from "@mui/system";
-import Card from "@mui/material/Card";
-////////////////
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Box,
+  Typography,
+  Container,
+  InputLabel,
+  Select,
+  MenuItem,
+  Card,
+} from "@mui/material";
 
 const SearchGame = () => {
-  const userId = useSelector((state) => state.auth.me.id);
-  //  const foundGame = useSelector(selectSingleGame)
-  //  console.log("FOUND GAME: ", foundGame)
+  // COMPONENT STATE
   const [gameName, setGameName] = useState("");
   const [error, setError] = useState(false);
+  const [foundGame, setFoundGame] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // SOCKET
-  //  const clientSocket = socket.connect("http://localhost:8080");
-  const clientSocket = useContext(SocketContext);
-
-  const [foundGame, setFoundGame] = useState("");
-
+  // SEARCH FOR A GAME
   const handleSearchGame = (e) => {
     e.preventDefault();
-
     dispatch(findGameByName(gameName)).then((game) => {
-      game.payload === null ? setError("Can't find that game...")
-      : setFoundGame(game.payload);
+      game.payload === null
+        ? setError("Can't find that game...")
+        : setFoundGame(game.payload);
     });
   };
 

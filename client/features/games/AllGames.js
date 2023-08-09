@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
+// COMPONENTS
 import CardFront from "../cards/CardFront";
 
 const AllGames = () => {
