@@ -309,7 +309,24 @@ const ScoreCard = ({
               // Should make singleScore for user!!!! check for that to determing if can send
 
               <button onClick={handleAskJoin}>Ask to join this game</button>
-            ) : null}
+            ) : 
+            game.ownerId !== userId && !game.started && userScore ?
+<Typography
+                                    color="secondary"
+                                    sx={{
+                                      fontWeight: "bold",
+                                      fontSize: "25px",
+                                      width: "100%",
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      alignItems: "center",
+                                    }}
+                                    variant="h4"
+                                  >
+                                    REQUEST SENT
+                                  </Typography>
+
+            : null}
 
             {/* START GAME - If game owner and more than one player*/}
             {game.ownerId === userId &&
