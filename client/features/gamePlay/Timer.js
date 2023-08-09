@@ -1,9 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import socket from "socket.io-client";
+
+// SOCKET
 import { SocketContext } from "../../app/SocketProvider";
+
+// COMPONENTS
 import DefInputBox from "./DefInputBox";
 import GuessDefs from "./GuessDefs";
+
+// SLICES/STATE REDUCERS, ETC.
 import {
   selectFakeWords,
   getFakeDefinitions,
@@ -28,7 +33,7 @@ const Timer = ({
   setTimer,
   setChoseWord,
 }) => {
-  // Component state
+  // COMPONENT STATE
   const [countdown, setCountdown] = useState(20);
   const [defInput, setDefInput] = useState(false);
   const [playGame, setPlayGame] = useState(false);

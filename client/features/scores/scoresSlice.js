@@ -52,6 +52,7 @@ console.log("HIGHEST SCORE IN THUNK: ", data)
       try {
 
         const { data } = await axios.post("/api/scores",{score, accepted, turn, turnNum, gameId, userId});
+        console.log("GREATE SCORE DATA: ", data)
         return data;
       } catch (error) {
         console.log("ERROR IN CREAT Score THUNK: ", error);

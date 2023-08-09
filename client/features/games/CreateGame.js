@@ -28,10 +28,12 @@ import Card from "@mui/material/Card";
 
 const CreateGame = () => {
   const userId = useSelector((state) => state.auth.me.id);
+  console.log("USER ID: ", userId);
   const [gameName, setGameName] = useState("");
   const [rounds, setRounds] = useState(1);
   const [error, setError] = useState("");
-
+  const [gameId, setGameId] = useState(0);
+  console.log("GAME IDI ID: ", gameId);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -57,30 +59,22 @@ const CreateGame = () => {
             numPlayers: 1,
             turn: 1,
           })
-        )
-          .then((res) => {
-            clientSocket.emit("join_room", {
-              roomId: res.payload.id,
+        ).then((res) => {
+          dispatch(
+            createScore({
+              score: 0,
+              accepted: true,
+              turn: true,
+              turnNum: 1,
+              gameId: res.payload.id,
               userId: userId,
-            });
-            clientSocket.emit("join-da-room", res.payload.id);
-            dispatch(
-              createScore({
-                score: 0,
-                accepted: true,
-                turn: true,
-                turnNum: 1,
-                gameId: res.payload.id,
-                userId: userId,
-              })
-            );
-          })
-          .then(() => {
-            navigate("/home");
-          })
+            })
+          ).then((res) => {
+            navigate(`/games/${res.payload.gameId}`);
+          });
+        })
       : setError("Rounds must be a postive integer");
   };
-
 
   return (
     <Container
@@ -104,123 +98,125 @@ const CreateGame = () => {
           fontWeight: "bold",
         }}
       >
-         <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              backgroundColor: "#e6e8dc",
-              padding: "1em 1em",
-              borderRadius: "50px",
-              border: "5px solid black",
-              boxShadow: "20",
-              fontWeight: "bold",
-              height: "100%",
-            }}
-          >
-        
-        <Typography
-          color="secondary"
-          component="h1"
-          variant="h4"
+        <Box
           sx={{
-            textDecoration: "underline",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            backgroundColor: "#e6e8dc",
+            padding: "1em 1em",
+            borderRadius: "50px",
+            border: "5px solid black",
+            boxShadow: "20",
             fontWeight: "bold",
-            fontSize: "40px",
+            height: "100%",
           }}
         >
-          Create a New Game
-        </Typography>
-        <Box
-          component="form"
-          onSubmit={handleCreateGame}
-          noValidate
-          sx={{ mt: 3 }}
-        >
-    
           <Typography
-            color="black"
-            component="h2"
-            variant="h5"
-            sx={{ fontWeight: "bold" }}
-          >
-            Game Name:
-          </Typography>
-          <input
-            style={{
-              backgroundColor: "white",
-              border: "2px solid black",
-              borderRadius: "50px",
-              fontWeight: "bold",
-              font: "200px",
-              width: "100%",
-              height: "50px",
-              fontSize: "20px",
-            }}
-            placeholder="pick a fun game name..."
-          
-
-            type="text"
-            name="name"
-            value={gameName}
-            onChange={(e) => setGameName(e.target.value)}
-            required
-          />
-  
-
-          <Typography
-            color="black"
-            component="h2"
-            variant="h5"
-            sx={{ fontWeight: "bold" }}
-          >
-            Rounds:
-          </Typography>
-          <input
-            style={{
-              backgroundColor: "white",
-              border: "2px solid black",
-              borderRadius: "50px",
-
-              height: "50px",
-              fontSize: "20px",
-            }}
-            type="number"
-            name="rounds"
-            value={rounds}
-            onChange={(e) => setRounds(parseInt(e.target.value))}
-          />
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
+            color="secondary"
+            component="h1"
+            variant="h4"
             sx={{
-              mt: 3,
-              mb: 2,
-              height: "60px",
-              fontSize: "1.25rem",
-              boxShadow: "20",
-              border: "2px solid black",
-              borderRadius: "25px",
+              textDecoration: "underline",
+              fontWeight: "bold",
+              fontSize: "40px",
             }}
-            color="primary"
+          >
+            Create a New Game
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleCreateGame}
+            noValidate
+            sx={{ mt: 3 }}
           >
             <Typography
-              color="secondary"
+              color="black"
               component="h2"
               variant="h5"
               sx={{ fontWeight: "bold" }}
             >
-              Create Game
+              Game Name:
             </Typography>
-          </Button>
+            <input
+              style={{
+                backgroundColor: "white",
+                border: "2px solid black",
+                borderRadius: "50px",
+                fontWeight: "bold",
+                font: "200px",
+                width: "100%",
+                height: "50px",
+                fontSize: "20px",
+              }}
+              placeholder="pick a fun game name..."
+              type="text"
+              name="name"
+              value={gameName}
+              onChange={(e) => setGameName(e.target.value)}
+              required
+            />
+
+            <Typography
+              color="black"
+              component="h2"
+              variant="h5"
+              sx={{ fontWeight: "bold" }}
+            >
+              Rounds:
+            </Typography>
+            <input
+              style={{
+                backgroundColor: "white",
+                border: "2px solid black",
+                borderRadius: "50px",
+
+                height: "50px",
+                fontSize: "20px",
+              }}
+              type="number"
+              name="rounds"
+              value={rounds}
+              onChange={(e) => setRounds(parseInt(e.target.value))}
+            />
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                mt: 3,
+                mb: 2,
+                height: "60px",
+                fontSize: "1.25rem",
+                boxShadow: "20",
+                border: "2px solid black",
+                borderRadius: "25px",
+              }}
+              color="primary"
+            >
+              <Typography
+                color="secondary"
+                component="h2"
+                variant="h5"
+                sx={{ fontWeight: "bold" }}
+              >
+                Create Game
+              </Typography>
+            </Button>
+          </Box>
+          {/* </Card> */}
+          {error ? <div style={{ color: "red" }}>{error}</div> : null}
         </Box>
-        {/* </Card> */}
-        {error ? <div style={{ color: "red" }}>{error}</div> : null}
       </Box>
-      </Box>
-      <Button type="button" color='secondary' sx={{textDecoration: "underline", fontWeight: "bold"}} onClick={()=> navigate('/home')}>Home</Button>
+      <Button
+        type="button"
+        color="secondary"
+        sx={{ textDecoration: "underline", fontWeight: "bold" }}
+        onClick={() => navigate("/home")}
+      >
+        Home
+      </Button>
     </Container>
   );
 };

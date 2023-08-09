@@ -17,7 +17,6 @@ import {
 import { editGame, editGameTurn } from "../games/singleGameSlice";
 import {
   fetchSingleGame,
-  fetchAllGameScores,
   selectSingleGame,
 } from "../games/singleGameSlice";
 import { clearFakeWords, clearFakeDefs, selectWord } from "./gamePlaySlice";

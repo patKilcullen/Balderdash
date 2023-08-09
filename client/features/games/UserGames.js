@@ -3,9 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 
 import {
-  fetchAllGames,
   selectAllGames,
-  fetchAllUserGames,
 } from "./allGamesSlice";
 
 import { fetchSingleUser, selectSingleUser } from "../users/singleUserSlice";
