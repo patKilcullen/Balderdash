@@ -1,3 +1,5 @@
+// ADD NEW WORD AND DEFINITON TO DATABASE FOR FUTURE USE IN GAME
+
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 

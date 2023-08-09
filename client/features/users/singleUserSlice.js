@@ -3,7 +3,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// GET ALL GAMES
+// GET SINGLE USER
 export const fetchSingleUser = createAsyncThunk(
     "singleUser",
     async (id) => {
@@ -42,10 +42,9 @@ initialState: {},
 reducers: {},
 extraReducers: (builder)=>{
     builder.addCase(fetchSingleUser.fulfilled, (state, action)=>{
-
         return action.payload
     })
-   
+  
 }
 
 })

@@ -305,28 +305,24 @@ const ScoreCard = ({
 
             {/* IF NOT GAME OWNER  and Game NOT STARTED: REQUEST TO JOIN*/}
             {game.ownerId !== userId && !game.started && !userScore ? (
-              // ADD additional conditional to determine if request already sent
-              // Should make singleScore for user!!!! check for that to determing if can send
-
               <button onClick={handleAskJoin}>Ask to join this game</button>
-            ) : 
-            game.ownerId !== userId && !game.started && userScore ?
-<Typography
-                                    color="secondary"
-                                    sx={{
-                                      fontWeight: "bold",
-                                      fontSize: "25px",
-                                      width: "100%",
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      alignItems: "center",
-                                    }}
-                                    variant="h4"
-                                  >
-                                    REQUEST SENT
-                                  </Typography>
-
-            : null}
+            ) : // if request sent already, display message
+            game.ownerId !== userId && !game.started && userScore ? (
+              <Typography
+                color="secondary"
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: "25px",
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+                variant="h4"
+              >
+                REQUEST SENT
+              </Typography>
+            ) : null}
 
             {/* START GAME - If game owner and more than one player*/}
             {game.ownerId === userId &&

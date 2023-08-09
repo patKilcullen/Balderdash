@@ -1,149 +1,117 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// GET ALL SCORES.... probably won't need
-export const fetchAllScores = createAsyncThunk(
-    "allScores",
-    async () => {
-      try {
-        const { data } = await axios.get("/api/scores");
-      
-        return data;
-      } catch (error) {
-        console.log("ERROR IN FETCH ALL SCORES THUNK: ", error);
-      }
+// GET ALL GAME'S SCORES
+export const fetchAllGameScores = createAsyncThunk(
+  "allScores",
+  async (gameId) => {
+    try {
+      const { data } = await axios.get(`/api/scores/game/${gameId}`);
+
+      return data;
+    } catch (error) {
+      console.log("ERROR IN FETCH ALL SCORES THUNK: ", error);
     }
-  );
+  }
+);
 
-
-  export const fetchAllGameScores = createAsyncThunk(
-    "allScores",
-    async (gameId) => {
-      try {
-        const { data } = await axios.get(`/api/scores/game/${gameId}`);
-
-        return data;
-      } catch (error) {
-        console.log("ERROR IN FETCH ALL SCORES THUNK: ", error);
-      }
+// GET HIGHEST SCORE IN GAME
+export const fetchHighestGameScores = createAsyncThunk(
+  "highestScores",
+  async (gameId) => {
+    try {
+      const { data } = await axios.get(
+        `/api/scores/game/${gameId}/highestScores`
+      );
+      console.log("HIGHEST SCORE IN THUNK: ", data);
+      return data;
+    } catch (error) {
+      console.log("ERROR IN FETCH ALL SCORES THUNK: ", error);
     }
-  );
+  }
+);
 
-  export const fetchHighestGameScores = createAsyncThunk(
-    "highestScores",
-    async (gameId) => {
-      try {
-        const { data } = await axios.get(`/api/scores/game/${gameId}/highestScores`);
-console.log("HIGHEST SCORE IN THUNK: ", data)
-        return data;
-      } catch (error) {
-        console.log("ERROR IN FETCH ALL SCORES THUNK: ", error);
-      }
+// CREATE SCORE
+export const createScore = createAsyncThunk(
+  "createScore",
+  async ({ score, accepted, turn, turnNum, gameId, userId }) => {
+    try {
+      const { data } = await axios.post("/api/scores", {
+        score,
+        accepted,
+        turn,
+        turnNum,
+        gameId,
+        userId,
+      });
+      console.log("GREATE SCORE DATA: ", data);
+      return data;
+    } catch (error) {
+      console.log("ERROR IN CREAT Score THUNK: ", error);
     }
-  );
+  }
+);
 
+// EDIT SCORE
+export const editScore = createAsyncThunk("editScore", async (score) => {
+  try {
+    const { data } = await axios.put(`/api/scores/${score.userId}`, score);
 
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+});
 
-// CREATE A Score
-  export const createScore = createAsyncThunk(
-    "createScore",
-    async ({score, accepted, turn,  turnNum, gameId, userId}) => {
-        
-      try {
+// ADD POINT TO SCORE
+export const addPoint = createAsyncThunk(
+  "addPoint",
+  async ({ userId, gameId }) => {
+    try {
+      const { data } = await axios.put(`/api/scores/${userId}/addPoint`, {
+        userId,
+        gameId,
+      });
 
-        const { data } = await axios.post("/api/scores",{score, accepted, turn, turnNum, gameId, userId});
-        console.log("GREATE SCORE DATA: ", data)
-        return data;
-      } catch (error) {
-        console.log("ERROR IN CREAT Score THUNK: ", error);
-      }
+      return data;
+    } catch (err) {
+      console.log(err);
     }
-  );
+  }
+);
 
-  // Edit Score
-  export const editScore = createAsyncThunk(
-    "editScore",
-    async (score) => {
-
-      try {
-        const { data } = await axios.put(`/api/scores/${score.userId}`, score);
-       
-        return data;
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  );
-
-// ADD POINT
-  export const addPoint = createAsyncThunk(
-    "addPoint",
-    async ({userId, gameId}) => {
-
-      try {
-        const { data } = await axios.put(`/api/scores/${userId}/addPoint`, {userId, gameId});
-     
-        return data;
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  );
-
-  export const deleteScore = createAsyncThunk(
-    "deleteScore",
-    async (score) => {
-    
-      try {
-         await axios.delete(`/api/scores/${score.gameId}/${score.userId}`);
-        
-        //  What to return???  should core table have its own ID?
-        return {gameId: score.gameId, userId: score.userId };
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  );
-
-
-
+// DELETE SCORE - for now used only when game owner denies request
+export const deleteScore = createAsyncThunk("deleteScore", async (score) => {
+  try {
+    await axios.delete(`/api/scores/${score.gameId}/${score.userId}`);
+    return { gameId: score.gameId, userId: score.userId };
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 const allScoresSlice = createSlice({
-name: "allScores",
-initialState: [],
-reducers: {},
-extraReducers: (builder)=>{
-    // builder.addCase(fetchAllScores.fulfilled, (state, action)=>{
-    //     return action.payload
-    // }),
-    builder.addCase(fetchAllGameScores.fulfilled, (state, action)=>{
-      return action.payload
-  }),
-    builder.addCase(createScore.fulfilled, (state, action)=>{
-        state.push(action.payload)
+  name: "allScores",
+  initialState: [],
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchAllGameScores.fulfilled, (state, action) => {
+      return action.payload;
     }),
-    builder.addCase(editScore.fulfilled, (state, action)=>{
-      state.push(action.payload)
-  }),
-  builder.addCase(deleteScore.fulfilled, (state, action) => {
+      builder.addCase(createScore.fulfilled, (state, action) => {
+        state.push(action.payload);
+      }),
+      builder.addCase(editScore.fulfilled, (state, action) => {
+        state.push(action.payload);
+      }),
+      builder.addCase(addPoint.fulfilled, (state, action) => {
+        state.push(action.payload);
+      });
+  },
+});
 
-    // state.allScores = state.allScores.filter(score =>{
+export const selectAllScores = (state) => {
+  return state.allScores;
+};
 
-    //   return score !== action.payload
-    // });
-
-  }),
-  builder.addCase(addPoint.fulfilled, (state, action)=>{
-console.log("ADD PPIONT AxE PAY: ", action.payload)
-    state.push(action.payload)
-})
-}
-
-
-})
-
-export const selectAllScores = (state)=>{
-    return state.allScores
-}
-
-export default allScoresSlice.reducer
+export default allScoresSlice.reducer;

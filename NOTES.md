@@ -4,6 +4,8 @@ T
 
 LAST UPDATE: 
 
+<!-- CLEANED UP AND ADDED COMMENT TO FRONT END -->
+
 added addPoint route to include raw sql but the info doesnt appear on the scoreCard after the points are updated////  probably has to do what what is sent... HOWEVER, its currenlty more confusing than sequelize, though there may be a way to use the OUTPUT in sql to make it word, as in the commented out routed in scores.js in api
 
 added pgdb and newWords routes to add hardcoded word and def to database.... uses thunks from scoreSlice for now and automatically hits them when singlePage useEffect loads
