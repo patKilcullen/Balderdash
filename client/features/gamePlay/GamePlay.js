@@ -186,6 +186,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
         ) : null}
 
         {/* MAIN CARD COMPONENT */}
+        <CardFront side={"back"} bottomCard={false}></CardFront>
         <CardFront
           checkIfTied={checkIfTied}
           top={word}

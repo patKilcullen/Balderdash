@@ -2,7 +2,6 @@ const router = require('express').Router()
 module.exports = router
 
 router.use('/users', require('./users'))
-router.use('/dictionary', require('./dictionary'))
 router.use('/games', require('./games'))
 router.use('/scores', require('./scores'))
 router.use('/wordsAndDefinitions', require('./wordsAndDefinitions'))

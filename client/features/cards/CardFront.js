@@ -11,6 +11,7 @@ import DefInputBox from "../gamePlay/DefInputBox";
 
 
 const CardFront = ({
+  bottomCard,
   checkIfTied,
   half,
   def,
@@ -117,185 +118,192 @@ const CardFront = ({
 
   
   return (
-  <div>
-    {/* Main Card */}
-    <Card
-      sx={{
-        // Styling for the main card container
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        backgroundColor: cardBackgroundColor, // Use the cardBackgroundColor useMemo variable
-        padding: "1em 1em",
-        borderRadius: !hidden ? "50px" : null,
-        border: "5px solid black",
-        boxShadow: "20",
-        fontWeight: "bold",
-        // CARD FLIP
-        transform: flip ? "rotateY(360deg) " : null,
-        perspective: "1000px",
-        transformStyle: "preserve-3d",
-        transition: "0.9s",
-        transformOrigin: "center center",
-        // FULL SCREEN CARD DIMENSIONS
-        ...cardDimensions, // Use the cardDimensions useMemo variable
-      }}
-    >
-      {/* CARD BORDER */}
+    <div>
+      {/* Main Card */}
       <Card
         sx={{
-          // Styling for the inner card container
-          padding: "10px",
-          backgroundColor: sideState === "front" && !tempBack ? "#e6e8dc" : "#88ebe6",
-          height: hidden ? "100vh" : "95%",
-          width: hidden ? "100%" : "90%",
-          borderRadius: !hidden ? "50px" : null,
-          overflow: "scroll",
+          // Styling for the main card container
+          zIndex: bottomCard === false ? "1" : "2000",
+          position: bottomCard === false ? "relative" : "absolute",
+          top: bottomCard === false ? "0" : "365px",
+          left: bottomCard === false ? "0" : "75px",
           display: "flex",
           flexDirection: "column",
-          alignContent: "center",
           alignItems: "center",
-          ...cardBorderStyle, // Use the cardBorderStyle useMemo variable
-          top: hidden ? "0px" : null,
+          backgroundColor:  cardBackgroundColor, // Use the cardBackgroundColor useMemo variable
+          padding: "1em 1em",
+          borderRadius: !hidden ? "50px" : null,
+          border: "5px solid black",
+          boxShadow: "20",
+          fontWeight: "bold",
+          // CARD FLIP
+          transform: flip ? "rotateY(360deg) " : null,
+          perspective: "1000px",
+          transformStyle: "preserve-3d",
+          transition: "0.9s",
+          transformOrigin: "center center",
+          // FULL SCREEN CARD DIMENSIONS
+          ...cardDimensions, // Use the cardDimensions useMemo variable
         }}
       >
-        {/* FRONT OF CARD */}
-        {sideState === "front" ? (
-          <div
-            style={{
-              ...frontCardStyle, // Use the frontCardStyle useMemo variable
-            }}
-          >
-            {/* Top Portion of Front of Card */}
-            {!hidden ? (
-              <Box
-                style={{
-                  visibility: hidden || tempBack ? "hidden" : null,
-                  fontSize: "40px",
-                  fontWeight: "bold",
-                  borderTop: "40px",
-                  marginTop: "-10px",
-                  paddingTop: "10px",
-                  backgroundColor: "#88ebe6",
-                  width: "110%",
-                  marginBottom: "10px",
-                  paddingBottom: "10px",
-                  height: hidden ? "0px" : "20%",
-                  display: "flex",
-                  justifyContent: "center",
-                  borderBottom: "5px solid #571122",
-                }}
-              >
-                {/* TOP portion of front of card */}
-                <Typography
+        {/* CARD BORDER */}
+        <Card
+          sx={{
+            // Styling for the inner card container
+            padding: "10px",
+            backgroundColor:
+              sideState === "front" && !tempBack ? "#e6e8dc" : "#88ebe6",
+            height: hidden ? "100vh" : "95%",
+            width: hidden ? "100%" : "90%",
+            borderRadius: !hidden ? "50px" : null,
+            overflow: "scroll",
+            display: "flex",
+            flexDirection: "column",
+            alignContent: "center",
+            alignItems: "center",
+            ...cardBorderStyle, // Use the cardBorderStyle useMemo variable
+            top: hidden ? "0px" : null,
+          }}
+        >
+          {/* FRONT OF CARD */}
+          {sideState === "front" ? (
+            <div
+              style={{
+                ...frontCardStyle, // Use the frontCardStyle useMemo variable
+              }}
+            >
+              {/* Top Portion of Front of Card */}
+              {!hidden ? (
+                <Box
                   style={{
+                    visibility: hidden || tempBack ? "hidden" : null,
                     fontSize: "40px",
-                    fontWeight: "bolder",
-                    textShadow: `3px 3px #558ABB`,
-                    alignSelf: " center",
-                    textDecoration: "underline",
-                    minHeight: hidden ? "0px" : "20%",
-                    maxHeight: hidden ? "0px" : null,
-                  }}
-                  color={"secondary"}
-                >
-                  {top && !hidden && !tempBack ? top : null}
-                </Typography>
-              </Box>
-            ) : null}
-
-            {/* BOTTOM portion of front of card */}
-            {!hidden ? (
-              <Box>
-                <div
-                  className="temp-scorecard-messages"
-                  sx={{
-                    minHeight: defCards ? "600px" : null,
-                    visibility: hidden ? "hidden" : null,
-                    height: hidden ? "0" : null,
+                    fontWeight: "bold",
+                    borderTop: "40px",
+                    marginTop: "-10px",
+                    paddingTop: "10px",
+                    backgroundColor: "#88ebe6",
+                    width: "110%",
+                    marginBottom: "10px",
+                    paddingBottom: "10px",
+                    height: hidden ? "0px" : "20%",
+                    display: "flex",
+                    justifyContent: "center",
+                    borderBottom: "5px solid #571122",
                   }}
                 >
-                  {bottom && !hidden ? (
-                    <div style={{ paddingLeft: "10%", width: "90%" }}>
-                      {bottom}
-                    </div>
-                  ) : null}
-                </div>
-              </Box>
-            ) : null}
+                  {/* TOP portion of front of card */}
+                  <Typography
+                    style={{
+                      fontSize: "40px",
+                      fontWeight: "bolder",
+                      textShadow: `3px 3px #558ABB`,
+                      alignSelf: " center",
+                      textDecoration: "underline",
+                      minHeight: hidden ? "0px" : "20%",
+                      maxHeight: hidden ? "0px" : null,
+                    }}
+                    color={"secondary"}
+                  >
+                    {top && !hidden && !tempBack ? top : null}
+                  </Typography>
+                </Box>
+              ) : null}
 
-            {/* TIMER starts Timer component with set time for the player to input
+              {/* BOTTOM portion of front of card */}
+              {!hidden ? (
+                <Box>
+                  <div
+                    className="temp-scorecard-messages"
+                    sx={{
+                      minHeight: defCards ? "600px" : null,
+                      visibility: hidden ? "hidden" : null,
+                      height: hidden ? "0" : null,
+                    }}
+                  >
+                    {bottom && !hidden ? (
+                      <div style={{ paddingLeft: "10%", width: "90%" }}>
+                        {bottom}
+                      </div>
+                    ) : null}
+                  </div>
+                </Box>
+              ) : null}
+
+              {/* TIMER starts Timer component with set time for the player to input
             their own definition, then sets the timer in the Guess Defs Component */}
-            {timer ? (
-              <Timer
-                checkIfTied={checkIfTied}
-                setTempBack={setTempBack}
-                showBackOfCard={showBackOfCard}
-                makeHidden={makeHidden}
-                top={top}
-                game={game}
-                username={username}
-                userId={userId}
-                userScore={userScore}
-                gameName={gameName}
-                gameId={game.id}
-                playerTurnName={playerTurnName}
-                definition={bottom}
-                reloadScores={reloadScores}
-                setDefinition={setDefinition}
-                setWord={setWord}
-                setTimer={setTimer}
-                setChoseWord={setChoseWord}
-              />
-            ) : null}
-          </div>
-        ) : null}
+              {timer ? (
+                <Timer
+                  checkIfTied={checkIfTied}
+                  setTempBack={setTempBack}
+                  showBackOfCard={showBackOfCard}
+                  makeHidden={makeHidden}
+                  top={top}
+                  game={game}
+                  username={username}
+                  userId={userId}
+                  userScore={userScore}
+                  gameName={gameName}
+                  gameId={game.id}
+                  playerTurnName={playerTurnName}
+                  definition={bottom}
+                  reloadScores={reloadScores}
+                  setDefinition={setDefinition}
+                  setWord={setWord}
+                  setTimer={setTimer}
+                  setChoseWord={setChoseWord}
+                />
+              ) : null}
+            </div>
+          ) : null}
 
-        {/* BACK OF CARD */}
-        {sideState === "back" || tempBack ? (
-          <div
-            className="card-logo"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              position: sideState !== "back" ? "fixed" : null,
-              marginTop: sideState !== "back" ? "-5%" : null,
-            }}
-          >
-            <Typography
-              className="card-logo-text"
-              style={{ fontSize: "65px", fontWeight: "bold" }}
-              color={"secondary"}
+          {/* BACK OF CARD */}
+          {sideState === "back" || tempBack ? (
+            <div
+              className="card-logo"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                position: sideState !== "back" ? "fixed" : null,
+                marginTop: sideState !== "back" ? "-5%" : null,
+              }}
             >
-              {/* half refers to if the game name on the back of the card needs to be split in half */}
-              {!half ? "Balder..." : half.first}
-            </Typography>
+              <Typography
+                className="card-logo-text"
+                style={{ fontSize: "65px", fontWeight: "bold" }}
+                color={"secondary"}
+              >
+                {/* half refers to if the game name on the back of the card needs to be split in half */}
+                {!half ? "Balder..." : half.first}
+              </Typography>
 
-            <Typography
-              className="card-logo-text"
-              style={{ fontSize: "70px", fontWeight: "bold" }}
-              color={"secondary"}
+              <Typography
+                className="card-logo-text"
+                style={{ fontSize: "70px", fontWeight: "bold" }}
+                color={"secondary"}
+              >
+                {!half ? "...dash" : half.second}
+              </Typography>
+            </div>
+          ) : null}
+
+          {/* CHOOSE DEFINITION BUTTON */}
+          {defCards &&
+          userScore.turnNum !== singleGame.turn &&
+          userScore.accepted === true ? (
+            <Button
+              sx={{ alignSelf: "center" }}
+              variant="contained"
+              size="large"
+              onClick={() => handleChooseWord(def)}
             >
-              {!half ? "...dash" : half.second}
-            </Typography>
-          </div>
-        ) : null}
-
-        {/* CHOOSE DEFINITION BUTTON */}
-        {defCards && userScore.turnNum !== singleGame.turn && userScore.accepted === true ? (
-          <Button
-            sx={{ alignSelf: "center" }}
-            variant="contained"
-            size="large"
-            onClick={() => handleChooseWord(def)}
-          >
-            {" "}
-            Choose Definition
-          </Button>
-        ) : null}
+              {" "}
+              Choose Definition
+            </Button>
+          ) : null}
+        </Card>
       </Card>
-    </Card>
-  </div>
-);
+    </div>
+  );
         }
 export default CardFront;
