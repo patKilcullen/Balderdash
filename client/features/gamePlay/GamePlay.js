@@ -67,31 +67,23 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
   const [moveOffScreen, setMoveOffScreen] = useState(false);
 const [flipSide, setFlipSide] = useState("back")
   const handleGetWord = () => {
-    word ? setMoveOffScreen(true) : null
-    // setTimeout(() => {
-    //   setMoveOffScreen(false);
-    //   dispatch(getWord);
+    // word ? setMoveOffScreen(true) : null
+    // setTimeout(()=>{
+    //  word ? setMoveOffScreen(false) : null
+    //  setFlipSide("back");
+    //   setTimeout(
+    //     () => {
 
-    //   setTimeout(() => {
-    //     
-    //   }, 1000);
-    // }, 1000);
-    setTimeout(()=>{
-     word ? setMoveOffScreen(false) : null
-     setFlipSide("back");
-      setTimeout(
-        () => {
+    //       setFlip(true);
+    //       setFlipSide("front");
+    //     },
+    //     word ? 1000 : 0
+    //   );
+
+    // }, word ? 1000 : 0)
+    // setFlip(true);
           
-          setFlip(true);
-          setFlipSide("front");
-        },
-        word ? 1000 : 0
-      );
-      
-        
-    }, word ? 1000 : 0)
-    
-
+    // setFlip(true);
     dispatch(clearFakeDefs());
     dispatch(clearTempScoreCardMessages());
     dispatch(getWord()).then((res) => {
@@ -99,8 +91,11 @@ const [flipSide, setFlipSide] = useState("back")
       dispatch(getDefinition(res.payload[0])).then((res) => {
         setDefinition(res.payload);
         dispatch(addDefinition({ real: res.payload }));
-        setFlip(false);
+        // setFlip(false);
       });
+      // HERE
+       setFlip(true);
+      setFlipSide("front");
     });
   };
 
@@ -213,6 +208,7 @@ const [flipSide, setFlipSide] = useState("back")
 
         {/* MAIN CARD COMPONENT */}
         <CardFront side={"back"} bottomCard={false}></CardFront>
+        <CardFront backFlip={true} flip={!flip} side={"back"}></CardFront>
         <CardFront
           moveOffScreen={moveOffScreen}
           checkIfTied={checkIfTied}
