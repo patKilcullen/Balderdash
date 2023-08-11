@@ -78,9 +78,10 @@ const [flipSide, setFlipSide] = useState("back")
     // }, 1000);
     setTimeout(()=>{
      word ? setMoveOffScreen(false) : null
+     setFlipSide("back");
       setTimeout(
         () => {
-          setFlipSide("back");
+          
           setFlip(true);
           setFlipSide("front");
         },
