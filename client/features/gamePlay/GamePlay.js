@@ -67,23 +67,22 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
   const [moveOffScreen, setMoveOffScreen] = useState(false);
 const [flipSide, setFlipSide] = useState("back")
   const handleGetWord = () => {
-    // word ? setMoveOffScreen(true) : null
-    // setTimeout(()=>{
-    //  word ? setMoveOffScreen(false) : null
-    //  setFlipSide("back");
-    //   setTimeout(
-    //     () => {
 
-    //       setFlip(true);
-    //       setFlipSide("front");
-    //     },
-    //     word ? 1000 : 0
-    //   );
+    word ? setMoveOffScreen(true) : null
+    setTimeout(()=>{
+     word ? setMoveOffScreen(false) : null
+     setFlipSide("back");
+      setTimeout(
+        () => {
 
-    // }, word ? 1000 : 0)
-    // setFlip(true);
-          
-    // setFlip(true);
+          setFlip(true);
+          setFlipSide("front");
+        },
+        word ? 1000 : 0
+      );
+
+    }, word ? 1000 : 0)
+  // setFlip(false);
     dispatch(clearFakeDefs());
     dispatch(clearTempScoreCardMessages());
     dispatch(getWord()).then((res) => {
@@ -94,6 +93,8 @@ const [flipSide, setFlipSide] = useState("back")
         // setFlip(false);
       });
       // HERE
+
+
        setFlip(true);
       setFlipSide("front");
     });

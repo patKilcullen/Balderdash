@@ -117,8 +117,17 @@ const CardFront = ({
     };
   }, [hidden]);
 
+useEffect(()=>{
+console.log("MOVE OFF SCROOEM: ", moveOffScreen)
+}, [moveOffScreen])
 
-  
+
+ const transformStyles = {
+   transform: `${flip || side === "front" ? "" : "rotateY(180deg)"}${
+     moveOffScreen ? " translate(-1000px, -1000px)" : ""
+   }`,
+   // ...other styles
+ };
   return (
     <div>
       {/* Main Card */}
@@ -131,7 +140,8 @@ const CardFront = ({
           //   ? "rotateY(360deg) "
           //   : null,
 
-          transform: flip || side === "front"? "" : "rotateY(180deg)",
+          // transform: flip || side === "front" ?  "" : "rotateY(180deg)" ,
+          transform: transformStyles.transform,
           backfaceVisibility: "hidden",
           zIndex: bottomCard === false ? "1" : "2000",
           position: bottomCard === false ? "relative" : "absolute",
