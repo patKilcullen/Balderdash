@@ -117,17 +117,17 @@ const CardFront = ({
     };
   }, [hidden]);
 
-useEffect(()=>{
-console.log("MOVE OFF SCROOEM: ", moveOffScreen)
-}, [moveOffScreen])
+  useEffect(() => {
+    console.log("MOVE OFF SCROOEM: ", moveOffScreen);
+  }, [moveOffScreen]);
 
+  // CARD FLIPPING INFO
+  const transformStyles = {
+    transform: `${flip || side === "front" ? "" : "rotateY(180deg)"}${
+      moveOffScreen ? " translate(-1000px, -1000px)" : ""
+    }`,
+  };
 
- const transformStyles = {
-   transform: `${flip || side === "front" ? "" : "rotateY(180deg)"}${
-     moveOffScreen ? " translate(-1000px, -1000px)" : ""
-   }`,
-   // ...other styles
- };
   return (
     <div>
       {/* Main Card */}
@@ -140,13 +140,16 @@ console.log("MOVE OFF SCROOEM: ", moveOffScreen)
           //   ? "rotateY(360deg) "
           //   : null,
 
+          // CARD FLIPPING INFO
           // transform: flip || side === "front" ?  "" : "rotateY(180deg)" ,
-          transform: transformStyles.transform,
-          backfaceVisibility: "hidden",
-          zIndex: bottomCard === false ? "1" : "2000",
-          position: bottomCard === false ? "relative" : "absolute",
-          top: bottomCard === false ? "0" : "365px",
-          left: bottomCard === false ? "0" : "75px",
+          // transform: transformStyles.transform,
+          // backfaceVisibility: "hidden",
+          // zIndex: bottomCard === false ? "1" : "2000",
+          // position: bottomCard === false ? "relative" : "absolute",
+          // top: bottomCard === false ? "0" : "365px",
+          // left: bottomCard === false ? "0" : "75px",
+          // CARD FLIPPING INFO
+
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -325,5 +328,5 @@ console.log("MOVE OFF SCROOEM: ", moveOffScreen)
       </Card>
     </div>
   );
-        }
+}
 export default CardFront;

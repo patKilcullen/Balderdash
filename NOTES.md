@@ -4,6 +4,11 @@ T
 
 LAST UPDATE: 
 
+IMPORTATN  LOOK Up
+// CARD FLIPPING INFO
+the code makes a card flip correctly the first time, then leave the screen and come back and flip again, but it doesnt flip correctly when it come bak
+BUTTTTTT the home screen is now messed up, and probably the cards throughout the game as well because of the // CARD FLIPPING INFO code in CardFront
+
 <!-- CLEANED UP AND ADDED COMMENT TO FRONT END -->
 
 added addPoint route to include raw sql but the info doesnt appear on the scoreCard after the points are updated////  probably has to do what what is sent... HOWEVER, its currenlty more confusing than sequelize, though there may be a way to use the OUTPUT in sql to make it word, as in the commented out routed in scores.js in api

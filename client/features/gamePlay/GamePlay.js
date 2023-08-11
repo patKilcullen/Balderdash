@@ -65,24 +65,28 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
   // then gets the definition throug API then sets that in state for player whose turn it is,
   // and then add it the the definition array with the key "real" to distinguish it from others
   const [moveOffScreen, setMoveOffScreen] = useState(false);
-const [flipSide, setFlipSide] = useState("back")
+  const [flipSide, setFlipSide] = useState("back");
   const handleGetWord = () => {
+    // CARD FLIPPING INFO
+    word ? setMoveOffScreen(true) : null;
+    setTimeout(
+      () => {
+        word ? setMoveOffScreen(false) : null;
+        setFlipSide("back");
 
-    word ? setMoveOffScreen(true) : null
-    setTimeout(()=>{
-     word ? setMoveOffScreen(false) : null
-     setFlipSide("back");
-      setTimeout(
-        () => {
+        setTimeout(
+          () => {
+            setFlip(true);
+            setFlipSide("front");
+          },
+          word ? 1000 : 0
+        );
+      },
+      word ? 1000 : 0
+    );
+    // CARD FLIPPING INFO
 
-          setFlip(true);
-          setFlipSide("front");
-        },
-        word ? 1000 : 0
-      );
-
-    }, word ? 1000 : 0)
-  // setFlip(false);
+ 
     dispatch(clearFakeDefs());
     dispatch(clearTempScoreCardMessages());
     dispatch(getWord()).then((res) => {
@@ -92,11 +96,6 @@ const [flipSide, setFlipSide] = useState("back")
         dispatch(addDefinition({ real: res.payload }));
         // setFlip(false);
       });
-      // HERE
-
-
-       setFlip(true);
-      setFlipSide("front");
     });
   };
 
@@ -209,7 +208,9 @@ const [flipSide, setFlipSide] = useState("back")
 
         {/* MAIN CARD COMPONENT */}
         <CardFront side={"back"} bottomCard={false}></CardFront>
-        <CardFront backFlip={true} flip={!flip} side={"back"}></CardFront>
+
+        {/* CARD FLIPPING INFO */}
+        {/* <CardFront backFlip={true} flip={!flip} side={"back"}></CardFront> */}
         <CardFront
           moveOffScreen={moveOffScreen}
           checkIfTied={checkIfTied}
