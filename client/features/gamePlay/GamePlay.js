@@ -64,8 +64,33 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
   // GET WORD:  first clears defs from last round then gets word from API, sets it in state,
   // then gets the definition throug API then sets that in state for player whose turn it is,
   // and then add it the the definition array with the key "real" to distinguish it from others
+  const [moveOffScreen, setMoveOffScreen] = useState(false);
+const [flipSide, setFlipSide] = useState("back")
   const handleGetWord = () => {
-    setFlip(true);
+    word ? setMoveOffScreen(true) : null
+    // setTimeout(() => {
+    //   setMoveOffScreen(false);
+    //   dispatch(getWord);
+
+    //   setTimeout(() => {
+    //     
+    //   }, 1000);
+    // }, 1000);
+    setTimeout(()=>{
+     word ? setMoveOffScreen(false) : null
+      setTimeout(
+        () => {
+          setFlipSide("back");
+          setFlip(true);
+          setFlipSide("front");
+        },
+        word ? 1000 : 0
+      );
+      
+        
+    }, word ? 1000 : 0)
+    
+
     dispatch(clearFakeDefs());
     dispatch(clearTempScoreCardMessages());
     dispatch(getWord()).then((res) => {
@@ -188,10 +213,12 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
         {/* MAIN CARD COMPONENT */}
         <CardFront side={"back"} bottomCard={false}></CardFront>
         <CardFront
+          moveOffScreen={moveOffScreen}
           checkIfTied={checkIfTied}
           top={word}
           bottom={definition}
-          side={word || (word.length && definition) ? "front" : "back"}
+          // side={word || (word.length && definition) ? "front" : "back"}
+          side={flipSide}
           flip={flip}
           timer={timer}
           game={game}

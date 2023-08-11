@@ -11,6 +11,7 @@ import DefInputBox from "../gamePlay/DefInputBox";
 
 
 const CardFront = ({
+  moveOffScreen,
   bottomCard,
   checkIfTied,
   half,
@@ -123,6 +124,11 @@ const CardFront = ({
       <Card
         sx={{
           // Styling for the main card container
+          transform: moveOffScreen
+            ? "translate(-1000px, -1000px)"
+            : flip
+            ? "rotateY(360deg) "
+            : null,
           zIndex: bottomCard === false ? "1" : "2000",
           position: bottomCard === false ? "relative" : "absolute",
           top: bottomCard === false ? "0" : "365px",
@@ -130,14 +136,14 @@ const CardFront = ({
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          backgroundColor:  cardBackgroundColor, // Use the cardBackgroundColor useMemo variable
+          backgroundColor: cardBackgroundColor, // Use the cardBackgroundColor useMemo variable
           padding: "1em 1em",
           borderRadius: !hidden ? "50px" : null,
           border: "5px solid black",
-          boxShadow: "20",
+          boxShadow: "0 0 2px 2px",
           fontWeight: "bold",
           // CARD FLIP
-          transform: flip ? "rotateY(360deg) " : null,
+          //  transform: flip ? "rotateY(360deg) " : null,
           perspective: "1000px",
           transformStyle: "preserve-3d",
           transition: "0.9s",
