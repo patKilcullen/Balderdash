@@ -162,9 +162,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
       ({ playerDef, room, userId, playerTurnName }) => {
         let playerId = userId;
         room === gameName && playerTurnName === username
-          ? dispatch(addDefinition({ [playerId]: playerDef })).then(() => {
-              console.log("RECEIVE PLAYER FAKE DEF: ");
-            })
+          ? dispatch(addDefinition({ [playerId]: playerDef }))
           : console.log(
               "ERROR: Failed to add player definition: ",
               playerDef,

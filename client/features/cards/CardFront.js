@@ -125,7 +125,7 @@ const CardFront = ({
   // CARD FLIPPING INFO
   // THIS
   const transformStyles = {
-    transform: `${flip || side === "front" || notReverse ? "" : "rotateY(360deg)"}${
+    transform: `${flip || side === "front" || notReverse ? "" : "rotateY(180deg)"}${
       moveOffScreen ? " translate(-1000px, -1000px)" : ""
     }`,
   };
@@ -150,7 +150,7 @@ const CardFront = ({
           zIndex: bottomCard === false ? "1" : "2000",
 
           // THIS 
-           position: notReverse ? "static" :  bottomCard === false  ? "relative"  : "absolute",
+           position: notReverse ? "static" :  bottomCard === false  ? "relative"   :"absolute",
 
           top: bottomCard === false ? "0" : "365px",
           left: bottomCard === false ? "0" : "75px",

@@ -164,6 +164,7 @@ const SearchGame = () => {
       {foundGame && foundGame.name ? (
         <Link to={`/games/${foundGame.id}`}>
           <CardFront
+          notReverse={true}
             side={"back"}
             half={{
               first: `${
