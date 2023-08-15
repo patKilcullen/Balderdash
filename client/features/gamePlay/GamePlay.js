@@ -210,7 +210,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
         <CardFront side={"back"} bottomCard={false}></CardFront>
 
         {/* CARD FLIPPING INFO */}
-        {/* <CardFront backFlip={true} flip={!flip} side={"back"}></CardFront> */}
+        <CardFront backFlip={true} flip={!flip} side={"back"}></CardFront>
         <CardFront
           moveOffScreen={moveOffScreen}
           checkIfTied={checkIfTied}

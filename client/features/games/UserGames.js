@@ -59,6 +59,7 @@ const UserGames = () => {
             ? displayGames.map((game) => (
                 <Link to={`/games/${game.id}`}>
                   <CardFront
+                  notReverse={true}
                     side={"back"}
                     half={{
                       first: `${

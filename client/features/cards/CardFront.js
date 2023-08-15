@@ -11,6 +11,7 @@ import DefInputBox from "../gamePlay/DefInputBox";
 
 
 const CardFront = ({
+  notReverse,
   backFlip,
   moveOffScreen,
   bottomCard,
@@ -122,8 +123,9 @@ const CardFront = ({
   }, [moveOffScreen]);
 
   // CARD FLIPPING INFO
+  // THIS
   const transformStyles = {
-    transform: `${flip || side === "front" ? "" : "rotateY(180deg)"}${
+    transform: `${flip || side === "front" || notReverse ? "" : "rotateY(360deg)"}${
       moveOffScreen ? " translate(-1000px, -1000px)" : ""
     }`,
   };
@@ -142,12 +144,16 @@ const CardFront = ({
 
           // CARD FLIPPING INFO
           // transform: flip || side === "front" ?  "" : "rotateY(180deg)" ,
-          // transform: transformStyles.transform,
-          // backfaceVisibility: "hidden",
-          // zIndex: bottomCard === false ? "1" : "2000",
-          // position: bottomCard === false ? "relative" : "absolute",
-          // top: bottomCard === false ? "0" : "365px",
-          // left: bottomCard === false ? "0" : "75px",
+          transform: transformStyles.transform,
+          // THIS
+            backfaceVisibility:  notReverse ? "" : "hidden",
+          zIndex: bottomCard === false ? "1" : "2000",
+
+          // THIS 
+           position: notReverse ? "static" :  bottomCard === false  ? "relative"  : "absolute",
+
+          top: bottomCard === false ? "0" : "365px",
+          left: bottomCard === false ? "0" : "75px",
           // CARD FLIPPING INFO
 
           display: "flex",
@@ -156,7 +162,7 @@ const CardFront = ({
           backgroundColor: cardBackgroundColor, // Use the cardBackgroundColor useMemo variable
           padding: "1em 1em",
           borderRadius: !hidden ? "50px" : null,
-          border: backFlip ? "5px solid red" : "5px solid black",
+          border:  "5px solid black",
           boxShadow: "0 0 2px 2px",
           fontWeight: "bold",
           // CARD FLIP

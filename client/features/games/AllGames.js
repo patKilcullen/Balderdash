@@ -16,6 +16,7 @@ const AllGames = () => {
       >
         <Link to="/create-game">
           <CardFront
+            notReverse={true}
             top={"Create Game"}
             side={"back"}
             half={{ first: "Create", second: "Game" }}
@@ -24,6 +25,7 @@ const AllGames = () => {
 
         <Link to="/search-game">
           <CardFront
+            notReverse={true}
             top={"Search Game"}
             side={"back"}
             half={{ first: "Find", second: "Game" }}
@@ -32,18 +34,21 @@ const AllGames = () => {
 
         <Link to={`/user-games/all-games`}>
           <CardFront
+            notReverse={true}
             side={"back"}
             half={{ first: "All", second: "Games" }}
           ></CardFront>
         </Link>
         <Link to={`/user-games/started-games`}>
           <CardFront
+            notReverse={true}
             side={"back"}
             half={{ first: "Started", second: "Games" }}
           ></CardFront>
         </Link>
         <Link to={`/user-games/unstarted-games`}>
           <CardFront
+            notReverse={true}
             side={"back"}
             half={{ first: "Unstarted", second: "Games" }}
           ></CardFront>
