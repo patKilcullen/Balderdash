@@ -55,7 +55,7 @@ const GuessDefs = ({
   const [fakeDefs, setFakeDefs] = useState([]);
   const [defList, setDefList] = useState(null);
   const [guessed, setGuessed] = useState(false);
-  const [countdown, setCountdown] = useState(20);
+  const [countdown, setCountdown] = useState(2);
 
   const dispatch = useDispatch();
   const word = useSelector(selectWord);
@@ -90,6 +90,7 @@ const GuessDefs = ({
         setChoseWord(false);
         dispatch(clearFakeWords());
         makeHidden();
+        
       }
     }, 1000);
 
@@ -102,6 +103,7 @@ const GuessDefs = ({
   // if Last round, check to see if the is one high score, if not, its a tie game, if there is one score, subtract round to 0, thus ending the game
   // if tie game, change turn but dont subtract rounds, it will continue until one high score.
   const handleChangeGameTurn = () => {
+    
     game.roundsLeft !== 1
       ? game.turn === 1
         ? dispatch(
@@ -145,6 +147,7 @@ const GuessDefs = ({
   // checks if guessed word is a fake definition, the real defintion, or neither, which would be abother users definiton
   // then adds apporproate message to tempScore card
   const handleChooseWord = (def) => {
+    
     setGuessed(true);
     const userKey = Object.keys(def)[0];
     if (userKey === "fake") {
@@ -233,7 +236,8 @@ const GuessDefs = ({
               );
             })
         : ""}
-      {guessed ? <CardFront side={"back"} fullScreen={true} /> : null}
+        {/* If player guesses def, flip the card and show the back */}
+      {guessed ? <CardFront flip={true} side={"back"} fullScreen={true} /> : null}
     </div>
   );
 };

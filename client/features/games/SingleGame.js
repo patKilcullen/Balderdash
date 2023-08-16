@@ -67,7 +67,8 @@ const SingleGame = () => {
     setTimeout(() => {
       dispatch(clearTempScoreCardMessages());
       setShowTempScoreCard(false);
-    }, 10000);
+
+    }, 100);
     setShowTempScoreCard(true);
   };
 

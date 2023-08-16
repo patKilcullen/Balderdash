@@ -23,7 +23,7 @@ added roundsLeft: game.roundsLeft - 1 to handleChangeGameTurn in GuessDefs becas
 
  WHAT TO DO:
 
-new card flip messes up defcards and change turn
+new card flip messes up flip when you choose a definition and whne  change turn
 
 
  GAME FOR JUST TWO PLAYUER HAS TO BE DIFFERENT OR NOT ALLOPWED.... as it is, with two players, the players fake def wouldnt make a different because no one could guess it... Could have it where player whose turn it is is also allowed to enter a fake def.. could always work that way..

@@ -146,10 +146,10 @@ const CardFront = ({
           transform: transformStyles.transform,
           // THIS
           backfaceVisibility: notReverse ? "" : "hidden",
-           zIndex: bottomCard ? "100000" : "2",
+          zIndex: bottomCard ? "100000" : "2",
 
           // THIS
-          position: notReverse  || defCards ? "static" : "absolute",
+          position: notReverse || defCards ? "static" : "absolute",
 
           top: bottomCard ? "308px" : "365px",
           left: "75px",

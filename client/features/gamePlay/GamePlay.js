@@ -190,6 +190,13 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
     );
   }, [clientSocket, game]);
 
+
+
+  // This set the flipCArd funciton right when the game changes turns
+  useEffect(()=>{
+!word ? setFlipSide("back") : null
+  },[reloadScores])
+
   return (
     <Card
       className="main "
@@ -227,16 +234,20 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
             side={"back"}
             // bottomCard={false}
           ></CardFront>
-       
 
           {/* CARD FLIPPING INFO */}
           <CardFront
             moveOffScreen={moveOffScreen}
             flip={!flip}
             side={"back"}
-            bottomCard={game && userScore && game.turn === userScore.turnNum ? false : true}
+            bottomCard={
+              game && userScore && game.turn === userScore.turnNum
+                ? false
+                : true
+            }
           ></CardFront>
           <CardFront
+     
             moveOffScreen={moveOffScreen}
             checkIfTied={checkIfTied}
             top={word}
