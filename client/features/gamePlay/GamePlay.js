@@ -143,8 +143,9 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
   // belong to(or have visited) other games
   useEffect(() => {
     // RECEIVE WORD from socket first, if it isn't players turn, update playerTurnNAme,
-    // then, if they're in the right room, add the word to state
+    // then, if they're in the right room, add the word to state, set flip to truand and flipside to "front"
     clientSocket.on("receive_word", ({ word, room, playerTurnName }) => {
+      
       playerTurnName !== username && room === gameName
         ? dispatch(setWordState(word))
         : null;
@@ -154,10 +155,14 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
         ? setWord(word)
         : setWord("");
 
-        // NEEDED WITH NEW FLIP?
+  
       playerTurnName !== username && room === gameName
         ? setFlip(true)
         : setFlip(false);
+           playerTurnName !== username && room === gameName
+             ? setFlipSide("front")
+             : null;
+        
     });
 
     // RECEIVE START COUNTDOWN players receive this from player whose turn it is when
@@ -227,7 +232,6 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
           {/* CARD FLIPPING INFO */}
           <CardFront
             moveOffScreen={moveOffScreen}
-            backFlip={true}
             flip={!flip}
             side={"back"}
             bottomCard={game && userScore && game.turn === userScore.turnNum ? false : true}
