@@ -146,14 +146,14 @@ const CardFront = ({
           // transform: flip || side === "front" ?  "" : "rotateY(180deg)" ,
           transform: transformStyles.transform,
           // THIS
-            backfaceVisibility:  notReverse ? "" : "hidden",
-          zIndex: bottomCard === false ? "1" : "2000",
+          backfaceVisibility: notReverse ? "" : "hidden",
+           zIndex: bottomCard ? "100000" : "2",
 
-          // THIS 
-           position: notReverse ? "static" :  bottomCard === false  ? "relative"   :"absolute",
+          // THIS
+          position: notReverse ? "static" : "absolute",
 
-          top: bottomCard === false ? "0" : "365px",
-          left: bottomCard === false ? "0" : "75px",
+          top: bottomCard ? "308px" : "365px",
+          left: "75px",
           // CARD FLIPPING INFO
 
           display: "flex",
@@ -162,7 +162,7 @@ const CardFront = ({
           backgroundColor: cardBackgroundColor, // Use the cardBackgroundColor useMemo variable
           padding: "1em 1em",
           borderRadius: !hidden ? "50px" : null,
-          border:  "5px solid black",
+          border: bottomCard ? "5px solid red" :"5px solid black",
           boxShadow: "0 0 2px 2px",
           fontWeight: "bold",
           // CARD FLIP

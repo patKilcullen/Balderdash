@@ -70,6 +70,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
 
 
     // CARD FLIPPING INFO
+    // If there is already a word(card already flipped over, the card leaves the screen, comes back, then flip over)
     word ? setMoveOffScreen(true) : null;
     word ? setFlip(false): null
     setTimeout(
@@ -82,7 +83,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
             setFlip(true);
             setFlipSide("front");
           },
-          word ? 1000 : 0
+          word ? 500 : 0
         );
       },
       word ? 1000 : 0
@@ -153,6 +154,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
         ? setWord(word)
         : setWord("");
 
+        // NEEDED WITH NEW FLIP?
       playerTurnName !== username && room === gameName
         ? setFlip(true)
         : setFlip(false);
@@ -214,39 +216,47 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
         ) : null}
 
         {/* MAIN CARD COMPONENT */}
-        <CardFront side={"back"} bottomCard={false}></CardFront>
+        <Card>
+          <CardFront
+            notReverse={true}
+            side={"back"}
+            // bottomCard={false}
+          ></CardFront>
+       
 
-        {/* CARD FLIPPING INFO */}
-        <CardFront
-          moveOffScreen={moveOffScreen}
-          backFlip={true}
-          flip={!flip}
-          side={"back"}
-        ></CardFront>
-        <CardFront
-          moveOffScreen={moveOffScreen}
-          checkIfTied={checkIfTied}
-          top={word}
-          bottom={definition}
-          // side={word || (word.length && definition) ? "front" : "back"}
-          side={flipSide}
-          flip={flip}
-          timer={timer}
-          game={game}
-          username={username}
-          userId={userId}
-          userScore={userScore}
-          gameName={gameName}
-          gameId={game.id}
-          playerTurnName={playerTurnName}
-          definition={definition}
-          reloadScores={reloadScores}
-          setDefinition={setDefinition}
-          setWord={setWord}
-          setTimer={setTimer}
-          setChoseWord={setChoseWord}
-          style={{ border: "2px solid green" }}
-        />
+          {/* CARD FLIPPING INFO */}
+          <CardFront
+            moveOffScreen={moveOffScreen}
+            backFlip={true}
+            flip={!flip}
+            side={"back"}
+            bottomCard={game && userScore && game.turn === userScore.turnNum ? false : true}
+          ></CardFront>
+          <CardFront
+            moveOffScreen={moveOffScreen}
+            checkIfTied={checkIfTied}
+            top={word}
+            bottom={definition}
+            // side={word || (word.length && definition) ? "front" : "back"}
+            side={flipSide}
+            flip={flip}
+            timer={timer}
+            game={game}
+            username={username}
+            userId={userId}
+            userScore={userScore}
+            gameName={gameName}
+            gameId={game.id}
+            playerTurnName={playerTurnName}
+            definition={definition}
+            reloadScores={reloadScores}
+            setDefinition={setDefinition}
+            setWord={setWord}
+            setTimer={setTimer}
+            setChoseWord={setChoseWord}
+            style={{ border: "2px solid green" }}
+          />
+        </Card>
       </Card>
 
       {/* CHOOSE WORD BUTON  only avaible if they got word/definition and havent chosen word yet*/}
