@@ -67,8 +67,11 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
   const [moveOffScreen, setMoveOffScreen] = useState(false);
   const [flipSide, setFlipSide] = useState("back");
   const handleGetWord = () => {
+
+
     // CARD FLIPPING INFO
     word ? setMoveOffScreen(true) : null;
+    word ? setFlip(false): null
     setTimeout(
       () => {
         word ? setMoveOffScreen(false) : null;
@@ -86,7 +89,8 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
     );
     // CARD FLIPPING INFO
 
- 
+
+
     dispatch(clearFakeDefs());
     dispatch(clearTempScoreCardMessages());
     dispatch(getWord()).then((res) => {
@@ -94,10 +98,15 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
       dispatch(getDefinition(res.payload[0])).then((res) => {
         setDefinition(res.payload);
         dispatch(addDefinition({ real: res.payload }));
-        // setFlip(false);
+        //  setFlip(true);
+        //  setFlipSide("front");
       });
     });
   };
+
+
+
+
 
   // CHOOSE WORD: first gets fake words for fake definition, then emits the word,
   // socket room name (as gamename), and playerTurn(as their username)
@@ -208,7 +217,12 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
         <CardFront side={"back"} bottomCard={false}></CardFront>
 
         {/* CARD FLIPPING INFO */}
-        <CardFront backFlip={true} flip={!flip} side={"back"}></CardFront>
+        <CardFront
+          moveOffScreen={moveOffScreen}
+          backFlip={true}
+          flip={!flip}
+          side={"back"}
+        ></CardFront>
         <CardFront
           moveOffScreen={moveOffScreen}
           checkIfTied={checkIfTied}
