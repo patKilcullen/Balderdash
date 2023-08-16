@@ -149,7 +149,7 @@ const CardFront = ({
            zIndex: bottomCard ? "100000" : "2",
 
           // THIS
-          position: notReverse ? "static" : "absolute",
+          position: notReverse  || defCards ? "static" : "absolute",
 
           top: bottomCard ? "308px" : "365px",
           left: "75px",

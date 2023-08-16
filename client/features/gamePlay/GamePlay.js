@@ -143,7 +143,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
   // belong to(or have visited) other games
   useEffect(() => {
     // RECEIVE WORD from socket first, if it isn't players turn, update playerTurnNAme,
-    // then, if they're in the right room, add the word to state, set flip to truand and flipside to "front"
+    // then, if they're in the right room, add the word to state, set flip to truand and flipside to "front""
     clientSocket.on("receive_word", ({ word, room, playerTurnName }) => {
       
       playerTurnName !== username && room === gameName
