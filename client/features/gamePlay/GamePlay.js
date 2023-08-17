@@ -193,22 +193,22 @@ const GamePlay = ({
   );
 
   // This set the flipCard animation funcitonality right when the game changes turns
-  // useEffect(() => {
-  //   // !word ? setFlipSide("back") : null
-  //   // !word ? setFlip(false) : null;
-  //   game && userScore && game.turn === userScore.turnNum
-  //     ? setBottom(false)
-  //     : setBottom(true);
-  // }, [reloadScores]);
+  useEffect(() => {
+    // !word ? setFlipSide("back") : null
+    // !word ? setFlip(false) : null;
+    game && userScore && game.turn === userScore.turnNum
+      ? setBottom(false)
+      : setBottom(true);
+  }, [reloadScores]);
 
   useEffect(() => { 
     console.log("FLIP: ", flip)
     console.log("FLIPSde: ", flipSide);
   !word ? setFlipSide("back") : null;
   !word ? setFlip(false) : null;
-  game && userScore && game.turn === userScore.turnNum
-    ? setBottom(false)
-    : setBottom(true);
+  // game && userScore && game.turn === userScore.turnNum
+  //   ? setBottom(false)
+  //   : setBottom(true);
   console.log("FLIP AFTER: ", flip);
   console.log("FLIPSde AFTER: ", flipSide);
   setReloadFlip(false)
