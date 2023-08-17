@@ -8,6 +8,7 @@ import {
   selectFakeDefinitions,
   addTempScoreCardMessage,
   selectTempScoreCardMessages,
+  selectDefinition,
 } from "./gamePlaySlice";
 import {
   editScore,
@@ -33,7 +34,6 @@ import TempScoreCard from "../scores/TempScoreCard";
 import CardFront from "../cards/CardFront";
 
 const GuessDefs = ({
-  setFlipFalse,
   checkIfTied,
   showBackOfCard,
   makeHidden,
@@ -91,11 +91,7 @@ const GuessDefs = ({
         setChoseWord(false);
         dispatch(clearFakeWords());
         makeHidden();
-//         setTimeout(()=>{
-// setFlipFalse();
 
-
-//         },1000)
         
       }
     }, 1000);
@@ -150,8 +146,24 @@ const GuessDefs = ({
     setFakeDefs(fakeDefinitions);
   }, [fakeDefinitions]);
 
+
+
+// When the component loads, adds word and real definitinos to list 
+const realDefinition = useSelector(selectDefinition);
+  useEffect(()=>{
+let message =`The defintion of ${word} is ${realDefinition}`
+singleGame.turn === userScore.turnNum
+  ? dispatch(addTempScoreCardMessage(message))
+  : clientSocket.emit("send_score_card_info", {
+      gameName: gameName,
+      playerTurnName: playerTurnName,
+      message: message,
+    });
+null;
+  },[])
+
   // CHOOSE WORD
-  // checks if guessed word is a fake definition, the real defintion, or neither, which would be abother users definiton
+  // checks if guessed defintion(should be handle choose definition) is a fake definition, the real defintion, or neither, which would be abother users definiton
   // then adds apporproate message to tempScore card
   const handleChooseWord = (def) => {
     

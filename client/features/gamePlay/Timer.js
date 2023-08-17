@@ -16,7 +16,6 @@ import {
 } from "./gamePlaySlice";
 
 const Timer = ({
-  setFlipFalse={setFlipFalse},
   checkIfTied,
   setTempBack,
   showBackOfCard,
@@ -107,7 +106,6 @@ const Timer = ({
       {/* GUESSDEFS/ guess definition component mounts when playgame is true */}
       {playGame ? (
         <GuessDefs
-          setFlipFalse={setFlipFalse}
           checkIfTied={checkIfTied}
           showBackOfCard={showBackOfCard}
           makeHidden={makeHidden}

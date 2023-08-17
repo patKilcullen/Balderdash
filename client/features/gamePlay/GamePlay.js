@@ -32,7 +32,13 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { minWidth } from "@mui/system";
 
-const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
+const GamePlay = ({
+  reloadFlip, userId,
+  game,
+  userScore,
+  reloadScores,
+  checkIfTied,
+}) => {
   const dispatch = useDispatch();
   const me = useSelector(selectMe);
   // SOCKET
@@ -68,12 +74,10 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
   const [flipSide, setFlipSide] = useState("back");
 
   const handleGetWord = () => {
-
-
     // CARD FLIPPING INFO
     // If there is already a word(card already flipped over, the card leaves the screen, comes back, then flip over)
     word ? setMoveOffScreen(true) : null;
-    word ? setFlip(false): null
+    word ? setFlip(false) : null;
     setTimeout(
       () => {
         word ? setMoveOffScreen(false) : null;
@@ -91,8 +95,6 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
     );
     // CARD FLIPPING INFO
 
-
-
     dispatch(clearFakeDefs());
     dispatch(clearTempScoreCardMessages());
     dispatch(getWord()).then((res) => {
@@ -101,14 +103,10 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
         setDefinition(res.payload);
         dispatch(addDefinition({ real: res.payload }));
         //  setFlip(true);
-         setFlipSide("front");
+        setFlipSide("front");
       });
     });
   };
-
-
-
-
 
   // CHOOSE WORD: first gets fake words for fake definition, then emits the word,
   // socket room name (as gamename), and playerTurn(as their username)
@@ -146,7 +144,6 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
     // RECEIVE WORD from socket first, if it isn't players turn, update playerTurnNAme,
     // then, if they're in the right room, add the word to state, set flip to truand and flipside to "front""
     clientSocket.on("receive_word", ({ word, room, playerTurnName }) => {
-      
       playerTurnName !== username && room === gameName
         ? dispatch(setWordState(word))
         : null;
@@ -156,14 +153,12 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
         ? setWord(word)
         : setWord("");
 
-  
       playerTurnName !== username && room === gameName
         ? setFlip(true)
         : setFlip(false);
-           playerTurnName !== username && room === gameName
-             ? setFlipSide("front")
-             : null;
-        
+      playerTurnName !== username && room === gameName
+        ? setFlipSide("front")
+        : null;
     });
 
     // RECEIVE START COUNTDOWN players receive this from player whose turn it is when
@@ -191,21 +186,32 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
     );
   }, [clientSocket, game]);
 
+  const [bottom, setBottom] = useState(
+    game && userScore && game.turn === userScore.turnNum ? false : true
+  );
 
-const [bottom, setBottom] = useState(
-  game && userScore && game.turn === userScore.turnNum ? false : true
-);
-  // This set the flipCArd funciton right when the game changes turns
-  useEffect(()=>{
-    
-!word ? setFlipSide("back") : null
-!word ? setFlip(false) : null;
-game && userScore && game.turn === userScore.turnNum ? setBottom(false) : setBottom(true);
-  },[reloadScores])
-  
-const setFlipFalse = ()=>{
-  setFlip(false)
-}
+  // This set the flipCard animation funcitonality right when the game changes turns
+  // useEffect(() => {
+  //   // !word ? setFlipSide("back") : null
+  //   // !word ? setFlip(false) : null;
+  //   game && userScore && game.turn === userScore.turnNum
+  //     ? setBottom(false)
+  //     : setBottom(true);
+  // }, [reloadScores]);
+
+  useEffect(() => { 
+       !word ? setFlipSide("back") : null;
+  !word ? setFlip(false) : null;
+  game && userScore && game.turn === userScore.turnNum
+    ? setBottom(false)
+    : setBottom(true);
+}, [reloadFlip]);
+
+  // const reloadFlip = () => {
+  //   !word ? setFlipSide("back") : null;
+  //   !word ? setFlip(false) : null;
+  // };
+
   return (
     <Card
       className="main "
@@ -252,7 +258,6 @@ const setFlipFalse = ()=>{
             bottomCard={bottom}
           ></CardFront>
           <CardFront
-            setFlipFalse={setFlipFalse}
             moveOffScreen={moveOffScreen}
             checkIfTied={checkIfTied}
             top={word}

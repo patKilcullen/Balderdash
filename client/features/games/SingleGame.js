@@ -35,6 +35,7 @@ const SingleGame = () => {
   const [tempScoreCard, setTempScoreCard] = useState("");
   const [showTempScoreCard, setShowTempScoreCard] = useState(false);
   const [showTiedGame, setShowTiedGame] = useState(false);
+    const [reloadFlip, setReloadFlip] = useState(false);
   // SOCKET
   const clientSocket = useContext(SocketContext);
 
@@ -61,14 +62,16 @@ const SingleGame = () => {
     dispatch(fetchAllGameScores(gameId));
   }, [gameId]);
 
-  // SHOWS TEMPSCORECARD AND RELOADS UPDATES SCORES when game round is over and its new player's turn
+
+
+  // SHOWS TEMPSCORECARD AND RELOADS/UPDATES SCORES  and reloads the cardFlip animation when game round is over and its new player's turn the
   const reloadScores = () => {
     dispatch(fetchAllGameScores(gameId));
     setTimeout(() => {
       dispatch(clearTempScoreCardMessages());
       setShowTempScoreCard(false);
-
-    }, 100);
+setReloadFlip(true)
+    }, 10000);
     setShowTempScoreCard(true);
   };
 
@@ -195,6 +198,7 @@ const SingleGame = () => {
       (game.started === true && userScore) ? (
         <>
           <GamePlay
+            reloadFlip={reloadFlip}
             userId={userId}
             game={game}
             userScore={userScore}

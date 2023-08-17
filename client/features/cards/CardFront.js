@@ -11,7 +11,6 @@ import DefInputBox from "../gamePlay/DefInputBox";
 
 
 const CardFront = ({
-  setFlipFalse={setFlipFalse},
   notReverse,
   moveOffScreen,
   bottomCard,
@@ -263,7 +262,6 @@ const CardFront = ({
             their own definition, then sets the timer in the Guess Defs Component */}
               {timer ? (
                 <Timer
-                  setFlipFalse={setFlipFalse}
                   checkIfTied={checkIfTied}
                   setTempBack={setTempBack}
                   showBackOfCard={showBackOfCard}
