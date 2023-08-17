@@ -115,9 +115,11 @@ const GamePlay = ({
   // to other users/ then starts Timer component by setting state to true
   //  and then choseWord to true to hide button/keep user from choosing again
   const handleChooseWord = () => {
+    dispatch(addDefinition(definition))
     handleGetFakeWords();
     clientSocket.emit("send_word", {
       word: word,
+      definition: definition,
       room: gameName,
       playerTurnName: username,
     });
@@ -145,10 +147,16 @@ const GamePlay = ({
   useEffect(() => {
     // RECEIVE WORD from socket first, if it isn't players turn, update playerTurnNAme,
     // then, if they're in the right room, add the word to state, set flip to truand and flipside to "front""
-    clientSocket.on("receive_word", ({ word, room, playerTurnName }) => {
+    clientSocket.on("receive_word", ({ word, definition, room, playerTurnName }) => {
+
       playerTurnName !== username && room === gameName
         ? dispatch(setWordState(word))
         : null;
+
+        playerTurnName !== username && room === gameName
+          ? dispatch(addDefinition(definition))
+          : null;
+
       playerTurnName !== username ? setPlayerTurnName(playerTurnName) : null;
 
       playerTurnName !== username && room === gameName
@@ -194,30 +202,18 @@ const GamePlay = ({
 
   // This set the flipCard animation funcitonality right when the game changes turns
   useEffect(() => {
-    // !word ? setFlipSide("back") : null
-    // !word ? setFlip(false) : null;
     game && userScore && game.turn === userScore.turnNum
       ? setBottom(false)
       : setBottom(true);
   }, [reloadScores]);
 
   useEffect(() => { 
-    console.log("FLIP: ", flip)
-    console.log("FLIPSde: ", flipSide);
-  !word ? setFlipSide("back") : null;
+   !word ? setFlipSide("back") : null;
   !word ? setFlip(false) : null;
-  // game && userScore && game.turn === userScore.turnNum
-  //   ? setBottom(false)
-  //   : setBottom(true);
-  console.log("FLIP AFTER: ", flip);
-  console.log("FLIPSde AFTER: ", flipSide);
   setReloadFlip(false)
 }, [reloadFlip]);
 
-  // const reloadFlip = () => {
-  //   !word ? setFlipSide("back") : null;
-  //   !word ? setFlip(false) : null;
-  // };
+
 
   return (
     <Card

@@ -14,6 +14,8 @@ import {
 import {
   selectTempScoreCardMessages,
   clearTempScoreCardMessages,
+  selectWord,
+  selectDefinition
 } from "../gamePlay/gamePlaySlice";
 
 // SOCKET
@@ -51,6 +53,11 @@ const SingleGame = () => {
   const tempScoreCardTurn = useSelector(selectTempScoreCardMessages);
   const userScore = scores.find((score) => score.userId === userId);
 
+
+const word = useSelector(selectWord)
+const defintion = useSelector(selectDefinition)
+console.log("WORD AND Def IN SINGLE GAME: ", word, defintion)
+
   // If there are 0 rounds left, render the FinalCard
   useEffect(() => {
     game.roundsLeft === 0 ? setShowFinalCard(true) : setShowFinalCard(false);
@@ -71,7 +78,7 @@ const SingleGame = () => {
       dispatch(clearTempScoreCardMessages());
       setShowTempScoreCard(false);
 setReloadFlip(true)
-    }, 1000);
+    }, 10000);
     setShowTempScoreCard(true);
   };
 

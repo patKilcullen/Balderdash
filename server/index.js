@@ -57,9 +57,10 @@ const init = async () => {
 
 
 
-      socket.on("send_word", ({ word, room, playerTurnName }) => {
-       
-        socket.to(room).emit("receive_word", { word, room, playerTurnName });
+      socket.on("send_word", ({ word, definition, room, playerTurnName }) => {
+        socket
+          .to(room)
+          .emit("receive_word", { word, definition, room, playerTurnName });
       });
 
       // Countdown Socket

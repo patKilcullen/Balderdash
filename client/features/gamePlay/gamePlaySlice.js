@@ -87,57 +87,52 @@ const initialState = {
     tempScoreCard: []
 }
 const gamePlaySlice = createSlice({
-    name:"gamePlay",
-    initialState,
-    reducers: {
-      setWordState(state, action){
-
-        state.word = action.payload
-      },
-      clearFakeDefs(state, action){
-        state.fakeDefinitions = []
-      },
-      clearFakeWords(state, action){
-        state.fakeWords = []
-      },
-      clearDefinition(state, action){
-        state.definition = {}
-      },
-      addDefinition(state, action){
-        state.fakeDefinitions.push(action.payload)
-      },
-
-      addWordPlayerNotTurn(state,action){
-          state.word = action.payload
-      },
-      addTempScoreCardMessage(state, action){
-        state.tempScoreCard.push(action.payload)
-      },
-      clearTempScoreCardMessages(state, action){
-        state.tempScoreCard = []
-      },
+  name: "gamePlay",
+  initialState,
+  reducers: {
+    setWordState(state, action) {
+      state.word = action.payload;
     },
-  
+    clearFakeDefs(state, action) {
+      state.fakeDefinitions = [];
+    },
+    clearFakeWords(state, action) {
+      state.fakeWords = [];
+    },
+    addDefinition(state, action) {
+      state.definition = action.payload;
+    },
+    clearDefinition(state, action) {
+      state.definition = {};
+    },
+    addWordPlayerNotTurn(state, action) {
+      state.word = action.payload;
+    },
+    addTempScoreCardMessage(state, action) {
+      state.tempScoreCard.push(action.payload);
+    },
+    clearTempScoreCardMessages(state, action) {
+      state.tempScoreCard = [];
+    },
+  },
 
-
-    extraReducers: (builder)=>{
-        builder
-        .addCase('/getWord/fulfilled', (state, action) => {
-            
-           state.word = action.payload
-        })
-        .addCase('/getDefinition/fulfilled', (state, action) => {
-           state.definition = action.payload
-        })
-        .addCase('/getFakeWords/fulfilled', (state, action) => {
-         state.fakeWords.push(action.payload)
+  extraReducers: (builder) => {
+    builder
+      .addCase("/getWord/fulfilled", (state, action) => {
+        state.word = action.payload;
       })
-      .addCase('/getFakeDefinitions/fulfilled', (state, action) => {
-        state.fakeDefinitions.push({fake: action.payload})
-        state.fakeDefinitions = randomizeArray(state.fakeDefinitions)
-    })
-    }
-})
+      .addCase("/getDefinition/fulfilled", (state, action) => {
+        state.definition = action.payload;
+      })
+      .addCase("/getFakeWords/fulfilled", (state, action) => {
+        state.fakeWords.push(action.payload);
+      })
+      .addCase("/getFakeDefinitions/fulfilled", (state, action) => {
+        state.fakeDefinitions.push({ fake: action.payload });
+        state.fakeDefinitions = randomizeArray(state.fakeDefinitions);
+      });
+  },
+});
 
 // RANDOMIZE THE ORDER OF DEFINITIONS BEFORE ADDING TO STATE
 function randomizeArray(array) {
