@@ -55,8 +55,8 @@ const SingleGame = () => {
 
 
 const word = useSelector(selectWord)
-const defintion = useSelector(selectDefinition)
-console.log("WORD AND Def IN SINGLE GAME: ", word, defintion)
+const definition = useSelector(selectDefinition)
+console.log("WORD AND Def IN SINGLE GAME: ", word, definition)
 
   // If there are 0 rounds left, render the FinalCard
   useEffect(() => {
@@ -180,6 +180,8 @@ setReloadFlip(true)
     <Card>
       {showTempScoreCard ? (
         <TempScoreCard
+        word={word}
+        definition={definition}
           tempScoreCard={tempScoreCard}
           showTiedGame={showTiedGame}
         />

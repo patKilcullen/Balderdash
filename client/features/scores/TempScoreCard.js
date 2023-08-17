@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import {Card, Box, Typography} from "@mui/material"
 
-const TempScoreCard = ({ tempScoreCard, showTiedGame }) => {
+const TempScoreCard = ({ word,definition, tempScoreCard, showTiedGame }) => {
   return (
     <div id="temp-scorecard">
       <Card
@@ -76,7 +76,20 @@ const TempScoreCard = ({ tempScoreCard, showTiedGame }) => {
             </Typography>
           </Box>
           <Box>
+            <Typography
+              style={{
+                fontSize: "20px",
+            
+                
+                alignSelf: " center",
+        
+              }}
+              color={"secondary"}
+            >
+             The definition of {word} is... {definition}
+            </Typography>
             <div className="temp-scorecard-messages">
+              <h1>Round Results</h1>
               {/* MAP THROUGH TEMPSCORECARD MESSAGE (about who earned points) */}
               {tempScoreCard && tempScoreCard.length
                 ? tempScoreCard.map((message) => {

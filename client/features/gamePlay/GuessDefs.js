@@ -148,20 +148,20 @@ const GuessDefs = ({
 
 
 
-// When the component loads, adds word and real definitinos to list 
-const realDefinition = useSelector(selectDefinition);
-  useEffect(() => {
-    let message = `The defintion of ${word} is ${realDefinition}`;
-    console.log("MESSAGE: ", message);
-    singleGame.turn === userScore.turnNum
-      ? dispatch(addTempScoreCardMessage(message))
-      : clientSocket.emit("send_score_card_info", {
-          gameName: gameName,
-          playerTurnName: playerTurnName,
-          message: message,
-        });
-    null;
-  }, [realDefinition]);
+// // When the component loads, adds word and real definitinos to list 
+// const realDefinition = useSelector(selectDefinition);
+//   useEffect(() => {
+//     let message = `The defintion of ${word} is ${realDefinition}`;
+//     console.log("MESSAGE: ", message);
+//     singleGame.turn === userScore.turnNum
+//       ? dispatch(addTempScoreCardMessage(message))
+//       : clientSocket.emit("send_score_card_info", {
+//           gameName: gameName,
+//           playerTurnName: playerTurnName,
+//           message: message,
+//         });
+//     null;
+//   }, [realDefinition]);
 
   // CHOOSE WORD
   // checks if guessed defintion(should be handle choose definition) is a fake definition, the real defintion, or neither, which would be abother users definiton
