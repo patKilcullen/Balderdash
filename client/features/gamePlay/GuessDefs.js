@@ -33,6 +33,7 @@ import TempScoreCard from "../scores/TempScoreCard";
 import CardFront from "../cards/CardFront";
 
 const GuessDefs = ({
+  setFlipFalse,
   checkIfTied,
   showBackOfCard,
   makeHidden,
@@ -90,13 +91,19 @@ const GuessDefs = ({
         setChoseWord(false);
         dispatch(clearFakeWords());
         makeHidden();
+//         setTimeout(()=>{
+// setFlipFalse();
+
+
+//         },1000)
         
       }
     }, 1000);
 
     // Cleanup the timer when the component unmounts
     // NEED?
-    return () => clearTimeout(timer);
+    return () => clearTimeout(timer)
+    ;
   }, [countdown]);
 
   // if more than one round left, change game turn, if 1, set turn to num of players and subtract round, if not 1, -1 from turn and rounds

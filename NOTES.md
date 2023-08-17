@@ -23,6 +23,8 @@ added roundsLeft: game.roundsLeft - 1 to handleChangeGameTurn in GuessDefs becas
 
  WHAT TO DO:
 
+ ADDED setFlipFasle to guessDefs and Gameplay  
+
 new card flip messes up flip when you choose a definition and whne  change turn
 
 

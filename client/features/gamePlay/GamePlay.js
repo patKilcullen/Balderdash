@@ -66,6 +66,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
   // and then add it the the definition array with the key "real" to distinguish it from others
   const [moveOffScreen, setMoveOffScreen] = useState(false);
   const [flipSide, setFlipSide] = useState("back");
+
   const handleGetWord = () => {
 
 
@@ -100,7 +101,7 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
         setDefinition(res.payload);
         dispatch(addDefinition({ real: res.payload }));
         //  setFlip(true);
-        //  setFlipSide("front");
+         setFlipSide("front");
       });
     });
   };
@@ -191,12 +192,20 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
   }, [clientSocket, game]);
 
 
-
+const [bottom, setBottom] = useState(
+  game && userScore && game.turn === userScore.turnNum ? false : true
+);
   // This set the flipCArd funciton right when the game changes turns
   useEffect(()=>{
+    
 !word ? setFlipSide("back") : null
+!word ? setFlip(false) : null;
+game && userScore && game.turn === userScore.turnNum ? setBottom(false) : setBottom(true);
   },[reloadScores])
-
+  
+const setFlipFalse = ()=>{
+  setFlip(false)
+}
   return (
     <Card
       className="main "
@@ -240,14 +249,10 @@ const GamePlay = ({ userId, game, userScore, reloadScores, checkIfTied }) => {
             moveOffScreen={moveOffScreen}
             flip={!flip}
             side={"back"}
-            bottomCard={
-              game && userScore && game.turn === userScore.turnNum
-                ? false
-                : true
-            }
+            bottomCard={bottom}
           ></CardFront>
           <CardFront
-     
+            setFlipFalse={setFlipFalse}
             moveOffScreen={moveOffScreen}
             checkIfTied={checkIfTied}
             top={word}
