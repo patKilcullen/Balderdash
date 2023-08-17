@@ -71,7 +71,7 @@ const SingleGame = () => {
       dispatch(clearTempScoreCardMessages());
       setShowTempScoreCard(false);
 setReloadFlip(true)
-    }, 10000);
+    }, 1000);
     setShowTempScoreCard(true);
   };
 
@@ -198,6 +198,7 @@ setReloadFlip(true)
       (game.started === true && userScore) ? (
         <>
           <GamePlay
+            setReloadFlip={setReloadFlip}
             reloadFlip={reloadFlip}
             userId={userId}
             game={game}

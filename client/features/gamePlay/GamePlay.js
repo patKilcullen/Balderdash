@@ -33,7 +33,9 @@ import Typography from "@mui/material/Typography";
 import { minWidth } from "@mui/system";
 
 const GamePlay = ({
-  reloadFlip, userId,
+  setReloadFlip,
+  reloadFlip, 
+  userId,
   game,
   userScore,
   reloadScores,
@@ -200,11 +202,16 @@ const GamePlay = ({
   // }, [reloadScores]);
 
   useEffect(() => { 
-       !word ? setFlipSide("back") : null;
+    console.log("FLIP: ", flip)
+    console.log("FLIPSde: ", flipSide);
+  !word ? setFlipSide("back") : null;
   !word ? setFlip(false) : null;
   game && userScore && game.turn === userScore.turnNum
     ? setBottom(false)
     : setBottom(true);
+  console.log("FLIP AFTER: ", flip);
+  console.log("FLIPSde AFTER: ", flipSide);
+  setReloadFlip(false)
 }, [reloadFlip]);
 
   // const reloadFlip = () => {
