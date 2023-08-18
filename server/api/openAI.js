@@ -1,42 +1,46 @@
 const express = require("express");
 const router = express.Router();
-const openai = require("openai");
 
-openai.apiKey = process.env.OPENAI_API_KEY;
+const OpenAI = require("openai");
+// openai.apiKey = process.env.OPENAI_API_KEY;
+//  const openai = require("openai");
+//  const Configuration = openai.Configuration
+
+// const configuration = new Configuration({
+//   apiKey: process.env.OPENAI_API_KEY,
+// });
+// const openai = new OpenAIApi(configuration);
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY, // This is also the default, can be omitted
+});
 
 module.exports = router;
 
 
 
 
-router.post(`/`, async (req, res) => {
-  // Your OpenAI integration logic here
 
-  console.log("REQQYY DECCCY: ", req.body)
+router.post(`/`, async (req, res) => {
   try {
     const word = req.body.word || "";
     const definition = req.body.definition;
 
-    console.log("WORD DEF SERVER: ", word, definition)
-
-    // if (adjective.trim().length === 0) {
-    //   return res.status(400).json({
-    //     error: {
-    //       message: "Please enter an adjective.",
-    //     },
-    //   });
-    // }
-
-     const prompt = `Make the following sentence sound more ${adjective}:\n\n${sentence}\n\n`;
+    const prompt = `Answer "yes" or "no": is ${definition} a valid definition of ${word}`;
 
     // const completion = await openai.Completions.create({
-    //   model: "text-davinci-003",
+    //   engine: "text-davinci-003", // Use "davinci" instead of "text-davinci-003"
     //   prompt: prompt,
     //   temperature: 0.6,
     //   max_tokens: 1000,
     // });
+    const completion = await openai.completions.create({
+      model: "text-davinci-003",
+      prompt: prompt,
+      max_tokens: 30,
+    });
 
-    // console.log("COMPLETION: ", completion.choices[0].text);
+     console.log("COMPLETION: ", completion.choices[0].text);
 
     // res.status(200).json({ result: completion.choices[0].text });
   } catch (error) {
@@ -44,6 +48,98 @@ router.post(`/`, async (req, res) => {
     res.status(500).json({ error: "An error occurred." });
   }
 });
+
+module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+// const express = require("express");
+// const router = express.Router();
+// const openai = require("openai");
+// console.log("OPER AIR: ", openai)
+// // Set your OpenAI API key here
+// // const OPENAI_API_KEY = "your_api_key_here"; // Replace with your actual API key
+
+// // // Create an instance of the OpenAIApi class
+// const openai = new OpenAIApi({
+//   key: OPENAI_API_KEY,
+// });
+// openai.apiKey = process.env.OPENAI_API_KEY;
+// router.get("/example", async (req, res) => {
+//   try {
+//     const result = await openai.complete({
+//       prompt: "Once upon a time",
+//       max_tokens: 50,
+//     });
+//     console.log("OpenAI Response:", result.choices[0].text);
+//     res.send(result.choices[0].text);
+//   } catch (error) {
+//     console.error("OpenAI Error:", error);
+//     res.status(500).send("An error occurred.");
+//   }
+// });
+
+// module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// router.post(`/`, async (req, res) => {
+//   // Your OpenAI integration logic here
+
+//   console.log("REQQYY DECCCY: ", req.body)
+//   try {
+//     const word = req.body.word || "";
+//     const definition = req.body.definition;
+
+//     console.log("WORD DEF SERVER: ", word, definition)
+
+//     // if (adjective.trim().length === 0) {
+//     //   return res.status(400).json({
+//     //     error: {
+//     //       message: "Please enter an adjective.",
+//     //     },
+//     //   });
+//     // }
+
+//      const prompt = `Answer "yes" or "no" : is ${definition} a valid defintion of ${word}`;
+
+//     const completion = await openai.Completions.create({
+//       model: "text-davinci-003",
+//       prompt: prompt,
+//       temperature: 0.6,
+//       max_tokens: 1000,
+//     });
+
+//   console.log("COMPLETION: ", completion.choices[0].text);
+
+// res.status(200).json({ result: completion.choices[0].text });
+//   } catch (error) {
+//     console.error("OpenAI API Error:", error);
+//     res.status(500).json({ error: "An error occurred." });
+//   }
+// });
 
 
 
