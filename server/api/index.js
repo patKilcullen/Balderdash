@@ -6,6 +6,7 @@ router.use('/games', require('./games'))
 router.use('/scores', require('./scores'))
 router.use('/wordsAndDefinitions', require('./wordsAndDefinitions'))
 router.use('/newWords', require('./newWords'))
+router.use("/openAI", require("./openAI"));
 
 
 router.use((req, res, next) => {

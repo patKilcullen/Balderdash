@@ -2,6 +2,9 @@
 T
 <!-- NEW -->
 
+
+OPENAI: in JSON packa added "type": "module" and openAI script
+
 LAST UPDATE: 
 
 IMPORTATN  LOOK Up

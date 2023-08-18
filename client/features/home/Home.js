@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <div>
       <Navbar></Navbar>
-      <Typography id="title" color="secondary" sx={{ fontWeight: "bold" }}>
+      <Typography id="title" color="secondary" sx={{ fontWeight: "bold"}} >
         Welcome, {username}
       </Typography>
       <AllGames></AllGames>

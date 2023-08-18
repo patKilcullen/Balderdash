@@ -33,7 +33,7 @@ const App = () => {
       <div className="border">
         <SocketProvider>
           <ThemeProvider theme={theme}>
-            <div>
+            <div >
               <AppRoutes />
             </div>
           </ThemeProvider>

@@ -217,7 +217,7 @@ const GamePlay = ({
 
   return (
     <Card
-      className="main "
+      className="main"
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -225,6 +225,7 @@ const GamePlay = ({
         overflow: "visible",
         height: "100vh",
         gap: "10px",
+        
       }}
     >
       <Card className="buttons " sx={{ boxShadow: "none" }}>

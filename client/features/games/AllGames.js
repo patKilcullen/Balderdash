@@ -6,12 +6,13 @@ import CardFront from "../cards/CardFront";
 
 const AllGames = () => {
   return (
-    <div style={{ height: "100%" }}>
+    <div style={{ height: "100%"}}>
       <div
         style={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+           
         }}
       >
         <Link to="/create-game">

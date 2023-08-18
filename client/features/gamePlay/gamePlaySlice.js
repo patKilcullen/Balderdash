@@ -3,7 +3,6 @@ import axios from 'axios';
 import defaultDefs from './defaultFakeDefs';
 
 
-
 // GET WORD
 export const getWord = createAsyncThunk(
   '/getWord',

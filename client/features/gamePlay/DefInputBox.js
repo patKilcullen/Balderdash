@@ -1,8 +1,10 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
 // SOCKET
 import { SocketContext } from "../../app/SocketProvider";
 
+import { askAI } from "./openAISlice";
+import { selectWord } from "./gamePlaySlice";
 
 // MaterialUI
 import {
@@ -28,6 +30,8 @@ const DefInputBox = ({
 
   const inputRef = useRef();
 
+  const word = useSelector(selectWord)
+
   // Set focus on input box
   useEffect(() => {
     inputRef.current.focus();
@@ -48,6 +52,11 @@ const DefInputBox = ({
     showBackOfCard("back");
   };
 
+const dispatch = useDispatch()
+  const handleTestAI = ()=>{
+    console.log("TEST ASSHOLELELELELEL: ", playerDef)
+    dispatch(askAI({word, definition: playerDef }));
+  }
   return (
     <div>
       {seeInput ? (
@@ -79,10 +88,14 @@ const DefInputBox = ({
                 onChange={(e) => setPlayerDef(e.target.value)}
               />
             </FormControl>
+
             <Button variant="contained" type="submit">
               Submit Definition
             </Button>
           </form>
+          <Button  onClick={handleTestAI} variant="contained" type="submit">
+              AI TEST
+            </Button>
         </Container>
       ) : null}
     </div>

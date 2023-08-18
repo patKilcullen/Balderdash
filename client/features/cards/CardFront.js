@@ -155,7 +155,6 @@ const CardFront = ({
           left: "75px",
           // CARD FLIPPING INFO
 
-          
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -182,7 +181,7 @@ const CardFront = ({
             background:
               sideState === "front" && !tempBack
                 ? "#88ebe6"
-                : "linear-gradient(45deg, #709186, #88ebe6)",
+                : "linear-gradient(45deg, #283330, #88ebe6)",
             padding: "10px",
             backgroundColor:
               sideState === "front" && !tempBack ? "#e6e8dc" : "#88ebe6",

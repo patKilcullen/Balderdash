@@ -177,11 +177,11 @@ setReloadFlip(true)
   };
 
   return (
-    <Card>
+    <Card >
       {showTempScoreCard ? (
         <TempScoreCard
-        word={word}
-        definition={definition}
+          word={word}
+          definition={definition}
           tempScoreCard={tempScoreCard}
           showTiedGame={showTiedGame}
         />
