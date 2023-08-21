@@ -56,7 +56,7 @@ const SingleGame = () => {
 
 const word = useSelector(selectWord)
 const definition = useSelector(selectDefinition)
-console.log("WORD AND Def IN SINGLE GAME: ", word, definition)
+
 
   // If there are 0 rounds left, render the FinalCard
   useEffect(() => {

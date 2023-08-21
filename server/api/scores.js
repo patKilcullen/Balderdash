@@ -41,7 +41,6 @@ router.get("/game/:gameId/highestScores", async (req, res, next) => {
       where: { score: max, gameId: req.params.gameId },
       include: [User],
     });
-    console.log("MAX SCORES: ", maxScores);
     res.json(maxScores);
   } catch (err) {
     next(err);

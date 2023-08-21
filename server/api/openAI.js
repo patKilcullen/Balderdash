@@ -26,8 +26,20 @@ router.post(`/`, async (req, res) => {
     const word = req.body.word || "";
     const definition = req.body.definition;
 
-    const prompt = `Answer "yes" or "no": is ${definition} a valid definition of ${word}`;
+    // const prompt = `Answer "yes" or "no": is ${definition} a valid definition of ${word}`;
 
+console.log("askAI route: ", word, definition)
+
+const prompt = `
+You are a teacher and you have to determine if students are correctly defining words. Their definitions may not be exactly as they appear in the dictionary, but they have to specifically and accurately describe the word, as if they were a definition. They cannot be subjects or simply say something accurate about the word. They have to resemble the real definitions.
+
+Definition: ${definition}
+Word: ${word}
+
+Answer only "yes" or "no"
+`;
+
+    
     // const completion = await openai.Completions.create({
     //   engine: "text-davinci-003", // Use "davinci" instead of "text-davinci-003"
     //   prompt: prompt,
@@ -41,7 +53,7 @@ router.post(`/`, async (req, res) => {
     });
 
      console.log("COMPLETION: ", completion.choices[0].text);
-
+res.json(completion.choices[0].text);
     // res.status(200).json({ result: completion.choices[0].text });
   } catch (error) {
     console.error("OpenAI API Error:", error);

@@ -117,9 +117,6 @@ const CardFront = ({
     };
   }, [hidden]);
 
-  useEffect(() => {
-    console.log("MOVE OFF SCROOEM: ", moveOffScreen);
-  }, [moveOffScreen]);
 
   // CARD FLIPPING INFO
   // THIS

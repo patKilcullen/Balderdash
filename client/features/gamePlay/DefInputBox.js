@@ -54,7 +54,6 @@ const DefInputBox = ({
 
 const dispatch = useDispatch()
   const handleTestAI = ()=>{
-    console.log("TEST ASSHOLELELELELEL: ", playerDef)
     dispatch(askAI({word, definition: playerDef }));
   }
   return (
