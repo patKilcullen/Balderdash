@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useDispatch } from "react-redux";
 
+import { SocketContext } from "../../app/SocketProvider";
 
 import { clearTempScoreCardMessages} from "../gamePlay/gamePlaySlice";
 
 import {Card, Box, Typography, Button} from "@mui/material"
 
 const TempScoreCard = ({
+  gameName,
   setShowTempScoreCard,
   setReloadFlip,
   word,
@@ -16,17 +18,18 @@ const TempScoreCard = ({
 }) => {
   const [countdown, setCountdown] = useState(15);
   const dispatch = useDispatch();
-
-
+  const clientSocket = useContext(SocketContext);
 
   const [pause, setPause] = useState(false);
   const handleTogglePause = () => {
-    
     setPause(!pause);
+    clientSocket.emit("send_pause_tempScoreCard_countdown", { gameName });
   };
 
+ 
+
   useEffect(() => {
-    console.log("score card count down");
+    console.log("score card count down PAUSE: ", pause);
     const timer = setTimeout(() => {
       if (countdown > 0 && !pause) {
         setCountdown(countdown - 1);
@@ -43,6 +46,18 @@ const TempScoreCard = ({
     // NEED?
     return () => clearTimeout(timer);
   }, [countdown, pause]);
+
+  // SOCKET RECIEVE
+  useEffect(() => {
+console.log("GAME NAEM IN TEMO SCOKET: pausyyyyy: ", pause)
+    clientSocket.on("recieve_pause_tempScoreCard_countdown", (room) => {
+      console.log("ROOM AND GAME NAME: ", room, gameName)
+      room === gameName ? setPause(!pause) : null;
+
+
+    });
+
+  }, [clientSocket, gameName, pause]);
 
   return (
     <div id="temp-scorecard">

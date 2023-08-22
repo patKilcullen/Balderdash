@@ -56,6 +56,7 @@ const SingleGame = () => {
   const word = useSelector(selectWord);
   const definition = useSelector(selectDefinition);
 
+
   // If there are 0 rounds left, render the FinalCard
   useEffect(() => {
     game.roundsLeft === 0 ? setShowFinalCard(true) : setShowFinalCard(false);
@@ -215,6 +216,7 @@ const reloadScores = ()=>{
     <Card>
       {showTempScoreCard ? (
         <TempScoreCard
+        gameName={game.name}
           setShowTempScoreCard={setShowTempScoreCard}
           setReloadFlip={setReloadFlip}
           word={word}
