@@ -16,9 +16,10 @@ export const askAI = createAsyncThunk(
          },
          body: JSON.stringify({ word, definition }),
        });
-console.log("JUST RESPONE IN askAI thunk: ", response)
+
        const data = await response.json();
-       console.log("FETCH ASK AI: ", data); // Process the response data as needed
+       return data
+   
      } catch (error) {
        console.error("Error:", error);
      }

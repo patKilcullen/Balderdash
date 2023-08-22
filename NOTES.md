@@ -28,6 +28,8 @@ added roundsLeft: game.roundsLeft - 1 to handleChangeGameTurn in GuessDefs becas
 
  WHAT TO DO:
 
+ASKAI changes how tie game/end game will work? 
+
  ADDED setFlipFasle to guessDefs and Gameplay  
 
 new card flip messes up flip when you choose a definition and whne  change turn

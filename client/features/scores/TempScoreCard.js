@@ -5,7 +5,7 @@ import { SocketContext } from "../../app/SocketProvider";
 
 import { clearTempScoreCardMessages, selectPlayerFakeDef} from "../gamePlay/gamePlaySlice";
 import { selectMe } from "../auth/authSlice";
-
+import { askAI } from "../gamePlay/openAISlice";
 
 import {Card, Box, Typography, Button} from "@mui/material"
 
@@ -27,6 +27,8 @@ const TempScoreCard = ({
 const me = useSelector(selectMe);
 const username = me.username;
 const playerFakeDef = useSelector(selectPlayerFakeDef);
+const [aiResponse, setAiResponse] = useState("")
+
 
   const [pause, setPause] = useState(false);
   const handleTogglePause = () => {
@@ -38,6 +40,12 @@ const playerFakeDef = useSelector(selectPlayerFakeDef);
       userName: username,
       playerFakeDef: playerFakeDef,
     });
+    dispatch(askAI({ word, definition: playerFakeDef })).then((res)=>{
+      setTimeout(()=>{
+ setAiResponse(res.payload)
+// console.log("RESPONSE: ", res.payload)
+      }, 5000)
+    })
   };
 
 
@@ -181,7 +189,7 @@ console.log("GAME NAEM IN TEMO SCOKET: pausyyyyy: ", pause)
                 {showTiedGame ? "TIED GAME... keep playing!" : null}
               </h1>
             </Box>
-            <Button
+          <Button
               sx={{ alignSelf: "center" }}
               variant="contained"
               size="large"
@@ -190,6 +198,7 @@ console.log("GAME NAEM IN TEMO SCOKET: pausyyyyy: ", pause)
               {" "}
               Challenge
             </Button>
+            
           </Card>
         </Card>
       ) : (
@@ -275,32 +284,12 @@ console.log("GAME NAEM IN TEMO SCOKET: pausyyyyy: ", pause)
                 {challenge.userName} challenges that {challenge.playerFakeDef} is a fitting defintion of {word}
               </Typography>
               <div className="temp-scorecard-messages">
-                <h1>Round Results</h1>
-                {/* MAP THROUGH TEMPSCORECARD MESSAGE (about who earned points) */}
-                {tempScoreCard && tempScoreCard.length
-                  ? tempScoreCard.map((message) => {
-                      return (
-                        <div>
-                          <div>{message}</div>
-                          <div className="line-break"></div>
-                        </div>
-                      );
-                    })
-                  : null}{" "}
+                <h1>Results</h1>
+                {aiResponse}
               </div>
-              <h1 style={{ color: "red" }}>
-                {showTiedGame ? "TIED GAME... keep playing!" : null}
-              </h1>
+           
             </Box>
-            <Button
-              sx={{ alignSelf: "center" }}
-              variant="contained"
-              size="large"
-              onClick={handleTogglePause}
-            >
-              {" "}
-              Challenge
-            </Button>
+          
           </Card>
         </Card>
       )}
