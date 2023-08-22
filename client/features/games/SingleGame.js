@@ -37,7 +37,7 @@ const SingleGame = () => {
   const [tempScoreCard, setTempScoreCard] = useState("");
   const [showTempScoreCard, setShowTempScoreCard] = useState(false);
   const [showTiedGame, setShowTiedGame] = useState(false);
-    const [reloadFlip, setReloadFlip] = useState(false);
+  const [reloadFlip, setReloadFlip] = useState(false);
   // SOCKET
   const clientSocket = useContext(SocketContext);
 
@@ -53,10 +53,8 @@ const SingleGame = () => {
   const tempScoreCardTurn = useSelector(selectTempScoreCardMessages);
   const userScore = scores.find((score) => score.userId === userId);
 
-
-const word = useSelector(selectWord)
-const definition = useSelector(selectDefinition)
-
+  const word = useSelector(selectWord);
+  const definition = useSelector(selectDefinition);
 
   // If there are 0 rounds left, render the FinalCard
   useEffect(() => {
@@ -71,16 +69,53 @@ const definition = useSelector(selectDefinition)
 
 
 
+const reloadScores = ()=>{
+  dispatch(fetchAllGameScores(gameId));
+  setShowTempScoreCard(true);
+}
+
+
+
+  //   const reloadScores = () => {
+  //   dispatch(fetchAllGameScores(gameId));
+  //   setShowTempScoreCard(true);
+  // //  const [countdown, setCountdown] = useState(4);
+  // let countdown = 20
+
+  // const reloadRecur = () => {
+  //   console.log("COUNTDOWN: ", countdown);
+  //   console.log("PAUSE: ", pause)
+  //   if (countdown > 0 && !pause) {
+  //     setTimeout(() => {
+  //       countdown --
+
+  //       reloadRecur();
+  //     }, 1000);
+  //   }
+  //   if (countdown === 0) {
+  //     dispatch(clearTempScoreCardMessages());
+  //     setShowTempScoreCard(false);
+  //     setReloadFlip(true);
+  //   }
+  // };
+  // reloadRecur();
+
+  // };
+
+ 
+
+
   // SHOWS TEMPSCORECARD AND RELOADS/UPDATES SCORES  and reloads the cardFlip animation when game round is over and its new player's turn the
-  const reloadScores = () => {
-    dispatch(fetchAllGameScores(gameId));
-    setTimeout(() => {
-      dispatch(clearTempScoreCardMessages());
-      setShowTempScoreCard(false);
-setReloadFlip(true)
-    }, 10000);
-    setShowTempScoreCard(true);
-  };
+  //     const reloadScores = () => {
+  //        dispatch(fetchAllGameScores(gameId));
+  // setTimeout(() => {
+  //         dispatch(clearTempScoreCardMessages());
+  //         setShowTempScoreCard(false);
+  //   setReloadFlip(true)
+  //       }, 10000);
+
+  //       setShowTempScoreCard(true);
+  //     };
 
   // WHEN ACCEPT HAVE TO EDIT THE GAME AND THE SCORE. get response from game edit to edit score..
   const handleAcceptRequest = (id) => {
@@ -177,9 +212,11 @@ setReloadFlip(true)
   };
 
   return (
-    <Card >
+    <Card>
       {showTempScoreCard ? (
         <TempScoreCard
+          setShowTempScoreCard={setShowTempScoreCard}
+          setReloadFlip={setReloadFlip}
           word={word}
           definition={definition}
           tempScoreCard={tempScoreCard}
@@ -201,12 +238,29 @@ setReloadFlip(true)
         handleDeclineRequest={handleDeclineRequest}
         handleAcceptRequest={handleAcceptRequest}
       />
+      {/* <Button
+        type="button"
+        color="secondary"
+        sx={{ textDecoration: "underline", fontWeight: "bold" }}
+        onClick={handlePause}
+      >
+        Pause
+      </Button>
+      <Button
+        type="button"
+        color="secondary"
+        sx={{ textDecoration: "underline", fontWeight: "bold" }}
+        onClick={handleUnPause}
+      >
+        UnPause
+      </Button> */}
 
       {/* GAME PLAY */}
       {(game.started === true && game.ownerId === userId) ||
       (game.started === true && userScore) ? (
         <>
           <GamePlay
+            setShowTempScoreCard={setShowTempScoreCard}
             setReloadFlip={setReloadFlip}
             reloadFlip={reloadFlip}
             userId={userId}

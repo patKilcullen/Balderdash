@@ -34,7 +34,7 @@ const Timer = ({
   setChoseWord,
 }) => {
   // COMPONENT STATE
-  const [countdown, setCountdown] = useState(50);
+  const [countdown, setCountdown] = useState(1);
   const [defInput, setDefInput] = useState(false);
   const [playGame, setPlayGame] = useState(false);
 
@@ -50,6 +50,8 @@ const Timer = ({
       dispatch(getFakeDefinitions(word));
     });
   };
+
+ 
 
   // TIMER displays definiton input box/front of card while countdown if above 0 or while definition has yet to be submitted
   // When time hits 0, mounts GuessDEfs compnents and shows front of card

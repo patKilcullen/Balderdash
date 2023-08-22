@@ -1,9 +1,49 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 
-import {Card, Box, Typography} from "@mui/material"
+import { clearTempScoreCardMessages} from "../gamePlay/gamePlaySlice";
 
-const TempScoreCard = ({ word,definition, tempScoreCard, showTiedGame }) => {
+import {Card, Box, Typography, Button} from "@mui/material"
+
+const TempScoreCard = ({
+  setShowTempScoreCard,
+  setReloadFlip,
+  word,
+  definition,
+  tempScoreCard,
+  showTiedGame,
+}) => {
+  const [countdown, setCountdown] = useState(15);
+  const dispatch = useDispatch();
+
+
+
+  const [pause, setPause] = useState(false);
+  const handleTogglePause = () => {
+    
+    setPause(!pause);
+  };
+
+  useEffect(() => {
+    console.log("score card count down");
+    const timer = setTimeout(() => {
+      if (countdown > 0 && !pause) {
+        setCountdown(countdown - 1);
+      } else if (countdown === 0) {
+        dispatch(clearTempScoreCardMessages());
+        setShowTempScoreCard(false);
+        setReloadFlip(true);
+      } else {
+        null;
+      }
+    }, 1000);
+
+    // Cleanup the timer when the component unmounts
+    // NEED?
+    return () => clearTimeout(timer);
+  }, [countdown, pause]);
+
   return (
     <div id="temp-scorecard">
       <Card
@@ -79,14 +119,12 @@ const TempScoreCard = ({ word,definition, tempScoreCard, showTiedGame }) => {
             <Typography
               style={{
                 fontSize: "20px",
-            
-                
+
                 alignSelf: " center",
-        
               }}
               color={"secondary"}
             >
-             The definition of {word} is... {definition}
+              The definition of {word} is... {definition}
             </Typography>
             <div className="temp-scorecard-messages">
               <h1>Round Results</h1>
@@ -106,6 +144,15 @@ const TempScoreCard = ({ word,definition, tempScoreCard, showTiedGame }) => {
               {showTiedGame ? "TIED GAME... keep playing!" : null}
             </h1>
           </Box>
+          <Button
+            sx={{ alignSelf: "center" }}
+            variant="contained"
+            size="large"
+            onClick={handleTogglePause}
+          >
+            {" "}
+            Challenge
+          </Button>
         </Card>
       </Card>
     </div>
