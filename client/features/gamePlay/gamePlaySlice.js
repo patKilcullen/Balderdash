@@ -84,7 +84,7 @@ const initialState = {
     fakeWords: [],
     fakeDefinitions: [],
     tempScoreCard: [],
-    playerFakeDef: []
+    playerFakeDef: {}
 }
 const gamePlaySlice = createSlice({
   name: "gamePlay",
@@ -103,14 +103,16 @@ const gamePlaySlice = createSlice({
       state.fakeDefinitions.push(action.payload);
     },
     addRealDefinition(state, action) {
-       state.definition = action.payload;
-
+      state.definition = action.payload;
     },
-
 
     addPlayerFakeDef(state, action) {
       state.playerFakeDef = action.payload;
     },
+    // NEEDED?
+    // clearPlayerFakeDef(state, action) {
+    //   state.playerFakeDef = {};
+    // },
     clearDefinition(state, action) {
       state.definition = {};
     },
@@ -167,6 +169,9 @@ export const selectFakeWords = (state)=>{
 export const selectTempScoreCardMessages = (state)=>{
   return state.gamePlay.tempScoreCard
 }
+export const selectPlayerFakeDef = (state) => {
+  return state.gamePlay.playerFakeDef;
+};
 
 
 export const {

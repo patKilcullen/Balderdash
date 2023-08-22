@@ -64,10 +64,10 @@ const init = async () => {
 
       // Countdown TempScoreCArd Socket
 
-      socket.on("send_pause_tempScoreCard_countdown", ({ gameName }) => {
+      socket.on("send_pause_tempScoreCard_countdown", ({ gameName, userName, playerFakeDef }) => {
         socket
           .to(gameName)
-          .emit("recieve_pause_tempScoreCard_countdown", gameName);
+          .emit("recieve_pause_tempScoreCard_countdown", {room: gameName, userName, playerFakeDef});
       });
 
       // PLAYER DEFINITIONS
