@@ -7,6 +7,8 @@ OPENAI: in JSON packa added "type": "module" and openAI script
 
 LAST UPDATE: 
 
+
+
 IMPORTATN  LOOK Up
 // CARD FLIPPING INFO
 the code makes a card flip correctly the first time, then leave the screen and come back and flip again, but it doesnt flip correctly when it come bak

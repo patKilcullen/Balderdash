@@ -15,7 +15,7 @@ import {
   selectTempScoreCardMessages,
   clearTempScoreCardMessages,
   selectWord,
-  selectDefinition
+  selectRealDefinition
 } from "../gamePlay/gamePlaySlice";
 
 // SOCKET
@@ -54,7 +54,8 @@ const SingleGame = () => {
   const userScore = scores.find((score) => score.userId === userId);
 
   const word = useSelector(selectWord);
-  const definition = useSelector(selectDefinition);
+
+  const definition = useSelector(selectRealDefinition);
 
 
   // If there are 0 rounds left, render the FinalCard
@@ -216,6 +217,7 @@ const reloadScores = ()=>{
     <Card>
       {showTempScoreCard ? (
         <TempScoreCard
+        game={game}
         gameName={game.name}
           setShowTempScoreCard={setShowTempScoreCard}
           setReloadFlip={setReloadFlip}

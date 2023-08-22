@@ -11,6 +11,7 @@ import {
   clearFakeWords,
   addDefinition,
   clearTempScoreCardMessages,
+  addRealDefinition,
 } from "./gamePlaySlice";
 import { addNewWord } from "../words/wordsSlice";
 import { selectMe } from "../auth/authSlice";
@@ -115,7 +116,8 @@ const GamePlay = ({
   // to other users/ then starts Timer component by setting state to true
   //  and then choseWord to true to hide button/keep user from choosing again
   const handleChooseWord = () => {
-    dispatch(addDefinition(definition))
+    dispatch(addRealDefinition(definition));
+
     handleGetFakeWords();
     clientSocket.emit("send_word", {
       word: word,
@@ -154,7 +156,7 @@ const GamePlay = ({
         : null;
 
         playerTurnName !== username && room === gameName
-          ? dispatch(addDefinition(definition))
+          ? dispatch(addRealDefinition(definition))
           : null;
 
       playerTurnName !== username ? setPlayerTurnName(playerTurnName) : null;

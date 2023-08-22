@@ -8,6 +8,7 @@ import { clearTempScoreCardMessages} from "../gamePlay/gamePlaySlice";
 import {Card, Box, Typography, Button} from "@mui/material"
 
 const TempScoreCard = ({
+  game,
   gameName,
   setShowTempScoreCard,
   setReloadFlip,
@@ -26,6 +27,7 @@ const TempScoreCard = ({
     clientSocket.emit("send_pause_tempScoreCard_countdown", { gameName });
   };
 
+  console.log("WORJD ANHD DEF IN TEMO SCORE: ", word, definition)
  
 
   useEffect(() => {
@@ -36,7 +38,8 @@ const TempScoreCard = ({
       } else if (countdown === 0) {
         dispatch(clearTempScoreCardMessages());
         setShowTempScoreCard(false);
-        setReloadFlip(true);
+        // if game isn;t over, reload flip....
+    game.roundsLeft !== 0    ?  setReloadFlip(true) : null
       } else {
         null;
       }
@@ -139,7 +142,8 @@ console.log("GAME NAEM IN TEMO SCOKET: pausyyyyy: ", pause)
               }}
               color={"secondary"}
             >
-              The definition of {word} is... {definition}
+              The definition of {word} is... 
+              {definition}
             </Typography>
             <div className="temp-scorecard-messages">
               <h1>Round Results</h1>

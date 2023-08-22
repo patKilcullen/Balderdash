@@ -83,7 +83,8 @@ const initialState = {
     definition: {},
     fakeWords: [],
     fakeDefinitions: [],
-    tempScoreCard: []
+    tempScoreCard: [],
+    playerFakeDef: []
 }
 const gamePlaySlice = createSlice({
   name: "gamePlay",
@@ -99,7 +100,16 @@ const gamePlaySlice = createSlice({
       state.fakeWords = [];
     },
     addDefinition(state, action) {
-      state.definition = action.payload;
+      state.fakeDefinitions.push(action.payload);
+    },
+    addRealDefinition(state, action) {
+       state.definition = action.payload;
+
+    },
+
+
+    addPlayerFakeDef(state, action) {
+      state.playerFakeDef = action.payload;
     },
     clearDefinition(state, action) {
       state.definition = {};
@@ -145,9 +155,9 @@ function randomizeArray(array) {
 export const selectWord = (state)=>{
     return state.gamePlay.word
 }
-export const selectDefinition = (state)=>{
-    return state.gamePlay.definition
-}
+export const selectRealDefinition = (state) => {
+  return state.gamePlay.definition;
+};
 export const selectFakeDefinitions = (state)=>{
     return state.gamePlay.fakeDefinitions
 }
@@ -159,6 +169,16 @@ export const selectTempScoreCardMessages = (state)=>{
 }
 
 
-export const { setWordState, clearFakeDefs, clearFakeWords, addWordPlayerNotTurn, addDefinition,addTempScoreCardMessage,clearTempScoreCardMessages } = gamePlaySlice.actions;
+export const {
+  setWordState,
+  clearFakeDefs,
+  clearFakeWords,
+  addWordPlayerNotTurn,
+  addDefinition,
+  addRealDefinition,
+  addPlayerFakeDef,
+  addTempScoreCardMessage,
+  clearTempScoreCardMessages,
+} = gamePlaySlice.actions;
 
 export default gamePlaySlice.reducer

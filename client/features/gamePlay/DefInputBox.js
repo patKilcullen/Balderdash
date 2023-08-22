@@ -5,6 +5,7 @@ import { SocketContext } from "../../app/SocketProvider";
 
 import { askAI } from "./openAISlice";
 import { selectWord } from "./gamePlaySlice";
+import { addPlayerFakeDef } from "./gamePlaySlice";
 
 // MaterialUI
 import {
@@ -41,6 +42,7 @@ const DefInputBox = ({
   // Where it will be added  to array of defs. Thenk clears the definition input box
   const handleEnterFakeDef = (e) => {
     e.preventDefault();
+    // dispatch(addPlayerFakeDef(playerDef));
     clientSocket.emit("send_player_fake_def", {
       playerDef,
       room: gameName,
