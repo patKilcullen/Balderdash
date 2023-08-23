@@ -25,7 +25,7 @@ const TempScoreCard = ({
 
 // NEW
 const me = useSelector(selectMe);
-const username = me.username;
+const userName = me.username;
 const playerFakeDef = useSelector(selectPlayerFakeDef);
 const [aiResponse, setAiResponse] = useState("")
 
@@ -34,15 +34,24 @@ const [aiResponse, setAiResponse] = useState("")
   const handleTogglePause = () => {
     setPause(!pause);
     // NEW
-    setChallenge({ username, playerFakeDef });
+    setChallenge({ userName, playerFakeDef });
     clientSocket.emit("send_pause_tempScoreCard_countdown", {
       gameName,
-      userName: username,
+      userName,
       playerFakeDef: playerFakeDef,
     });
+
     dispatch(askAI({ word, definition: playerFakeDef })).then((res)=>{
       setTimeout(()=>{
  setAiResponse(res.payload)
+
+ console.log("RES PAYLOAD: ", res.payload )
+
+  clientSocket.emit("send_ask_ai_answer", {
+       room: gameName,
+       answer: res.payload
+     });
+
 // console.log("RESPONSE: ", res.payload)
       }, 5000)
     })
@@ -52,7 +61,6 @@ const [aiResponse, setAiResponse] = useState("")
  
 
   useEffect(() => {
-    console.log("score card count down PAUSE: ", pause);
     const timer = setTimeout(() => {
       if (countdown > 0 && !pause) {
         setCountdown(countdown - 1);
@@ -74,18 +82,21 @@ const [aiResponse, setAiResponse] = useState("")
   const [challenge, setChallenge] = useState({})
   // SOCKET RECIEVE
   useEffect(() => {
-console.log("GAME NAEM IN TEMO SCOKET: pausyyyyy: ", pause)
     clientSocket.on(
       "recieve_pause_tempScoreCard_countdown",
       ({ room, userName, playerFakeDef }) => {
-        console.log("ROOM AND GAME NAME: ", room, gameName);
         room === gameName ? setPause(!pause) : null;
          room === gameName ? setChallenge({ userName, playerFakeDef }) : null;
           
       }
     );
 
-  }, [clientSocket, gameName, pause]);
+     clientSocket.on("receive_ask_ai_answer", ({ room, answer }) => {
+       console.log("ANSWER: ROOM GAMENAME ", answer, room, gameName);
+       room === gameName ? setAiResponse(answer) : null;
+     });
+
+  }, [clientSocket, gameName, pause, aiResponse]);
 
   return (
     <div id="temp-scorecard">

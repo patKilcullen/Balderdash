@@ -7,6 +7,8 @@ OPENAI: in JSON packa added "type": "module" and openAI script
 
 LAST UPDATE: 
 
+challenging player get response back from AI.. Need to send it to other players/adjust scores/ incorporate tempscorecard and game refresh/tiedgame/end game info
+
 
 
 IMPORTATN  LOOK Up

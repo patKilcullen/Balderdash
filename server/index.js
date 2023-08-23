@@ -64,11 +64,18 @@ const init = async () => {
 
       // Countdown TempScoreCArd Socket
 
-      socket.on("send_pause_tempScoreCard_countdown", ({ gameName, userName, playerFakeDef }) => {
-        socket
-          .to(gameName)
-          .emit("recieve_pause_tempScoreCard_countdown", {room: gameName, userName, playerFakeDef});
-      });
+      socket.on(
+        "send_pause_tempScoreCard_countdown",
+        ({ gameName, userName, playerFakeDef }) => {
+          socket
+            .to(gameName)
+            .emit("recieve_pause_tempScoreCard_countdown", {
+              room: gameName,
+              userName,
+              playerFakeDef,
+            });
+        }
+      );
 
       // PLAYER DEFINITIONS
       socket.on(
@@ -124,6 +131,12 @@ const init = async () => {
       socket.on("send_play_again", ({ room, gameId }) => {
         socket.to(room).emit("receive_play_again", { gameId });
       });
+// ASK AI
+socket.on("send_ask_ai_answer", ({ room, answer }) => {
+          console.log("ANSWER: ", answer, "boooobb");
+  socket.to(room).emit("receive_ask_ai_answer", { room, answer });
+});
+      
     });
   } catch (ex) {
     console.log(ex);
