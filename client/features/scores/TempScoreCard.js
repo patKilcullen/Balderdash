@@ -22,6 +22,7 @@ const TempScoreCard = ({
   showTiedGame,
 }) => {
   const [countdown, setCountdown] = useState(15);
+  const [showChallengeButton, setShowChallengeButton] = useState(true)
   const dispatch = useDispatch();
   const clientSocket = useContext(SocketContext);
 
@@ -37,6 +38,7 @@ const [aiResponse, setAiResponse] = useState("")
 
   const [pause, setPause] = useState(false);
   const handleTogglePause = () => {
+    setShowChallengeButton(false)
     setPause(!pause);
     // NEW
     setChallenge({ userName, playerFakeDef });
@@ -301,7 +303,7 @@ room === gameName ? showChallengeAnswer(answer) : null
                 {showTiedGame ? "TIED GAME... keep playing!" : null}
               </h1>
             </Box>
-          <Button
+       { showChallengeButton ?  <Button
               sx={{ alignSelf: "center" }}
               variant="contained"
               size="large"
@@ -309,7 +311,7 @@ room === gameName ? showChallengeAnswer(answer) : null
             >
               {" "}
               Challenge
-            </Button>
+            </Button>: null}
             
           </Card>
         </Card>

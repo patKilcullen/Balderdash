@@ -27,11 +27,11 @@ const DefInputBox = ({
   const [playerDef, setPlayerDef] = useState("");
   const [seeInput, setSeeInput] = useState(true);
 
+  const dispatch = useDispatch();
   const clientSocket = useContext(SocketContext);
 
   const inputRef = useRef();
 
-  const word = useSelector(selectWord)
 
   // Set focus on input box
   useEffect(() => {
@@ -54,10 +54,8 @@ const DefInputBox = ({
     showBackOfCard("back");
   };
 
-const dispatch = useDispatch()
-  const handleTestAI = ()=>{
-    dispatch(askAI({word, definition: playerDef }));
-  }
+
+  
   return (
     <div>
       {seeInput ? (
@@ -94,9 +92,6 @@ const dispatch = useDispatch()
               Submit Definition
             </Button>
           </form>
-          <Button  onClick={handleTestAI} variant="contained" type="submit">
-              AI TEST
-            </Button>
         </Container>
       ) : null}
     </div>
