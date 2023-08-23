@@ -30,6 +30,7 @@ const me = useSelector(selectMe);
 const userName = me.username;
 const userId = me.id
 const gameId = game.id
+const gameTurn = game.turn
 const playerFakeDef = useSelector(selectPlayerFakeDef);
 const [aiResponse, setAiResponse] = useState("")
 
@@ -46,57 +47,90 @@ const [aiResponse, setAiResponse] = useState("")
     });
 
     dispatch(askAI({ word, definition: playerFakeDef })).then((res)=>{
+      clientSocket.emit("send_ask_ai_answer", {
+        room: gameName,
+        answer: res.payload,
+      });
+      // showChallengeAnswer(res.payload)
+      setTimeout(() => {
+        setAiResponse(res.payload);
+        setTimeout(() => {
+          setPause((pause) => !pause);
+        }, 3000);
+      }, 3000);
 
-clientSocket.emit("send_ask_ai_answer", {
-  room: gameName,
-  answer: res.payload,
-});
-// showChallengeAnswer(res.payload)
-setTimeout(()=>{
+      // LASTUPDATE
+      // use this as reference
+      // dispatch(addPoint({ userId: userKey, gameId: gameId })).then((res) => {
+      //         let message = `${username} guessed ${res.payload.user.username}'s fake definition... ${res.payload.user.username} gets 1 point!!`;
+      //         singleGame.turn === userScore.turnNum
+      //           ? dispatch(addTempScoreCardMessage(message))
+      //           : clientSocket.emit("send_score_card_info", {
+      //               gameName: gameName,
+      //               playerTurnName: playerTurnName,
+      //               message: message,
+      //             });
+      //       });
+      //     }
 
-setAiResponse(res.payload);
-  setTimeout(()=>{
-setPause(pause=> !pause);
+      // res.payload === "yes"
+      //   ? dispatch(add3Points({ userId: userId, gameId: gameId })) &&
+      //     // singleGame.turn === userScore.turnNum
+      //     //   ? dispatch(addTempScoreCardMessage(`AI says ${username} wrote a correct definition, ${username} gets 3 points!`))
+      //     //   :
+      //     dispatch(
+      //       addTempScoreCardMessage(
+      //         `AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
+      //       )
+      //     ) &&
+      //     clientSocket.emit("send_score_card_info", {
+      //       gameName: gameName,
+      //       // playerTurnName: playerTurnName,
+      //       message: `AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`,
+      //     })
+      //   : dispatch(subtract3Points({ userId: userId, gameId: gameId })) &&
+      //     // singleGame.turn === userScore.turnNum
+      //     //   ? dispatch(addTempScoreCardMessage(`AI says ${username} wrote an incorrect definition, ${username} LOSES 3 points!`))
+      //     //   :
+      //     dispatch(
+      //       addTempScoreCardMessage(
+      //         `AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`
+      //       )
+      //     ) &&
+      //         clientSocket.emit("send_score_card_info", {
+      //             gameName: gameName,
+      //             // playerTurnName: playerTurnName,
+      //             message: `AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`,
+      //           });
 
-  },3000)
 
-}, 3000)
+      console.log("RES payloda: ", res.payload, typeof res.payload);
+      res.payload.includes("yes")
+        ? dispatch(add3Points({ userId: userId, gameId: gameId }))
+        : dispatch(subtract3Points({ userId: userId, gameId: gameId }));
 
+      res.payload.includes("yes") ?
+                dispatch(
+                  addTempScoreCardMessage(
+                    `AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
+                  )
+                )
+                 : dispatch(
+                  addTempScoreCardMessage(
+                    `AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`
+                  ))
 
-
-
-res.payload === "Yes"
-  ? dispatch(add3Points({ userId: userId, gameId: gameId })) &&
-    // singleGame.turn === userScore.turnNum
-    //   ? dispatch(addTempScoreCardMessage(`AI says ${username} wrote a correct definition, ${username} gets 3 points!`))
-    //   :
-    dispatch(
-      addTempScoreCardMessage(
-        `AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
-      )
-    ) &&
-    clientSocket.emit("send_score_card_info", {
-      gameName: gameName,
-      // playerTurnName: playerTurnName,
-      message: `AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`,
-    })
-  : dispatch(subtract3Points({ userId: userId, gameId: gameId })) &&
-    // singleGame.turn === userScore.turnNum
-    //   ? dispatch(addTempScoreCardMessage(`AI says ${username} wrote an incorrect definition, ${username} LOSES 3 points!`))
-    //   :
-    dispatch(
-      addTempScoreCardMessage(
-        `AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`
-      )
-    ) &&
-        clientSocket.emit("send_score_card_info", {
+      res.payload.includes("yes")
+        ? clientSocket.emit("send_score_card_info", {
+            gameName: gameName,
+            // playerTurnName: playerTurnName,
+            message: `AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`,
+          })
+        : clientSocket.emit("send_score_card_info", {
             gameName: gameName,
             // playerTurnName: playerTurnName,
             message: `AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`,
           });
-
-
-
     })
   };
 

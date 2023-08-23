@@ -7,6 +7,14 @@ OPENAI: in JSON packa added "type": "module" and openAI script
 
 LAST UPDATE: 
 
+look up
+// LASTUPDATE 
+added answer to askAI to scorecard, but got multiple answeres in one users tempscore card, maybe because didnt put conditionals about who send to who, as in refernce in TempScoreCArd LASTUPDATE
+ACTUALLY.. it may be working now, but its getting the incorrect seponse when the ai response is yes
+
+
+
+
 challenging player get response back from AI.. Need to send it to other players/adjust scores/ incorporate tempscorecard and game refresh/tiedgame/end game info
 
 

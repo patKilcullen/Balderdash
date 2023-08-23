@@ -36,7 +36,7 @@ You are a teacher and you have to determine if students are correctly defining w
 Definition: ${definition}
 Word: ${word}
 
-Answer only "yes" or "no"
+Answer only "yes" or "no"  specifically undercase with no period.
 `;
 
     
