@@ -80,6 +80,45 @@ export const addPoint = createAsyncThunk(
   }
 );
 
+
+// ADD POINT TO SCORE
+export const add3Points = createAsyncThunk(
+  "add3Points",
+  async ({ userId, gameId }) => {
+    try {
+      const { data } = await axios.put(`/api/scores/${userId}/add3Points`, {
+        userId,
+        gameId,
+      });
+
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+// ADD POINT TO SCORE
+export const subtract3Points = createAsyncThunk(
+  "subtract3Points",
+  async ({ userId, gameId }) => {
+    try {
+      const { data } = await axios.put(
+        `/api/scores/${userId}/subtract3Points`,
+        {
+          userId,
+          gameId,
+        }
+      );
+
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+
 // DELETE SCORE - for now used only when game owner denies request
 export const deleteScore = createAsyncThunk("deleteScore", async (score) => {
   try {
@@ -106,7 +145,14 @@ const allScoresSlice = createSlice({
       }),
       builder.addCase(addPoint.fulfilled, (state, action) => {
         state.push(action.payload);
+      }),
+      builder.addCase(add3Points.fulfilled, (state, action) => {
+        state.push(action.payload);
+      }),
+      builder.addCase(subtract3Points.fulfilled, (state, action) => {
+        state.push(action.payload);
       });
+      
   },
 });
 

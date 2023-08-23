@@ -86,6 +86,37 @@ router.put("/:id/addPoint", async (req, res, next) => {
   }
 });
 
+// Add 3 Points
+router.put("/:id/add3Points", async (req, res, next) => {
+  try {
+    const score = await Score.findOne({
+      where: { userId: req.body.userId, gameId: req.body.gameId },
+      include: [User],
+    });
+
+    score.score += 3;
+    res.send(await score.save());
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Subtract 3 Points
+router.put("/:id/subtract3Points", async (req, res, next) => {
+  try {
+    const score = await Score.findOne({
+      where: { userId: req.body.userId, gameId: req.body.gameId },
+      include: [User],
+    });
+
+    score.score -= 3;
+    res.send(await score.save());
+  } catch (err) {
+    next(err);
+  }
+});
+
+
 // ADD POINT 2 USES RAW SQL but doesn't return user in requires format
 router.put("/:id/addPoint2", async (req, res, next) => {
   try {

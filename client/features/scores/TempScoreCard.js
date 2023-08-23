@@ -6,6 +6,8 @@ import { SocketContext } from "../../app/SocketProvider";
 import { clearTempScoreCardMessages, selectPlayerFakeDef} from "../gamePlay/gamePlaySlice";
 import { selectMe } from "../auth/authSlice";
 import { askAI } from "../gamePlay/openAISlice";
+import { add3Points, subtract3Points } from "./scoresSlice";
+import { addTempScoreCardMessage } from "../gamePlay/gamePlaySlice";
 
 import {Card, Box, Typography, Button} from "@mui/material"
 
@@ -26,6 +28,8 @@ const TempScoreCard = ({
 // NEW
 const me = useSelector(selectMe);
 const userName = me.username;
+const userId = me.id
+const gameId = game.id
 const playerFakeDef = useSelector(selectPlayerFakeDef);
 const [aiResponse, setAiResponse] = useState("")
 
@@ -57,15 +61,42 @@ setPause(pause=> !pause);
   },3000)
 
 }, 3000)
-//       setTimeout(()=>{
-  
-//       setAiResponse(res.payload);
-//       setTimeout(()=>{
-// setPause(!pause);
-//       },5000)
 
-// // console.log("RESPONSE: ", res.payload)
-//       }, 5000)
+
+
+
+res.payload === "Yes"
+  ? dispatch(add3Points({ userId: userId, gameId: gameId })) &&
+    // singleGame.turn === userScore.turnNum
+    //   ? dispatch(addTempScoreCardMessage(`AI says ${username} wrote a correct definition, ${username} gets 3 points!`))
+    //   :
+    dispatch(
+      addTempScoreCardMessage(
+        `AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
+      )
+    ) &&
+    clientSocket.emit("send_score_card_info", {
+      gameName: gameName,
+      // playerTurnName: playerTurnName,
+      message: `AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`,
+    })
+  : dispatch(subtract3Points({ userId: userId, gameId: gameId })) &&
+    // singleGame.turn === userScore.turnNum
+    //   ? dispatch(addTempScoreCardMessage(`AI says ${username} wrote an incorrect definition, ${username} LOSES 3 points!`))
+    //   :
+    dispatch(
+      addTempScoreCardMessage(
+        `AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`
+      )
+    ) &&
+        clientSocket.emit("send_score_card_info", {
+            gameName: gameName,
+            // playerTurnName: playerTurnName,
+            message: `AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`,
+          });
+
+
+
     })
   };
 
