@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { SocketContext } from "../../app/SocketProvider";
@@ -42,22 +42,47 @@ const [aiResponse, setAiResponse] = useState("")
     });
 
     dispatch(askAI({ word, definition: playerFakeDef })).then((res)=>{
-      setTimeout(()=>{
- setAiResponse(res.payload)
 
- console.log("RES PAYLOAD: ", res.payload )
+clientSocket.emit("send_ask_ai_answer", {
+  room: gameName,
+  answer: res.payload,
+});
+// showChallengeAnswer(res.payload)
+setTimeout(()=>{
 
-  clientSocket.emit("send_ask_ai_answer", {
-       room: gameName,
-       answer: res.payload
-     });
+setAiResponse(res.payload);
+  setTimeout(()=>{
+setPause(pause=> !pause);
 
-// console.log("RESPONSE: ", res.payload)
-      }, 5000)
+  },3000)
+
+}, 3000)
+//       setTimeout(()=>{
+  
+//       setAiResponse(res.payload);
+//       setTimeout(()=>{
+// setPause(!pause);
+//       },5000)
+
+// // console.log("RESPONSE: ", res.payload)
+//       }, 5000)
     })
   };
 
+const showChallengeAnswer =(answer)=>{
+  console.log("SHOW CAHLLEN ANS: ", answer )
+setTimeout(() => {
+  console.log("first")
+  setAiResponse(answer);
+  // setTimeout(() => {
+  //   console.log("second: ", pause);
+  //   setPause(!pause);
+  //   console.log("3: ", pause);
+  // }, 5000);
 
+  // console.log("RESPONSE: ", res.payload)
+}, 5000);
+}
  
 
   useEffect(() => {
@@ -92,11 +117,22 @@ const [aiResponse, setAiResponse] = useState("")
     );
 
      clientSocket.on("receive_ask_ai_answer", ({ room, answer }) => {
-       console.log("ANSWER: ROOM GAMENAME ", answer, room, gameName);
-       room === gameName ? setAiResponse(answer) : null;
+
+room === gameName ? showChallengeAnswer(answer) : null
+
+//        room === gameName ? setAiResponse(answer) : null;
+      room === gameName
+        ? setTimeout(() => {
+            setAiResponse(answer);
+            setTimeout(() => {
+              setPause(!pause);
+            }, 3000);
+          }, 3000)
+        : null;
+
      });
 
-  }, [clientSocket, gameName, pause, aiResponse]);
+  }, [clientSocket, gameName, pause]);
 
   return (
     <div id="temp-scorecard">

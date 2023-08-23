@@ -56,7 +56,7 @@ const GuessDefs = ({
   const [fakeDefs, setFakeDefs] = useState([]);
   const [defList, setDefList] = useState(null);
   const [guessed, setGuessed] = useState(false);
-  const [countdown, setCountdown] = useState(10);
+  const [countdown, setCountdown] = useState(3);
 
   const dispatch = useDispatch();
   const word = useSelector(selectWord);
