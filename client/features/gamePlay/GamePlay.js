@@ -62,6 +62,7 @@ const GamePlay = ({
   // Finds the player who turnNum === game.turn, sets it to playerTurnName
   // when the game reloads to check for new turn
   useEffect(() => {
+    
     game && game.scores
       ? setPlayerTurn(
           game.scores.filter((score) => score.turnNum === game.turn)

@@ -84,7 +84,7 @@ const initialState = {
     fakeWords: [],
     fakeDefinitions: [],
     tempScoreCard: [],
-    playerFakeDef: {}
+    playerFakeDef: []
 }
 const gamePlaySlice = createSlice({
   name: "gamePlay",

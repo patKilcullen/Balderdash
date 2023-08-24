@@ -7,6 +7,9 @@ OPENAI: in JSON packa added "type": "module" and openAI script
 
 LAST UPDATE: 
 
+used incliuded in tempscporecard challenge conditionals to print and edts scores correctly, but other player get multiple messages regarding the score in their temp score card.  need to referecr the comented out add to score card example to include more dontiions about the player
+
+
 look up
 // LASTUPDATE 
 added answer to askAI to scorecard, but got multiple answeres in one users tempscore card, maybe because didnt put conditionals about who send to who, as in refernce in TempScoreCArd LASTUPDATE

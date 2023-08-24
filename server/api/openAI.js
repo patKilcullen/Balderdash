@@ -31,7 +31,7 @@ router.post(`/`, async (req, res) => {
 console.log("askAI route: ", word, definition)
 
 const prompt = `
-You are a teacher and you have to determine if students are correctly defining words. Their definitions may not be exactly as they appear in the dictionary, but they have to specifically and accurately describe the word, as if they were a definition. They cannot be subjects or simply say something accurate about the word. They have to resemble the real definitions.
+You are a teacher and you have to determine if students are correctly defining words. Their definitions may not be exactly as they appear in the dictionary, but they have to specifically and accurately describe the word, as if they were a definition. They cannot be subjects or simply say something accurate about the word. They have to resemble the real definitions. If their definition is blank(empty) the answer is "no".
 
 Definition: ${definition}
 Word: ${word}

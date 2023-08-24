@@ -38,6 +38,7 @@ const [aiResponse, setAiResponse] = useState("")
 
   const [pause, setPause] = useState(false);
   const handleTogglePause = () => {
+    console.log("PLAYER FAKE DEF IN PAUSE: ", playerFakeDef)
     setShowChallengeButton(false)
     setPause(!pause);
     // NEW
@@ -75,35 +76,6 @@ const [aiResponse, setAiResponse] = useState("")
       //       });
       //     }
 
-      // res.payload === "yes"
-      //   ? dispatch(add3Points({ userId: userId, gameId: gameId })) &&
-      //     // singleGame.turn === userScore.turnNum
-      //     //   ? dispatch(addTempScoreCardMessage(`AI says ${username} wrote a correct definition, ${username} gets 3 points!`))
-      //     //   :
-      //     dispatch(
-      //       addTempScoreCardMessage(
-      //         `AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
-      //       )
-      //     ) &&
-      //     clientSocket.emit("send_score_card_info", {
-      //       gameName: gameName,
-      //       // playerTurnName: playerTurnName,
-      //       message: `AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`,
-      //     })
-      //   : dispatch(subtract3Points({ userId: userId, gameId: gameId })) &&
-      //     // singleGame.turn === userScore.turnNum
-      //     //   ? dispatch(addTempScoreCardMessage(`AI says ${username} wrote an incorrect definition, ${username} LOSES 3 points!`))
-      //     //   :
-      //     dispatch(
-      //       addTempScoreCardMessage(
-      //         `AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`
-      //       )
-      //     ) &&
-      //         clientSocket.emit("send_score_card_info", {
-      //             gameName: gameName,
-      //             // playerTurnName: playerTurnName,
-      //             message: `AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`,
-      //           });
 
 
       console.log("RES payloda: ", res.payload, typeof res.payload);
@@ -136,6 +108,21 @@ const [aiResponse, setAiResponse] = useState("")
     })
   };
 
+
+
+     const [playerTurn, setPlayerTurn] = useState("");
+     const [playerTurnName, setPlayerTurnName] = useState("");
+     useEffect(() => {
+       game && game.scores
+         ? setPlayerTurn(
+             game.scores.filter((score) => score.turnNum === game.turn)
+           )
+         : null;
+       playerTurn ? setPlayerTurnName(playerTurn[0].user.username) : null;
+     }, []);
+
+console.log("player turn name in temp score card: ", playerTurnName);
+console.log("player turn name in temp score card: ", playerTurnName)
 const showChallengeAnswer =(answer)=>{
   console.log("SHOW CAHLLEN ANS: ", answer )
 setTimeout(() => {
