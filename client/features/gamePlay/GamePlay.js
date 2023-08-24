@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 // SLICES/STATE REDUCERS, ETC.
 import {
+  getPlayerTurnName,
   getWord,
   setWordState,
   getDefinition,
@@ -69,7 +70,10 @@ const GamePlay = ({
         )
       : null;
     playerTurn ? setPlayerTurnName(playerTurn[0].user.username) : null;
+    playerTurn ? getPlayerTurnName(playerTurn[0].user.username) : null;
+ 
   }, []);
+  console.log("PLAYA TURD GAME IN GAMEPLAY: ", playerTurnName)
 
   // GET WORD:  first clears defs from last round then gets word from API, sets it in state,
   // then gets the definition throug API then sets that in state for player whose turn it is,
@@ -197,6 +201,8 @@ const GamePlay = ({
             );
       }
     );
+
+  
   }, [clientSocket, game]);
 
   const [bottom, setBottom] = useState(

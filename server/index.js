@@ -132,9 +132,9 @@ const init = async () => {
         socket.to(room).emit("receive_play_again", { gameId });
       });
 // ASK AI
-socket.on("send_ask_ai_answer", ({ room, answer }) => {
-          console.log("ANSWER: ", answer, "boooobb");
-  socket.to(room).emit("receive_ask_ai_answer", { room, answer });
+socket.on("send_ask_ai_answer", ({ room, answer,message }) => {
+console.log("MESSAGE ON THE BNACKCKCKC: ", message)
+  socket.to(room).emit("receive_ask_ai_answer", { room, answer, message });
 });
       
     });

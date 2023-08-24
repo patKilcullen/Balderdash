@@ -7,7 +7,6 @@ import { clearTempScoreCardMessages, selectPlayerFakeDef} from "../gamePlay/game
 import { selectMe } from "../auth/authSlice";
 import { askAI } from "../gamePlay/openAISlice";
 import { add3Points, subtract3Points } from "./scoresSlice";
-import { addTempScoreCardMessage } from "../gamePlay/gamePlaySlice";
 
 import {Card, Box, Typography, Button} from "@mui/material"
 
@@ -21,27 +20,27 @@ const TempScoreCard = ({
   tempScoreCard,
   showTiedGame,
 }) => {
-  const [countdown, setCountdown] = useState(15);
-  const [showChallengeButton, setShowChallengeButton] = useState(true)
+  const [countdown, setCountdown] = useState(10);
+  const [showChallengeButton, setShowChallengeButton] = useState(true);
   const dispatch = useDispatch();
   const clientSocket = useContext(SocketContext);
 
-// NEW
-const me = useSelector(selectMe);
-const userName = me.username;
-const userId = me.id
-const gameId = game.id
-const gameTurn = game.turn
-const playerFakeDef = useSelector(selectPlayerFakeDef);
-const [aiResponse, setAiResponse] = useState("")
+  // NEW
+  const me = useSelector(selectMe);
+  const userName = me.username;
+  const userId = me.id;
+  const gameId = game.id;
+  const playerFakeDef = useSelector(selectPlayerFakeDef);
+  const [aiResponse, setAiResponse] = useState("");
+
 
 
   const [pause, setPause] = useState(false);
   const handleTogglePause = () => {
-    console.log("PLAYER FAKE DEF IN PAUSE: ", playerFakeDef)
-    setShowChallengeButton(false)
+    console.log("PLAYER FAKE DEF IN PAUSE: ", playerFakeDef);
+    setShowChallengeButton(false);
     setPause(!pause);
-    // NEW
+
     setChallenge({ userName, playerFakeDef });
     clientSocket.emit("send_pause_tempScoreCard_countdown", {
       gameName,
@@ -49,95 +48,47 @@ const [aiResponse, setAiResponse] = useState("")
       playerFakeDef: playerFakeDef,
     });
 
-    dispatch(askAI({ word, definition: playerFakeDef })).then((res)=>{
+    dispatch(askAI({ word, definition: playerFakeDef })).then((res) => {
+
       clientSocket.emit("send_ask_ai_answer", {
         room: gameName,
         answer: res.payload,
+        message:
+          res.payload === "yes"
+            ? ` puss AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
+            : `pussAI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`,
       });
-      // showChallengeAnswer(res.payload)
       setTimeout(() => {
         setAiResponse(res.payload);
+        tempScoreCard.push(
+          res.payload === "yes"
+            ? `puss AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
+            : `puss AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`
+        );
         setTimeout(() => {
           setPause((pause) => !pause);
         }, 3000);
       }, 3000);
 
-      // LASTUPDATE
-      // use this as reference
-      // dispatch(addPoint({ userId: userKey, gameId: gameId })).then((res) => {
-      //         let message = `${username} guessed ${res.payload.user.username}'s fake definition... ${res.payload.user.username} gets 1 point!!`;
-      //         singleGame.turn === userScore.turnNum
-      //           ? dispatch(addTempScoreCardMessage(message))
-      //           : clientSocket.emit("send_score_card_info", {
-      //               gameName: gameName,
-      //               playerTurnName: playerTurnName,
-      //               message: message,
-      //             });
-      //       });
-      //     }
 
-
-
-      console.log("RES payloda: ", res.payload, typeof res.payload);
       res.payload.includes("yes")
         ? dispatch(add3Points({ userId: userId, gameId: gameId }))
         : dispatch(subtract3Points({ userId: userId, gameId: gameId }));
 
-      res.payload.includes("yes") ?
-                dispatch(
-                  addTempScoreCardMessage(
-                    `AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
-                  )
-                )
-                 : dispatch(
-                  addTempScoreCardMessage(
-                    `AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`
-                  ))
-
-      res.payload.includes("yes")
-        ? clientSocket.emit("send_score_card_info", {
-            gameName: gameName,
-            // playerTurnName: playerTurnName,
-            message: `AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`,
-          })
-        : clientSocket.emit("send_score_card_info", {
-            gameName: gameName,
-            // playerTurnName: playerTurnName,
-            message: `AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`,
-          });
-    })
+    });
   };
 
+  const [playerTurn, setPlayerTurn] = useState("");
+  const [playerTurnName, setPlayerTurnName] = useState("");
+  useEffect(() => {
+    game && game.scores
+      ? setPlayerTurn(
+          game.scores.filter((score) => score.turnNum === game.turn)
+        )
+      : null;
+    playerTurn ? setPlayerTurnName(playerTurn[0].user.username) : null;
+  }, [playerTurn, playerTurnName]);
 
-
-     const [playerTurn, setPlayerTurn] = useState("");
-     const [playerTurnName, setPlayerTurnName] = useState("");
-     useEffect(() => {
-       game && game.scores
-         ? setPlayerTurn(
-             game.scores.filter((score) => score.turnNum === game.turn)
-           )
-         : null;
-       playerTurn ? setPlayerTurnName(playerTurn[0].user.username) : null;
-     }, []);
-
-console.log("player turn name in temp score card: ", playerTurnName);
-console.log("player turn name in temp score card: ", playerTurnName)
-const showChallengeAnswer =(answer)=>{
-  console.log("SHOW CAHLLEN ANS: ", answer )
-setTimeout(() => {
-  console.log("first")
-  setAiResponse(answer);
-  // setTimeout(() => {
-  //   console.log("second: ", pause);
-  //   setPause(!pause);
-  //   console.log("3: ", pause);
-  // }, 5000);
-
-  // console.log("RESPONSE: ", res.payload)
-}, 5000);
-}
- 
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -147,7 +98,7 @@ setTimeout(() => {
         dispatch(clearTempScoreCardMessages());
         setShowTempScoreCard(false);
         // if game isn;t over, reload flip....
-    game.roundsLeft !== 0    ?  setReloadFlip(true) : null
+        game.roundsLeft !== 0 ? setReloadFlip(true) : null;
       } else {
         null;
       }
@@ -158,35 +109,35 @@ setTimeout(() => {
     return () => clearTimeout(timer);
   }, [countdown, pause]);
 
-  const [challenge, setChallenge] = useState({})
+  const [challenge, setChallenge] = useState({});
   // SOCKET RECIEVE
   useEffect(() => {
     clientSocket.on(
       "recieve_pause_tempScoreCard_countdown",
       ({ room, userName, playerFakeDef }) => {
         room === gameName ? setPause(!pause) : null;
-         room === gameName ? setChallenge({ userName, playerFakeDef }) : null;
-          
+        room === gameName ? setChallenge({ userName, playerFakeDef }) : null;
       }
     );
 
-     clientSocket.on("receive_ask_ai_answer", ({ room, answer }) => {
-
-room === gameName ? showChallengeAnswer(answer) : null
-
-//        room === gameName ? setAiResponse(answer) : null;
+    clientSocket.on("receive_ask_ai_answer", ({ room, answer, message }) => {
       room === gameName
         ? setTimeout(() => {
             setAiResponse(answer);
+          tempScoreCard.includes(message) ? null :  tempScoreCard.push(message)
             setTimeout(() => {
               setPause(!pause);
             }, 3000);
           }, 3000)
         : null;
+    });
 
-     });
+  }, [clientSocket, pause]);
 
-  }, [clientSocket, gameName, pause]);
+  clientSocket.on("receive_challenge_answer_message", ({ room, answer }) => {
+    console.log("WHY WONT THIS WORKKK: ", answer);
+    room === gameName ? tempScoreCard.push(answer) : null;
+  });
 
   return (
     <div id="temp-scorecard">
@@ -290,16 +241,17 @@ room === gameName ? showChallengeAnswer(answer) : null
                 {showTiedGame ? "TIED GAME... keep playing!" : null}
               </h1>
             </Box>
-       { showChallengeButton ?  <Button
-              sx={{ alignSelf: "center" }}
-              variant="contained"
-              size="large"
-              onClick={handleTogglePause}
-            >
-              {" "}
-              Challenge
-            </Button>: null}
-            
+            {showChallengeButton ? (
+              <Button
+                sx={{ alignSelf: "center" }}
+                variant="contained"
+                size="large"
+                onClick={handleTogglePause}
+              >
+                {" "}
+                Challenge
+              </Button>
+            ) : null}
           </Card>
         </Card>
       ) : (
@@ -382,15 +334,14 @@ room === gameName ? showChallengeAnswer(answer) : null
                 }}
                 color={"secondary"}
               >
-                {challenge.userName} challenges that {challenge.playerFakeDef} is a fitting defintion of {word}
+                {challenge.userName} challenges that {challenge.playerFakeDef}{" "}
+                is a fitting defintion of {word}
               </Typography>
               <div className="temp-scorecard-messages">
                 <h1>Results</h1>
                 {aiResponse}
               </div>
-           
             </Box>
-          
           </Card>
         </Card>
       )}
