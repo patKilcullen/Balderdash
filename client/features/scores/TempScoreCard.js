@@ -264,7 +264,8 @@ console.log("userScore", userScore.turnNum)
                 {showTiedGame ? "TIED GAME... keep playing!" : null}
               </h1>
             </Box>
-            {showChallengeButton ? (
+            {showChallengeButton &&
+            userScore.turnNum !== prevGameTurn.current ? (
               <Button
                 sx={{ alignSelf: "center" }}
                 variant="contained"
