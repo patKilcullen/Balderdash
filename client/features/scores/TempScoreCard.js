@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useCallback } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { SocketContext } from "../../app/SocketProvider";
@@ -11,6 +11,8 @@ import { add3Points, subtract3Points } from "./scoresSlice";
 import {Card, Box, Typography, Button} from "@mui/material"
 
 const TempScoreCard = ({
+  prevGameTurn,
+  userScore,
   game,
   gameName,
   setShowTempScoreCard,
@@ -33,6 +35,27 @@ const TempScoreCard = ({
   const playerFakeDef = useSelector(selectPlayerFakeDef);
   const [aiResponse, setAiResponse] = useState("");
 
+
+  
+  console.log("prevGameTurn in temp: ", prevGameTurn.current);
+
+
+
+// const gameTurn = game.turn;
+// const prevGameTurn = useRef("");
+
+// useEffect(() => {
+//   prevGameTurn.current = gameTurn;
+
+// }, [gameTurn]);
+
+
+//   console.log("GAME TURN: ", gameTurn);
+//   console.log("PREEEEVIOUS: ", prevGameTurn);
+
+console.log("userScore", userScore.turnNum)
+// console.log("game.turn", game.turn);
+// console.log("prev.game.turn", gameTurn);
 
 
   const [pause, setPause] = useState(false);

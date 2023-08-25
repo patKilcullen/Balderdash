@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -76,7 +76,16 @@ const reloadScores = ()=>{
   setShowTempScoreCard(true);
 }
 
+const gameTurn = game.turn;
+const prevGameTurn = useRef("");
 
+useEffect(() => {
+  prevGameTurn.current = gameTurn;
+ 
+}, [showTempScoreCard]);
+
+//  console.log("GAME TURN: ", gameTurn);
+//  console.log("PREEEEVIOUS: ", prevGameTurn);
 
   //   const reloadScores = () => {
   //   dispatch(fetchAllGameScores(gameId));
@@ -217,8 +226,10 @@ const reloadScores = ()=>{
     <Card>
       {showTempScoreCard ? (
         <TempScoreCard
-        game={game}
-        gameName={game.name}
+          prevGameTurn={prevGameTurn}
+          userScore={userScore}
+          game={game}
+          gameName={game.name}
           setShowTempScoreCard={setShowTempScoreCard}
           setReloadFlip={setReloadFlip}
           word={word}

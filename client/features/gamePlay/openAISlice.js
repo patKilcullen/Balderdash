@@ -7,7 +7,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const askAI = createAsyncThunk(
   "/askAI",
   async ({ word, definition }) => {
-    console.log("WORD DEF ASKAI: ", word, definition)
      try {
        const response = await fetch("/api/openAI", {
          method: "POST",
