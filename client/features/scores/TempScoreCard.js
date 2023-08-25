@@ -54,14 +54,14 @@ const TempScoreCard = ({
         room: gameName,
         answer: res.payload,
         message:
-          res.payload === "yes"
+          res.payload.includes("yes")
             ? ` puss AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
             : `pussAI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`,
       });
       setTimeout(() => {
         setAiResponse(res.payload);
         tempScoreCard.push(
-          res.payload === "yes"
+          res.payload.includes("yes")
             ? `puss AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
             : `puss AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`
         );

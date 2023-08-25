@@ -17,10 +17,6 @@ const openai = new OpenAI({
 
 module.exports = router;
 
-
-
-
-
 router.post(`/`, async (req, res) => {
   try {
     const word = req.body.word || "";
@@ -28,18 +24,23 @@ router.post(`/`, async (req, res) => {
 
     // const prompt = `Answer "yes" or "no": is ${definition} a valid definition of ${word}`;
 
-console.log("askAI route: ", word, definition)
+    console.log("askAI route: ", word, definition);
 
-const prompt = `
-You are a teacher and you have to determine if students are correctly defining words. Their definitions may not be exactly as they appear in the dictionary, but they have to specifically and accurately describe the word, as if they were a definition. They cannot be subjects or simply say something accurate about the word. They have to resemble the real definitions. If their definition is blank(empty) the answer is "no".
+    const prompt = `
+You are a teacher and you have to determine if students are correctly defining words. 
+Their definitions may not be exactly as they appear in the dictionary, 
+but they have to specifically and accurately describe the word, as if they were a definition,
+and demonstate that the student undersatns the word. 
+They cannot be subjective or simply say something accurate about the word. 
+They have to resemble the real definition. If their definition is blank(empty) or "", the answer is "no".
 
 Definition: ${definition}
 Word: ${word}
 
-Answer only "yes" or "no"  specifically undercase with no period.
+Answer only "yes" if definition meets the criteria and "no" if its anything else. Responses should only be "yes" or "no" undercase with no period.
+Reply "no" if the definition is "[]".
 `;
 
-    
     // const completion = await openai.Completions.create({
     //   engine: "text-davinci-003", // Use "davinci" instead of "text-davinci-003"
     //   prompt: prompt,
@@ -52,8 +53,8 @@ Answer only "yes" or "no"  specifically undercase with no period.
       max_tokens: 30,
     });
 
-     console.log("COMPLETION: ", completion.choices[0].text);
-res.json(completion.choices[0].text);
+    console.log("COMPLETION: ", completion.choices[0].text);
+    res.json(completion.choices[0].text);
     // res.status(200).json({ result: completion.choices[0].text });
   } catch (error) {
     console.error("OpenAI API Error:", error);
@@ -62,16 +63,6 @@ res.json(completion.choices[0].text);
 });
 
 module.exports = router;
-
-
-
-
-
-
-
-
-
-
 
 // const express = require("express");
 // const router = express.Router();
@@ -100,22 +91,6 @@ module.exports = router;
 // });
 
 // module.exports = router;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // router.post(`/`, async (req, res) => {
 //   // Your OpenAI integration logic here
@@ -152,16 +127,6 @@ module.exports = router;
 //     res.status(500).json({ error: "An error occurred." });
 //   }
 // });
-
-
-
-
-
-
-
-
-
-
 
 // const openAI = async function (req, res) {
 //   if (!configuration.apiKey) {
@@ -217,8 +182,6 @@ module.exports = router;
 //   return `Make the following sentence sound more ${adjective}:
 
 //   ${sentence}
-
-
 
 // `;
 // }
