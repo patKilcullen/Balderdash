@@ -95,7 +95,7 @@ const CardFront = ({
             ? "85%"
             : "200px",
         marginLeft:
-          (timer && !defCards) || (fullScreen && !defCards) ? "-1vw" : "0",
+          (timer && !defCards) || (fullScreen && !defCards) ? "-1vw" : defCards  ? "2vw" : "0",
       };
     }
   }, [timer, fullScreen, defCards, hidden]);
@@ -143,7 +143,8 @@ const CardFront = ({
           transform: transformStyles.transform,
           // THIS
           backfaceVisibility: notReverse ? "" : "hidden",
-          zIndex: bottomCard ? "100000" : "2",
+          // zIndex: bottomCard ? "100000" : "2",
+       
 
           // THIS
           position: notReverse || defCards ? "static" : "absolute",
