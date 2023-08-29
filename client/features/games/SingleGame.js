@@ -129,27 +129,53 @@ useEffect(() => {
   //     };
 
   // WHEN ACCEPT HAVE TO EDIT THE GAME AND THE SCORE. get response from game edit to edit score..
-  const handleAcceptRequest = (id) => {
-    dispatch(editGame({ id: game.id, numPlayers: game.numPlayers + 1 }))
-      .then((res) => {
-        dispatch(
-          editScore({
-            userId: id,
-            turnNum: res.payload.numPlayers,
-            gameId: game.id,
-            accepted: true,
-          })
-        );
-      })
-      .then(() => {
-        clientSocket.emit("send_ask_to_join", {
-          room: game.name,
-          userName: username,
-        });
-        dispatch(fetchSingleGame(gameId));
-        dispatch(fetchAllGameScores(gameId));
-      });
-  };
+  // const handleAcceptRequest = (id) => {
+  //   dispatch(editGame({ id: game.id, numPlayers: game.numPlayers + 1 }))
+  //     .then((res) => {
+  //       dispatch(
+  //         editScore({
+  //           userId: id,
+  //           turnNum: res.payload.numPlayers,
+  //           gameId: game.id,
+  //           accepted: true,
+  //         })
+  //       );
+  //     })
+  //     .then(() => {
+  //       clientSocket.emit("send_ask_to_join", {
+  //         room: game.name,
+  //         userName: username,
+  //       });
+  //       dispatch(fetchSingleGame(gameId));
+  //       dispatch(fetchAllGameScores(gameId));
+  //     });
+  // };
+
+
+
+
+   const handleAcceptRequest = (id) => {
+     console.log("ACCE{PT ID: ", id);
+     dispatch(editGame({ id: game.id, numPlayers: game.numPlayers + 1 }))
+       .then((res) => {
+         dispatch(
+           editScore({
+             userId: id,
+             turnNum: res.payload.numPlayers,
+             gameId: game.id,
+             accepted: true,
+           })
+         ).then((editScoreRes) => {
+           console.log("res in dif : ", editScoreRes.payload);
+           console.log("res in dif  game: ", editScoreRes.payload.gameId);
+
+           dispatch(fetchSingleGame(gameId));
+           dispatch(fetchAllGameScores(gameId));
+         });
+       })
+      
+   };
+
   // DECLINE REQUEST TO PLAY
   const handleDeclineRequest = (id) => {
     dispatch(deleteScore({ userId: id, gameId: game.id }));

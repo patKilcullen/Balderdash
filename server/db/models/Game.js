@@ -5,7 +5,8 @@ const db = require("../db")
 
 const Game = db.define("game", {
     name: {
-        type: Sequelize.STRING, 
+        type: Sequelize.STRING,
+        unique: true, 
     },
     rounds: {
         type: Sequelize.INTEGER,

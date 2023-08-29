@@ -49,6 +49,7 @@ export const fetchSingleGame = createAsyncThunk("singleGame", async (id) => {
 export const editGame = createAsyncThunk("editGame", async (game) => {
   try {
     const { data } = await axios.put(`/api/games/${game.id}`, game); 
+    console.log("DATA IN EDIT GAME THUNK: ", data)
     return data;
   } catch (err) {
     console.log(err);

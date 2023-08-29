@@ -46,10 +46,13 @@ try {
 // UPDATE GAME
 router.put('/:gameId', async(req,res,next)=>{
   try {
-    const game = await Game.findByPk(req.params.gameId)
-    
-    res.send(await game.update(req.body));
-    // res.json(score)
+    // const game = await Game.findByPk(req.params.gameId)
+    // res.send(await game.update(req.body));
+  
+  const game = await Game.findByPk(req.params.gameId);
+  const updatedGame = await game.update(req.body)
+  console.log("UPDATED GAME IN THE BACK: ", updatedGame)
+  res.send(updatedGame);
   } catch (err) {
     next(err)
   }
