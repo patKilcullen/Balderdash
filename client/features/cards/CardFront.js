@@ -182,7 +182,8 @@ const CardFront = ({
                 : "linear-gradient(45deg, #283330, #88ebe6)",
             padding: "10px",
             backgroundColor:
-              sideState === "front" && !tempBack ? "#e6e8dc" : "#88ebe6",
+              sideState === "front" && !tempBack ? 
+              "#e6e8dc" : "#88ebe6",
             height: hidden ? "100vh" : "95%",
             width: hidden ? "100%" : "90%",
             borderRadius: !hidden ? "50px" : null,

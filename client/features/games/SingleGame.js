@@ -141,6 +141,10 @@ useEffect(() => {
              accepted: true,
            })
          ).then((editScoreRes) => {
+          clientSocket.emit("send_ask_to_join", {
+            room: game.name,
+            userName: username,
+          });
            dispatch(fetchSingleGame(gameId));
            dispatch(fetchAllGameScores(gameId));
          });

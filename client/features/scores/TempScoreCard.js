@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { SocketContext } from "../../app/SocketProvider";
 
-import { clearTempScoreCardMessages, selectPlayerFakeDef} from "../gamePlay/gamePlaySlice";
+import {
+  clearTempScoreCardMessages,
+  selectPlayerFakeDef,
+  addTempScoreCardMessage,
+} from "../gamePlay/gamePlaySlice";
 import { selectMe } from "../auth/authSlice";
 import { askAI } from "../gamePlay/openAISlice";
 import { add3Points, subtract3Points } from "./scoresSlice";
@@ -72,14 +76,14 @@ console.log("userScore", userScore.turnNum)
     });
 
     dispatch(askAI({ word, definition: playerFakeDef })).then((res) => {
-
+console.log("RED PAYLOAD FAGGOT ANSWERRERERER ERE : ", res.payload)
       clientSocket.emit("send_ask_ai_answer", {
         room: gameName,
         answer: res.payload,
         message:
           res.payload.includes("yes")
-            ? ` puss AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
-            : `pussAI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`,
+            ? `AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
+            : `AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`,
       });
       setTimeout(() => {
         setAiResponse(res.payload);
@@ -143,25 +147,51 @@ console.log("userScore", userScore.turnNum)
       }
     );
 
-    clientSocket.on("receive_ask_ai_answer", ({ room, answer, message }) => {
-      room === gameName
-        ? setTimeout(() => {
-            setAiResponse(answer);
-          tempScoreCard.includes(message) ? null :  tempScoreCard.push(message)
-            setTimeout(() => {
-              setPause(!pause);
-            }, 3000);
-          }, 3000)
-        : null;
-    });
+    // clientSocket.on("receive_ask_ai_answer", ({ room, answer, message }) => {
+    //   console.log("receive_ask_ai_answer: ", room, answer, typeof message);
+    //   console.log("TEMP SCORE CARD: ", tempScoreCard)
+    //   console.log("INCLUDES: ", !tempScoreCard.includes(message));
+    //   room === gameName
+    //     ? setTimeout(() => {
+    //         setAiResponse(answer);
+    //         if (!tempScoreCard.includes(message)){
+    //           dispatch(addTempScoreCardMessage(message))
+    //         }
+
+          
+    //          console.log("TEMP SCORE CARD BELOW: ", tempScoreCard);
+    //           // tempScoreCard.includes(message)
+    //           //   ? null
+    //           //   : tempScoreCard.push(message);
+    //         setTimeout(() => {
+    //           setPause(!pause);
+    //         }, 3000);
+    //       }, 3000)
+    //     : null;
+    // });
 
   }, [clientSocket, pause]);
 
-  clientSocket.on("receive_challenge_answer_message", ({ room, answer }) => {
-    console.log("WHY WONT THIS WORKKK: ", answer);
-    room === gameName ? tempScoreCard.push(answer) : null;
-  });
+  // clientSocket.on("receive_challenge_answer_message", ({ room, answer }) => {
+  //   console.log("WHY WONT THIS WORKKK: ", answer);
+  //   room === gameName ? tempScoreCard.push(answer) : null;
+  // });
 
+  useEffect(()=>{
+      clientSocket.on("receive_ask_ai_answer", ({ room, answer, message }) => {
+     
+        room === gameName
+          ? setTimeout(() => {
+              setAiResponse(answer);
+              pause ?
+                dispatch(addTempScoreCardMessage(message)) : null
+              setTimeout(() => {
+                setPause(!pause);
+              }, 3000);
+            }, 3000)
+          : null;
+      });
+  }, [pause])
   return (
     <div id="temp-scorecard">
       {!pause ? (
