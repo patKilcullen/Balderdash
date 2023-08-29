@@ -26,7 +26,7 @@ const TempScoreCard = ({
   tempScoreCard,
   showTiedGame,
 }) => {
-  const [countdown, setCountdown] = useState(10);
+  const [countdown, setCountdown] = useState(8);
   const [showChallengeButton, setShowChallengeButton] = useState(true);
   const dispatch = useDispatch();
   const clientSocket = useContext(SocketContext);
@@ -40,8 +40,7 @@ const TempScoreCard = ({
   const [aiResponse, setAiResponse] = useState("");
 
 
-  
-  console.log("prevGameTurn in temp: ", prevGameTurn.current);
+
 
 
 
@@ -57,7 +56,7 @@ const TempScoreCard = ({
 //   console.log("GAME TURN: ", gameTurn);
 //   console.log("PREEEEVIOUS: ", prevGameTurn);
 
-console.log("userScore", userScore.turnNum)
+
 // console.log("game.turn", game.turn);
 // console.log("prev.game.turn", gameTurn);
 
@@ -92,8 +91,14 @@ console.log("RED PAYLOAD FAGGOT ANSWERRERERER ERE : ", res.payload)
             ? `puss AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
             : `puss AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`
         );
+        
         setTimeout(() => {
           setPause((pause) => !pause);
+          setMessage(
+            res.payload.includes("yes")
+              ? `puss AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
+              : `puss AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`
+          );
         }, 3000);
       }, 3000);
 
@@ -137,6 +142,7 @@ console.log("RED PAYLOAD FAGGOT ANSWERRERERER ERE : ", res.payload)
   }, [countdown, pause]);
 
   const [challenge, setChallenge] = useState({});
+  const [message,setMessage]= useState("")
   // SOCKET RECIEVE
   useEffect(() => {
     clientSocket.on(
@@ -169,6 +175,23 @@ console.log("RED PAYLOAD FAGGOT ANSWERRERERER ERE : ", res.payload)
     //       }, 3000)
     //     : null;
     // });
+    clientSocket.on("receive_ask_ai_answer", ({ room, answer, message }) => {
+      console.log("TEMPO BEFIRE: ", tempScoreCard)
+      room === gameName
+        ? setTimeout(() => {
+            setAiResponse(answer);
+            console.log("PAUSE: ", pause)
+            
+            pause === false ? dispatch(addTempScoreCardMessage(message)) : null;
+           
+            setTimeout(() => {
+              setPause(!pause);
+              setMessage(message);
+               console.log("TEMPO AFTER: ", tempScoreCard);
+            }, 3000);
+          }, 3000)
+        : null;
+    });
 
   }, [clientSocket, pause]);
 
@@ -177,21 +200,21 @@ console.log("RED PAYLOAD FAGGOT ANSWERRERERER ERE : ", res.payload)
   //   room === gameName ? tempScoreCard.push(answer) : null;
   // });
 
-  useEffect(()=>{
-      clientSocket.on("receive_ask_ai_answer", ({ room, answer, message }) => {
+  // useEffect(()=>{
+  //     clientSocket.on("receive_ask_ai_answer", ({ room, answer, message }) => {
      
-        room === gameName
-          ? setTimeout(() => {
-              setAiResponse(answer);
-              pause ?
-                dispatch(addTempScoreCardMessage(message)) : null
-              setTimeout(() => {
-                setPause(!pause);
-              }, 3000);
-            }, 3000)
-          : null;
-      });
-  }, [pause])
+  //       room === gameName
+  //         ? setTimeout(() => {
+  //             setAiResponse(answer);
+  //             pause ?
+  //               dispatch(addTempScoreCardMessage(message)) : null
+  //             setTimeout(() => {
+  //               setPause(!pause);
+  //             }, 3000);
+  //           }, 3000)
+  //         : null;
+  //     });
+  // }, [pause])
   return (
     <div id="temp-scorecard">
       {!pause ? (
@@ -290,6 +313,7 @@ console.log("RED PAYLOAD FAGGOT ANSWERRERERER ERE : ", res.payload)
                     })
                   : null}{" "}
               </div>
+             {message?  <div>MESSAGE: {message}</div> : null}
               <h1 style={{ color: "red" }}>
                 {showTiedGame ? "TIED GAME... keep playing!" : null}
               </h1>
