@@ -75,35 +75,40 @@ const TempScoreCard = ({
     });
 
     dispatch(askAI({ word, definition: playerFakeDef })).then((res) => {
-console.log("RED PAYLOAD FAGGOT ANSWERRERERER ERE : ", res.payload)
+console.log("RED PAYLOAD ANSWERRERERER ERE : ", `okokokokdofkodkfodkfodkfodkfodkfodkfodfX${res.payload}X`)
+console.log("RED PAYLOAD TYPE: ",typeof res.payload);
+console.log("RED PAYLOAD toLow : ", res.payload.toLowerCase());
+res.payload.toLowerCase() == "yes" || res.payload.includes("yes")
+  ? console.log("WERKY DERKY")
+  : console.log("DOES NOTTT WERKY DERKY");
       clientSocket.emit("send_ask_ai_answer", {
         room: gameName,
         answer: res.payload,
         message:
-          res.payload.includes("yes")
-            ? `AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
-            : `AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`,
+          res.payload.toLowerCase() == "yes" || res.payload.includes("yes")
+            ? `AI says ${userName} wrote a CORRECT definition, ${userName} gets 3 points!`
+            : `AI says ${userName} wrote an INCORRECT definition, ${userName} LOSES 3 points!`,
       });
       setTimeout(() => {
         setAiResponse(res.payload);
-        tempScoreCard.push(
-          res.payload.includes("yes")
-            ? `puss AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
-            : `puss AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`
-        );
+        // tempScoreCard.push(
+        //   res.payload.includes("yes")
+        //     ? `puss AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
+        //     : `puss AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`
+        // );
         
         setTimeout(() => {
           setPause((pause) => !pause);
           setMessage(
-            res.payload.includes("yes")
-              ? `puss AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
-              : `puss AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`
+            res.payload.toLowerCase() == "yes" || res.payload.includes("yes")
+              ? `AI says ${userName} wrote a CORRECT definition, ${userName} gets 3 points!`
+              : `AI says ${userName} wrote an INCORRECT definition, ${userName} LOSES 3 points!`
           );
-        }, 3000);
-      }, 3000);
+        }, 1500);
+      }, 1500);
 
 
-      res.payload.includes("yes")
+      res.payload.toLowerCase() == "yes" || res.payload.includes("yes")
         ? dispatch(add3Points({ userId: userId, gameId: gameId }))
         : dispatch(subtract3Points({ userId: userId, gameId: gameId }));
 
@@ -176,20 +181,18 @@ console.log("RED PAYLOAD FAGGOT ANSWERRERERER ERE : ", res.payload)
     //     : null;
     // });
     clientSocket.on("receive_ask_ai_answer", ({ room, answer, message }) => {
-      console.log("TEMPO BEFIRE: ", tempScoreCard)
+      console.log("answer: ", answer)
+      console.log("message: ", message);
       room === gameName
         ? setTimeout(() => {
             setAiResponse(answer);
-            console.log("PAUSE: ", pause)
-            
-            pause === false ? dispatch(addTempScoreCardMessage(message)) : null;
-           
+            // pause === false ? dispatch(addTempScoreCardMessage(message)) : null;
             setTimeout(() => {
               setPause(!pause);
+              // HERE
               setMessage(message);
-               console.log("TEMPO AFTER: ", tempScoreCard);
-            }, 3000);
-          }, 3000)
+            }, 1500);
+          }, 1500)
         : null;
     });
 
@@ -313,7 +316,11 @@ console.log("RED PAYLOAD FAGGOT ANSWERRERERER ERE : ", res.payload)
                     })
                   : null}{" "}
               </div>
-             {message?  <div>MESSAGE: {message}</div> : null}
+              {message ? (
+                <div className="temp-scorecard-messages">
+                  ***MESSAGE: {message}
+                </div>
+              ) : null}
               <h1 style={{ color: "red" }}>
                 {showTiedGame ? "TIED GAME... keep playing!" : null}
               </h1>

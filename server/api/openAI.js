@@ -37,9 +37,8 @@ They have to resemble the real definition. If their definition is blank(empty) o
 Definition: ${definition}
 Word: ${word}
 
-Answer only "yes" if definition meets the criteria and "no" if its anything else. Responses should only be "yes" or "no" undercase with no period.
-Reply "no" if the definition is "[]".
-`;
+Answer only yes if definition meets the criteria and no if its anything else. Responses should only be yes or no undercase with no period.
+Reply no if the definition is [].`;
 
     // const completion = await openai.Completions.create({
     //   engine: "text-davinci-003", // Use "davinci" instead of "text-davinci-003"
@@ -53,7 +52,7 @@ Reply "no" if the definition is "[]".
       max_tokens: 30,
     });
 
-    console.log("COMPLETION: ", completion.choices[0].text);
+    console.log("COMPLETION: ", `X${completion.choices[0].text}X`);
     res.json(completion.choices[0].text);
     // res.status(200).json({ result: completion.choices[0].text });
   } catch (error) {
