@@ -11,6 +11,7 @@ import DefInputBox from "../gamePlay/DefInputBox";
 
 
 const CardFront = ({
+  baseCard,
   notReverse,
   moveOffScreen,
   bottomCard,
@@ -72,6 +73,8 @@ const CardFront = ({
     }
   }, [sideState, defCards, hidden, tempBack]);
 
+const [mainCardClass, setMainCardClass] =useState("")
+
   const cardDimensions = useMemo(() => {
     // Calculate the dimensions of the card based on the current state
     if (timer || (fullScreen && !defCards)) {
@@ -82,18 +85,19 @@ const CardFront = ({
         bottom: 0,
         left: 0,
         height: "100vh",
-        width: "90%",
+        // width: "90%",
         marginLeft: "-1vw",
       };
     } else {
+
       return {
         height: timer || (fullScreen && !hidden) ? "100vh" : "350px",
-        width:
-          (timer && !defCards) || (fullScreen && !defCards)
-            ? "90%"
-            : defCards
-            ? "85%"
-            : "200px",
+        // width:
+        //   (timer && !defCards) || (fullScreen && !defCards)
+        //     ? "90%"
+        //     : defCards
+        //     ? "85%"
+        //     : "200px",
         marginLeft:
           (timer && !defCards) || (fullScreen && !defCards) ? "-1vw" : defCards  ? "2vw" : "0",
           
@@ -127,11 +131,27 @@ const CardFront = ({
     }`,
   };
 
+  
+  
   return (
     <div>
       {/* Main Card */}
       <Card
-      className="main-card"
+        // className={baseCard ? null : `main-card`}
+        className={
+          baseCard
+            ? "main-card-base-card"
+            : `main-card${
+                (timer && !defCards) || (fullScreen && !defCards)
+                  ? "-timer"
+                  : 
+                  defCards 
+                  ? "def-cards"
+                  :
+                  ""
+              }`
+        }
+        // className={ `main-card`}
         sx={{
           // Styling for the main card container
           // CARD FLIPPING INFO
@@ -139,14 +159,8 @@ const CardFront = ({
           backfaceVisibility: notReverse ? "" : "hidden",
           position: notReverse || defCards ? "static" : "absolute",
           top: bottomCard ? "308px" : "365px",
-          backgroundColor: cardBackgroundColor, // Use the cardBackgroundColor useMemo variable
+          backgroundColor: baseCard ? "green" : cardBackgroundColor, // Use the cardBackgroundColor useMemo variable
           borderRadius: !hidden ? "50px" : null,
-          
-
-          // HERE
-          // left: "75px",
-          // alignSelf: "center",
-// top: "200px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",

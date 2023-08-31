@@ -259,6 +259,7 @@ const GamePlay = ({
           <CardFront
             notReverse={true}
             side={"back"}
+            baseCard={true}
             // bottomCard={false}
           ></CardFront>
 

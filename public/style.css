@@ -46,22 +46,49 @@ background-color: #88ebe6
 }
 
 
+.main-card{
+  width: 200px
+}
+.main-card-base-card{
+  width: 200px
+}
 
+
+.main-card-timer{
+  width: 90%
+}
+
+.main-card-def-cards{
+  width: 85%
+}
 
 @media (max-width: 450px) {
   .main-card{
     left: 75px;
-   
+  }
+  .main-card-timer{
+    left: 75px;
+ 
   }
 }
 @media (min-width: 500px) {
   .main-card{
-    margin-top: 15vh
+    margin-top: 15vh;
+
+  }
+  .main-card-timer{
+    margin-top: 15vh;
+    width: 95vw
   }
 }
 @media (min-width: 750px) {
   .main-card{
-    margin-top: 20vh
+    margin-top: 20vh;
+
+  }
+  .main-card-timer{
+    margin-top: 20vh;
+    width: 95vw
   }
 }
 
