@@ -96,6 +96,7 @@ const CardFront = ({
             : "200px",
         marginLeft:
           (timer && !defCards) || (fullScreen && !defCards) ? "-1vw" : defCards  ? "2vw" : "0",
+          
       };
     }
   }, [timer, fullScreen, defCards, hidden]);
@@ -130,45 +131,33 @@ const CardFront = ({
     <div>
       {/* Main Card */}
       <Card
+      className="main-card"
         sx={{
           // Styling for the main card container
-          // transform: moveOffScreen
-          //   ? "translate(-1000px, -1000px)"
-          //   : flip
-          //   ? "rotateY(360deg) "
-          //   : null,
-
           // CARD FLIPPING INFO
-          // transform: flip || side === "front" ?  "" : "rotateY(180deg)" ,
           transform: transformStyles.transform,
-          // THIS
           backfaceVisibility: notReverse ? "" : "hidden",
-          // zIndex: bottomCard ? "100000" : "2",
-       
-
-          // THIS
           position: notReverse || defCards ? "static" : "absolute",
-
           top: bottomCard ? "308px" : "365px",
-          left: "75px",
-          // CARD FLIPPING INFO
+          backgroundColor: cardBackgroundColor, // Use the cardBackgroundColor useMemo variable
+          borderRadius: !hidden ? "50px" : null,
+          
 
+          // HERE
+          // left: "75px",
+          // alignSelf: "center",
+// top: "200px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          backgroundColor: cardBackgroundColor, // Use the cardBackgroundColor useMemo variable
           padding: "1em 1em",
-          borderRadius: !hidden ? "50px" : null,
           border: "5px solid black",
           boxShadow: "0 0 2px 2px",
           fontWeight: "bold",
-          // CARD FLIP
-          //  transform: flip ? "rotateY(360deg) " : null,
           perspective: "1000px",
           transformStyle: "preserve-3d",
           transition: "0.9s",
           transformOrigin: "center center",
-          // FULL SCREEN CARD DIMENSIONS
           ...cardDimensions, // Use the cardDimensions useMemo variable
         }}
       >
@@ -182,8 +171,7 @@ const CardFront = ({
                 : "linear-gradient(45deg, #283330, #88ebe6)",
             padding: "10px",
             backgroundColor:
-              sideState === "front" && !tempBack ? 
-              "#e6e8dc" : "#88ebe6",
+              sideState === "front" && !tempBack ? "#e6e8dc" : "#88ebe6",
             height: hidden ? "100vh" : "95%",
             width: hidden ? "100%" : "90%",
             borderRadius: !hidden ? "50px" : null,

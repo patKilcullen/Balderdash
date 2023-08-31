@@ -234,7 +234,6 @@ const GamePlay = ({
         overflow: "visible",
         height: "100vh",
         gap: "10px",
-        
       }}
     >
       <Card className="buttons " sx={{ boxShadow: "none" }}>
@@ -248,7 +247,7 @@ const GamePlay = ({
             <Typography
               className={!word || !word.length ? "pulse" : null}
               color={"secondary"}
-              sx={{ fontSize: 30 }}
+              sx={{ fontSize: 30}}
             >
               Get Word
             </Typography>

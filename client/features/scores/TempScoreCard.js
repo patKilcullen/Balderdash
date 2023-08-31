@@ -41,29 +41,8 @@ const TempScoreCard = ({
 
 
 
-
-
-
-// const gameTurn = game.turn;
-// const prevGameTurn = useRef("");
-
-// useEffect(() => {
-//   prevGameTurn.current = gameTurn;
-
-// }, [gameTurn]);
-
-
-//   console.log("GAME TURN: ", gameTurn);
-//   console.log("PREEEEVIOUS: ", prevGameTurn);
-
-
-// console.log("game.turn", game.turn);
-// console.log("prev.game.turn", gameTurn);
-
-
   const [pause, setPause] = useState(false);
   const handleTogglePause = () => {
-    console.log("PLAYER FAKE DEF IN PAUSE: ", playerFakeDef);
     setShowChallengeButton(false);
     setPause(!pause);
 
@@ -75,12 +54,7 @@ const TempScoreCard = ({
     });
 
     dispatch(askAI({ word, definition: playerFakeDef })).then((res) => {
-console.log("RED PAYLOAD ANSWERRERERER ERE : ", `okokokokdofkodkfodkfodkfodkfodkfodkfodfX${res.payload}X`)
-console.log("RED PAYLOAD TYPE: ",typeof res.payload);
-console.log("RED PAYLOAD toLow : ", res.payload.toLowerCase());
-res.payload.toLowerCase() == "yes" || res.payload.includes("yes")
-  ? console.log("WERKY DERKY")
-  : console.log("DOES NOTTT WERKY DERKY");
+
       clientSocket.emit("send_ask_ai_answer", {
         room: gameName,
         answer: res.payload,
@@ -91,12 +65,6 @@ res.payload.toLowerCase() == "yes" || res.payload.includes("yes")
       });
       setTimeout(() => {
         setAiResponse(res.payload);
-        // tempScoreCard.push(
-        //   res.payload.includes("yes")
-        //     ? `puss AI says ${userName} wrote a correct definition, ${userName} gets 3 points!`
-        //     : `puss AI says ${userName} wrote an incorrect definition, ${userName} LOSES 3 points!`
-        // );
-        
         setTimeout(() => {
           setPause((pause) => !pause);
           setMessage(
@@ -115,17 +83,7 @@ res.payload.toLowerCase() == "yes" || res.payload.includes("yes")
     });
   };
 
-  const [playerTurn, setPlayerTurn] = useState("");
-  const [playerTurnName, setPlayerTurnName] = useState("");
-  useEffect(() => {
-    game && game.scores
-      ? setPlayerTurn(
-          game.scores.filter((score) => score.turnNum === game.turn)
-        )
-      : null;
-    playerTurn ? setPlayerTurnName(playerTurn[0].user.username) : null;
-  }, [playerTurn, playerTurnName]);
-
+  
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -158,38 +116,14 @@ res.payload.toLowerCase() == "yes" || res.payload.includes("yes")
       }
     );
 
-    // clientSocket.on("receive_ask_ai_answer", ({ room, answer, message }) => {
-    //   console.log("receive_ask_ai_answer: ", room, answer, typeof message);
-    //   console.log("TEMP SCORE CARD: ", tempScoreCard)
-    //   console.log("INCLUDES: ", !tempScoreCard.includes(message));
-    //   room === gameName
-    //     ? setTimeout(() => {
-    //         setAiResponse(answer);
-    //         if (!tempScoreCard.includes(message)){
-    //           dispatch(addTempScoreCardMessage(message))
-    //         }
-
-          
-    //          console.log("TEMP SCORE CARD BELOW: ", tempScoreCard);
-    //           // tempScoreCard.includes(message)
-    //           //   ? null
-    //           //   : tempScoreCard.push(message);
-    //         setTimeout(() => {
-    //           setPause(!pause);
-    //         }, 3000);
-    //       }, 3000)
-    //     : null;
-    // });
     clientSocket.on("receive_ask_ai_answer", ({ room, answer, message }) => {
       console.log("answer: ", answer)
       console.log("message: ", message);
       room === gameName
         ? setTimeout(() => {
             setAiResponse(answer);
-            // pause === false ? dispatch(addTempScoreCardMessage(message)) : null;
             setTimeout(() => {
               setPause(!pause);
-              // HERE
               setMessage(message);
             }, 1500);
           }, 1500)
@@ -198,26 +132,6 @@ res.payload.toLowerCase() == "yes" || res.payload.includes("yes")
 
   }, [clientSocket, pause]);
 
-  // clientSocket.on("receive_challenge_answer_message", ({ room, answer }) => {
-  //   console.log("WHY WONT THIS WORKKK: ", answer);
-  //   room === gameName ? tempScoreCard.push(answer) : null;
-  // });
-
-  // useEffect(()=>{
-  //     clientSocket.on("receive_ask_ai_answer", ({ room, answer, message }) => {
-     
-  //       room === gameName
-  //         ? setTimeout(() => {
-  //             setAiResponse(answer);
-  //             pause ?
-  //               dispatch(addTempScoreCardMessage(message)) : null
-  //             setTimeout(() => {
-  //               setPause(!pause);
-  //             }, 3000);
-  //           }, 3000)
-  //         : null;
-  //     });
-  // }, [pause])
   return (
     <div id="temp-scorecard">
       {!pause ? (
