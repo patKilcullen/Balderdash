@@ -78,7 +78,7 @@ background-color: #88ebe6
   }
   .main-card-timer{
     margin-top: 15vh;
-    width: 95vw
+    width: 300px
   }
 }
 @media (min-width: 750px) {
@@ -88,7 +88,7 @@ background-color: #88ebe6
   }
   .main-card-timer{
     margin-top: 20vh;
-    width: 95vw
+    width: 300px
   }
 }
 
