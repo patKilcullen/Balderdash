@@ -93,12 +93,12 @@ const [mainCardClass, setMainCardClass] =useState("")
 
       return {
         height: timer || (fullScreen && !hidden) ? "100vh" : "350px",
-        // width:
-        //   (timer && !defCards) || (fullScreen && !defCards)
-        //     ? "90%"
-        //     : defCards
-        //     ? "85%"
-        //     : "200px",
+        width:
+          (timer && !defCards) || (fullScreen && !defCards)
+            ? "90%"
+            : defCards
+            ? "85%"
+            : "200px",
         marginLeft:
           (timer && !defCards) || (fullScreen && !defCards) ? "-1vw" : defCards  ? "2vw" : "0",
           
