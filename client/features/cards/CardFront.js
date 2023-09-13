@@ -171,7 +171,7 @@ console.log(
           backfaceVisibility: notReverse ? "" : "hidden",
           position: notReverse || defCards ? "static" : "absolute",
           top: bottomCard ? "308px" : "365px",
-          backgroundColor: baseCard ? "green" : cardBackgroundColor, // Use the cardBackgroundColor useMemo variable
+          backgroundColor: cardBackgroundColor, // Use the cardBackgroundColor useMemo variable
           borderRadius: !hidden ? "50px" : null,
           display: "flex",
           flexDirection: "column",

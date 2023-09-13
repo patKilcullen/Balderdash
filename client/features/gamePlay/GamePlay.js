@@ -59,6 +59,7 @@ const GamePlay = ({
   const [playerTurn, setPlayerTurn] = useState("");
   const [playerTurnName, setPlayerTurnName] = useState("");
   const [flip, setFlip] = useState(false);
+  const [wordToDb, setWordToDb] = useState(false)
 
   // Finds the player who turnNum === game.turn, sets it to playerTurnName
   // when the game reloads to check for new turn
@@ -70,7 +71,7 @@ const GamePlay = ({
         )
       : null;
     playerTurn ? setPlayerTurnName(playerTurn[0].user.username) : null;
-    playerTurn ? getPlayerTurnName(playerTurn[0].user.username) : null;
+    // playerTurn ? getPlayerTurnName(playerTurn[0].user.username) : null;
  
   }, []);
 
@@ -114,6 +115,7 @@ const GamePlay = ({
         setFlipSide("front");
       });
     });
+    setWordToDb(false)
   };
 
   // CHOOSE WORD: first gets fake words for fake definition, then emits the word,
@@ -135,8 +137,12 @@ const GamePlay = ({
   };
 
   const handleAddNewWord = () => {
+    
+ setWordToDb(true);
     dispatch(addNewWord({ word: word, definition: definition }));
+    console.log("New Word Added to AWS Database: ", wordToDb);
   };
+ 
 
   // GET FAKE WORDS   called in handleChooseWord function,
   // clears fake words from last roung, then gets 5 fake words
@@ -247,7 +253,7 @@ const GamePlay = ({
             <Typography
               className={!word || !word.length ? "pulse" : null}
               color={"secondary"}
-              sx={{ fontSize: 30}}
+              sx={{ fontSize: 30 }}
             >
               Get Word
             </Typography>
@@ -292,7 +298,7 @@ const GamePlay = ({
             setWord={setWord}
             setTimer={setTimer}
             setChoseWord={setChoseWord}
-            style={{ border: "2px solid green" }}
+            // style={{ border: "2px solid green" }}
           />
         </Card>
       </Card>
@@ -312,7 +318,7 @@ const GamePlay = ({
       ) : null}
 
       {/* ADD NEW WORD/DEFINITION TO DATABASE */}
-      {definition && !choseWord ? (
+      {definition && !choseWord && wordToDb === false ? (
         <Button
           className={"pulse"}
           onClick={() => handleAddNewWord()}
