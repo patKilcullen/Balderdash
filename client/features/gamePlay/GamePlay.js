@@ -276,7 +276,7 @@ const GamePlay = ({
           //   </Typography>
           // </Button>
           <Buttons
-            name={"Get Word"}
+            name={!word ? "Get Word": "Get Another Word"}
             func={handleGetWord}
             pulse={!word || !word.length ? "pulse" : null}
           />

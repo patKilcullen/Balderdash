@@ -133,18 +133,7 @@ const [mainCardClass, setMainCardClass] =useState("")
       moveOffScreen ? " translate(-1000px, -1000px)" : ""
     }`,
   };
-console.log(
-  "DEF CARDS: ",
-  baseCard
-    ? "main-card-base-card"
-    : `main-card${
-        (timer && !defCards) || (fullScreen && !defCards)
-          ? "-timer"
-          : defCards
-          ? "-def-cards"
-          : ""
-      }`
-);
+
   
   
   return (

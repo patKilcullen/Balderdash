@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { SocketContext } from "../../app/SocketProvider";
 
+// Components
+import Buttons from "../Buttons";
+
 import {
   clearTempScoreCardMessages,
   selectPlayerFakeDef,
@@ -241,15 +244,16 @@ const TempScoreCard = ({
             </Box>
             {showChallengeButton &&
             userScore.turnNum !== prevGameTurn.current ? (
-              <Button
-                sx={{ alignSelf: "center" }}
-                variant="contained"
-                size="large"
-                onClick={handleTogglePause}
-              >
-                {" "}
-                Challenge
-              </Button>
+              // <Button
+              //   sx={{ alignSelf: "center" }}
+              //   variant="contained"
+              //   size="large"
+              //   onClick={handleTogglePause}
+              // >
+              //   {" "}
+              //   Challenge
+              // </Button>
+              <Buttons name={"Challenge"} func={handleTogglePause} pulse={"pulse"} />
             ) : null}
           </Card>
         </Card>

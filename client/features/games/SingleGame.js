@@ -197,6 +197,7 @@ useEffect(() => {
   useEffect(() => {
     clientSocket.on("receive_score_card", ({ tempScoreCardMessages }) => {
       setTempScoreCard(tempScoreCardMessages);
+      console.log("TEMP SCORE CARD HERE: ", tempScoreCard)
     });
 
     clientSocket.on("receive_start_game", ({ room, userName }) => {

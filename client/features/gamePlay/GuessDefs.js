@@ -206,8 +206,9 @@ const GuessDefs = ({
   // Score CArd inforrmation Socekt
   useEffect(() => {
     clientSocket.on("receive_score_card_info", ({ room, message }) => {
+      console.log("THIS ON BIATHCH")
       room === gameName && singleGame.turn === userScore.turnNum
-        ? dispatch(addTempScoreCardMessage(message))
+        ?  dispatch(addTempScoreCardMessage(message))
         : null;
     });
   }, [clientSocket]);

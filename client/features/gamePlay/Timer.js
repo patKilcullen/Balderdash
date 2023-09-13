@@ -34,7 +34,7 @@ const Timer = ({
   setChoseWord,
 }) => {
   // COMPONENT STATE
-  const [countdown, setCountdown] = useState(2);
+  const [countdown, setCountdown] = useState(3);
   const [defInput, setDefInput] = useState(false);
   const [playGame, setPlayGame] = useState(false);
 

@@ -114,6 +114,7 @@ const init = async () => {
       );
 
       socket.on("send_score_card", ({ tempScoreCardMessages, gameName }) => {
+        console.log("SEND SCORE CARD")
         socket
           .to(gameName)
           .emit("receive_score_card", { gameName, tempScoreCardMessages });

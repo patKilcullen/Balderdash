@@ -8,7 +8,7 @@ export const askAI = createAsyncThunk(
   "/askAI",
   async ({ word, definition }) => {
      try {
-       const response = await fetch("server/db/awspg.js", {
+       const response = await fetch("/api/openAI/", {
          method: "POST",
          headers: {
            "Content-Type": "application/json",

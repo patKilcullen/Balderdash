@@ -18,6 +18,7 @@ const openai = new OpenAI({
 module.exports = router;
 
 router.post(`/`, async (req, res) => {
+  console.log("HIT OPEN AI")
   try {
     const word = req.body.word || "";
     const definition = req.body.definition;
