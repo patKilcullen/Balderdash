@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 
+// Components
+import Buttons from "../Buttons";
 
 // MaterialUI
 import Card from "@mui/material/Card";
@@ -337,15 +339,16 @@ console.log(
           {defCards &&
           userScore.turnNum !== singleGame.turn &&
           userScore.accepted === true ? (
-            <Button
-              sx={{ alignSelf: "center" }}
-              variant="contained"
-              size="large"
-              onClick={() => handleChooseWord(def)}
-            >
-              {" "}
-              Choose Definition
-            </Button>
+            // <Button
+            //   sx={{ alignSelf: "center" }}
+            //   variant="contained"
+            //   size="large"
+            //   onClick={() => handleChooseWord(def)}
+            // >
+            //   {" "}
+            //   Choose Definition
+            // </Button>
+            <Buttons name={"Choose Definition"} func={()=>handleChooseWord(def)} pulse={"null"}/>
           ) : null}
         </Card>
       </Card>

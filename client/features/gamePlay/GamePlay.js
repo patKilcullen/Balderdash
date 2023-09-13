@@ -343,16 +343,17 @@ const GamePlay = ({
 
       {/* ADD NEW WORD/DEFINITION TO DATABASE */}
       {definition && !choseWord && wordToDb === false ? (
-        <Button
-          className={"pulse"}
-          onClick={() => handleAddNewWord()}
-          sx={{ fontSize: 30, marginTop: "15px" }}
-          variant="contained"
-        >
-          <Typography color={"secondary"} sx={{ fontSize: 30 }}>
-            Add word to database
-          </Typography>
-        </Button>
+        // <Button
+        //   className={"pulse"}
+        //   onClick={() => handleAddNewWord()}
+        //   sx={{ fontSize: 30, marginTop: "15px" }}
+        //   variant="contained"
+        // >
+        //   <Typography color={"secondary"} sx={{ fontSize: 30 }}>
+        //     Add word to database
+        //   </Typography>
+        // </Button>
+        <Buttons name={"Add word to database"} func={handleAddNewWord} pulse={"pulse"}/>
       ) : null}
     </Card>
   );

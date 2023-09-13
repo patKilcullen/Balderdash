@@ -7,6 +7,9 @@ import { askAI } from "./openAISlice";
 import { selectWord } from "./gamePlaySlice";
 import { addPlayerFakeDef } from "./gamePlaySlice";
 
+// Components
+import Buttons from "../Buttons";
+
 // MaterialUI
 import {
   TextareaAutosize,
