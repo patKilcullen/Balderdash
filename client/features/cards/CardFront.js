@@ -70,6 +70,7 @@ const CardFront = ({
       return "#88ebe6";
     } else {
       return "#e6e8dc";
+      // return "purple";
     }
   }, [sideState, defCards, hidden, tempBack]);
 
@@ -83,7 +84,7 @@ const [mainCardClass, setMainCardClass] =useState("")
         top: 0,
         right: 0,
         bottom: 0,
-        left: 0,
+        // left: 0,
         height: "100vh",
         // width: "90%",
         marginLeft: "-1vw",
@@ -130,11 +131,22 @@ const [mainCardClass, setMainCardClass] =useState("")
       moveOffScreen ? " translate(-1000px, -1000px)" : ""
     }`,
   };
-
+console.log(
+  "DEF CARDS: ",
+  baseCard
+    ? "main-card-base-card"
+    : `main-card${
+        (timer && !defCards) || (fullScreen && !defCards)
+          ? "-timer"
+          : defCards
+          ? "-def-cards"
+          : ""
+      }`
+);
   
   
   return (
-    <div>
+    <div  >
       {/* Main Card */}
       <Card
         // className={baseCard ? null : `main-card`}
@@ -146,7 +158,7 @@ const [mainCardClass, setMainCardClass] =useState("")
                   ? "-timer"
                   : 
                   defCards 
-                  ? "def-cards"
+                  ? "-def-cards"
                   :
                   ""
               }`
@@ -267,6 +279,7 @@ const [mainCardClass, setMainCardClass] =useState("")
             their own definition, then sets the timer in the Guess Defs Component */}
               {timer ? (
                 <Timer
+                sx={{border: "5px solid purple"}}
                   checkIfTied={checkIfTied}
                   setTempBack={setTempBack}
                   showBackOfCard={showBackOfCard}

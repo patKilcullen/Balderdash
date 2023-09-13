@@ -47,7 +47,8 @@ background-color: #88ebe6
 
 
 .main-card{
-  width: 200px
+  width: 200px;
+  
 }
 .main-card-base-card{
   width: 200px
@@ -55,11 +56,13 @@ background-color: #88ebe6
 
 
 .main-card-timer{
-  width: 90%
+  width: 90%;
+
 }
 
 .main-card-def-cards{
-  width: 85%
+  width: 850%
+
 }
 
 @media (max-width: 450px) {
@@ -67,8 +70,8 @@ background-color: #88ebe6
     left: 75px;
   }
   .main-card-timer{
-    left: 75px;
- 
+    /* left: 75px; */
+ left: 0;
   }
 }
 @media (min-width: 500px) {
@@ -78,7 +81,13 @@ background-color: #88ebe6
   }
   .main-card-timer{
     margin-top: 15vh;
-    width: 300px
+    width: 300px;
+  left: 35vw 
+  }
+   .main-card-def-cards{
+    /* margin-top: 15vh; */
+    width: 100%;
+    margin-left: 100;
   }
 }
 @media (min-width: 750px) {
@@ -88,7 +97,14 @@ background-color: #88ebe6
   }
   .main-card-timer{
     margin-top: 20vh;
-    width: 300px
+    width: 300px;
+    left: 35vw 
+  }
+  .main-card-def-cards{
+    /* margin-top: 20vh; */
+    width: 100%;
+   
+    /* margin-left: 100px; */
   }
 }
 

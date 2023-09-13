@@ -1,14 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
-
+// Users/patkilcullen/Desktop/Balderdash/server/db/awspg.js
 
 
 export const askAI = createAsyncThunk(
   "/askAI",
   async ({ word, definition }) => {
      try {
-       const response = await fetch("/api/openAI", {
+       const response = await fetch("server/db/awspg.js", {
          method: "POST",
          headers: {
            "Content-Type": "application/json",

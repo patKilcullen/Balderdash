@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 // SLICES/STATE REDUCERS, ETC.
 import {
-  getPlayerTurnName,
   getWord,
   setWordState,
   getDefinition,
@@ -45,6 +44,7 @@ const GamePlay = ({
 }) => {
   const dispatch = useDispatch();
   const me = useSelector(selectMe);
+
   // SOCKET
   const clientSocket = useContext(SocketContext);
 

@@ -216,7 +216,7 @@ const GuessDefs = ({
   }, [tempScoreCardMessages]);
 
   return (
-    <div>
+    <div >
       <div style={{ position: "fixed", top: "0", color: "red" }}>
         Time: {countdown}
       </div>
@@ -240,8 +240,10 @@ const GuessDefs = ({
               );
             })
         : ""}
-        {/* If player guesses def, flip the card and show the back */}
-      {guessed ? <CardFront flip={true} side={"back"} fullScreen={true} /> : null}
+      {/* If player guesses def, flip the card and show the back */}
+      {guessed ? (
+        <CardFront flip={true} side={"back"} fullScreen={true} />
+      ) : null}
     </div>
   );
 };

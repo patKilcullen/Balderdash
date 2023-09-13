@@ -34,7 +34,7 @@ const Timer = ({
   setChoseWord,
 }) => {
   // COMPONENT STATE
-  const [countdown, setCountdown] = useState(5);
+  const [countdown, setCountdown] = useState(2);
   const [defInput, setDefInput] = useState(false);
   const [playGame, setPlayGame] = useState(false);
 
@@ -87,7 +87,7 @@ const Timer = ({
   }, [playGame]);
 
   return (
-    <div style={{ overflow: "auto" }}>
+    <div style={{ overflow: "auto"}}>
       <div
         style={{ position: "fixed", bottom: "8vh", left: "40vw", color: "red" }}
       >

@@ -5,6 +5,8 @@ const app = require("./app");
 const seed = require("../script/seed");
 
 
+
+
 // SOCKET
 const socket = require("socket.io");
 
@@ -14,6 +16,7 @@ const init = async () => {
       await seed();
     } else {
       await db.sync();
+
     }
     const server = app.listen(PORT, () =>
       console.log(`Mixing it up on port ${PORT}`)
