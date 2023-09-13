@@ -327,17 +327,17 @@ const GamePlay = ({
 
       {/* CHOOSE WORD BUTON  only avaible if they got word/definition and havent chosen word yet*/}
       {definition && !choseWord ? (
-        <Button
-          className={"pulse"}
-          onClick={() => handleChooseWord()}
-          sx={{ fontSize: 30, marginTop: "15px" }}
-          variant="contained"
-        >
-          <Typography color={"secondary"} sx={{ fontSize: 30 }}>
-            Choose Word
-          </Typography>
-        </Button>
-
+        // <Button
+        //   className={"pulse"}
+        //   onClick={() => handleChooseWord()}
+        //   sx={{ fontSize: 30, marginTop: "15px" }}
+        //   variant="contained"
+        // >
+        //   <Typography color={"secondary"} sx={{ fontSize: 30 }}>
+        //     Choose Word
+        //   </Typography>
+        // </Button>
+      <Buttons name={"Choose Word"} func={handleChooseWord} pulse={"pulse"}/>
   
       ) : null}
 
