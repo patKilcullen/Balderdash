@@ -20,6 +20,7 @@ import { selectSingleGame } from "../games/singleGameSlice";
 // COMPONENTS
 import Timer from "./Timer";
 import CardFront from "../cards/CardFront";
+import Buttons from "../Buttons";
 
 // SOCKET
 import { SocketContext } from "../../app/SocketProvider";
@@ -244,7 +245,7 @@ const GamePlay = ({
     >
       <Card className="buttons " sx={{ boxShadow: "none" }}>
         {/* GET WORD BUTTON -  only visible if it is players turn*/}
-        {game && userScore && game.turn === userScore.turnNum ? (
+        {/* {game && userScore && game.turn === userScore.turnNum ? (
           <Button
             onClick={handleGetWord}
             sx={{ fontSize: 30 }}
@@ -258,6 +259,27 @@ const GamePlay = ({
               Get Word
             </Typography>
           </Button>
+        ) : null} */}
+
+        {game && userScore && game.turn === userScore.turnNum ? (
+          // <Button
+          //   onClick={handleGetWord}
+          //   sx={{ fontSize: 30 }}
+          //   variant="contained"
+          // >
+          //   <Typography
+          //     className={!word || !word.length ? "pulse" : null}
+          //     color={"secondary"}
+          //     sx={{ fontSize: 30 }}
+          //   >
+          //     Get Word
+          //   </Typography>
+          // </Button>
+          <Buttons
+            name={"Get Word"}
+            func={handleGetWord}
+            pulse={!word || !word.length ? "pulse" : null}
+          />
         ) : null}
 
         {/* MAIN CARD COMPONENT */}
@@ -315,6 +337,8 @@ const GamePlay = ({
             Choose Word
           </Typography>
         </Button>
+
+  
       ) : null}
 
       {/* ADD NEW WORD/DEFINITION TO DATABASE */}

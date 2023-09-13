@@ -1,6 +1,9 @@
 
 
-
+@font-face {
+  font-family: DMSerifDisplay;
+  src: url('./DMSerifDisplay-Regular.ttf')
+}
 
 #header {
 display: flex;

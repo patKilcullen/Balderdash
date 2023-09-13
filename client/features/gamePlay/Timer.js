@@ -87,6 +87,7 @@ const Timer = ({
   }, [playGame]);
 
   return (
+    // OVERFLOW AUTO NECESSARY????
     <div style={{ overflow: "auto"}}>
       <div
         style={{ position: "fixed", bottom: "8vh", left: "40vw", color: "red" }}

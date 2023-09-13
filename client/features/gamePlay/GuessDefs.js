@@ -56,7 +56,7 @@ const GuessDefs = ({
   const [fakeDefs, setFakeDefs] = useState([]);
   const [defList, setDefList] = useState(null);
   const [guessed, setGuessed] = useState(false);
-  const [countdown, setCountdown] = useState(2);
+  const [countdown, setCountdown] = useState(10);
 
   const dispatch = useDispatch();
   const word = useSelector(selectWord);
@@ -220,6 +220,7 @@ const GuessDefs = ({
       <div style={{ position: "fixed", top: "0", color: "red" }}>
         Time: {countdown}
       </div>
+     
       {guessed === false && defList === true && fakeDefs && fakeDefs.length
         ? fakeDefs
             .filter((def) => !def.hasOwnProperty(`${userId}`))

@@ -19,7 +19,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: "Ubuntu",
+    fontFamily: "DMSerifDisplay",
     h4: {
       fontFamily: ['Chalkduster', 'Bradley Hand']
     }

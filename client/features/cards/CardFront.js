@@ -146,7 +146,7 @@ console.log(
   
   
   return (
-    <div  >
+    <div>
       {/* Main Card */}
       <Card
         // className={baseCard ? null : `main-card`}
@@ -156,11 +156,9 @@ console.log(
             : `main-card${
                 (timer && !defCards) || (fullScreen && !defCards)
                   ? "-timer"
-                  : 
-                  defCards 
+                  : defCards
                   ? "-def-cards"
-                  :
-                  ""
+                  : ""
               }`
         }
         // className={ `main-card`}
@@ -172,7 +170,7 @@ console.log(
           position: notReverse || defCards ? "static" : "absolute",
           top: bottomCard ? "308px" : "365px",
           backgroundColor: cardBackgroundColor, // Use the cardBackgroundColor useMemo variable
-          borderRadius: !hidden ? "50px" : null,
+          borderRadius: "50px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -185,6 +183,7 @@ console.log(
           transition: "0.9s",
           transformOrigin: "center center",
           ...cardDimensions, // Use the cardDimensions useMemo variable
+           
         }}
       >
         {/* CARD BORDER */}
@@ -208,6 +207,7 @@ console.log(
             alignItems: "center",
             ...cardBorderStyle, // Use the cardBorderStyle useMemo variable
             top: hidden ? "0px" : null,
+            
           }}
         >
           {/* FRONT OF CARD */}
@@ -279,7 +279,7 @@ console.log(
             their own definition, then sets the timer in the Guess Defs Component */}
               {timer ? (
                 <Timer
-                sx={{border: "5px solid purple"}}
+                  sx={{ border: "5px solid purple" }}
                   checkIfTied={checkIfTied}
                   setTempBack={setTempBack}
                   showBackOfCard={showBackOfCard}
