@@ -12,7 +12,7 @@ export const getWord = createAsyncThunk(
    
       return data
     } catch (error) {
-      console.log("ERROR IN GET WdddddddORD", error)
+      console.log("ERROR IN GET WORD", error)
       return error.message;
     }
   }
@@ -26,7 +26,7 @@ export const getFakeWords = createAsyncThunk(
       const { data } = await axios.get(`https://random-word-api.vercel.app/api?words=1`);
       return data
     } catch (error) {
-      console.log("EROR IN GET FAKES WORDS")
+      console.log("ERROR IN GET FAKES WORDS")
       return error.message;
     }
   }
@@ -45,7 +45,7 @@ export const getFakeWords = createAsyncThunk(
           return "That word is too weird, try again"
          }
       } catch (error) {
-        console.log("EROR IN Get  DEFINITIOM")
+        console.log("ERROR IN Get  DEFINITIOM")
         return error.message;
       }
     }

@@ -114,7 +114,6 @@ const init = async () => {
       );
 
       socket.on("send_score_card", ({ tempScoreCardMessages, gameName }) => {
-        console.log("SEND SCORE CARD")
         socket
           .to(gameName)
           .emit("receive_score_card", { gameName, tempScoreCardMessages });
@@ -137,7 +136,6 @@ const init = async () => {
       });
 // ASK AI
 socket.on("send_ask_ai_answer", ({ room, answer,message }) => {
-console.log("MESSAGE ON THE BNACKCKCKC: ", message)
   socket.to(room).emit("receive_ask_ai_answer", { room, answer, message });
 });
       

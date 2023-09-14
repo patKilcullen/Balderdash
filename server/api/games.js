@@ -4,7 +4,7 @@ const {
 } = require("../db");
 module.exports = router;
 
-const { Op } = require('sequelize')
+const { Op } = require("sequelize");
 
 // Get All Games
 router.get("/", async (req, res, next) => {
@@ -21,54 +21,47 @@ router.get("/", async (req, res, next) => {
 
 // GET SINGLE GAME
 router.get("/findGame/:gameName", async (req, res, next) => {
-try {
+  try {
     const game = await Game.findOne({
-      // where: {name: req.params.gameName},
       where: {
         name: {
-          [Op.like]: `%${req.params.gameName}%`
-        }
+          [Op.like]: `%${req.params.gameName}%`,
+        },
       },
       include: [{ model: User, as: "owner" }],
     });
 
     res.json(game);
   } catch (err) {
-    console.log("GAME NOT FOUND")
+    console.log("GAME NOT FOUND");
     next(err);
   }
 });
 
-
-
-
-
 // UPDATE GAME
-router.put('/:gameId', async(req,res,next)=>{
+router.put("/:gameId", async (req, res, next) => {
   try {
     // const game = await Game.findByPk(req.params.gameId)
     // res.send(await game.update(req.body));
-  
-  const game = await Game.findByPk(req.params.gameId);
-  const updatedGame = await game.update(req.body)
-  res.send(updatedGame);
+
+    const game = await Game.findByPk(req.params.gameId);
+    const updatedGame = await game.update(req.body);
+    res.send(updatedGame);
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
 
-
-router.patch('/:gameId/changeTurn', async(req,res,next)=>{
-  
+router.patch("/:gameId/changeTurn", async (req, res, next) => {
   try {
-    const game = await Game.findByPk(req.params.gameId)
-    
+    const game = await Game.findByPk(req.params.gameId);
+
     res.send(await game.update(req.body));
     // res.json(score)
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
 
 // Get All Users Games
 // router.get("/", async (req, res, next) => {
@@ -82,8 +75,6 @@ router.patch('/:gameId/changeTurn', async(req,res,next)=>{
 //     next(err);
 //   }
 // });
-
-
 
 // Get Single Game
 router.get("/:id", async (req, res, next) => {
@@ -104,7 +95,7 @@ router.get("/:id", async (req, res, next) => {
         },
         {
           model: User,
-         as: "owner",
+          as: "owner",
         },
       ],
     });
@@ -114,14 +105,11 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-
-
-
 // Create Game
 router.post("/", async (req, res, next) => {
   try {
     const game = await Game.create(req.body);
-   
+
     res.json(game);
   } catch (err) {
     next(err);

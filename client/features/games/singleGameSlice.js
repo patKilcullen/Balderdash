@@ -18,30 +18,12 @@ export const fetchSingleGame = createAsyncThunk("singleGame", async (id) => {
  
       try {
         const { data } = await axios.get(`/api/games/findGame/${gameName}`);
-        console.log("DATA IN SLICE: ", data)
         return data;
       } catch (error) {
         console.log("ERROR IN FETCH ALL GAMES THUNK: ", error);
       }
     }
   );
-
-
-
-// export const addGamePlayer = createAsyncThunk(
-//   "addGamePlayer",
-//   async (gameId) => {
-//     try {
-//       const { data } = await axios.put(`/api/games/${gameId}`,{
-
-//       });
-
-//       return data;
-//     } catch (error) {
-//       console.log("ERROR IN SINBGLE GAME THUNK: ", error);
-//     }
-//   }
-// );
 
 
 

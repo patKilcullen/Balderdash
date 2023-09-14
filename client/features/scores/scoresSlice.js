@@ -23,7 +23,6 @@ export const fetchHighestGameScores = createAsyncThunk(
       const { data } = await axios.get(
         `/api/scores/game/${gameId}/highestScores`
       );
-      console.log("HIGHEST SCORE IN THUNK: ", data);
       return data;
     } catch (error) {
       console.log("ERROR IN FETCH ALL SCORES THUNK: ", error);
@@ -44,7 +43,6 @@ export const createScore = createAsyncThunk(
         gameId,
         userId,
       });
-      console.log("GREATE SCORE DATA: ", data);
       return data;
     } catch (error) {
       console.log("ERROR IN CREAT Score THUNK: ", error);

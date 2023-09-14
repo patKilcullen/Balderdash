@@ -120,8 +120,6 @@ const TempScoreCard = ({
     );
 
     clientSocket.on("receive_ask_ai_answer", ({ room, answer, message }) => {
-      console.log("answer: ", answer)
-      console.log("message: ", message);
       room === gameName
         ? setTimeout(() => {
             setAiResponse(answer);

@@ -5,6 +5,9 @@ import { useSelector } from "react-redux";
 import { selectAllScores } from "./scoresSlice";
 import { selectSingleGame } from "../games/singleGameSlice";
 
+// Components
+import Buttons from "../Buttons";
+
 // MATERIAL UI
 import { Card, Button, Typography, Divider, Box } from "@mui/material";
 
@@ -273,50 +276,102 @@ const ScoreCard = ({
 
             {/*IF GAME OWNER and Game NOT STARTED: Player Requests */}
             {game.ownerId === userId && !game.started ? (
-              <div>Player Requests</div>
-            ) : null}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  backgroundColor: "#e6e8dc",
+                  border: "2px solid #571122",
+                }}
+              >
+                <Typography
+                  color="secondary"
+                  sx={{ fontSize: "30px", textDecoration: "underline" }}
+                >
+                  Player Requests
+                </Typography>
 
-            {game.ownerId === userId && !game.started ? (
-              <div>
-                {scores && scores.length ? (
+                {game.ownerId === userId && !game.started ? (
                   <div>
-                    {scores
-                      .filter((score) => !score.accepted)
+                    {scores && scores.length ? (
+                      <div>
+                        {scores
+                          .filter((score) => !score.accepted)
 
-                      .map((score) => (
-                        <div>
-                          {score.user.username}
-                          <button
+                          .map((score) => (
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "space-around",
+                              }}
+                            >
+                              <Typography
+                                color="secondary"
+                                sx={{
+                                  fontWeight: "bold",
+                                  fontSize: "20px",
+                                  width: "100%",
+                                }}
+                              >
+                                {score.user.username}:
+                                {/* <button
                             onClick={() => handleAcceptRequest(score.user.id)}
                           >
                             Accept
-                          </button>
-                          <button
-                            onClick={() => handleDeclineRequest(score.user.id)}
-                          >
-                            Decline
-                          </button>
-                        </div>
-                      ))}
+                          </button> */}
+                                <Buttons
+                                  name={"Accept"}
+                                  func={() =>
+                                    handleAcceptRequest(score.user.id)
+                                  }
+                                  pulse={"pulse"}
+                                  small={true}
+                                />
+                              </Typography>
+                              {/* <button
+                                onClick={() =>
+                                  handleDeclineRequest(score.user.id)
+                                }
+                              >
+                                Decline
+                              </button> */}
+                              <Buttons
+                                name={"Decline"}
+                                func={() => handleDeclineRequest(score.user.id)}
+                                pulse={"pulse"}
+                                small={true}
+                              />
+                            </div>
+                          ))}
+                      </div>
+                    ) : null}
                   </div>
                 ) : null}
-              </div>
+              </Box>
             ) : null}
-
             {/* IF NOT GAME OWNER  and Game NOT STARTED: REQUEST TO JOIN*/}
             {game.ownerId !== userId && !game.started && !userScore ? (
-              <button onClick={handleAskJoin}>Ask to join this game</button>
+              //{" "}
+              // <button onClick={handleAskJoin}>Ask to join this game</button>
+              <Buttons
+                name={"Ask to join game"}
+                func={handleAskJoin}
+                pulse={"pulse"}
+              />
             ) : // if request sent already, display message
             game.ownerId !== userId && !game.started && userScore ? (
               <Typography
                 color="secondary"
                 sx={{
-                  fontWeight: "bold",
+                  fontWeight: "bolder",
                   fontSize: "25px",
                   width: "100%",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
+                  backgroundColor: "#e6e8dc",
+                  border: "2px solid #571122",
                 }}
                 variant="h4"
               >
@@ -328,7 +383,8 @@ const ScoreCard = ({
             {game.ownerId === userId &&
             game.numPlayers > 1 &&
             game.started === false ? (
-              <button onClick={handleStartGame}>Start Game</button>
+              <Buttons name={"Start Game"} func={handleStartGame} pulse={"pulse"}/>
+              // <button onClick={handleStartGame}>Start Game</button>
             ) : null}
           </div>
         </Card>

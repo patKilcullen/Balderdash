@@ -15,10 +15,7 @@ export const askAI = createAsyncThunk(
          },
          body: JSON.stringify({ word, definition }),
        });
-
-       console.log("RESPONSE IN THUNK: ", response);
        const data = await response.json();
-        console.log("DATE IN THUNK: ", data.trim());
        return data.trim()
    
      } catch (error) {

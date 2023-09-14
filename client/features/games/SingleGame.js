@@ -84,53 +84,10 @@ useEffect(() => {
  
 }, [showTempScoreCard]);
 
-//  console.log("GAME TURN: ", gameTurn);
-//  console.log("PREEEEVIOUS: ", prevGameTurn);
 
-  //   const reloadScores = () => {
-  //   dispatch(fetchAllGameScores(gameId));
-  //   setShowTempScoreCard(true);
-  // //  const [countdown, setCountdown] = useState(4);
-  // let countdown = 20
-
-  // const reloadRecur = () => {
-  //   console.log("COUNTDOWN: ", countdown);
-  //   console.log("PAUSE: ", pause)
-  //   if (countdown > 0 && !pause) {
-  //     setTimeout(() => {
-  //       countdown --
-
-  //       reloadRecur();
-  //     }, 1000);
-  //   }
-  //   if (countdown === 0) {
-  //     dispatch(clearTempScoreCardMessages());
-  //     setShowTempScoreCard(false);
-  //     setReloadFlip(true);
-  //   }
-  // };
-  // reloadRecur();
-
-  // };
-
- 
-
-
-  // SHOWS TEMPSCORECARD AND RELOADS/UPDATES SCORES  and reloads the cardFlip animation when game round is over and its new player's turn the
-  //     const reloadScores = () => {
-  //        dispatch(fetchAllGameScores(gameId));
-  // setTimeout(() => {
-  //         dispatch(clearTempScoreCardMessages());
-  //         setShowTempScoreCard(false);
-  //   setReloadFlip(true)
-  //       }, 10000);
-
-  //       setShowTempScoreCard(true);
-  //     };
 
   // WHEN ACCEPT HAVE TO EDIT THE GAME AND THE SCORE. get response from game edit to edit score..
    const handleAcceptRequest = (id) => {
-     console.log("ACCE{PT ID: ", id);
      dispatch(editGame({ id: game.id, numPlayers: game.numPlayers + 1 }))
        .then((res) => {
          dispatch(
@@ -197,7 +154,6 @@ useEffect(() => {
   useEffect(() => {
     clientSocket.on("receive_score_card", ({ tempScoreCardMessages }) => {
       setTempScoreCard(tempScoreCardMessages);
-      console.log("TEMP SCORE CARD HERE: ", tempScoreCard)
     });
 
     clientSocket.on("receive_start_game", ({ room, userName }) => {

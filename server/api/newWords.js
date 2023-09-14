@@ -17,7 +17,6 @@ router.post("/", async (req,res)=>{
           values: [req.body.word, req.body.definition],
         };
         const newWord = await awsPool.query(query);
-        console.log("AWSPOOOL: ", newWord.rows[0])
         res.send(newWord.rows[0])     
       } catch (err) {
         console.error('Error posting the word:', err);

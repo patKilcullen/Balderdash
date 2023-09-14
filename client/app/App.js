@@ -1,6 +1,5 @@
 import React from "react";
 
-
 import AppRoutes from "./AppRoutes";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
