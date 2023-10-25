@@ -61,6 +61,8 @@ const GamePlay = ({
   const [playerTurnName, setPlayerTurnName] = useState("");
   const [flip, setFlip] = useState(false);
   const [wordToDb, setWordToDb] = useState(false)
+   const [moveOffScreen, setMoveOffScreen] = useState(false);
+   const [flipSide, setFlipSide] = useState("back");
 
   // Finds the player who turnNum === game.turn, sets it to playerTurnName
   // when the game reloads to check for new turn
@@ -73,16 +75,12 @@ const GamePlay = ({
       : null;
     playerTurn ? setPlayerTurnName(playerTurn[0].user.username) : null;
     // playerTurn ? getPlayerTurnName(playerTurn[0].user.username) : null;
- 
   }, []);
 
 
   // GET WORD:  first clears defs from last round then gets word from API, sets it in state,
   // then gets the definition throug API then sets that in state for player whose turn it is,
   // and then add it the the definition array with the key "real" to distinguish it from others
-  const [moveOffScreen, setMoveOffScreen] = useState(false);
-  const [flipSide, setFlipSide] = useState("back");
-
   const handleGetWord = () => {
     // CARD FLIPPING INFO
     // If there is already a word(card already flipped over, the card leaves the screen, comes back, then flip over)
@@ -103,7 +101,6 @@ const GamePlay = ({
       },
       word ? 1000 : 0
     );
-    // CARD FLIPPING INFO
 
     dispatch(clearFakeDefs());
     dispatch(clearTempScoreCardMessages());
@@ -119,7 +116,7 @@ const GamePlay = ({
     setWordToDb(false)
   };
 
-  // CHOOSE WORD: first gets fake words for fake definition, then emits the word,
+  // CHOOSE WORD: first adds the real defintion to store/state, then gets fake words for fake definition, then emits the word,
   // socket room name (as gamename), and playerTurn(as their username)
   // to other users/ then starts Timer component by setting state to true
   //  and then choseWord to true to hide button/keep user from choosing again
@@ -137,8 +134,9 @@ const GamePlay = ({
     setChoseWord(true);
   };
 
+
+  // ADD WORD TO AWS DATABASE if word and definition are good for the game, as it to AWS RDS
   const handleAddNewWord = () => {
-    
  setWordToDb(true);
     dispatch(addNewWord({ word: word, definition: definition }));
     console.log("New Word Added to AWS Database: ", wordToDb);
@@ -146,7 +144,7 @@ const GamePlay = ({
  
 
   // GET FAKE WORDS   called in handleChooseWord function,
-  // clears fake words from last roung, then gets 5 fake words
+  // clears fake words from last round, then gets 5 fake words
   const handleGetFakeWords = () => {
     dispatch(clearFakeWords());
     let count = 0;
@@ -160,29 +158,16 @@ const GamePlay = ({
   // belong to(or have visited) other games
   useEffect(() => {
     // RECEIVE WORD from socket first, if it isn't players turn, update playerTurnNAme,
-    // then, if they're in the right room, add the word to state, set flip to truand and flipside to "front""
+    // then, if they're in the right room, add the word and defintion to state, set flip to true and and flipside to "front""
     clientSocket.on("receive_word", ({ word, definition, room, playerTurnName }) => {
-
-      playerTurnName !== username && room === gameName
-        ? dispatch(setWordState(word))
-        : null;
-
-        playerTurnName !== username && room === gameName
-          ? dispatch(addRealDefinition(definition))
-          : null;
-
-      playerTurnName !== username ? setPlayerTurnName(playerTurnName) : null;
-
-      playerTurnName !== username && room === gameName
-        ? setWord(word)
-        : setWord("");
-
-      playerTurnName !== username && room === gameName
-        ? setFlip(true)
-        : setFlip(false);
-      playerTurnName !== username && room === gameName
-        ? setFlipSide("front")
-        : null;
+            if (playerTurnName !== username && room === gameName) {
+              dispatch(setWordState(word));
+              dispatch(addRealDefinition(definition));
+              setPlayerTurnName(playerTurnName);
+              setWord(word);
+              setFlip(true);
+              setFlipSide("front");
+            }
     });
 
     // RECEIVE START COUNTDOWN players receive this from player whose turn it is when
@@ -192,7 +177,7 @@ const GamePlay = ({
     });
 
     // RECEIVER PLAYERS FAKE DEFINITIONS if players turn, recieve other players fake definitions
-    // and add the to fake def array with key associated with player id so they can later be awarded point
+    // and add them to fake def array with key associated with player id so they can later be awarded point
     clientSocket.on(
       "receive_player_fake_def",
       ({ playerDef, room, userId, playerTurnName }) => {

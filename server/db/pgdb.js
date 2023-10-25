@@ -8,7 +8,7 @@ const pool = new Pool({
     host: 'localhost',
     database: databaseName,
     password: process.env.pgPASSWORD,
-    port: 5432,
+  port: 5432,
   }); 
 
   
