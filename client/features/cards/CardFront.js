@@ -161,12 +161,12 @@ const CardFront = ({
           position: notReverse || defCards ? "static" : "absolute",
           top: bottomCard ? "308px" : "365px",
           backgroundColor: cardBackgroundColor, // Use the cardBackgroundColor useMemo variable
-          borderRadius: "50px",
+          borderRadius: hidden ? "0" : "50px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           padding: "1em 1em",
-          border: "5px solid black",
+           border: "5px solid black",
           boxShadow: "0 0 2px 2px",
           fontWeight: "bold",
           perspective: "1000px",
@@ -198,6 +198,7 @@ const CardFront = ({
             alignItems: "center",
             ...cardBorderStyle, // Use the cardBorderStyle useMemo variable
             top: hidden ? "0px" : null,
+           
             
           }}
         >

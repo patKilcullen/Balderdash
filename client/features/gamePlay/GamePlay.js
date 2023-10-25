@@ -36,7 +36,7 @@ import { minWidth } from "@mui/system";
 
 const GamePlay = ({
   setReloadFlip,
-  reloadFlip, 
+  reloadFlip,
   userId,
   game,
   userScore,
@@ -60,14 +60,13 @@ const GamePlay = ({
   const [playerTurn, setPlayerTurn] = useState("");
   const [playerTurnName, setPlayerTurnName] = useState("");
   const [flip, setFlip] = useState(false);
-  const [wordToDb, setWordToDb] = useState(false)
-   const [moveOffScreen, setMoveOffScreen] = useState(false);
-   const [flipSide, setFlipSide] = useState("back");
+  const [wordToDb, setWordToDb] = useState(false);
+  const [moveOffScreen, setMoveOffScreen] = useState(false);
+  const [flipSide, setFlipSide] = useState("back");
 
   // Finds the player who turnNum === game.turn, sets it to playerTurnName
   // when the game reloads to check for new turn
   useEffect(() => {
-    
     game && game.scores
       ? setPlayerTurn(
           game.scores.filter((score) => score.turnNum === game.turn)
@@ -76,7 +75,6 @@ const GamePlay = ({
     playerTurn ? setPlayerTurnName(playerTurn[0].user.username) : null;
     // playerTurn ? getPlayerTurnName(playerTurn[0].user.username) : null;
   }, []);
-
 
   // GET WORD:  first clears defs from last round then gets word from API, sets it in state,
   // then gets the definition throug API then sets that in state for player whose turn it is,
@@ -113,7 +111,7 @@ const GamePlay = ({
         setFlipSide("front");
       });
     });
-    setWordToDb(false)
+    setWordToDb(false);
   };
 
   // CHOOSE WORD: first adds the real defintion to store/state, then gets fake words for fake definition, then emits the word,
@@ -134,14 +132,12 @@ const GamePlay = ({
     setChoseWord(true);
   };
 
-
   // ADD WORD TO AWS DATABASE if word and definition are good for the game, as it to AWS RDS
   const handleAddNewWord = () => {
- setWordToDb(true);
+    setWordToDb(true);
     dispatch(addNewWord({ word: word, definition: definition }));
     console.log("New Word Added to AWS Database: ", wordToDb);
   };
- 
 
   // GET FAKE WORDS   called in handleChooseWord function,
   // clears fake words from last round, then gets 5 fake words
@@ -157,19 +153,21 @@ const GamePlay = ({
   // This useEffect dependency(including "game") array ensures sockets dont render on the wrong game for client who
   // belong to(or have visited) other games
   useEffect(() => {
-
     // RECEIVE WORD from socket first, if it isn't players turn, update playerTurnNAme,
     // then, if they're in the right room, add the word and defintion to state, set flip to true and and flipside to "front""
-    clientSocket.on("receive_word", ({ word, definition, room, playerTurnName }) => {
-            if (playerTurnName !== username && room === gameName) {
-              dispatch(setWordState(word));
-              dispatch(addRealDefinition(definition));
-              setPlayerTurnName(playerTurnName);
-              setWord(word);
-              setFlip(true);
-              setFlipSide("front");
-            }
-    });
+    clientSocket.on(
+      "receive_word",
+      ({ word, definition, room, playerTurnName }) => {
+        if (playerTurnName !== username && room === gameName) {
+          dispatch(setWordState(word));
+          dispatch(addRealDefinition(definition));
+          setPlayerTurnName(playerTurnName);
+          setWord(word);
+          setFlip(true);
+          setFlipSide("front");
+        }
+      }
+    );
 
     // RECEIVE START COUNTDOWN players receive this from player whose turn it is when
     // that player start Timer countdown then automatically start Timer contdown on their end
@@ -194,15 +192,12 @@ const GamePlay = ({
             );
       }
     );
-
-  
   }, [clientSocket, game]);
 
   const [bottomCard, setBottomCard] = useState(
     game && userScore && game.turn === userScore.turnNum ? false : true
   );
 
-  console.log("BOTTOM: ", bottomCard)
 
   // This set the flipCard animation funcitonality right when the game changes turns
   useEffect(() => {
@@ -211,13 +206,11 @@ const GamePlay = ({
       : setBottomCard(true);
   }, [reloadScores]);
 
-  useEffect(() => { 
-   !word ? setFlipSide("back") : null;
-  !word ? setFlip(false) : null;
-  setReloadFlip(false)
-}, [reloadFlip]);
-
-
+  useEffect(() => {
+    !word ? setFlipSide("back") : null;
+    !word ? setFlip(false) : null;
+    setReloadFlip(false);
+  }, [reloadFlip]);
 
   return (
     <Card
@@ -233,38 +226,9 @@ const GamePlay = ({
     >
       <Card className="buttons " sx={{ boxShadow: "none" }}>
         {/* GET WORD BUTTON -  only visible if it is players turn*/}
-        {/* {game && userScore && game.turn === userScore.turnNum ? (
-          <Button
-            onClick={handleGetWord}
-            sx={{ fontSize: 30 }}
-            variant="contained"
-          >
-            <Typography
-              className={!word || !word.length ? "pulse" : null}
-              color={"secondary"}
-              sx={{ fontSize: 30 }}
-            >
-              Get Word
-            </Typography>
-          </Button>
-        ) : null} */}
-
         {game && userScore && game.turn === userScore.turnNum ? (
-          // <Button
-          //   onClick={handleGetWord}
-          //   sx={{ fontSize: 30 }}
-          //   variant="contained"
-          // >
-          //   <Typography
-          //     className={!word || !word.length ? "pulse" : null}
-          //     color={"secondary"}
-          //     sx={{ fontSize: 30 }}
-          //   >
-          //     Get Word
-          //   </Typography>
-          // </Button>
           <Buttons
-            name={!word ? "Get Word": "Get Another Word"}
+            name={!word ? "Get Word" : "Get Another Word"}
             func={handleGetWord}
             pulse={!word || !word.length ? "pulse" : null}
           />
@@ -315,12 +279,16 @@ const GamePlay = ({
 
       {/* CHOOSE WORD BUTON  only avaible if they got word/definition and havent chosen word yet*/}
       {definition && !choseWord ? (
-      <Buttons name={"Choose Word"} func={handleChooseWord} pulse={"pulse"}/>
+        <Buttons name={"Choose Word"} func={handleChooseWord} pulse={"pulse"} />
       ) : null}
 
       {/* ADD NEW WORD/DEFINITION TO DATABASE */}
       {definition && !choseWord && wordToDb === false ? (
-        <Buttons name={"Add word to database"} func={handleAddNewWord} pulse={"pulse"}/>
+        <Buttons
+          name={"Add word to database"}
+          func={handleAddNewWord}
+          pulse={"pulse"}
+        />
       ) : null}
     </Card>
   );

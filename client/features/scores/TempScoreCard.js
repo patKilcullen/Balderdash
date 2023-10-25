@@ -29,7 +29,7 @@ const TempScoreCard = ({
   tempScoreCard,
   showTiedGame,
 }) => {
-  const [countdown, setCountdown] = useState(8);
+  const [countdown, setCountdown] = useState(12);
   const [showChallengeButton, setShowChallengeButton] = useState(true);
   const dispatch = useDispatch();
   const clientSocket = useContext(SocketContext);
