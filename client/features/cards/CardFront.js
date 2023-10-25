@@ -76,7 +76,7 @@ const CardFront = ({
     }
   }, [sideState, defCards, hidden, tempBack]);
 
-const [mainCardClass, setMainCardClass] =useState("")
+
 
   const cardDimensions = useMemo(() => {
     // Calculate the dimensions of the card based on the current state

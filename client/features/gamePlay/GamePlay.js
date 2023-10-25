@@ -157,6 +157,7 @@ const GamePlay = ({
   // This useEffect dependency(including "game") array ensures sockets dont render on the wrong game for client who
   // belong to(or have visited) other games
   useEffect(() => {
+
     // RECEIVE WORD from socket first, if it isn't players turn, update playerTurnNAme,
     // then, if they're in the right room, add the word and defintion to state, set flip to true and and flipside to "front""
     clientSocket.on("receive_word", ({ word, definition, room, playerTurnName }) => {
@@ -197,15 +198,17 @@ const GamePlay = ({
   
   }, [clientSocket, game]);
 
-  const [bottom, setBottom] = useState(
+  const [bottomCard, setBottomCard] = useState(
     game && userScore && game.turn === userScore.turnNum ? false : true
   );
+
+  console.log("BOTTOM: ", bottomCard)
 
   // This set the flipCard animation funcitonality right when the game changes turns
   useEffect(() => {
     game && userScore && game.turn === userScore.turnNum
-      ? setBottom(false)
-      : setBottom(true);
+      ? setBottomCard(false)
+      : setBottomCard(true);
   }, [reloadScores]);
 
   useEffect(() => { 
@@ -281,7 +284,7 @@ const GamePlay = ({
             moveOffScreen={moveOffScreen}
             flip={!flip}
             side={"back"}
-            bottomCard={bottom}
+            bottomCard={bottomCard}
           ></CardFront>
           <CardFront
             moveOffScreen={moveOffScreen}
@@ -312,32 +315,11 @@ const GamePlay = ({
 
       {/* CHOOSE WORD BUTON  only avaible if they got word/definition and havent chosen word yet*/}
       {definition && !choseWord ? (
-        // <Button
-        //   className={"pulse"}
-        //   onClick={() => handleChooseWord()}
-        //   sx={{ fontSize: 30, marginTop: "15px" }}
-        //   variant="contained"
-        // >
-        //   <Typography color={"secondary"} sx={{ fontSize: 30 }}>
-        //     Choose Word
-        //   </Typography>
-        // </Button>
       <Buttons name={"Choose Word"} func={handleChooseWord} pulse={"pulse"}/>
-  
       ) : null}
 
       {/* ADD NEW WORD/DEFINITION TO DATABASE */}
       {definition && !choseWord && wordToDb === false ? (
-        // <Button
-        //   className={"pulse"}
-        //   onClick={() => handleAddNewWord()}
-        //   sx={{ fontSize: 30, marginTop: "15px" }}
-        //   variant="contained"
-        // >
-        //   <Typography color={"secondary"} sx={{ fontSize: 30 }}>
-        //     Add word to database
-        //   </Typography>
-        // </Button>
         <Buttons name={"Add word to database"} func={handleAddNewWord} pulse={"pulse"}/>
       ) : null}
     </Card>
