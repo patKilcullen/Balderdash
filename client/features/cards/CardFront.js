@@ -72,7 +72,6 @@ const CardFront = ({
       return "#88ebe6";
     } else {
       return "#e6e8dc";
-      // return "purple";
     }
   }, [sideState, defCards, hidden, tempBack]);
 

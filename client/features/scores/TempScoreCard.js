@@ -18,6 +18,7 @@ import { add3Points, subtract3Points } from "./scoresSlice";
 import {Card, Box, Typography, Button} from "@mui/material"
 
 const TempScoreCard = ({
+  reloadScores,
   prevGameTurn,
   userScore,
   game,
@@ -29,7 +30,7 @@ const TempScoreCard = ({
   tempScoreCard,
   showTiedGame,
 }) => {
-  const [countdown, setCountdown] = useState(12);
+  const [countdown, setCountdown] = useState(7);
   const [showChallengeButton, setShowChallengeButton] = useState(true);
   const dispatch = useDispatch();
   const clientSocket = useContext(SocketContext);
@@ -80,8 +81,15 @@ const TempScoreCard = ({
 
 
       res.payload.toLowerCase() == "yes" || res.payload.includes("yes")
-        ? dispatch(add3Points({ userId: userId, gameId: gameId }))
-        : dispatch(subtract3Points({ userId: userId, gameId: gameId }));
+        ? dispatch(add3Points({ userId: userId, gameId: gameId })).then(() => {
+            reloadScores();
+          })
+        : dispatch(subtract3Points({ userId: userId, gameId: gameId })).then(
+            () => {
+              reloadScores();
+            }
+          );
+
 
     });
   };
@@ -126,6 +134,7 @@ const TempScoreCard = ({
             setTimeout(() => {
               setPause(!pause);
               setMessage(message);
+              reloadScores()
             }, 1500);
           }, 1500)
         : null;
@@ -242,15 +251,6 @@ const TempScoreCard = ({
             </Box>
             {showChallengeButton &&
             userScore.turnNum !== prevGameTurn.current ? (
-              // <Button
-              //   sx={{ alignSelf: "center" }}
-              //   variant="contained"
-              //   size="large"
-              //   onClick={handleTogglePause}
-              // >
-              //   {" "}
-              //   Challenge
-              // </Button>
               <Buttons name={"Challenge"} func={handleTogglePause} pulse={"pulse"} />
             ) : null}
           </Card>

@@ -157,7 +157,7 @@ useEffect(() => {
     });
 
     clientSocket.on("receive_start_game", ({ room, userName }) => {
-      dispatch(fetchSingleGame(gameId));
+       dispatch(fetchSingleGame(gameId));
     });
     clientSocket.on("recieve_ask_to_join", (room) => {
       room === game.name ? dispatch(fetchAllGameScores(gameId)) : null;
@@ -185,6 +185,7 @@ useEffect(() => {
     <Card>
       {showTempScoreCard ? (
         <TempScoreCard
+          reloadScores={reloadScores}
           prevGameTurn={prevGameTurn}
           userScore={userScore}
           game={game}

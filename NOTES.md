@@ -1,6 +1,13 @@
 
-T
+
 <!-- NEW -->
+subtracting three points doesnt automatically update
+
+when player creates while second user is on different game, if second users navigates to new game and requests and join new game, then new games is starts, that second player reloads to be on the initial game they were on
+
+
+
+
 
 
 OPENAI: in JSON packa added "type": "module" and openAI script

@@ -108,7 +108,6 @@ export const subtract3Points = createAsyncThunk(
           gameId,
         }
       );
-
       return data;
     } catch (err) {
       console.log(err);

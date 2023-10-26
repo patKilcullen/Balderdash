@@ -34,7 +34,7 @@ const Timer = ({
   setChoseWord,
 }) => {
   // COMPONENT STATE
-  const [countdown, setCountdown] = useState(2);
+  const [countdown, setCountdown] = useState(12);
   const [defInput, setDefInput] = useState(false);
   const [playGame, setPlayGame] = useState(false);
 
@@ -81,7 +81,7 @@ const Timer = ({
     clientSocket.emit("start_countdown", { gameName });
   }, []);
 
-  // when playGame/guessDEfs mounts, runs makeHidden function in CardFront component to hade previous stles to show guessDefs
+  // when playGame/guessDEfs mounts, runs makeHidden function in CardFront component to hade previous styleses to show guessDefs
   useEffect(() => {
     playGame ? makeHidden() : null;
   }, [playGame]);

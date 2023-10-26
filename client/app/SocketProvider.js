@@ -8,6 +8,7 @@ const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
+    // add host to .env file
     const newSocket = io("http://localhost:8080");
     setSocket(newSocket);
 
